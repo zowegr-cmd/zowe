@@ -63,15 +63,13 @@ const { title, description } = Astro.props;
     document.querySelectorAll('[data-section]').forEach(el => observer.observe(el));
   </script>
   <script is:inline>
-    function initIdentity() {
-      if (!window.netlifyIdentity) return;
+    // Redirige vers la page dédiée si un token identity est dans l'URL
+    var hash = window.location.hash;
+    if (hash.includes('recovery_token') || hash.includes('invite_token') || hash.includes('confirmation_token')) {
+      window.location.href = '/identity/' + hash;
+    }
 
-      // Si un token de récupération ou d'invitation est dans l'URL, ouvre le widget
-      var hash = window.location.hash;
-      if (hash.includes('recovery_token') || hash.includes('invite_token') || hash.includes('confirmation_token')) {
-        window.netlifyIdentity.open();
-      }
-
+    if (window.netlifyIdentity) {
       window.netlifyIdentity.on('init', function(user) {
         if (!user) {
           window.netlifyIdentity.on('login', function() {
@@ -80,10 +78,13 @@ const { title, description } = Astro.props;
         }
       });
     }
-
-    // Essai immédiat + après chargement complet
-    initIdentity();
-    window.addEventListener('load', initIdentity);
+    window.addEventListener('load', function() {
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('login', function() {
+          document.location.href = '/admin/';
+        });
+      }
+    });
   </script>
 </body>
 </html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion — Zowe</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #F8F5F1;
+      font-family: 'Georgia', serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 400;
+      font-style: italic;
+      color: #6B2437;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.85rem;
+      color: #AAAAAA;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">Zowe</div>
+  <p>Chargement de l'interface de connexion…</p>
+
+  <script>
+    window.addEventListener('load', function () {
+      if (!window.netlifyIdentity) return;
+
+      // Ouvre le widget dès que prêt
+      window.netlifyIdentity.on('init', function (user) {
+        if (user) {
+          // Déjà connecté → panneau admin
+          window.location.href = '/admin/';
+        } else {
+          window.netlifyIdentity.open();
+        }
+      });
+
+      // Après connexion → panneau admin
+      window.netlifyIdentity.on('login', function () {
+        window.location.href = '/admin/';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -183,8 +183,8 @@ const nextUrl    = meta.siteUrl ? `${meta.siteUrl.replace(/\/$/, '')}/merci` : '
           <label for="motif">Motif de consultation <span aria-hidden="true">*</span></label>
           <select id="motif" name="motif" required>
             <option value="" disabled selected>Choisissez un soin</option>
-            {services.items.map((item) => (
-              <option value={item.name}>{item.name}</option>
+            {services.tiers.map((tier) => (
+              <option value={tier.name}>{tier.name}</option>
             ))}
             <option value="Autre">Autre</option>
           </select>

@@ -140,7 +140,7 @@ const nextUrl    = meta.siteUrl ? `${meta.siteUrl.replace(/\/$/, '')}/merci` : '
     </div>
   </section>
 
-  <!-- Contact -->
+  <!-- Contact — Formulaire multi-étapes -->
   <section id="contact" class="section contact" data-section>
     <div class="container">
       <div class="section-header">
@@ -149,56 +149,278 @@ const nextUrl    = meta.siteUrl ? `${meta.siteUrl.replace(/\/$/, '')}/merci` : '
       </div>
       <p class="contact-intro">{contact.intro}</p>
 
-      <form class="contact-form" action={formAction} method="POST">
-        <!-- Formspree: objet de l'email reçu -->
-        <input type="hidden" name="_subject" value="Nouvelle demande de rendez-vous — Zowe">
-        <!-- Formspree: redirection après envoi (URL absolue requise) -->
-        {nextUrl && <input type="hidden" name="_next" value={nextUrl} />}
-        <!-- Honeypot anti-spam -->
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="mf-wrapper">
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="prenom">Prénom <span aria-hidden="true">*</span></label>
-            <input type="text" id="prenom" name="prenom" required autocomplete="given-name" placeholder="Votre prénom">
+        <!-- Progress -->
+        <div class="mf-progress">
+          <div class="mf-progress__step active" data-step="1">
+            <div class="mf-progress__dot"><span>1</span></div>
+            <p>Coordonnées</p>
           </div>
-          <div class="form-group">
-            <label for="nom">Nom <span aria-hidden="true">*</span></label>
-            <input type="text" id="nom" name="nom" required autocomplete="family-name" placeholder="Votre nom">
+          <div class="mf-progress__line"></div>
+          <div class="mf-progress__step" data-step="2">
+            <div class="mf-progress__dot"><span>2</span></div>
+            <p>Soin</p>
           </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="email">Email <span aria-hidden="true">*</span></label>
-            <input type="email" id="email" name="email" required autocomplete="email" placeholder="votre@email.com">
-          </div>
-          <div class="form-group">
-            <label for="telephone">Téléphone</label>
-            <input type="tel" id="telephone" name="telephone" autocomplete="tel" placeholder="0470 00 00 00">
+          <div class="mf-progress__line"></div>
+          <div class="mf-progress__step" data-step="3">
+            <div class="mf-progress__dot"><span>3</span></div>
+            <p>Disponibilités</p>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="motif">Motif de consultation <span aria-hidden="true">*</span></label>
-          <select id="motif" name="motif" required>
-            <option value="" disabled selected>Choisissez un soin</option>
-            {services.tiers.map((tier) => (
-              <option value={tier.name}>{tier.name}</option>
-            ))}
-            <option value="Autre">Autre</option>
-          </select>
-        </div>
+        <form id="mainForm" action={formAction} method="POST">
+          <input type="hidden" name="_subject" value="Nouvelle demande de rendez-vous — Zowe BELTRA">
+          {nextUrl && <input type="hidden" name="_next" value={nextUrl} />}
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="soin_choisi" id="hiddenSoin">
+          <input type="hidden" name="date_souhaitee" id="hiddenDate">
+          <input type="hidden" name="heure_souhaitee" id="hiddenHeure">
 
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="4" placeholder="Décrivez brièvement votre situation ou vos questions…"></textarea>
-        </div>
+          <!-- Étape 1 : Coordonnées -->
+          <div class="mf-panel" id="panel1">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="prenom">Prénom *</label>
+                <input type="text" id="prenom" name="prenom" autocomplete="given-name" placeholder="Votre prénom">
+              </div>
+              <div class="form-group">
+                <label for="nom">Nom *</label>
+                <input type="text" id="nom" name="nom" autocomplete="family-name" placeholder="Votre nom">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" autocomplete="email" placeholder="votre@email.com">
+              </div>
+              <div class="form-group">
+                <label for="telephone">Téléphone</label>
+                <input type="tel" id="telephone" name="telephone" autocomplete="tel" placeholder="0470 00 00 00">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message">Votre situation</label>
+              <textarea id="message" name="message" rows="3" placeholder="Décrivez brièvement votre situation, vos douleurs ou objectifs…"></textarea>
+            </div>
+            <div class="mf-nav mf-nav--right">
+              <button type="button" class="btn btn-primary" id="toStep2">Continuer <span>→</span></button>
+            </div>
+          </div>
 
-        <button type="submit" class="btn btn-primary">Envoyer ma demande</button>
-      </form>
+          <!-- Étape 2 : Choix du soin -->
+          <div class="mf-panel mf-panel--hidden" id="panel2">
+            <div class="soin-cards">
+              <div class="soin-card" data-soin="Le Bilan — 30 min — 50€">
+                <div class="soin-card__top">
+                  <span class="soin-card__duration">30 min</span>
+                  <span class="soin-card__price">50€</span>
+                </div>
+                <h3>Le Bilan</h3>
+                <p>Point de départ de votre parcours. Anamnèse approfondie, bilan postural, identification des chaînes de tension et des émotions associées.</p>
+                <div class="soin-card__check">✓</div>
+              </div>
+              <div class="soin-card" data-soin="Le Soin Demi Corps — 1h — 100€">
+                <div class="soin-card__top">
+                  <span class="soin-card__duration">1h</span>
+                  <span class="soin-card__price">100€</span>
+                </div>
+                <h3>Le Soin Demi Corps</h3>
+                <p>Haut ou bas du corps, selon vos besoins. Deep tissue, IASTM, mobilisations articulaires ciblées.</p>
+                <div class="soin-card__check">✓</div>
+              </div>
+              <div class="soin-card soin-card--premium" data-soin="Le Contrôle Technique — 1h30 — 150€">
+                <div class="soin-card__top">
+                  <span class="soin-card__duration">1h30</span>
+                  <span class="soin-card__price">150€</span>
+                </div>
+                <h3>Le Contrôle Technique</h3>
+                <p>Corps complet. Reset physique, nerveux et émotionnel. Le soin signature BELTRA — de A à Z.</p>
+                <div class="soin-card__check">✓</div>
+              </div>
+            </div>
+            <div class="mf-nav">
+              <button type="button" class="mf-back" id="toStep1">← Retour</button>
+              <button type="button" class="btn btn-primary" id="toStep3">Continuer <span>→</span></button>
+            </div>
+          </div>
+
+          <!-- Étape 3 : Calendrier -->
+          <div class="mf-panel mf-panel--hidden" id="panel3">
+            <div class="cal-layout">
+              <div class="cal-box">
+                <div class="cal-header">
+                  <button type="button" class="cal-nav" id="prevMonth">&#8592;</button>
+                  <span class="cal-title" id="calTitle"></span>
+                  <button type="button" class="cal-nav" id="nextMonth">&#8594;</button>
+                </div>
+                <div class="cal-grid" id="calGrid"></div>
+              </div>
+              <div class="slots-box" id="slotsBox" style="display:none">
+                <p class="slots-date" id="slotsDate"></p>
+                <div class="slots-grid" id="slotsGrid"></div>
+              </div>
+            </div>
+            <div class="cal-note">
+              <p>⚠ Ce choix est une <strong>estimation de vos disponibilités</strong> pour aider Zoé à organiser son planning. Il ne constitue pas un rendez-vous confirmé. La date et l'heure seront validées lors de votre échange personnalisé.</p>
+            </div>
+            <div class="mf-nav">
+              <button type="button" class="mf-back" id="toStep2b">← Retour</button>
+              <button type="submit" class="btn btn-primary">Envoyer ma demande</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </section>
+
+  <script is:inline>
+  (function () {
+    var step = 1;
+    var selSoin = '', selDate = '', selTime = '';
+    var calY, calM;
+    var now = new Date();
+    calY = now.getFullYear();
+    calM = now.getMonth();
+
+    var MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    var DAYS_H = ['Lu','Ma','Me','Je','Ve','Sa','Di'];
+    var DAYS_LABEL = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+
+    function showPanel(n) {
+      ['panel1','panel2','panel3'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.add('mf-panel--hidden');
+      });
+      var target = document.getElementById('panel' + n);
+      if (target) {
+        target.classList.remove('mf-panel--hidden');
+        target.classList.add('mf-panel--entering');
+        setTimeout(function(){ target.classList.remove('mf-panel--entering'); }, 30);
+      }
+      document.querySelectorAll('.mf-progress__step').forEach(function(el) {
+        var s = parseInt(el.dataset.step);
+        el.classList.toggle('active', s === n);
+        el.classList.toggle('done', s < n);
+      });
+      step = n;
+    }
+
+    // Nav step 1 → 2
+    var btn12 = document.getElementById('toStep2');
+    if (btn12) btn12.addEventListener('click', function () {
+      var p = document.getElementById('prenom').value.trim();
+      var e = document.getElementById('email').value.trim();
+      if (!p || !e) { alert('Veuillez renseigner au minimum votre prénom et votre email.'); return; }
+      showPanel(2);
+    });
+
+    // Nav step 2 → 1
+    var btn21 = document.getElementById('toStep1');
+    if (btn21) btn21.addEventListener('click', function () { showPanel(1); });
+
+    // Nav step 2 → 3
+    var btn23 = document.getElementById('toStep3');
+    if (btn23) btn23.addEventListener('click', function () {
+      if (!selSoin) { alert('Veuillez sélectionner un soin.'); return; }
+      showPanel(3);
+      renderCal();
+    });
+
+    // Nav step 3 → 2
+    var btn32 = document.getElementById('toStep2b');
+    if (btn32) btn32.addEventListener('click', function () { showPanel(2); });
+
+    // Soin card selection
+    document.querySelectorAll('.soin-card').forEach(function (card) {
+      card.addEventListener('click', function () {
+        document.querySelectorAll('.soin-card').forEach(function (c) { c.classList.remove('selected'); });
+        this.classList.add('selected');
+        selSoin = this.dataset.soin;
+        document.getElementById('hiddenSoin').value = selSoin;
+      });
+    });
+
+    // Calendar
+    function renderCal() {
+      var title = document.getElementById('calTitle');
+      var grid  = document.getElementById('calGrid');
+      if (!title || !grid) return;
+      title.textContent = MONTHS[calM] + ' ' + calY;
+
+      var html = DAYS_H.map(function(d){ return '<div class="cal-dh">' + d + '</div>'; }).join('');
+      var fd = new Date(calY, calM, 1).getDay();
+      fd = (fd + 6) % 7;
+      for (var i = 0; i < fd; i++) html += '<div class="cal-d"></div>';
+
+      var dim = new Date(calY, calM + 1, 0).getDate();
+      var today = new Date(); today.setHours(0,0,0,0);
+
+      for (var d = 1; d <= dim; d++) {
+        var dt = new Date(calY, calM, d); dt.setHours(0,0,0,0);
+        var ds = calY + '-' + String(calM+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+        var past = dt < today;
+        var we   = dt.getDay() === 0 || dt.getDay() === 6;
+        var sel  = selDate === ds;
+        var cls  = 'cal-d' + (past||we ? ' cal-d--off' : '') + (sel ? ' cal-d--sel' : '');
+        html += '<div class="' + cls + '"' + (!past && !we ? ' data-date="' + ds + '"' : '') + '>' + d + '</div>';
+      }
+      grid.innerHTML = html;
+
+      grid.querySelectorAll('[data-date]').forEach(function(el) {
+        el.addEventListener('click', function () {
+          selDate = this.dataset.date;
+          document.getElementById('hiddenDate').value = selDate;
+          grid.querySelectorAll('.cal-d').forEach(function(c){ c.classList.remove('cal-d--sel'); });
+          this.classList.add('cal-d--sel');
+          renderSlots(selDate);
+        });
+      });
+    }
+
+    function renderSlots(dateStr) {
+      var box  = document.getElementById('slotsBox');
+      var grid = document.getElementById('slotsGrid');
+      var lbl  = document.getElementById('slotsDate');
+      if (!box || !grid) return;
+
+      var d = new Date(dateStr + 'T00:00:00');
+      lbl.textContent = DAYS_LABEL[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS[d.getMonth()];
+
+      var slots = [], h = 8, m = 30;
+      while (h < 18 || (h === 18 && m === 0)) {
+        slots.push(String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0'));
+        m += 30; if (m >= 60) { m = 0; h++; }
+      }
+
+      grid.innerHTML = slots.map(function(s){
+        return '<button type="button" class="slot' + (selTime===s?' slot--sel':'') + '" data-time="' + s + '">' + s + '</button>';
+      }).join('');
+
+      grid.querySelectorAll('.slot').forEach(function(btn) {
+        btn.addEventListener('click', function () {
+          selTime = this.dataset.time;
+          document.getElementById('hiddenHeure').value = selTime;
+          grid.querySelectorAll('.slot').forEach(function(b){ b.classList.remove('slot--sel'); });
+          this.classList.add('slot--sel');
+        });
+      });
+      box.style.display = 'block';
+    }
+
+    document.getElementById('prevMonth').addEventListener('click', function () {
+      calM--; if (calM < 0) { calM = 11; calY--; } renderCal();
+    });
+    document.getElementById('nextMonth').addEventListener('click', function () {
+      calM++; if (calM > 11) { calM = 0; calY++; } renderCal();
+    });
+
+    // Submit guard
+    document.getElementById('mainForm').addEventListener('submit', function (e) {
+      if (!selSoin) { e.preventDefault(); alert('Veuillez sélectionner un soin.'); showPanel(2); }
+    });
+  })();
+  </script>
 
   <!-- Footer -->
   <footer class="footer">

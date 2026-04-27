@@ -283,13 +283,17 @@ img {
   line-height: 1;
 }
 
-/* Fade-in animation */
+/* Fade-in animation — visible par défaut, animé si JS disponible */
 [data-section] {
-  opacity: 0;
-  transform: translateY(24px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
-[data-section].visible {
+.js-ready [data-section] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.js-ready [data-section].visible {
   opacity: 1;
   transform: translateY(0);
 }

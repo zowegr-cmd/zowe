@@ -21,7 +21,7 @@ const { title, description } = Astro.props;
 </head>
 <body>
   <slot />
-  <script>
+  <script is:inline>
     // Nav scroll effect
     const nav = document.getElementById('nav');
     if (nav) {
@@ -50,7 +50,8 @@ const { title, description } = Astro.props;
       });
     }
 
-    // Fade-in on scroll
+    // Fade-in on scroll (progressive enhancement)
+    document.body.classList.add('js-ready');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {

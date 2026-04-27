@@ -14,49 +14,73 @@
       align-items: center;
       justify-content: center;
       background: #F8F5F1;
-      font-family: 'Georgia', serif;
+      font-family: Georgia, serif;
       text-align: center;
       padding: 2rem;
+      gap: 2rem;
     }
     .logo {
       font-size: 2.5rem;
-      font-weight: 400;
       font-style: italic;
       color: #6B2437;
       letter-spacing: 0.1em;
-      margin-bottom: 1rem;
     }
-    p {
-      font-family: 'Inter', system-ui, sans-serif;
-      font-size: 0.85rem;
+    .btn {
+      display: inline-block;
+      background: #6B2437;
+      color: #F8F5F1;
+      font-family: system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover { background: #4A1827; }
+    .hint {
+      font-family: system-ui, sans-serif;
+      font-size: 0.8rem;
       color: #AAAAAA;
-      letter-spacing: 0.05em;
     }
   </style>
 </head>
 <body>
   <div class="logo">Zowe</div>
-  <p>Chargement de l'interface de connexion…</p>
+  <button class="btn" id="loginBtn" onclick="openWidget()">
+    Se connecter / Créer mon mot de passe
+  </button>
+  <p class="hint">Si la fenêtre ne s'ouvre pas, cliquez sur le bouton ci-dessus.</p>
 
   <script>
-    window.addEventListener('load', function () {
-      if (!window.netlifyIdentity) return;
+    function openWidget() {
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.open();
+      }
+    }
 
-      // Ouvre le widget dès que prêt
-      window.netlifyIdentity.on('init', function (user) {
-        if (user) {
-          // Déjà connecté → panneau admin
+    // Tente d'ouvrir automatiquement dès que le widget est prêt
+    var attempts = 0;
+    var autoOpen = setInterval(function () {
+      attempts++;
+      if (window.netlifyIdentity) {
+        clearInterval(autoOpen);
+
+        window.netlifyIdentity.on('init', function (user) {
+          if (user) {
+            window.location.href = '/admin/';
+          } else {
+            window.netlifyIdentity.open();
+          }
+        });
+
+        window.netlifyIdentity.on('login', function () {
           window.location.href = '/admin/';
-        } else {
-          window.netlifyIdentity.open();
-        }
-      });
-
-      // Après connexion → panneau admin
-      window.netlifyIdentity.on('login', function () {
-        window.location.href = '/admin/';
-      });
-    });
+        });
+      }
+      if (attempts > 50) clearInterval(autoOpen); // stop après 5 sec
+    }, 100);
   </script>
 </body>
 </html>

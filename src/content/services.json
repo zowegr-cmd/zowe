@@ -1,17 +1,37 @@
 {
-  "intro": "Une palette de soins complète, adaptée à chaque étape de votre rétablissement.",
-  "items": [
-    { "name": "Kinésithérapie générale", "subtitle": "" },
-    { "name": "Kinésithérapie respiratoire", "subtitle": "Adultes, enfants & nourrissons" },
-    { "name": "Kinésithérapie sportive", "subtitle": "" },
-    { "name": "Kinésithérapie pédiatrique", "subtitle": "" },
-    { "name": "Drainage lymphatique manuel", "subtitle": "" },
-    { "name": "Massage thérapeutique", "subtitle": "" },
-    { "name": "Kinésithérapie neurologique", "subtitle": "" },
-    { "name": "Ondes de choc", "subtitle": "" },
-    { "name": "Pressothérapie", "subtitle": "" },
-    { "name": "Kinésithérapie vestibulaire", "subtitle": "" },
-    { "name": "Kinésithérapie cardiovasculaire", "subtitle": "" },
-    { "name": "Rééducation post-opératoire", "subtitle": "" }
+  "title": "Le Soin BELTRA",
+  "intro": "Un protocole premium né d'une formation à la frontière suisse, conçu pour remettre chaque patient au cœur de son traitement.",
+  "philosophy": "Tout ce qui surcharge mentalement ou émotionnellement se projette sur le corps — tensions, adhérences, douleurs chroniques. Le Soin BELTRA travaille à désensibiliser un système nerveux en alerte, libérer les blocages profonds et rendre au corps toute sa mobilité. Qu'il s'agisse de récupération sportive, de pathologies chroniques que l'on traîne depuis trop longtemps, ou simplement d'un besoin de « remise à neuf » — comme un contrôle technique au garage.",
+  "tiers": [
+    {
+      "id": "bilan",
+      "name": "Le Bilan",
+      "tagline": "Le point de départ",
+      "duration": "30 min",
+      "price": "50€",
+      "description": "Un bilan complet et rigoureux pour identifier vos limitations réelles, vos zones de tension et les douleurs chroniques que vous portez depuis trop longtemps. La base indispensable de chaque prise en charge BELTRA.",
+      "tools": ["Anamnèse approfondie", "Bilan postural et fonctionnel", "Identification des chaînes de tension et émotions associées"],
+      "ideal": "Première consultation ou point de départ avant tout protocole BELTRA."
+    },
+    {
+      "id": "demi-corps",
+      "name": "Le Soin Demi Corps",
+      "tagline": "Haut ou bas du corps — votre choix",
+      "duration": "1h",
+      "price": "100€",
+      "description": "Un soin ciblé, personnalisé selon vos plaintes et vos zones de tension. Vous choisissez : haut ou bas du corps. Idéal pour un suivi ou une problématique localisée.",
+      "tools": ["Mobilisations articulaires", "Massage deep tissue", "IASTM (scraping) et vacuothérapie"],
+      "ideal": "Douleurs cervicales, trapèzes, lombaires, hanche ou genoux. Soins de suivi."
+    },
+    {
+      "id": "controle-technique",
+      "name": "Le Contrôle Technique",
+      "tagline": "Corps complet — le soin signature",
+      "duration": "1h30",
+      "price": "150€",
+      "description": "La prise en charge globale BELTRA. Haut et bas du corps, de A à Z. On inspecte, on libère, on remet en ordre. Un véritable reset — physique, nerveux et émotionnel.",
+      "tools": ["Mobilisations articulaires complètes", "Massage deep tissue", "IASTM (scraping) et vacuothérapie", "Désensibilisation du système nerveux", "Travail émotionnel et sensoriel"],
+      "ideal": "Pathologies chroniques, récupération sportive intensive, reset complet du corps et du système nerveux."
+    }
   ]
 }

@@ -66,20 +66,42 @@ const nextUrl    = meta.siteUrl ? `${meta.siteUrl.replace(/\/$/, '')}/merci` : '
     </div>
   </section>
 
-  <!-- Services -->
+  <!-- Services — Le Soin BELTRA -->
   <section id="services" class="section services" data-section>
     <div class="container">
       <div class="section-header">
         <span class="section-number">02</span>
-        <h2 class="section-title">Soins</h2>
+        <h2 class="section-title">{services.title}</h2>
       </div>
       <p class="services-intro">{services.intro}</p>
-      <div class="services-grid">
-        {services.items.map((item) => (
-          <div class="service-item">
-            <span class="service-dot" aria-hidden="true"></span>
-            <h3>{item.name}</h3>
-            {item.subtitle && item.subtitle.trim() && <p>{item.subtitle}</p>}
+      <div class="beltra-philosophy">
+        <p>{services.philosophy}</p>
+      </div>
+      <div class="beltra-grid">
+        {services.tiers.map((tier, i) => (
+          <div class={`beltra-card${i === 2 ? ' beltra-card--featured' : ''}`}>
+            <div class="beltra-card__header">
+              <div class="beltra-card__meta">
+                <span class="beltra-card__duration">{tier.duration}</span>
+                <span class="beltra-card__price">{tier.price}</span>
+              </div>
+              <h3 class="beltra-card__name">{tier.name}</h3>
+              <p class="beltra-card__tagline">{tier.tagline}</p>
+            </div>
+            <div class="beltra-card__body">
+              <p class="beltra-card__desc">{tier.description}</p>
+              <div class="beltra-card__tools">
+                <p class="beltra-label">Outils</p>
+                <ul>
+                  {tier.tools.map(tool => <li>{tool}</li>)}
+                </ul>
+              </div>
+              <div class="beltra-card__ideal">
+                <p class="beltra-label">Idéal pour</p>
+                <p>{tier.ideal}</p>
+              </div>
+            </div>
+            <a href="#contact" class={`btn ${i === 2 ? 'btn-light' : 'btn-primary'}`}>Réserver</a>
           </div>
         ))}
       </div>

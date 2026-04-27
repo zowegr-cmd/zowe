@@ -429,6 +429,190 @@ img {
 }
 
 /* ==========================================
+   BELTRA — CARTES SOINS
+========================================== */
+.beltra-philosophy {
+  max-width: 680px;
+  margin-bottom: 4rem;
+  padding: 2rem 2.5rem;
+  border-left: 2px solid var(--bordeaux);
+}
+.beltra-philosophy p {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--mid);
+  line-height: 1.85;
+}
+
+.beltra-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.beltra-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--border);
+  transition: box-shadow 0.3s;
+}
+.beltra-card:hover {
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+}
+
+.beltra-card--featured {
+  background: var(--bordeaux);
+  border-color: var(--bordeaux);
+}
+
+.beltra-card__header {
+  padding: 2rem 2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.beltra-card--featured .beltra-card__header {
+  border-bottom-color: rgba(255,255,255,0.15);
+}
+
+.beltra-card__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.beltra-card__duration {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bordeaux);
+  font-weight: 500;
+}
+.beltra-card--featured .beltra-card__duration {
+  color: rgba(255,255,255,0.6);
+}
+
+.beltra-card__price {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: var(--bordeaux);
+  line-height: 1;
+}
+.beltra-card--featured .beltra-card__price {
+  color: var(--off-white);
+}
+
+.beltra-card__name {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--dark);
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+}
+.beltra-card--featured .beltra-card__name {
+  color: var(--off-white);
+}
+
+.beltra-card__tagline {
+  font-size: 0.72rem;
+  color: var(--light);
+  letter-spacing: 0.05em;
+  font-style: italic;
+}
+.beltra-card--featured .beltra-card__tagline {
+  color: rgba(255,255,255,0.5);
+}
+
+.beltra-card__body {
+  padding: 1.75rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.beltra-card__desc {
+  font-size: 0.87rem;
+  color: var(--mid);
+  line-height: 1.75;
+}
+.beltra-card--featured .beltra-card__desc {
+  color: rgba(255,255,255,0.75);
+}
+
+.beltra-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bordeaux);
+  margin-bottom: 0.6rem;
+  font-weight: 500;
+}
+.beltra-card--featured .beltra-label {
+  color: rgba(255,255,255,0.5);
+}
+
+.beltra-card__tools ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.beltra-card__tools li {
+  font-size: 0.8rem;
+  color: var(--mid);
+  padding-left: 1rem;
+  position: relative;
+}
+.beltra-card__tools li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--bordeaux);
+  font-size: 0.7rem;
+}
+.beltra-card--featured .beltra-card__tools li,
+.beltra-card--featured .beltra-card__ideal p {
+  color: rgba(255,255,255,0.7);
+}
+.beltra-card--featured .beltra-card__tools li::before {
+  color: rgba(255,255,255,0.4);
+}
+
+.beltra-card__ideal p {
+  font-size: 0.8rem;
+  color: var(--mid);
+  line-height: 1.65;
+  font-style: italic;
+}
+
+.beltra-card .btn {
+  margin: 0 2rem 2rem;
+  text-align: center;
+}
+
+.btn-light {
+  background: rgba(255,255,255,0.12);
+  color: var(--off-white);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.btn-light:hover {
+  background: rgba(255,255,255,0.22);
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+/* Responsive BELTRA */
+@media (max-width: 900px) {
+  .beltra-grid { grid-template-columns: 1fr; max-width: 480px; }
+}
+
+/* ==========================================
    INFOS PRATIQUES
 ========================================== */
 .infos {

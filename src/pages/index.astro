@@ -171,7 +171,6 @@ const nextUrl    = meta.siteUrl ? `${meta.siteUrl.replace(/\/$/, '')}/merci` : '
 
         <form id="mainForm" action={formAction} method="POST">
           <input type="hidden" name="_subject" value="Nouvelle demande de rendez-vous — Zowe BELTRA">
-          {nextUrl && <input type="hidden" name="_next" value={nextUrl} />}
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
           <input type="hidden" name="soin_choisi" id="hiddenSoin">
           <input type="hidden" name="date_souhaitee" id="hiddenDate">
@@ -415,9 +414,37 @@ const nextUrl    = meta.siteUrl ? `${meta.siteUrl.replace(/\/$/, '')}/merci` : '
       calM++; if (calM > 11) { calM = 0; calY++; } renderCal();
     });
 
-    // Submit guard
+    // Soumission AJAX → redirection vers /merci/
     document.getElementById('mainForm').addEventListener('submit', function (e) {
-      if (!selSoin) { e.preventDefault(); alert('Veuillez sélectionner un soin.'); showPanel(2); }
+      e.preventDefault();
+
+      if (!selSoin) { alert('Veuillez sélectionner un soin.'); showPanel(2); return; }
+
+      var form    = e.target;
+      var btn     = form.querySelector('[type="submit"]');
+      var origTxt = btn.textContent;
+      btn.textContent = 'Envoi en cours…';
+      btn.disabled = true;
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(function (res) {
+        if (res.ok) {
+          window.location.href = '/merci/';
+        } else {
+          return res.json().then(function (data) {
+            throw new Error(data.error || 'Erreur lors de l\'envoi.');
+          });
+        }
+      })
+      .catch(function (err) {
+        alert('Une erreur est survenue : ' + err.message + '\nVeuillez réessayer ou nous contacter directement.');
+        btn.textContent = origTxt;
+        btn.disabled = false;
+      });
     });
   })();
   </script>

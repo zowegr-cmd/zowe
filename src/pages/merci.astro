@@ -1,0 +1,87 @@
+---
+import meta from '../content/meta.json';
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merci — Zowe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='Georgia' fill='%236B2437'>Z</text></svg>">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bordeaux: #6B2437;
+      --bordeaux-dark: #4A1827;
+      --off-white: #F8F5F1;
+      --mid: #5C5C5C;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+    body {
+      font-family: var(--sans);
+      background: var(--off-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      -webkit-font-smoothing: antialiased;
+    }
+    .logo {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      color: var(--bordeaux);
+      margin-bottom: 4rem;
+      display: block;
+      text-decoration: none;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--bordeaux);
+      margin-bottom: 1.5rem;
+      line-height: 1;
+    }
+    p {
+      font-size: 0.93rem;
+      color: var(--mid);
+      line-height: 1.8;
+      max-width: 400px;
+      margin-bottom: 3rem;
+    }
+    a.btn {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 1rem 2.75rem;
+      background: var(--bordeaux);
+      color: var(--off-white);
+      text-decoration: none;
+      transition: background 0.25s, transform 0.25s;
+    }
+    a.btn:hover {
+      background: var(--bordeaux-dark);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <a href="/" class="logo">ZOWE</a>
+  <h1>Merci.</h1>
+  <p>Votre demande a bien été reçue. Je vous recontacterai dans les plus brefs délais pour confirmer votre rendez-vous.</p>
+  <a href="/" class="btn">Retour à l'accueil</a>
+</body>
+</html>

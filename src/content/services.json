@@ -1,0 +1,17 @@
+{
+  "intro": "Une palette de soins complète, adaptée à chaque étape de votre rétablissement.",
+  "items": [
+    { "name": "Kinésithérapie générale", "subtitle": "" },
+    { "name": "Kinésithérapie respiratoire", "subtitle": "Adultes, enfants & nourrissons" },
+    { "name": "Kinésithérapie sportive", "subtitle": "" },
+    { "name": "Kinésithérapie pédiatrique", "subtitle": "" },
+    { "name": "Drainage lymphatique manuel", "subtitle": "" },
+    { "name": "Massage thérapeutique", "subtitle": "" },
+    { "name": "Kinésithérapie neurologique", "subtitle": "" },
+    { "name": "Ondes de choc", "subtitle": "" },
+    { "name": "Pressothérapie", "subtitle": "" },
+    { "name": "Kinésithérapie vestibulaire", "subtitle": "" },
+    { "name": "Kinésithérapie cardiovasculaire", "subtitle": "" },
+    { "name": "Rééducation post-opératoire", "subtitle": "" }
+  ]
+}

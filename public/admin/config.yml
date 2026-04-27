@@ -1,0 +1,144 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: fr
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "contenu"
+    label: "Contenu du site"
+    files:
+
+      - label: "Accueil — Hero"
+        name: "hero"
+        file: "src/content/hero.json"
+        format: json
+        fields:
+          - label: "Texte au-dessus du titre"
+            name: "label"
+            widget: "string"
+            hint: "Ex : Kinésithérapeute — Rhode-Saint-Genèse"
+          - label: "Titre principal"
+            name: "title"
+            widget: "string"
+            hint: "Votre nom professionnel affiché en grand"
+          - label: "Accroche"
+            name: "tagline"
+            widget: "text"
+            hint: "Utilisez une nouvelle ligne pour un retour à la ligne"
+          - label: "Texte du bouton"
+            name: "cta"
+            widget: "string"
+
+      - label: "Parcours"
+        name: "about"
+        file: "src/content/about.json"
+        format: json
+        fields:
+          - label: "Phrase d'accroche (en bordeaux)"
+            name: "lead"
+            widget: "string"
+          - label: "Paragraphe 1"
+            name: "paragraph1"
+            widget: "text"
+          - label: "Paragraphe 2"
+            name: "paragraph2"
+            widget: "text"
+          - label: "Citation (encadré)"
+            name: "quote"
+            widget: "string"
+            hint: "Apparaît dans le cadre bordeaux à droite"
+          - label: "Ecole / Universite"
+            name: "school"
+            widget: "string"
+          - label: "Diplome"
+            name: "degree"
+            widget: "string"
+
+      - label: "Soins"
+        name: "services"
+        file: "src/content/services.json"
+        format: json
+        fields:
+          - label: "Introduction"
+            name: "intro"
+            widget: "string"
+          - label: "Liste des soins"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - label: "Nom du soin"
+                name: "name"
+                widget: "string"
+              - label: "Sous-titre (optionnel)"
+                name: "subtitle"
+                widget: "string"
+                required: false
+                default: ""
+                hint: "Ex : Adultes, enfants & nourrissons"
+
+      - label: "Infos pratiques"
+        name: "infos"
+        file: "src/content/infos.json"
+        format: json
+        fields:
+          - label: "Nom du cabinet"
+            name: "cabinet"
+            widget: "string"
+          - label: "Description du cabinet"
+            name: "cabinetText"
+            widget: "string"
+          - label: "Zones de deplacement"
+            name: "zones"
+            widget: "string"
+            hint: "Separees par · (ex : Ville A · Ville B)"
+          - label: "Titre tarification"
+            name: "tarifsTitle"
+            widget: "string"
+            hint: "Ex : Non-conventionne"
+          - label: "Texte tarification"
+            name: "tarifsText"
+            widget: "text"
+          - label: "Telephone"
+            name: "phone"
+            widget: "string"
+          - label: "Email"
+            name: "email"
+            widget: "string"
+
+      - label: "Formulaire de contact"
+        name: "contact"
+        file: "src/content/contact.json"
+        format: json
+        fields:
+          - label: "Texte d'introduction"
+            name: "intro"
+            widget: "text"
+          - label: "ID Formspree"
+            name: "formspreeId"
+            widget: "string"
+            hint: "Creez un compte sur formspree.io, creez un formulaire, puis copiez l'ID ici (ex : xrgvepxq)"
+
+      - label: "Parametres generaux"
+        name: "meta"
+        file: "src/content/meta.json"
+        format: json
+        fields:
+          - label: "Titre du site (onglet navigateur)"
+            name: "siteTitle"
+            widget: "string"
+          - label: "Description SEO"
+            name: "description"
+            widget: "text"
+            hint: "Texte affiché dans les résultats Google"
+          - label: "Annee copyright (footer)"
+            name: "copyright"
+            widget: "string"
+          - label: "URL du site (pour la redirection apres formulaire)"
+            name: "siteUrl"
+            widget: "string"
+            required: false
+            hint: "A remplir une fois le site en ligne. Ex : https://zowe.netlify.app (sans slash final)"

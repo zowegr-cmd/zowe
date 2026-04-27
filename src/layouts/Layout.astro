@@ -1,0 +1,76 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content={description}>
+  <title>{title}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='Georgia' fill='%236B2437'>Z</text></svg>">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+  <slot />
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+      }, { passive: true });
+    }
+
+    // Mobile menu toggle
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    if (toggle && links) {
+      toggle.addEventListener('click', () => {
+        const isOpen = links.classList.toggle('open');
+        toggle.classList.toggle('open', isOpen);
+        toggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+      links.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          links.classList.remove('open');
+          toggle.classList.remove('open');
+          toggle.setAttribute('aria-label', 'Ouvrir le menu');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('[data-section]').forEach(el => observer.observe(el));
+  </script>
+  <script is:inline>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', function(user) {
+        if (!user) {
+          window.netlifyIdentity.on('login', function() {
+            document.location.href = '/admin/';
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>

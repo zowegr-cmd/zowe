@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+import hero    from '../content/hero.json';
+import about   from '../content/about.json';
+import services from '../content/services.json';
+import infos   from '../content/infos.json';
+import contact from '../content/contact.json';
+import meta    from '../content/meta.json';
+
+const formAction = `https://formspree.io/f/${contact.formspreeId}`;
+const nextUrl    = meta.siteUrl ? `${meta.siteUrl.replace(/\/$/, '')}/merci` : '';
+---
+
+<Layout title={meta.siteTitle} description={meta.description}>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <a href="#hero" class="nav-logo">ZOWE</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">Parcours</a></li>
+      <li><a href="#services">Soins</a></li>
+      <li><a href="#infos">Infos</a></li>
+      <li><a href="#contact" class="nav-cta">Rendez-vous</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu">
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero" class="hero">
+    <div class="hero-inner">
+      <p class="hero-label">{hero.label}</p>
+      <h1 class="hero-title">{hero.title}</h1>
+      <p class="hero-tagline" set:html={hero.tagline.replace(/\n/g, '<br>')}></p>
+      <a href="#contact" class="btn btn-primary">{hero.cta}</a>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">&#8595;</div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section about" data-section>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <h2 class="section-title">Parcours</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="about-lead">{about.lead}</p>
+          <p>{about.paragraph1}</p>
+          <p>{about.paragraph2}</p>
+        </div>
+        <div class="about-aside">
+          <div class="about-quote">
+            <blockquote>"{about.quote}"</blockquote>
+          </div>
+          <div class="about-formation">
+            <p class="label">Formation</p>
+            <p class="formation-school">{about.school}</p>
+            <p class="formation-degree">{about.degree}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="section services" data-section>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <h2 class="section-title">Soins</h2>
+      </div>
+      <p class="services-intro">{services.intro}</p>
+      <div class="services-grid">
+        {services.items.map((item) => (
+          <div class="service-item">
+            <span class="service-dot" aria-hidden="true"></span>
+            <h3>{item.name}</h3>
+            {item.subtitle && item.subtitle.trim() && <p>{item.subtitle}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Infos pratiques -->
+  <section id="infos" class="section infos" data-section>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <h2 class="section-title">Infos pratiques</h2>
+      </div>
+      <div class="infos-grid">
+        <div class="info-card">
+          <p class="info-label">Cabinet</p>
+          <p class="info-value">{infos.cabinet}</p>
+          <p class="info-sub">{infos.cabinetText}</p>
+          <p class="info-sub info-zones">{infos.zones}</p>
+        </div>
+        <div class="info-card">
+          <p class="info-label">Tarification</p>
+          <p class="info-value">{infos.tarifsTitle}</p>
+          <p class="info-sub">{infos.tarifsText}</p>
+        </div>
+        <div class="info-card">
+          <p class="info-label">Contact direct</p>
+          <p class="info-value">
+            <a href={`tel:${infos.phone.replace(/\s/g, '')}`}>{infos.phone}</a>
+          </p>
+          <p class="info-sub">
+            <a href={`mailto:${infos.email}`}>{infos.email}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section contact" data-section>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-number">04</span>
+        <h2 class="section-title">Demande de rendez-vous</h2>
+      </div>
+      <p class="contact-intro">{contact.intro}</p>
+
+      <form class="contact-form" action={formAction} method="POST">
+        <!-- Formspree: objet de l'email reçu -->
+        <input type="hidden" name="_subject" value="Nouvelle demande de rendez-vous — Zowe">
+        <!-- Formspree: redirection après envoi (URL absolue requise) -->
+        {nextUrl && <input type="hidden" name="_next" value={nextUrl} />}
+        <!-- Honeypot anti-spam -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prenom">Prénom <span aria-hidden="true">*</span></label>
+            <input type="text" id="prenom" name="prenom" required autocomplete="given-name" placeholder="Votre prénom">
+          </div>
+          <div class="form-group">
+            <label for="nom">Nom <span aria-hidden="true">*</span></label>
+            <input type="text" id="nom" name="nom" required autocomplete="family-name" placeholder="Votre nom">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email" placeholder="votre@email.com">
+          </div>
+          <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone" autocomplete="tel" placeholder="0470 00 00 00">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="motif">Motif de consultation <span aria-hidden="true">*</span></label>
+          <select id="motif" name="motif" required>
+            <option value="" disabled selected>Choisissez un soin</option>
+            {services.items.map((item) => (
+              <option value={item.name}>{item.name}</option>
+            ))}
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Décrivez brièvement votre situation ou vos questions…"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Envoyer ma demande</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p class="footer-logo">ZOWE</p>
+        <p class="footer-copy">Kinésithérapeute &middot; Rhode-Saint-Genèse &middot; &copy; {meta.copyright}</p>
+        <nav class="footer-links" aria-label="Liens de pied de page">
+          <a href="#hero">Accueil</a>
+          <a href="#about">Parcours</a>
+          <a href="#services">Soins</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+</Layout>

@@ -44,17 +44,17 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
   </section>
 
   <!-- ② L'EXPÉRIENCE BELTRA -->
-  <section id="experience" class="section experience" data-section>
+  <section id="experience" class="section experience">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-anim="up">
         <span class="section-number">01</span>
         <h2 class="section-title">{experience.title}</h2>
       </div>
-      <p class="experience-subtitle">{experience.subtitle}</p>
-      <p class="experience-intro">{experience.intro}</p>
+      <p class="experience-subtitle" data-anim="up" data-delay="1">{experience.subtitle}</p>
+      <p class="experience-intro" data-anim="up" data-delay="2">{experience.intro}</p>
       <div class="experience-blocks">
         {experience.blocks.map((block, i) => (
-          <div class="experience-block">
+          <div class="experience-block" data-anim="up" data-delay={String(i + 1)}>
             <span class="experience-block__num">0{i + 1}</span>
             <h3>{block.title}</h3>
             <p>{block.text}</p>
@@ -65,20 +65,20 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
   </section>
 
   <!-- ③ QUI SUIS-JE -->
-  <section id="about" class="section about" data-section>
+  <section id="about" class="section about">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-anim="up">
         <span class="section-number">02</span>
         <h2 class="section-title">{about.title}</h2>
       </div>
       <div class="about-grid">
-        <div class="about-photo">
+        <div class="about-photo" data-anim="left">
           {about.image
             ? <img src={about.image} alt="Zoé — Kinésithérapeute BELTRA" loading="lazy">
             : <div class="about-photo__placeholder"><span>Photo professionnelle<br>à venir</span></div>
           }
         </div>
-        <div class="about-content">
+        <div class="about-content" data-anim="right">
           <p class="about-lead">{about.lead}</p>
           <p>{about.paragraph1}</p>
           <p>{about.paragraph2}</p>
@@ -95,16 +95,16 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
   </section>
 
   <!-- ④ PROTOCOLES & INVESTISSEMENTS -->
-  <section id="services" class="section services" data-section>
+  <section id="services" class="section services">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-anim="up">
         <span class="section-number">03</span>
         <h2 class="section-title">{services.title}</h2>
       </div>
-      <p class="services-intro">{services.intro}</p>
+      <p class="services-intro" data-anim="up" data-delay="1">{services.intro}</p>
       <div class="beltra-grid">
         {services.tiers.map((tier, i) => (
-          <div class={`beltra-card${i === 2 ? ' beltra-card--featured' : ''}`}>
+          <div class={`beltra-card${i === 2 ? ' beltra-card--featured' : ''}`} data-anim="up" data-delay={String(i + 1)}>
             <div class="beltra-card__header">
               <div class="beltra-card__meta">
                 <span class="beltra-card__duration">{tier.duration}</span>
@@ -132,9 +132,9 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
   </section>
 
   <!-- ⑤ TÉMOIGNAGES -->
-  <section id="testimonials" class="section testimonials" data-section>
+  <section id="testimonials" class="section testimonials">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-anim="up">
         <span class="section-number">04</span>
         <h2 class="section-title">Témoignages</h2>
       </div>
@@ -156,15 +156,15 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
   </section>
 
   <!-- ⑥ FAQ -->
-  <section id="faq" class="section faq-section" data-section>
+  <section id="faq" class="section faq-section">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-anim="up">
         <span class="section-number">05</span>
         <h2 class="section-title">Questions fréquentes</h2>
       </div>
       <div class="faq-list">
         {faq.items.map((item, i) => (
-          <details class="faq-item" id={`faq-${i}`}>
+          <details class="faq-item" id={`faq-${i}`} data-anim="up" data-delay={String(Math.min(i, 3))}>
             <summary class="faq-question">
               <span>{item.question}</span>
               <span class="faq-icon" aria-hidden="true">+</span>
@@ -177,15 +177,15 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
   </section>
 
   <!-- ⑦ CONCIERGERIE -->
-  <section id="contact" class="section contact" data-section>
+  <section id="contact" class="section contact">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header" data-anim="up">
         <span class="section-number">06</span>
         <h2 class="section-title">Conciergerie</h2>
       </div>
-      <p class="contact-intro">{contact.intro}</p>
+      <p class="contact-intro" data-anim="up" data-delay="1">{contact.intro}</p>
 
-      <div class="mf-wrapper">
+      <div class="mf-wrapper" data-anim="up" data-delay="2">
         <div class="mf-progress">
           <div class="mf-progress__step active" data-step="1">
             <div class="mf-progress__dot"><span>1</span></div>

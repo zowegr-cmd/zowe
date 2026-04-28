@@ -60,7 +60,7 @@ const { title, description } = Astro.props;
         }
       });
     }, { threshold: 0.08 });
-    document.querySelectorAll('[data-section]').forEach(el => observer.observe(el));
+    document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
   </script>
   <script is:inline>
     // Redirige vers la page dédiée si un token identity est dans l'URL

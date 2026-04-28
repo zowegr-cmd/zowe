@@ -1,0 +1,19 @@
+{
+  "title": "L'Expérience BELTRA",
+  "subtitle": "Le contrôle technique de votre corps",
+  "intro": "Née d'une formation d'excellence à la frontière suisse, la méthode BELTRA réinvente la kinésithérapie comme on réinvente la haute horlogerie : avec précision, profondeur et une exigence absolue du résultat.",
+  "blocks": [
+    {
+      "title": "Un diagnostic de haute précision",
+      "text": "Comme un ingénieur inspecte chaque composant avant d'intervenir, nous identifions vos limitations réelles — physiques, neurologiques et émotionnelles — avant toute intervention."
+    },
+    {
+      "title": "Des protocoles avancés",
+      "text": "Deep tissue, IASTM, vacuothérapie, mobilisations articulaires ciblées. Des outils de précision au service d'une récupération complète et durable."
+    },
+    {
+      "title": "La vision Performance",
+      "text": "L'objectif n'est pas simplement de supprimer la douleur. C'est d'optimiser votre capital physique pour que votre corps fonctionne à son plein potentiel — durablement."
+    }
+  ]
+}

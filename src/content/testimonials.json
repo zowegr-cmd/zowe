@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "name": "Marie L.",
+      "rating": 5,
+      "text": "Une approche complètement différente de ce que j'avais connu. Zoé a identifié des tensions que je traînais depuis des années. Après 2 séances, une différence réelle et durable.",
+      "date": "Mars 2025"
+    },
+    {
+      "name": "Thomas V.",
+      "rating": 5,
+      "text": "Je suis sportif amateur et les résultats sur ma récupération sont impressionnants. L'Expérience Signature vaut chaque centime — c'est du travail de précision.",
+      "date": "Février 2025"
+    },
+    {
+      "name": "Sophie M.",
+      "rating": 5,
+      "text": "Enfin quelqu'un qui comprend que les douleurs chroniques ont une origine profonde. L'approche holistique de Zoé a changé ma façon d'aborder ma santé.",
+      "date": "Janvier 2025"
+    },
+    {
+      "name": "Antoine D.",
+      "rating": 5,
+      "text": "Cadre premium, écoute exceptionnelle et résultats concrets. Je recommande le Protocole Harmonie pour tous ceux qui ont des cervicales persistantes.",
+      "date": "Décembre 2024"
+    },
+    {
+      "name": "Céline R.",
+      "rating": 5,
+      "text": "L'Expérience Signature est exactement ce que son nom promet. Mon corps n'avait jamais été aussi bien pris en charge. Je reviens chaque mois.",
+      "date": "Novembre 2024"
+    },
+    {
+      "name": "François B.",
+      "rating": 5,
+      "text": "Très professionnel et surtout une vraie différence dès la première séance. L'Audit Précision m'a aidé à comprendre l'origine réelle de mes douleurs lombaires.",
+      "date": "Octobre 2024"
+    }
+  ]
+}

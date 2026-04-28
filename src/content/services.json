@@ -1,37 +1,36 @@
 {
-  "title": "Le Soin BELTRA",
-  "intro": "Un protocole premium né d'une formation à la frontière suisse, conçu pour remettre chaque patient au cœur de son traitement.",
-  "philosophy": "Tout ce qui surcharge mentalement ou émotionnellement se projette sur le corps — tensions, adhérences, douleurs chroniques. Le Soin BELTRA travaille à désensibiliser un système nerveux en alerte, libérer les blocages profonds et rendre au corps toute sa mobilité. Qu'il s'agisse de récupération sportive, de pathologies chroniques que l'on traîne depuis trop longtemps, ou simplement d'un besoin de « remise à neuf » — comme un contrôle technique au garage.",
+  "title": "Protocoles & Investissements",
+  "intro": "Trois niveaux d'intervention, un seul objectif : l'excellence de votre capital physique.",
   "tiers": [
     {
-      "id": "bilan",
-      "name": "Le Bilan",
-      "tagline": "Le point de départ",
+      "id": "audit",
+      "name": "L'Audit Précision",
+      "tagline": "Le point de départ obligatoire",
       "duration": "30 min",
-      "price": "50€",
-      "description": "Un bilan complet et rigoureux pour identifier vos limitations réelles, vos zones de tension et les douleurs chroniques que vous portez depuis trop longtemps. La base indispensable de chaque prise en charge BELTRA.",
-      "tools": ["Anamnèse approfondie", "Bilan postural et fonctionnel", "Identification des chaînes de tension et émotions associées"],
-      "ideal": "Première consultation ou point de départ avant tout protocole BELTRA."
+      "price": "60€",
+      "description": "Un diagnostic complet et rigoureux de votre capital physique. Nous identifions ensemble vos limitations réelles, vos zones de tension et les origines profondes de vos douleurs.",
+      "tools": ["Anamnèse approfondie", "Bilan postural et fonctionnel", "Cartographie des chaînes de tension"],
+      "ideal": "Première consultation ou bilan avant tout protocole BELTRA."
     },
     {
-      "id": "demi-corps",
-      "name": "Le Soin Demi Corps",
-      "tagline": "Haut ou bas du corps — votre choix",
+      "id": "harmonie",
+      "name": "Le Protocole Harmonie",
+      "tagline": "Le soin d'équilibre",
       "duration": "1h",
-      "price": "100€",
-      "description": "Un soin ciblé, personnalisé selon vos plaintes et vos zones de tension. Vous choisissez : haut ou bas du corps. Idéal pour un suivi ou une problématique localisée.",
+      "price": "110€",
+      "description": "Une intervention ciblée, personnalisée selon vos besoins spécifiques. Haut ou bas du corps, selon votre situation et vos objectifs du moment.",
       "tools": ["Mobilisations articulaires", "Massage deep tissue", "IASTM (scraping) et vacuothérapie"],
-      "ideal": "Douleurs cervicales, trapèzes, lombaires, hanche ou genoux. Soins de suivi."
+      "ideal": "Suivi régulier, récupération sportive, douleurs localisées."
     },
     {
-      "id": "controle-technique",
-      "name": "Le Contrôle Technique",
-      "tagline": "Corps complet — le soin signature",
+      "id": "signature",
+      "name": "L'Expérience Signature",
+      "tagline": "Le soin ultime — corps complet",
       "duration": "1h30",
-      "price": "150€",
-      "description": "La prise en charge globale BELTRA. Haut et bas du corps, de A à Z. On inspecte, on libère, on remet en ordre. Un véritable reset — physique, nerveux et émotionnel.",
-      "tools": ["Mobilisations articulaires complètes", "Massage deep tissue", "IASTM (scraping) et vacuothérapie", "Désensibilisation du système nerveux", "Travail émotionnel et sensoriel"],
-      "ideal": "Pathologies chroniques, récupération sportive intensive, reset complet du corps et du système nerveux."
+      "price": "165€",
+      "description": "L'expérience BELTRA dans son intégralité. Une prise en charge globale du corps, du système nerveux et des émotions. Le reset complet auquel votre corps aspire.",
+      "tools": ["Mobilisations articulaires complètes", "Massage deep tissue", "IASTM et vacuothérapie", "Désensibilisation du système nerveux", "Travail émotionnel et sensoriel"],
+      "ideal": "Pathologies chroniques, récupération intensive, optimisation complète du capital physique."
     }
   ]
 }

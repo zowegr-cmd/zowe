@@ -291,45 +291,67 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
     </div>
   </section>
 
-  <!-- ⑧ FOOTER -->
-  <footer class="footer">
-    <div class="footer-map">
-      <iframe
-        src="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        width="100%" height="260" style="border:0;" loading="lazy"
-        title="Localisation Kinovea Rhode-Saint-Genèse"
-        aria-label="Carte Google Maps — Kinovea Rhode-Saint-Genèse">
-      </iframe>
+  <!-- ⑧ LOCALISATION -->
+  <section class="localisation">
+    <div class="localisation-inner">
+      <div class="localisation-map">
+        <iframe
+          src="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          width="100%" loading="lazy" style="border:0;"
+          title="Localisation Kinovea Rhode-Saint-Genèse">
+        </iframe>
+      </div>
+      <div class="localisation-info" data-anim="right">
+        <p class="localisation-label">Nous trouver</p>
+        <h2 class="localisation-title">Rhode-Saint-<br>Genèse</h2>
+        <div class="localisation-address">
+          <p>{infos.cabinet}</p>
+          <p>{infos.cabinetText}</p>
+          <p class="localisation-zones">{infos.zones}</p>
+        </div>
+        <div class="localisation-links">
+          <a href={`tel:${infos.phone.replace(/\s/g,'')}`}>{infos.phone}</a>
+          <a href={`mailto:${infos.email}`}>{infos.email}</a>
+        </div>
+        <a
+          href="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium"
+          target="_blank" rel="noopener"
+          class="btn-outline-light">
+          Voir l'itinéraire →
+        </a>
+      </div>
     </div>
-    <div class="footer-body">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-col">
-            <p class="footer-logo">ZOWE</p>
-            <p class="footer-tagline">Kinésithérapie de haute précision<br>Méthode BELTRA</p>
-          </div>
-          <div class="footer-col">
-            <p class="footer-col__title">Cabinet</p>
-            <p>{infos.cabinet}</p>
-            <p>{infos.cabinetText}</p>
-            <p class="footer-zones">{infos.zones}</p>
-          </div>
-          <div class="footer-col">
-            <p class="footer-col__title">Contact</p>
-            <p><a href={`tel:${infos.phone.replace(/\s/g,'')}`}>{infos.phone}</a></p>
-            <p><a href={`mailto:${infos.email}`}>{infos.email}</a></p>
-            <p class="footer-tarif">{infos.tarifsTitle}</p>
-          </div>
-          <div class="footer-col">
-            <p class="footer-col__title">Mentions légales</p>
-            <p>N° d'entreprise : <em>à compléter</em></p>
-            <p>Assurance RC Pro : <em>à compléter</em></p>
-            <p>Visa INAMI : <em>à compléter</em></p>
-          </div>
+  </section>
+
+  <!-- ⑨ FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <p class="footer-logo">ZOWE</p>
+          <p class="footer-tagline">Kinésithérapie de haute précision<br>Méthode BELTRA</p>
         </div>
-        <div class="footer-bottom">
-          <p>&copy; {meta.copyright} Zowe — Zoé Grêde. Tous droits réservés.</p>
+        <div class="footer-col">
+          <p class="footer-col__title">Cabinet</p>
+          <p>{infos.cabinet}</p>
+          <p>{infos.cabinetText}</p>
+          <p class="footer-zones">{infos.zones}</p>
         </div>
+        <div class="footer-col">
+          <p class="footer-col__title">Contact</p>
+          <p><a href={`tel:${infos.phone.replace(/\s/g,'')}`}>{infos.phone}</a></p>
+          <p><a href={`mailto:${infos.email}`}>{infos.email}</a></p>
+          <p class="footer-tarif">{infos.tarifsTitle}</p>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col__title">Mentions légales</p>
+          <p>N° d'entreprise : <em>à compléter</em></p>
+          <p>Assurance RC Pro : <em>à compléter</em></p>
+          <p>Visa INAMI : <em>à compléter</em></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; {meta.copyright} Zowe — Zoé Grêde. Tous droits réservés.</p>
       </div>
     </div>
   </footer>

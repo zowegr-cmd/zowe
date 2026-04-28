@@ -50,16 +50,13 @@ const { title, description } = Astro.props;
       });
     }
 
-    // Fade-in on scroll (progressive enhancement)
+    // Fade-in on scroll (progressive enhancement) — re-joue à chaque passage
     document.body.classList.add('js-ready');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
+        entry.target.classList.toggle('visible', entry.isIntersecting);
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.12 });
     document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
   </script>
   <script is:inline>

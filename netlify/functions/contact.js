@@ -12,8 +12,11 @@ const BREVO_KEY    = process.env.BREVO_API_KEY || '';
 const BREVO_SENDER = { name: 'Zoé — Zowe', email: 'zoegrede.kine@gmail.com' };
 
 async function brevoSend({ to, toName, subject, html }) {
-  if (!BREVO_KEY) return;
-  await fetch('https://api.brevo.com/v3/smtp/email', {
+  if (!BREVO_KEY) {
+    console.error('[Brevo] BREVO_API_KEY manquant');
+    return;
+  }
+  const res  = await fetch('https://api.brevo.com/v3/smtp/email', {
     method  : 'POST',
     headers : { 'api-key': BREVO_KEY, 'Content-Type': 'application/json' },
     body    : JSON.stringify({
@@ -23,6 +26,12 @@ async function brevoSend({ to, toName, subject, html }) {
       htmlContent: html,
     }),
   });
+  const data = await res.json();
+  if (!res.ok) {
+    console.error('[Brevo] Erreur', res.status, JSON.stringify(data));
+  } else {
+    console.log('[Brevo] Envoyé à', to, '— messageId:', data.messageId);
+  }
 }
 
 exports.handler = async function (event) {

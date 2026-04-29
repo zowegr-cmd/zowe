@@ -14,6 +14,10 @@ const formAction = `https://formspree.io/f/${contact.formspreeId}`;
 const allTestimonials = [...testimonials.items, ...testimonials.items];
 const waLink = `https://wa.me/32471783746?text=${encodeURIComponent("Bonjour Zoé, je souhaite en savoir plus sur l'expérience Zowe.")}`;
 const igLink = infos.instagram || 'https://www.instagram.com/kine.zowe';
+const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN || '';
+const mapLng = infos.mapLng ?? 4.3501;
+const mapLat = infos.mapLat ?? 50.7474;
+const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent((infos.address || '') + ', ' + (infos.city || '') + ', Belgique')}`;
 ---
 
 <Layout title={meta.siteTitle} description={meta.description}>
@@ -146,7 +150,7 @@ const igLink = infos.instagram || 'https://www.instagram.com/kine.zowe';
     </div>
   </section>
 
-  <!-- ⑤ TÉMOIGNAGES -->
+  <!-- ⑤ TÉMOIGNAGES (fallback statique · Google Reviews chargés dynamiquement) -->
   <section id="testimonials" class="section testimonials">
     <div class="container">
       <div class="section-header" data-anim="up">
@@ -189,25 +193,44 @@ const igLink = infos.instagram || 'https://www.instagram.com/kine.zowe';
         ))}
       </div>
 
-      <div class="faq-map-card" data-anim="up">
-        <div class="faq-map-card__map">
+    </div>
+  </section>
+
+  <!-- ⑥ LOCALISATION MAPBOX -->
+  <section id="localisation" class="section localisation-section">
+    <div class="localisation-grid">
+      <!-- Colonne gauche : infos -->
+      <div class="localisation-info" data-anim="left">
+        <div class="localisation-info__header">
+          <span class="section-number" style="opacity:0.45;">06</span>
+          <h2 class="localisation-title">Nous trouver</h2>
+        </div>
+        <div class="localisation-address-block">
+          <p class="localisation-name">{infos.cabinet}</p>
+          <p class="localisation-street">{infos.address}</p>
+          <p class="localisation-street">{infos.city}</p>
+        </div>
+        <p class="localisation-zones">{infos.zones}</p>
+        <div class="localisation-contacts">
+          <a href={`tel:${infos.phone.replace(/\s/g,'')}`}>{infos.phone}</a>
+          <a href={`mailto:${infos.email}`}>{infos.email}</a>
+        </div>
+        <div class="hours-row">
+          {infos.hours.split('·').map(h => <span class="hours-pill">{h.trim()}</span>)}
+        </div>
+        <a href={mapsUrl} target="_blank" rel="noopener" class="btn btn-primary localisation-cta">
+          Obtenir l'itinéraire
+        </a>
+      </div>
+      <!-- Colonne droite : Mapbox -->
+      <div class="localisation-map-col" id="mapbox-container">
+        <div id="mapbox-map">
+          <!-- Fallback si Mapbox token absent -->
           <iframe
             src="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            width="100%" loading="lazy" style="border:0;"
-            title="Localisation Kinovea Rhode-Saint-Genèse">
+            width="100%" height="100%" style="border:0;min-height:480px;filter:grayscale(1) brightness(0.7);" loading="lazy"
+            title="Localisation">
           </iframe>
-        </div>
-        <div class="faq-map-card__info">
-          <p class="faq-map-label">Cabinet</p>
-          <p class="faq-map-name">{infos.cabinet}</p>
-          <p class="faq-map-detail">{infos.cabinetText}</p>
-          <p class="faq-map-zones">{infos.zones}</p>
-          <a
-            href="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium"
-            target="_blank" rel="noopener"
-            class="faq-map-link">
-            Voir l'itinéraire →
-          </a>
         </div>
       </div>
     </div>
@@ -217,7 +240,7 @@ const igLink = infos.instagram || 'https://www.instagram.com/kine.zowe';
   <section id="contact" class="section contact">
     <div class="container">
       <div class="section-header" data-anim="up">
-        <span class="section-number">06</span>
+        <span class="section-number">07</span>
         <h2 class="section-title">Conciergerie</h2>
       </div>
       <p class="contact-intro" data-anim="up" data-delay="1">{contact.intro}</p>
@@ -331,7 +354,7 @@ const igLink = infos.instagram || 'https://www.instagram.com/kine.zowe';
 
 </Layout>
 
-<script is:inline>
+<script is:inline define:vars={{ mapboxToken, mapLng, mapLat }}>
 (function () {
 
   /* ── Formulaire direct → Netlify Function ── */
@@ -374,6 +397,109 @@ const igLink = infos.instagram || 'https://www.instagram.com/kine.zowe';
       });
     });
   }
+
+  /* ── Google Reviews dynamiques ── */
+  (function loadReviews() {
+    var track = document.getElementById('testimonialsTrack');
+    if (!track) return;
+    fetch('/.netlify/functions/reviews')
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(reviews) {
+        if (!reviews || reviews.length < 2) return; // garder le fallback si peu de résultats
+        var doubled = reviews.concat(reviews); // double pour le marquee infini
+        track.innerHTML = doubled.map(function(t) {
+          return '<div class="testimonial-card">'
+            + '<div class="testimonial-stars">' + '★'.repeat(t.rating) + '</div>'
+            + '<p class="testimonial-text">&ldquo;' + escHtml(t.text) + '&rdquo;</p>'
+            + '<div class="testimonial-meta">'
+            + '<span class="testimonial-name">' + escHtml(t.name) + '</span>'
+            + '<span class="testimonial-date">' + escHtml(t.date) + '</span>'
+            + '</div></div>';
+        }).join('');
+      })
+      .catch(function(){});
+    function escHtml(s) {
+      return String(s).replace(/[&<>"']/g, function(c) {
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+      });
+    }
+  })();
+
+  /* ── Mapbox ── */
+  (function initMapbox() {
+    var token = typeof mapboxToken !== 'undefined' ? mapboxToken : '';
+    var el    = document.getElementById('mapbox-map');
+    if (!token || !el) return;
+
+    // Lazy-load Mapbox GL JS depuis le CDN
+    var css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = 'https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css';
+    document.head.appendChild(css);
+
+    var script = document.createElement('script');
+    script.src = 'https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js';
+    script.onload = function() {
+      el.innerHTML = ''; // retirer le fallback iframe
+      mapboxgl.accessToken = token;
+
+      var map = new mapboxgl.Map({
+        container   : 'mapbox-map',
+        style       : 'mapbox://styles/mapbox/dark-v11',
+        center      : [mapLng, mapLat],
+        zoom        : 14.5,
+        attributionControl: false,
+        scrollZoom  : false,
+      });
+
+      map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
+
+      map.on('style.load', function() {
+        // Fond #0F0F0F
+        try { map.setPaintProperty('background', 'background-color', '#0F0F0F'); } catch(_){}
+        // Eau #1a0a0d
+        ['water', 'water-shadow', 'waterway'].forEach(function(id) {
+          try {
+            if (map.getLayer(id)) {
+              var type = map.getLayer(id).type;
+              if (type === 'fill')  map.setPaintProperty(id, 'fill-color',   '#1a0a0d');
+              if (type === 'line')  map.setPaintProperty(id, 'line-color',   '#1a0a0d');
+            }
+          } catch(_){}
+        });
+        // Terre sombre
+        ['land', 'landcover', 'national-park', 'park'].forEach(function(id) {
+          try { if (map.getLayer(id)) map.setPaintProperty(id, 'fill-color', '#0a0a0a'); } catch(_){}
+        });
+        // Routes crème (opacité réduite)
+        map.getStyle().layers.forEach(function(layer) {
+          if (layer['source-layer'] === 'road' && layer.type === 'line') {
+            try { map.setPaintProperty(layer.id, 'line-color', '#F5F0E8'); } catch(_){}
+            try { map.setPaintProperty(layer.id, 'line-opacity', 0.18); } catch(_){}
+          }
+        });
+        // Labels plus discrets
+        map.getStyle().layers.forEach(function(layer) {
+          if (layer.type === 'symbol') {
+            try { map.setPaintProperty(layer.id, 'text-color', 'rgba(245,240,232,0.45)'); } catch(_){}
+          }
+        });
+
+        // Marqueur doré
+        var markerEl = document.createElement('div');
+        markerEl.style.cssText = [
+          'width:14px', 'height:14px', 'border-radius:50%',
+          'background:#C9A96E', 'border:2px solid rgba(201,169,110,0.35)',
+          'box-shadow:0 0 0 6px rgba(201,169,110,0.12), 0 2px 8px rgba(0,0,0,0.4)',
+          'cursor:pointer',
+        ].join(';');
+        new mapboxgl.Marker({ element: markerEl })
+          .setLngLat([mapLng, mapLat])
+          .addTo(map);
+      });
+    };
+    document.head.appendChild(script);
+  })();
 
   /* ── FAQ accordion icon ── */
   document.querySelectorAll('.faq-item').forEach(function(d){

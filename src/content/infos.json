@@ -1,5 +1,7 @@
 {
   "cabinet": "Kinovea Rhode-Saint-Genèse",
+  "address": "Rue des Iris, Boîte 2",
+  "city": "1640 Rhode-Saint-Genèse",
   "cabinetText": "Consultations au cabinet & visites à domicile",
   "zones": "Rhode-Saint-Genèse · Linkebeek · Beersel · Lot · Braine-l'Alleud",
   "tarifsTitle": "Non-conventionné",
@@ -7,5 +9,7 @@
   "phone": "0471 78 37 46",
   "email": "zoegrede.kine@gmail.com",
   "hours": "Lun–Ven 8h–19h · Sam 9h–14h",
-  "instagram": "https://www.instagram.com/kine.zowe"
+  "instagram": "https://www.instagram.com/kine.zowe",
+  "mapLng": 4.3501,
+  "mapLat": 50.7474
 }

@@ -396,3 +396,11 @@ collections:
           - { label: "Description SEO", name: "description", widget: "text", hint: "Texte affiché dans les résultats Google" }
           - { label: "Année copyright (footer)", name: "copyright", widget: "string" }
           - { label: "URL du site", name: "siteUrl", widget: "string", required: false, hint: "Ex : https://zowe.netlify.app (sans slash final)" }
+          - label: "Mode de traduction NL / EN"
+            name: "translation_mode"
+            widget: "select"
+            default: "manual"
+            hint: "Manuel = vous écrivez vos traductions dans l'admin. Automatique = l'IA traduit depuis le français."
+            options:
+              - { label: "✋ Manuel — j'écris mes traductions dans l'admin", value: "manual" }
+              - { label: "🤖 Automatique — l'IA traduit depuis le français", value: "auto" }

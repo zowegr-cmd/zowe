@@ -412,6 +412,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
 </Layout>
 
 <script is:inline define:vars={{
+  __translationMode: meta.translation_mode || 'manual',
   __c_nl: {
     hero:       { label: hero.label.nl,       tagline: hero.tagline.nl,       cta: hero.cta.nl },
     nav:        { cta: hero.cta.nl },
@@ -461,7 +462,8 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     contact: { intro: contact.intro.en }
   }
 }}>
-window.__i18nContent = { nl: __c_nl, en: __c_en };
+window.__i18nContent    = { nl: __c_nl, en: __c_en };
+window.__translationMode = __translationMode;
 </script>
 
 <script is:inline define:vars={{ mapboxToken, mapLng, mapLat }}>

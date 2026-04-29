@@ -108,6 +108,21 @@ collections:
           - label: "Email"
             name: "email"
             widget: "string"
+          - label: "N° d'entreprise (BCE)"
+            name: "entreprise"
+            widget: "string"
+            required: false
+            hint: "Ex : BE 0123.456.789"
+          - label: "N° INAMI"
+            name: "inami"
+            widget: "string"
+            required: false
+            hint: "Numéro d'identification INAMI"
+          - label: "Assurance RC Professionnelle"
+            name: "rcpro"
+            widget: "string"
+            required: false
+            hint: "Nom de l'assureur et numéro de police"
 
       - label: "Formulaire de contact"
         name: "contact"

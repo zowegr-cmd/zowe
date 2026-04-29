@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import infos from '../content/infos.json';
+---
+<Layout
+  title="Mentions légales — Zowe · Kinésithérapie Rhode-Saint-Genèse"
+  description="Mentions légales du cabinet Zowe — Zoé Grêde, kinésithérapeute à Rhode-Saint-Genèse.">
+
+  <style>
+    .legal-page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 8rem 2rem 6rem;
+    }
+    .legal-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bordeaux);
+      text-decoration: none;
+      margin-bottom: 3rem;
+      transition: opacity 0.2s;
+    }
+    .legal-back:hover { opacity: 0.7; }
+    .legal-page h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--bordeaux);
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+    .legal-page .legal-sub {
+      font-size: 0.82rem;
+      color: var(--light);
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--or-border);
+    }
+    .legal-page h2 {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bordeaux);
+      margin: 2.5rem 0 1rem;
+    }
+    .legal-page p, .legal-page li {
+      font-size: 0.9rem;
+      color: var(--mid);
+      line-height: 1.85;
+      margin-bottom: 0.5rem;
+    }
+    .legal-page strong { color: var(--dark); font-weight: 500; }
+    .legal-page a { color: var(--bordeaux); text-decoration: none; }
+    .legal-page a:hover { text-decoration: underline; }
+  </style>
+
+  <article class="legal-page">
+    <a href="/" class="legal-back">← Retour à l'accueil</a>
+
+    <h1>Mentions légales</h1>
+    <p class="legal-sub">Conformément à la législation belge en vigueur</p>
+
+    <h2>Éditeur du site</h2>
+    <p><strong>Zoé Grêde</strong> — Kinésithérapeute</p>
+    <p>Rue des Iris, Boîte 2 — 1640 Rhode-Saint-Genèse, Belgique</p>
+    <p>
+      <a href="mailto:zoegrede.kine@gmail.com">zoegrede.kine@gmail.com</a>
+      &nbsp;·&nbsp;
+      <a href="tel:+32471783746">0471 78 37 46</a>
+    </p>
+
+    <h2>Informations professionnelles</h2>
+    <p>N° d'entreprise (BCE) : <strong>{infos.entreprise || 'À compléter'}</strong></p>
+    <p>Numéro INAMI : <strong>{infos.inami || 'À compléter'}</strong></p>
+    <p>Assurance RC Professionnelle : <strong>{infos.rcpro || 'À compléter'}</strong></p>
+    <p>Statut : Kinésithérapeute non-conventionné</p>
+
+    <h2>Hébergeur</h2>
+    <p><strong>Netlify, Inc.</strong></p>
+    <p>512 2nd Street, Suite 200 — San Francisco, CA 94107, États-Unis</p>
+    <p><a href="https://www.netlify.com" target="_blank" rel="noopener">www.netlify.com</a></p>
+
+    <h2>Propriété intellectuelle</h2>
+    <p>
+      L'ensemble du contenu de ce site (textes, images, visuels, logo) est la propriété exclusive
+      de Zoé Grêde, sauf mentions contraires. Toute reproduction, même partielle, est interdite
+      sans autorisation écrite préalable.
+    </p>
+
+    <h2>Responsabilité</h2>
+    <p>
+      Les informations publiées sur ce site ont une valeur informative et ne constituent pas
+      un avis médical. Zoé Grêde ne saurait être tenue responsable d'un quelconque dommage
+      résultant de l'utilisation de ces informations.
+    </p>
+
+    <h2>Droit applicable</h2>
+    <p>
+      Le présent site est soumis au droit belge. Tout litige relatif à son utilisation
+      relève de la compétence exclusive des tribunaux belges.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Pour toute question relative aux présentes mentions légales :
+      <a href="mailto:zoegrede.kine@gmail.com">zoegrede.kine@gmail.com</a>
+    </p>
+  </article>
+</Layout>

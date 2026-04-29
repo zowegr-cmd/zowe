@@ -42,24 +42,74 @@ const ogImage = `${siteUrl}/og-image.png`;
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 
-  <!-- Google Analytics 4 -->
-  {GA4_ID !== 'G-XXXXXXXXXX' && (
-    <>
-      <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
-      <script is:inline define:vars={{ GA4_ID }}>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', GA4_ID);
-      </script>
-    </>
-  )}
+  <!-- Google Analytics 4 — Consent Mode -->
+  <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+  <script is:inline define:vars={{ GA4_ID }}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', { analytics_storage: 'denied' });
+    gtag('js', new Date());
+    gtag('config', GA4_ID, { anonymize_ip: true });
+    if (localStorage.getItem('zowe-cookies') === 'accepted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+    }
+  </script>
 
   <!-- Netlify Identity -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <!-- Schema.org LocalBusiness + MedicalBusiness -->
+  <script type="application/ld+json">{JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": ["LocalBusiness", "MedicalBusiness"],
+    "name": "Zowe — Zoé Grêde",
+    "description": "Kinésithérapie de haute précision à Rhode-Saint-Genèse. Méthode BELTRA. Soins premium au cabinet et à domicile.",
+    "url": "https://zowe.netlify.app",
+    "telephone": "+32471783746",
+    "email": "zoegrede.kine@gmail.com",
+    "image": "https://zowe.netlify.app/images/zoe.jpg",
+    "priceRange": "€€€",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rue des Iris, Boîte 2",
+      "addressLocality": "Rhode-Saint-Genèse",
+      "postalCode": "1640",
+      "addressCountry": "BE"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 50.74625,
+      "longitude": 4.357579
+    },
+    "areaServed": [
+      "Rhode-Saint-Genèse","Linkebeek","Beersel","Lot","Braine-l'Alleud"
+    ],
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "19:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "09:00", "closes": "14:00" }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "26",
+      "bestRating": "5"
+    },
+    "sameAs": ["https://www.instagram.com/kine.zowe"]
+  })}</script>
 </head>
 <body>
   <slot />
+
+  <!-- Cookie banner -->
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Consentement cookies" hidden>
+    <p class="cookie-banner__text">
+      Ce site utilise Google Analytics pour mesurer son audience de façon anonymisée.
+      <a href="/confidentialite">En savoir plus</a>
+    </p>
+    <div class="cookie-banner__actions">
+      <button id="cookieRefuse" class="cookie-btn cookie-btn--refuse">Refuser</button>
+      <button id="cookieAccept" class="cookie-btn cookie-btn--accept">Accepter</button>
+    </div>
+  </div>
   <script is:inline>
     // Nav scroll effect
     const nav = document.getElementById('nav');
@@ -97,6 +147,24 @@ const ogImage = `${siteUrl}/og-image.png`;
       });
     }, { threshold: 0.12 });
     document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
+
+    // Cookie banner
+    (function() {
+      var pref = localStorage.getItem('zowe-cookies');
+      if (pref) return;
+      var banner = document.getElementById('cookieBanner');
+      if (!banner) return;
+      banner.hidden = false;
+      document.getElementById('cookieAccept').addEventListener('click', function() {
+        localStorage.setItem('zowe-cookies', 'accepted');
+        banner.hidden = true;
+        if (typeof gtag !== 'undefined') gtag('consent', 'update', { analytics_storage: 'granted' });
+      });
+      document.getElementById('cookieRefuse').addEventListener('click', function() {
+        localStorage.setItem('zowe-cookies', 'refused');
+        banner.hidden = true;
+      });
+    })();
   </script>
   <script is:inline>
     // Redirige vers la page dédiée si un token identity est dans l'URL

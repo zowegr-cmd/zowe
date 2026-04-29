@@ -1,0 +1,162 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout
+  title="Politique de confidentialité — Zowe"
+  description="Politique de confidentialité et protection des données personnelles — cabinet Zowe, Zoé Grêde.">
+
+  <style>
+    .legal-page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 8rem 2rem 6rem;
+    }
+    .legal-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bordeaux);
+      text-decoration: none;
+      margin-bottom: 3rem;
+      transition: opacity 0.2s;
+    }
+    .legal-back:hover { opacity: 0.7; }
+    .legal-page h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--bordeaux);
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+    .legal-page .legal-sub {
+      font-size: 0.82rem;
+      color: var(--light);
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--or-border);
+    }
+    .legal-page h2 {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bordeaux);
+      margin: 2.5rem 0 1rem;
+    }
+    .legal-page p, .legal-page li {
+      font-size: 0.9rem;
+      color: var(--mid);
+      line-height: 1.85;
+      margin-bottom: 0.5rem;
+    }
+    .legal-page ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+    .legal-page strong { color: var(--dark); font-weight: 500; }
+    .legal-page a { color: var(--bordeaux); text-decoration: none; }
+    .legal-page a:hover { text-decoration: underline; }
+  </style>
+
+  <article class="legal-page">
+    <a href="/" class="legal-back">← Retour à l'accueil</a>
+
+    <h1>Politique de confidentialité</h1>
+    <p class="legal-sub">Dernière mise à jour : avril 2026 · Conforme RGPD et loi belge du 30 juillet 2018</p>
+
+    <h2>Responsable du traitement</h2>
+    <p><strong>Zoé Grêde</strong> — Kinésithérapeute</p>
+    <p>Rue des Iris, Boîte 2 — 1640 Rhode-Saint-Genèse</p>
+    <p><a href="mailto:zoegrede.kine@gmail.com">zoegrede.kine@gmail.com</a></p>
+
+    <h2>Données collectées</h2>
+    <p>Lors de la soumission du formulaire de contact, les données suivantes sont collectées :</p>
+    <ul>
+      <li>Prénom et nom</li>
+      <li>Adresse email</li>
+      <li>Numéro de téléphone (optionnel)</li>
+      <li>Message libre</li>
+    </ul>
+    <p>
+      Si vous cochez la case newsletter, votre email est également enregistré à cet effet,
+      avec votre consentement explicite.
+    </p>
+
+    <h2>Finalité et base légale</h2>
+    <p>
+      Les données collectées sont utilisées exclusivement pour répondre à vos demandes de
+      prise de contact et, avec votre accord, pour vous envoyer des informations relatives
+      aux soins et actualités du cabinet.
+    </p>
+    <p>
+      La base légale du traitement est votre <strong>consentement explicite</strong>
+      (Article 6.1.a du RGPD) au moment de la soumission du formulaire.
+    </p>
+
+    <h2>Durée de conservation</h2>
+    <p>
+      Vos données sont conservées pendant <strong>2 ans</strong> à compter de votre dernier
+      contact, puis supprimées. Les emails de newsletter sont conservés jusqu'à désinscription.
+    </p>
+
+    <h2>Newsletter et désinscription</h2>
+    <p>
+      Si vous avez consenti à recevoir la newsletter, vous pouvez vous désinscrire à tout moment
+      en envoyant un email à <a href="mailto:zoegrede.kine@gmail.com">zoegrede.kine@gmail.com</a>
+      avec la mention "Désinscription".
+    </p>
+
+    <h2>Vos droits</h2>
+    <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+    <ul>
+      <li><strong>Droit d'accès</strong> : obtenir une copie de vos données</li>
+      <li><strong>Droit de rectification</strong> : corriger des données inexactes</li>
+      <li><strong>Droit à l'effacement</strong> : demander la suppression de vos données</li>
+      <li><strong>Droit à la portabilité</strong> : recevoir vos données dans un format lisible</li>
+      <li><strong>Droit d'opposition</strong> : vous opposer au traitement de vos données</li>
+    </ul>
+    <p>
+      Pour exercer ces droits, contactez :
+      <a href="mailto:zoegrede.kine@gmail.com">zoegrede.kine@gmail.com</a>
+    </p>
+    <p>
+      Vous pouvez également introduire une réclamation auprès de l'
+      <a href="https://www.autoriteprotectiondonnees.be" target="_blank" rel="noopener">
+        Autorité de Protection des Données (APD)
+      </a>.
+    </p>
+
+    <h2>Cookies et analytics</h2>
+    <p>
+      Ce site utilise Google Analytics 4 afin de mesurer l'audience de manière anonymisée.
+      Ces cookies ne sont activés qu'avec votre consentement explicite via la bannière présente
+      à votre première visite.
+    </p>
+    <p>
+      Vous pouvez retirer votre consentement à tout moment en effaçant les données de votre
+      navigateur (localStorage) ou en nous contactant.
+    </p>
+
+    <h2>Transferts de données</h2>
+    <p>
+      Aucune donnée personnelle n'est vendue, louée ou cédée à des tiers.
+      Les données transitent par les services suivants, conformes au RGPD :
+    </p>
+    <ul>
+      <li><strong>Netlify</strong> — hébergement (USA, données traitées en UE)</li>
+      <li><strong>Formspree</strong> — transmission des formulaires</li>
+      <li><strong>Brevo</strong> — envoi des emails de confirmation (UE)</li>
+      <li><strong>Google Analytics</strong> — uniquement si consentement accordé</li>
+    </ul>
+    <p>Aucun transfert de données hors Union Européenne sans garanties appropriées.</p>
+
+    <h2>Sécurité</h2>
+    <p>
+      Ce site est servi exclusivement en HTTPS. Les données de contact sont transmises
+      de manière chiffrée et ne sont pas stockées sur le serveur du site.
+    </p>
+  </article>
+</Layout>

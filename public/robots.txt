@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /identity/
+Disallow: /merci/
+
+Sitemap: https://zowe.netlify.app/sitemap.xml

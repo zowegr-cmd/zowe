@@ -10,6 +10,7 @@
   "dependencies": {
     "@netlify/blobs": "^10.7.4",
     "astro": "^4.15.0",
+    "nodemailer": "^8.0.7",
     "resend": "^6.12.2",
     "sharp": "^0.34.5"
   }

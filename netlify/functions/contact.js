@@ -1,14 +1,29 @@
 // Netlify Function — contact.js
-// Gère : Formspree (Zoé) + Resend patient + Resend patron + rappel 24h + newsletter
+// Formspree (Zoé + CC patron) · Brevo API (confirmation patient) · Blobs (rappel 24h)
 'use strict';
 
-const { Resend } = require('resend');
+const { Resend }   = require('resend');
 const { getStore } = require('@netlify/blobs');
 
-const FORMSPREE_ID  = process.env.FORMSPREE_ID  || 'xqewvayo';
-const PATRON_EMAIL  = process.env.PATRON_EMAIL   || 'patron@kinovea.be';
-const RESEND_FROM   = process.env.RESEND_FROM    || 'Zoé — Zowe <onboarding@resend.dev>';
-const AUDIENCE_ID   = process.env.RESEND_AUDIENCE_ID || '';
+const FORMSPREE_ID = process.env.FORMSPREE_ID  || 'xqewvayo';
+const PATRON_EMAIL = process.env.PATRON_EMAIL  || 'patron@kinovea.be';
+const AUDIENCE_ID  = process.env.RESEND_AUDIENCE_ID || '';
+const BREVO_KEY    = process.env.BREVO_API_KEY || '';
+const BREVO_SENDER = { name: 'Zoé — Zowe', email: 'zoegrede.kine@gmail.com' };
+
+async function brevoSend({ to, toName, subject, html }) {
+  if (!BREVO_KEY) return;
+  await fetch('https://api.brevo.com/v3/smtp/email', {
+    method  : 'POST',
+    headers : { 'api-key': BREVO_KEY, 'Content-Type': 'application/json' },
+    body    : JSON.stringify({
+      sender : BREVO_SENDER,
+      to     : [{ email: to, name: toName || to }],
+      subject,
+      htmlContent: html,
+    }),
+  });
+}
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {
@@ -42,30 +57,21 @@ exports.handler = async function (event) {
     });
   } catch (e) { console.error('[Formspree]', e.message); }
 
+  // ── Brevo — emails transactionnels ──────────────────────────────────────
+  // 2. Confirmation patient
+  try {
+    await brevoSend({
+      to      : email,
+      toName  : prenom,
+      subject : "Bienvenue dans l'expérience Zowe — Votre demande a été reçue avec soin",
+      html    : patientConfirmHtml(prenom),
+    });
+  } catch (e) { console.error('[Brevo patient]', e.message); }
+
   // ── Resend ───────────────────────────────────────────────────────────────
   const apiKey = process.env.RESEND_API_KEY;
   if (apiKey) {
     const resend = new Resend(apiKey);
-
-    // 2. Email patient — confirmation immédiate
-    try {
-      await resend.emails.send({
-        from: RESEND_FROM,
-        to: email,
-        subject: "Bienvenue dans l'expérience Zowe — Votre demande a été reçue avec soin",
-        html: patientConfirmHtml(prenom),
-      });
-    } catch (e) { console.error('[Resend patient confirm]', e.message); }
-
-    // 3. Email patron — notification immédiate
-    try {
-      await resend.emails.send({
-        from: RESEND_FROM,
-        to: PATRON_EMAIL,
-        subject: `Nouvelle demande Zowe — ${prenom} ${nom}`,
-        html: patronNotifHtml({ prenom, nom, email, telephone, message, dateStr, timeStr }),
-      });
-    } catch (e) { console.error('[Resend patron]', e.message); }
 
     // 4. Rappel 24h — stocker dans Netlify Blobs (envoyé par la cron function)
     try {

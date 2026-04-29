@@ -128,8 +128,8 @@ exports.handler = async function (event) {
   const message   = sanitize(body.message   || '', 2000);
   const newsletter = body.newsletter === true || body.newsletter === 'true';
 
-  if (!prenom || !email) {
-    return { statusCode: 422, body: JSON.stringify({ error: 'Prénom et email requis.' }) };
+  if (!prenom || !email || !telephone) {
+    return { statusCode: 422, body: JSON.stringify({ error: 'Prénom, email et téléphone requis.' }) };
   }
   if (!isValidEmail(email)) {
     return { statusCode: 422, body: JSON.stringify({ error: 'Format email invalide.' }) };

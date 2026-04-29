@@ -288,8 +288,8 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
             <label for="email" data-i18n="form.email">Email *</label>
           </div>
           <div class="ff">
-            <input type="tel" id="telephone" name="telephone" placeholder=" " autocomplete="tel" inputmode="tel">
-            <label for="telephone" data-i18n="form.tel">GSM (optionnel)</label>
+            <input type="tel" id="telephone" name="telephone" placeholder=" " autocomplete="tel" inputmode="tel" required>
+            <label for="telephone" data-i18n="form.tel">Numéro de téléphone *</label>
           </div>
         </div>
         <div class="ff">
@@ -491,10 +491,11 @@ window.__translationMode = __translationMode;
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var prenom = (document.getElementById('prenom') || {}).value || '';
-      var email  = (document.getElementById('email')  || {}).value || '';
-      if (!prenom.trim() || !email.trim()) {
-        alert((window.__t && window.__t('form.error_required')) || 'Veuillez renseigner votre prénom et votre email.');
+      var prenom = (document.getElementById('prenom')    || {}).value || '';
+      var email  = (document.getElementById('email')     || {}).value || '';
+      var tel    = (document.getElementById('telephone') || {}).value || '';
+      if (!prenom.trim() || !email.trim() || !tel.trim()) {
+        alert((window.__t && window.__t('form.error_required')) || 'Veuillez renseigner votre prénom, email et numéro de téléphone.');
         return;
       }
       var btn = document.getElementById('submitBtn');

@@ -1674,6 +1674,14 @@ img {
   .nav-toggle { display: flex; }
   .lang-selector { display: none; }
 
+  /* Sur mobile, backdrop-filter sur la nav crée un nouveau bloc contenant
+     pour position:fixed — le menu overlay ne couvre plus la fenêtre entière.
+     On le désactive pour que .nav-links.open reste positionné par rapport au viewport. */
+  .nav.scrolled {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .nav-lang-mobile {
     display: flex;
     align-items: center;

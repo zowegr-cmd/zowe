@@ -1,0 +1,59 @@
+{
+  "nav.concept":          "Concept",
+  "nav.approach":         "Approach",
+  "nav.protocols":        "Protocols",
+  "nav.faq":              "FAQ",
+  "nav.cta":              "Begin my journey",
+
+  "section.testimonials": "Testimonials",
+  "section.faq":          "Frequently asked questions",
+  "section.localisation": "Find us",
+  "section.contact":      "Contact",
+
+  "services.protocol":    "Protocol",
+  "services.ideal":       "Ideal for",
+  "services.learn_more":  "Learn more",
+
+  "about.formation":      "Education",
+  "about.kine_mention":   "Zoé also practises conventional physiotherapy",
+
+  "footer.tagline":        "High-precision physiotherapy<br>BELTRA method",
+  "footer.cabinet":        "Practice",
+  "footer.contact":        "Contact",
+  "footer.legal":          "Legal notices",
+  "footer.entreprise":     "Company no.",
+  "footer.rcpro":          "Professional liability",
+  "footer.inami":          "INAMI visa",
+  "footer.to_complete":    "to be completed",
+  "footer.rights":         "All rights reserved.",
+  "footer.gift_card":      "Gift card",
+  "footer.gallery":        "Gallery",
+  "footer.before_session": "Before your session",
+  "footer.legal_notices":  "Legal notices",
+  "footer.privacy":        "Privacy policy",
+
+  "form.prenom":           "First name *",
+  "form.nom":              "Last name *",
+  "form.email":            "Email *",
+  "form.tel":              "Phone (optional)",
+  "form.message":          "Your message *",
+  "form.newsletter":       "I agree to receive tips and news from Zoé by email.",
+  "form.newsletter_sub":   "Unsubscribe at any time.",
+  "form.note":             "Zoé will get back to you today to arrange a time that suits you.",
+  "form.submit":           "Write to Zoé",
+  "form.sending":          "Sending…",
+  "form.error_required":   "Please enter your first name and email.",
+  "form.error_network":    "Network error. Please try again.",
+  "form.error_server":     "An error occurred. Please try again.",
+
+  "localisation.directions": "Get directions",
+
+  "gallery.view_all":      "View full gallery",
+
+  "cookie.text":           "This site uses Google Analytics to measure its audience in an anonymised way.",
+  "cookie.learn_more":     "Learn more",
+  "cookie.refuse":         "Refuse",
+  "cookie.accept":         "Accept",
+
+  "sticky.cta":            "Begin my journey"
+}

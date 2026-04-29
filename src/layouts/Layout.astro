@@ -32,6 +32,12 @@ const ogImage = `${siteUrl}/og-image.png`;
 
   {GSC_CODE && <meta name="google-site-verification" content={GSC_CODE}>}
 
+  <!-- Hreflang : même URL pour toutes les langues -->
+  <link rel="alternate" hreflang="fr" href={siteUrl + "/"}>
+  <link rel="alternate" hreflang="nl" href={siteUrl + "/"}>
+  <link rel="alternate" hreflang="en" href={siteUrl + "/"}>
+  <link rel="alternate" hreflang="x-default" href={siteUrl + "/"}>
+
   <!-- Favicon -->
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/favicon.svg">
@@ -102,12 +108,12 @@ const ogImage = `${siteUrl}/og-image.png`;
   <!-- Cookie banner -->
   <div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Consentement cookies" hidden>
     <p class="cookie-banner__text">
-      Ce site utilise Google Analytics pour mesurer son audience de façon anonymisée.
-      <a href="/confidentialite">En savoir plus</a>
+      <span data-i18n="cookie.text">Ce site utilise Google Analytics pour mesurer son audience de façon anonymisée.</span>
+      <a href="/confidentialite" data-i18n="cookie.learn_more">En savoir plus</a>
     </p>
     <div class="cookie-banner__actions">
-      <button id="cookieRefuse" class="cookie-btn cookie-btn--refuse">Refuser</button>
-      <button id="cookieAccept" class="cookie-btn cookie-btn--accept">Accepter</button>
+      <button id="cookieRefuse" class="cookie-btn cookie-btn--refuse" data-i18n="cookie.refuse">Refuser</button>
+      <button id="cookieAccept" class="cookie-btn cookie-btn--accept" data-i18n="cookie.accept">Accepter</button>
     </div>
   </div>
   <script is:inline>
@@ -165,6 +171,76 @@ const ogImage = `${siteUrl}/og-image.png`;
         banner.hidden = true;
       });
     })();
+  </script>
+  <!-- i18n : détection langue + application traductions -->
+  <script is:inline>
+  (function() {
+    var LANGS = ['fr', 'nl', 'en'];
+    var _cache = {};   // traductions chargées
+    var _fr    = {};   // valeurs FR originales du DOM
+
+    function saveFr() {
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        _fr['t:' + el.getAttribute('data-i18n')] = el.textContent;
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        _fr['h:' + el.getAttribute('data-i18n-html')] = el.innerHTML;
+      });
+    }
+
+    function applyTranslations(lang, t) {
+      document.querySelectorAll('[data-i18n]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n');
+        el.textContent = (t && t[key] !== undefined) ? t[key]
+                       : (_fr['t:' + key] !== undefined ? _fr['t:' + key] : el.textContent);
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        var key = el.getAttribute('data-i18n-html');
+        el.innerHTML = (t && t[key] !== undefined) ? t[key]
+                     : (_fr['h:' + key] !== undefined ? _fr['h:' + key] : el.innerHTML);
+      });
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      window._i18n = t || null;
+      localStorage.setItem('zowe-lang', lang);
+    }
+
+    function setLang(lang) {
+      if (LANGS.indexOf(lang) === -1) lang = 'fr';
+      if (lang === 'fr') { applyTranslations('fr', null); return; }
+      if (_cache[lang])  { applyTranslations(lang, _cache[lang]); return; }
+      fetch('/i18n/' + lang + '.json')
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(data) {
+          if (data) { _cache[lang] = data; applyTranslations(lang, data); }
+        })
+        .catch(function() {});
+    }
+
+    saveFr();
+
+    var stored   = localStorage.getItem('zowe-lang');
+    var browser  = (navigator.language || 'fr').slice(0, 2).toLowerCase();
+    var detected = stored || browser;
+    var lang = LANGS.indexOf(detected) !== -1 ? detected : 'fr';
+
+    if (lang !== 'fr') {
+      setLang(lang);
+    } else {
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.lang === 'fr');
+      });
+    }
+
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.lang-btn');
+      if (btn && btn.dataset.lang) setLang(btn.dataset.lang);
+    });
+
+    window.__setLang = setLang;
+  })();
   </script>
   <script is:inline>
     // Redirige vers la page dédiée si un token identity est dans l'URL

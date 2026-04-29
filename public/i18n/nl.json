@@ -1,0 +1,59 @@
+{
+  "nav.concept":          "Concept",
+  "nav.approach":         "Aanpak",
+  "nav.protocols":        "Protocollen",
+  "nav.faq":              "FAQ",
+  "nav.cta":              "Mijn begeleiding starten",
+
+  "section.testimonials": "Getuigenissen",
+  "section.faq":          "Veelgestelde vragen",
+  "section.localisation": "Ons vinden",
+  "section.contact":      "Contact",
+
+  "services.protocol":    "Protocol",
+  "services.ideal":       "Ideaal voor",
+  "services.learn_more":  "Meer weten",
+
+  "about.formation":      "Opleiding",
+  "about.kine_mention":   "Zoé beoefent ook conventionele kinesitherapie",
+
+  "footer.tagline":        "Hoge precisie kinesitherapie<br>BELTRA-methode",
+  "footer.cabinet":        "Praktijk",
+  "footer.contact":        "Contact",
+  "footer.legal":          "Wettelijke vermeldingen",
+  "footer.entreprise":     "Ondernemingsnummer",
+  "footer.rcpro":          "BA-verzekering",
+  "footer.inami":          "RIZIV-nummer",
+  "footer.to_complete":    "aan te vullen",
+  "footer.rights":         "Alle rechten voorbehouden.",
+  "footer.gift_card":      "Cadeaubon",
+  "footer.gallery":        "Galerij",
+  "footer.before_session": "Voor uw sessie",
+  "footer.legal_notices":  "Wettelijke vermeldingen",
+  "footer.privacy":        "Privacybeleid",
+
+  "form.prenom":           "Voornaam *",
+  "form.nom":              "Achternaam *",
+  "form.email":            "E-mail *",
+  "form.tel":              "GSM (optioneel)",
+  "form.message":          "Uw bericht *",
+  "form.newsletter":       "Ik ontvang graag tips en nieuws van Zoé per e-mail.",
+  "form.newsletter_sub":   "Uitschrijven kan altijd.",
+  "form.note":             "Zoé neemt vandaag nog contact met u op om een geschikt moment te vinden.",
+  "form.submit":           "Schrijf naar Zoé",
+  "form.sending":          "Bezig met verzenden…",
+  "form.error_required":   "Gelieve uw voornaam en e-mailadres in te vullen.",
+  "form.error_network":    "Netwerkfout. Probeer opnieuw.",
+  "form.error_server":     "Er is een fout opgetreden. Probeer opnieuw.",
+
+  "localisation.directions": "Routebeschrijving",
+
+  "gallery.view_all":      "Bekijk de volledige galerij",
+
+  "cookie.text":           "Deze site gebruikt Google Analytics voor geanonimiseerde meting van het bezoekersverkeer.",
+  "cookie.learn_more":     "Meer weten",
+  "cookie.refuse":         "Weigeren",
+  "cookie.accept":         "Accepteren",
+
+  "sticky.cta":            "Mijn begeleiding starten"
+}

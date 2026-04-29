@@ -28,12 +28,19 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
   <nav class="nav" id="nav">
     <a href="#hero" class="nav-logo">ZOWE</a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#experience">Concept</a></li>
-      <li><a href="#about">Approche</a></li>
-      <li><a href="#services">Protocoles</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contact" class="nav-cta">Initier mon accompagnement</a></li>
+      <li><a href="#experience" data-i18n="nav.concept">Concept</a></li>
+      <li><a href="#about" data-i18n="nav.approach">Approche</a></li>
+      <li><a href="#services" data-i18n="nav.protocols">Protocoles</a></li>
+      <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+      <li><a href="#contact" class="nav-cta" data-i18n="nav.cta">Initier mon accompagnement</a></li>
     </ul>
+    <div class="lang-selector" id="langSelector" aria-label="Choisir la langue">
+      <button class="lang-btn" data-lang="fr">FR</button>
+      <span aria-hidden="true">·</span>
+      <button class="lang-btn" data-lang="nl">NL</button>
+      <span aria-hidden="true">·</span>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
     <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu">
       <span></span><span></span>
     </button>
@@ -99,11 +106,11 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
             >
           </div>
           <div class="about-formation">
-            <p class="label">Formation</p>
+            <p class="label" data-i18n="about.formation">Formation</p>
             <p class="formation-school">{about.school}</p>
             <p class="formation-degree">{about.degree}</p>
             <p class="about-kine-mention">
-              Zoé pratique également la kinésithérapie conventionnelle —
+              <span data-i18n="about.kine_mention">Zoé pratique également la kinésithérapie conventionnelle</span> —
               <a href="https://www.kinovea-lasne.com/praticiens/zoé-grêde" target="_blank" rel="noopener" class="kine-link">Kinovea Lasne</a>
             </p>
           </div>
@@ -134,18 +141,18 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
             <div class="beltra-card__body">
               <p class="beltra-card__desc">{tier.description}</p>
               <div class="beltra-card__tools">
-                <p class="beltra-label">Protocole</p>
+                <p class="beltra-label" data-i18n="services.protocol">Protocole</p>
                 <ul>{tier.tools.map(t => <li>{t}</li>)}</ul>
               </div>
               <div class="beltra-card__ideal">
-                <p class="beltra-label">Idéal pour</p>
+                <p class="beltra-label" data-i18n="services.ideal">Idéal pour</p>
                 <p>{tier.ideal}</p>
               </div>
             </div>
             <button class="share-btn" aria-label="Partager" data-share>
               <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
             </button>
-            <a href="#contact" class={`btn ${i === 2 ? 'btn-light' : 'btn-primary'}`}>En savoir plus</a>
+            <a href="#contact" class={`btn ${i === 2 ? 'btn-light' : 'btn-primary'}`} data-i18n="services.learn_more">En savoir plus</a>
           </div>
         ))}
       </div>
@@ -171,7 +178,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           ))}
         </div>
         <div style="text-align:center;margin-top:2.5rem;">
-          <a href="/galerie" class="btn btn-primary" data-anim="up">Voir toute la galerie</a>
+          <a href="/galerie" class="btn btn-primary" data-anim="up" data-i18n="gallery.view_all">Voir toute la galerie</a>
         </div>
       </div>
     </section>
@@ -182,7 +189,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     <div class="container">
       <div class="section-header" data-anim="up">
         <span class="section-number">04</span>
-        <h2 class="section-title">Témoignages</h2>
+        <h2 class="section-title" data-i18n="section.testimonials">Témoignages</h2>
       </div>
     </div>
     <div class="testimonials-track-wrapper">
@@ -206,7 +213,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     <div class="container">
       <div class="section-header" data-anim="up">
         <span class="section-number">05</span>
-        <h2 class="section-title">Questions fréquentes</h2>
+        <h2 class="section-title" data-i18n="section.faq">Questions fréquentes</h2>
       </div>
       <div class="faq-list">
         {faq.items.map((item, i) => (
@@ -230,7 +237,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       <div class="localisation-info" data-anim="left">
         <div class="localisation-info__header">
           <span class="section-number" style="opacity:0.45;">06</span>
-          <h2 class="localisation-title">Nous trouver</h2>
+          <h2 class="localisation-title" data-i18n="section.localisation">Nous trouver</h2>
         </div>
         <div class="localisation-address-block">
           <p class="localisation-name">{infos.cabinet}</p>
@@ -245,7 +252,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         <div class="hours-row">
           {infos.hours.split('·').map(h => <span class="hours-pill">{h.trim()}</span>)}
         </div>
-        <a href={mapsUrl} target="_blank" rel="noopener" class="btn btn-primary localisation-cta">
+        <a href={mapsUrl} target="_blank" rel="noopener" class="btn btn-primary localisation-cta" data-i18n="localisation.directions">
           Obtenir l'itinéraire
         </a>
       </div>
@@ -268,7 +275,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     <div class="container">
       <div class="section-header" data-anim="up">
         <span class="section-number">07</span>
-        <h2 class="section-title">Conciergerie</h2>
+        <h2 class="section-title" data-i18n="section.contact">Conciergerie</h2>
       </div>
       <p class="contact-intro" data-anim="up" data-delay="1">{contact.intro}</p>
 
@@ -294,37 +301,37 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         <div class="ff-row">
           <div class="ff">
             <input type="text" id="prenom" name="prenom" placeholder=" " autocomplete="given-name" required>
-            <label for="prenom">Prénom *</label>
+            <label for="prenom" data-i18n="form.prenom">Prénom *</label>
           </div>
           <div class="ff">
             <input type="text" id="nom" name="nom" placeholder=" " autocomplete="family-name" required>
-            <label for="nom">Nom *</label>
+            <label for="nom" data-i18n="form.nom">Nom *</label>
           </div>
         </div>
         <div class="ff-row">
           <div class="ff">
             <input type="email" id="email" name="email" placeholder=" " autocomplete="email" required inputmode="email">
-            <label for="email">Email *</label>
+            <label for="email" data-i18n="form.email">Email *</label>
           </div>
           <div class="ff">
             <input type="tel" id="telephone" name="telephone" placeholder=" " autocomplete="tel" inputmode="tel">
-            <label for="telephone">GSM (optionnel)</label>
+            <label for="telephone" data-i18n="form.tel">GSM (optionnel)</label>
           </div>
         </div>
         <div class="ff">
           <textarea id="message" name="message" placeholder=" " rows="5" required></textarea>
-          <label for="message">Votre message *</label>
+          <label for="message" data-i18n="form.message">Votre message *</label>
         </div>
         <div class="newsletter-opt">
           <input type="checkbox" id="newsletter" name="newsletter" value="true">
           <label for="newsletter">
-            J'accepte de recevoir les conseils et actualités de Zoé par email.
-            <span class="newsletter-opt__sub">Désinscription possible à tout moment.</span>
+            <span data-i18n="form.newsletter">J'accepte de recevoir les conseils et actualités de Zoé par email.</span>
+            <span class="newsletter-opt__sub" data-i18n="form.newsletter_sub">Désinscription possible à tout moment.</span>
           </label>
         </div>
         <div class="simple-form__footer">
-          <p class="mf-note">Zoé vous contactera dans la journée pour convenir ensemble d'un moment.</p>
-          <button type="submit" class="btn btn-primary" id="submitBtn">Écrire à Zoé</button>
+          <p class="mf-note" data-i18n="form.note">Zoé vous contactera dans la journée pour convenir ensemble d'un moment.</p>
+          <button type="submit" class="btn btn-primary" id="submitBtn" data-i18n="form.submit">Écrire à Zoé</button>
         </div>
       </form>
     </div>
@@ -336,25 +343,25 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       <div class="footer-grid">
         <div class="footer-col">
           <p class="footer-logo">ZOWE</p>
-          <p class="footer-tagline">Kinésithérapie de haute précision<br>Méthode BELTRA</p>
+          <p class="footer-tagline" data-i18n-html="footer.tagline">Kinésithérapie de haute précision<br>Méthode BELTRA</p>
         </div>
         <div class="footer-col">
-          <p class="footer-col__title">Cabinet</p>
+          <p class="footer-col__title" data-i18n="footer.cabinet">Cabinet</p>
           <p>{infos.cabinet}</p>
           <p>{infos.cabinetText}</p>
           <p class="footer-zones">{infos.zones}</p>
         </div>
         <div class="footer-col">
-          <p class="footer-col__title">Contact</p>
+          <p class="footer-col__title" data-i18n="footer.contact">Contact</p>
           <p><a href={`tel:${infos.phone.replace(/\s/g,'')}`}>{infos.phone}</a></p>
           <p><a href={`mailto:${infos.email}`}>{infos.email}</a></p>
           <p class="footer-tarif">{infos.tarifsTitle}</p>
         </div>
         <div class="footer-col">
-          <p class="footer-col__title">Mentions légales</p>
-          <p>N° d'entreprise : <em>à compléter</em></p>
-          <p>Assurance RC Pro : <em>à compléter</em></p>
-          <p>Visa INAMI : <em>à compléter</em></p>
+          <p class="footer-col__title" data-i18n="footer.legal">Mentions légales</p>
+          <p><span data-i18n="footer.entreprise">N° d'entreprise</span> : <em data-i18n="footer.to_complete">à compléter</em></p>
+          <p><span data-i18n="footer.rcpro">Assurance RC Pro</span> : <em data-i18n="footer.to_complete">à compléter</em></p>
+          <p><span data-i18n="footer.inami">Visa INAMI</span> : <em data-i18n="footer.to_complete">à compléter</em></p>
         </div>
       </div>
       <div class="footer-bottom">
@@ -365,15 +372,15 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           </a>
         </div>
         <div class="footer-legal-links">
-          <a href="/cadeau">Carte cadeau</a>
-          {gallery.visible && <><span aria-hidden="true">·</span><a href="/galerie">Galerie</a></>}
-          {session.visible && <><span aria-hidden="true">·</span><a href="/preparer-ma-seance">Avant votre séance</a></>}
+          <a href="/cadeau" data-i18n="footer.gift_card">Carte cadeau</a>
+          {gallery.visible && <><span aria-hidden="true">·</span><a href="/galerie" data-i18n="footer.gallery">Galerie</a></>}
+          {session.visible && <><span aria-hidden="true">·</span><a href="/preparer-ma-seance" data-i18n="footer.before_session">Avant votre séance</a></>}
           <span aria-hidden="true">·</span>
-          <a href="/mentions-legales">Mentions légales</a>
+          <a href="/mentions-legales" data-i18n="footer.legal_notices">Mentions légales</a>
           <span aria-hidden="true">·</span>
-          <a href="/confidentialite">Confidentialité</a>
+          <a href="/confidentialite" data-i18n="footer.privacy">Confidentialité</a>
         </div>
-        <p>&copy; {meta.copyright} Zowe — Zoé Grêde. Tous droits réservés.</p>
+        <p>&copy; {meta.copyright} Zowe — Zoé Grêde. <span data-i18n="footer.rights">Tous droits réservés.</span></p>
       </div>
     </div>
   </footer>
@@ -384,7 +391,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
   </a>
 
   <!-- Bouton sticky mobile -->
-  <a href="#contact" class="sticky-cta" id="stickyCta" aria-label="Initier mon accompagnement">
+  <a href="#contact" class="sticky-cta" id="stickyCta" aria-label="Initier mon accompagnement" data-i18n="sticky.cta">
     Initier mon accompagnement
   </a>
 
@@ -401,11 +408,11 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       var prenom = (document.getElementById('prenom') || {}).value || '';
       var email  = (document.getElementById('email')  || {}).value || '';
       if (!prenom.trim() || !email.trim()) {
-        alert('Veuillez renseigner votre prénom et votre email.');
+        alert((window._i18n && window._i18n['form.error_required']) || 'Veuillez renseigner votre prénom et votre email.');
         return;
       }
       var btn = document.getElementById('submitBtn');
-      if (btn) { btn.textContent = 'Envoi en cours…'; btn.disabled = true; }
+      if (btn) { btn.textContent = (window._i18n && window._i18n['form.sending']) || 'Envoi en cours…'; btn.disabled = true; }
 
       var payload = {
         prenom:    prenom.trim(),
@@ -423,12 +430,12 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       }).then(function (r) {
         if (r.ok) { window.location.href = '/merci/'; }
         else {
-          r.json().then(function (d) { alert(d.error || 'Une erreur est survenue. Veuillez réessayer.'); })
-           .catch(function () { alert('Une erreur est survenue. Veuillez réessayer.'); });
-          if (btn) { btn.textContent = 'Écrire à Zoé'; btn.disabled = false; }
+          r.json().then(function (d) { alert(d.error || (window._i18n && window._i18n['form.error_server']) || 'Une erreur est survenue. Veuillez réessayer.'); })
+           .catch(function () { alert((window._i18n && window._i18n['form.error_server']) || 'Une erreur est survenue. Veuillez réessayer.'); });
+          if (btn) { btn.textContent = (window._i18n && window._i18n['form.submit']) || 'Écrire à Zoé'; btn.disabled = false; }
         }
       }).catch(function () {
-        alert('Erreur réseau. Veuillez réessayer.');
+        alert((window._i18n && window._i18n['form.error_network']) || 'Erreur réseau. Veuillez réessayer.');
         if (btn) { btn.textContent = 'Écrire à Zoé'; btn.disabled = false; }
       });
     });

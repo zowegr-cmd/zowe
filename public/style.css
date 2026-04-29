@@ -181,14 +181,14 @@ img {
   margin-left: 1.5rem;
 }
 
-/* Sur le fond sombre du hero (nav non scrollée) */
-.nav:not(.scrolled) .lang-btn { color: rgba(245,240,232,0.6); }
-.nav:not(.scrolled) .lang-btn:hover,
-.nav:not(.scrolled) .lang-btn.active { color: var(--or); }
+/* Sur le fond sombre du hero (nav non scrollée) — desktop uniquement, pas le menu mobile */
+.nav:not(.scrolled) .lang-selector .lang-btn { color: rgba(245,240,232,0.6); }
+.nav:not(.scrolled) .lang-selector .lang-btn:hover,
+.nav:not(.scrolled) .lang-selector .lang-btn.active { color: var(--or); }
 .nav:not(.scrolled) .lang-selector > span { color: rgba(245,240,232,0.25); }
 
 /* Sur le fond clair (nav scrollée) */
-.nav.scrolled .lang-btn { color: var(--mid); }
+.nav.scrolled .lang-selector .lang-btn { color: var(--mid); }
 .nav.scrolled .lang-btn:hover,
 .nav.scrolled .lang-btn.active { color: var(--bordeaux); }
 .nav.scrolled .lang-selector > span { color: var(--light); }

@@ -3,6 +3,7 @@
 'use strict';
 
 const { Resend } = require('resend');
+const { getStore } = require('@netlify/blobs');
 
 const FORMSPREE_ID  = process.env.FORMSPREE_ID  || 'xqewvayo';
 const PATRON_EMAIL  = process.env.PATRON_EMAIL   || 'patron@kinovea.be';
@@ -66,17 +67,15 @@ exports.handler = async function (event) {
       });
     } catch (e) { console.error('[Resend patron]', e.message); }
 
-    // 4. Rappel 24h patient — nécessite Resend Pro pour scheduledAt
+    // 4. Rappel 24h — stocker dans Netlify Blobs (envoyé par la cron function)
     try {
-      const in24h = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString();
-      await resend.emails.send({
-        from: RESEND_FROM,
-        to: email,
-        subject: 'Zowe — Votre demande est bien entre nos mains',
-        html: patientReminderHtml(prenom),
-        scheduledAt: in24h,
+      const store = getStore('reminders');
+      const key   = `${now.getTime()}-${email.replace(/[^a-z0-9]/gi, '')}`;
+      await store.setJSON(key, {
+        prenom, email,
+        sendAt: new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString(),
       });
-    } catch (e) { console.error('[Resend 24h reminder — Pro requis si erreur 403]', e.message); }
+    } catch (e) { console.error('[Blobs reminder]', e.message); }
 
     // 5. Newsletter → Resend Contacts (si audience configurée)
     if ((newsletter === true || newsletter === 'true') && AUDIENCE_ID) {

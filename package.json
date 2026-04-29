@@ -8,6 +8,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@netlify/blobs": "^10.7.4",
     "astro": "^4.15.0",
     "resend": "^6.12.2",
     "sharp": "^0.34.5"

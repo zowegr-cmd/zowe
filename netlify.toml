@@ -4,3 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Rappel 24h — s'exécute toutes les 30 minutes
+[functions."send-reminders"]
+  schedule = "*/30 * * * *"

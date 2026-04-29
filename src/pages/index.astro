@@ -25,7 +25,7 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
       <li><a href="#about">Approche</a></li>
       <li><a href="#services">Protocoles</a></li>
       <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contact" class="nav-cta">Réserver</a></li>
+      <li><a href="#contact" class="nav-cta">Initier mon accompagnement</a></li>
     </ul>
     <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu">
       <span></span><span></span>
@@ -124,7 +124,7 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
                 <p>{tier.ideal}</p>
               </div>
             </div>
-            <a href="#contact" class={`btn ${i === 2 ? 'btn-light' : 'btn-primary'}`}>Réserver</a>
+            <a href="#contact" class={`btn ${i === 2 ? 'btn-light' : 'btn-primary'}`}>En savoir plus</a>
           </div>
         ))}
       </div>
@@ -173,6 +173,28 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
           </details>
         ))}
       </div>
+
+      <div class="faq-map-card" data-anim="up">
+        <div class="faq-map-card__map">
+          <iframe
+            src="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            width="100%" loading="lazy" style="border:0;"
+            title="Localisation Kinovea Rhode-Saint-Genèse">
+          </iframe>
+        </div>
+        <div class="faq-map-card__info">
+          <p class="faq-map-label">Cabinet</p>
+          <p class="faq-map-name">{infos.cabinet}</p>
+          <p class="faq-map-detail">{infos.cabinetText}</p>
+          <p class="faq-map-zones">{infos.zones}</p>
+          <a
+            href="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium"
+            target="_blank" rel="noopener"
+            class="faq-map-link">
+            Voir l'itinéraire →
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -199,16 +221,14 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
           <div class="mf-progress__line"></div>
           <div class="mf-progress__step" data-step="3">
             <div class="mf-progress__dot"><span>3</span></div>
-            <p>Agenda</p>
+            <p>Disponibilités</p>
           </div>
         </div>
 
         <form id="mainForm" action={formAction} method="POST">
           <input type="hidden" name="_subject" value="Nouvelle demande — Zowe BELTRA">
           <input type="text"   name="_gotcha"  style="display:none" tabindex="-1" autocomplete="off">
-          <input type="hidden" name="soin_choisi"   id="hiddenSoin">
-          <input type="hidden" name="date_souhaitee" id="hiddenDate">
-          <input type="hidden" name="heure_souhaitee" id="hiddenHeure">
+          <input type="hidden" name="soin_choisi" id="hiddenSoin">
 
           <!-- Étape 1 : Identité -->
           <div class="mf-panel" id="panel1">
@@ -262,28 +282,16 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
             </div>
           </div>
 
-          <!-- Étape 3 : Agenda -->
+          <!-- Étape 3 : Disponibilités -->
           <div class="mf-panel mf-panel--hidden" id="panel3">
-            <div class="cal-layout">
-              <div class="cal-box">
-                <div class="cal-header">
-                  <button type="button" class="cal-nav" id="prevMonth">&#8592;</button>
-                  <span class="cal-title" id="calTitle"></span>
-                  <button type="button" class="cal-nav" id="nextMonth">&#8594;</button>
-                </div>
-                <div class="cal-grid" id="calGrid"></div>
-              </div>
-              <div class="slots-box" id="slotsBox" style="display:none">
-                <p class="slots-date" id="slotsDate"></p>
-                <div class="slots-grid" id="slotsGrid"></div>
-              </div>
+            <div class="form-group">
+              <label for="disponibilites">Vos disponibilités préférées</label>
+              <textarea id="disponibilites" name="disponibilites" rows="4" placeholder="Ex : lundi matin, jeudi après-midi, en semaine uniquement…"></textarea>
             </div>
-            <div class="cal-note">
-              <p>⚠ Ce choix est une <strong>estimation de vos disponibilités</strong> pour aider Zoé à organiser son planning. Il ne constitue pas un rendez-vous confirmé — la date sera validée lors de votre échange personnalisé.</p>
-            </div>
+            <p class="mf-note">Zoé vous contactera dans les 24h pour convenir ensemble d'un moment qui vous correspond.</p>
             <div class="mf-nav">
               <button type="button" class="mf-back" id="toStep2b">← Retour</button>
-              <button type="submit" class="btn btn-primary">Envoyer ma demande</button>
+              <button type="submit" class="btn btn-primary">Écrire à Zoé</button>
             </div>
           </div>
         </form>
@@ -291,39 +299,7 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
     </div>
   </section>
 
-  <!-- ⑧ LOCALISATION -->
-  <section class="localisation">
-    <div class="localisation-inner">
-      <div class="localisation-map">
-        <iframe
-          src="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium&t=&z=15&ie=UTF8&iwloc=&output=embed"
-          width="100%" loading="lazy" style="border:0;"
-          title="Localisation Kinovea Rhode-Saint-Genèse">
-        </iframe>
-      </div>
-      <div class="localisation-info" data-anim="right">
-        <p class="localisation-label">Nous trouver</p>
-        <h2 class="localisation-title">Rhode-Saint-<br>Genèse</h2>
-        <div class="localisation-address">
-          <p>{infos.cabinet}</p>
-          <p>{infos.cabinetText}</p>
-          <p class="localisation-zones">{infos.zones}</p>
-        </div>
-        <div class="localisation-links">
-          <a href={`tel:${infos.phone.replace(/\s/g,'')}`}>{infos.phone}</a>
-          <a href={`mailto:${infos.email}`}>{infos.email}</a>
-        </div>
-        <a
-          href="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium"
-          target="_blank" rel="noopener"
-          class="btn-outline-light">
-          Voir l'itinéraire →
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ⑨ FOOTER -->
+  <!-- ⑧ FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -356,20 +332,17 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
     </div>
   </footer>
 
+  <!-- Bouton sticky mobile -->
+  <a href="#contact" class="sticky-cta" id="stickyCta" aria-label="Initier mon accompagnement">
+    Initier mon accompagnement
+  </a>
+
 </Layout>
 
 <script is:inline>
 (function () {
-  /* ── Multi-step form ── */
-  var step = 1;
-  var selSoin = '', selDate = '', selTime = '';
-  var calY, calM;
-  var now = new Date();
-  calY = now.getFullYear(); calM = now.getMonth();
-
-  var MONTHS   = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-  var DAYS_H   = ['Lu','Ma','Me','Je','Ve','Sa','Di'];
-  var DAYS_LBL = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  /* ── Formulaire multi-étapes ── */
+  var selSoin = '';
 
   function showPanel(n) {
     for (var i = 1; i <= 3; i++) {
@@ -381,7 +354,6 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
       el.classList.toggle('active', s === n);
       el.classList.toggle('done', s < n);
     });
-    step = n;
   }
 
   var b12 = document.getElementById('toStep2');
@@ -396,7 +368,7 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
   var b23 = document.getElementById('toStep3');
   if (b23) b23.addEventListener('click', function () {
     if (!selSoin) { alert('Veuillez sélectionner un protocole.'); return; }
-    showPanel(3); renderCal();
+    showPanel(3);
   });
   var b32 = document.getElementById('toStep2b');
   if (b32) b32.addEventListener('click', function () { showPanel(2); });
@@ -409,69 +381,6 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
       document.getElementById('hiddenSoin').value = selSoin;
     });
   });
-
-  /* ── Calendar ── */
-  function renderCal() {
-    var title = document.getElementById('calTitle');
-    var grid  = document.getElementById('calGrid');
-    if (!title || !grid) return;
-    title.textContent = MONTHS[calM] + ' ' + calY;
-    var html = DAYS_H.map(function(d){ return '<div class="cal-dh">'+d+'</div>'; }).join('');
-    var fd = new Date(calY, calM, 1).getDay();
-    fd = (fd + 6) % 7;
-    for (var i = 0; i < fd; i++) html += '<div class="cal-d"></div>';
-    var dim = new Date(calY, calM + 1, 0).getDate();
-    var tod = new Date(); tod.setHours(0,0,0,0);
-    for (var d = 1; d <= dim; d++) {
-      var dt = new Date(calY, calM, d); dt.setHours(0,0,0,0);
-      var ds = calY+'-'+String(calM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-      var off = dt < tod || dt.getDay()===0 || dt.getDay()===6;
-      var sel = selDate === ds;
-      html += '<div class="cal-d'+(off?' cal-d--off':'')+(sel?' cal-d--sel':'')+'"'
-             +(!off?' data-date="'+ds+'"':'')+'>'+d+'</div>';
-    }
-    grid.innerHTML = html;
-    grid.querySelectorAll('[data-date]').forEach(function(el) {
-      el.addEventListener('click', function () {
-        selDate = this.dataset.date;
-        document.getElementById('hiddenDate').value = selDate;
-        grid.querySelectorAll('.cal-d').forEach(function(c){ c.classList.remove('cal-d--sel'); });
-        this.classList.add('cal-d--sel');
-        renderSlots(selDate);
-      });
-    });
-  }
-
-  function renderSlots(ds) {
-    var box  = document.getElementById('slotsBox');
-    var grid = document.getElementById('slotsGrid');
-    var lbl  = document.getElementById('slotsDate');
-    if (!box || !grid) return;
-    var dt = new Date(ds+'T00:00:00');
-    lbl.textContent = DAYS_LBL[dt.getDay()]+' '+dt.getDate()+' '+MONTHS[dt.getMonth()];
-    var slots = []; var h = 8; var m = 30;
-    while (h < 18 || (h===18 && m===0)) {
-      slots.push(String(h).padStart(2,'0')+':'+String(m).padStart(2,'0'));
-      m+=30; if(m>=60){m=0;h++;}
-    }
-    grid.innerHTML = slots.map(function(s){
-      return '<button type="button" class="slot'+(selTime===s?' slot--sel':'')+'" data-time="'+s+'">'+s+'</button>';
-    }).join('');
-    grid.querySelectorAll('.slot').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        selTime = this.dataset.time;
-        document.getElementById('hiddenHeure').value = selTime;
-        grid.querySelectorAll('.slot').forEach(function(b){b.classList.remove('slot--sel');});
-        this.classList.add('slot--sel');
-      });
-    });
-    box.style.display = 'block';
-  }
-
-  var pm = document.getElementById('prevMonth');
-  var nm = document.getElementById('nextMonth');
-  if(pm) pm.addEventListener('click', function(){ calM--; if(calM<0){calM=11;calY--;} renderCal(); });
-  if(nm) nm.addEventListener('click', function(){ calM++; if(calM>11){calM=0;calY++;} renderCal(); });
 
   /* ── AJAX submit → /merci/ ── */
   (function () {
@@ -492,11 +401,11 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
           else {
             r.json().then(function(d){ alert('Erreur : '+(d.error||'Veuillez réessayer.')); })
              .catch(function(){ alert('Erreur. Veuillez réessayer.'); });
-            if(btn){ btn.textContent='Envoyer ma demande'; btn.disabled=false; }
+            if(btn){ btn.textContent='Écrire à Zoé'; btn.disabled=false; }
           }
         }).catch(function(){
           alert('Erreur réseau. Veuillez réessayer.');
-          if(btn){ btn.textContent='Envoyer ma demande'; btn.disabled=false; }
+          if(btn){ btn.textContent='Écrire à Zoé'; btn.disabled=false; }
         });
       });
     }
@@ -510,6 +419,16 @@ const allTestimonials = [...testimonials.items, ...testimonials.items];
       if(icon) icon.textContent = this.open ? '−' : '+';
     });
   });
+
+  /* ── Sticky CTA : masquer quand on est dans la section contact ── */
+  var stickyCta = document.getElementById('stickyCta');
+  var contactSection = document.getElementById('contact');
+  if (stickyCta && contactSection) {
+    var stickyObs = new IntersectionObserver(function(entries) {
+      stickyCta.classList.toggle('sticky-cta--hidden', entries[0].isIntersecting);
+    }, { threshold: 0.15 });
+    stickyObs.observe(contactSection);
+  }
 
 })();
 </script>

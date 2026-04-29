@@ -368,6 +368,25 @@ collections:
               - { label: "Texte NL", name: "text_nl", widget: "text", required: false }
               - { label: "Texte EN", name: "text_en", widget: "text", required: false }
 
+      - label: "Témoignages (fallback statique)"
+        name: "testimonials"
+        file: "src/content/testimonials.json"
+        format: json
+        fields:
+          - label: "Avis clients"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.rating}}★"
+            fields:
+              - { label: "Prénom et initiale (ex : Marie L.)", name: "name", widget: "string" }
+              - label: "Note"
+                name: "rating"
+                widget: "select"
+                options: ["5", "4"]
+                default: "5"
+              - { label: "Témoignage", name: "text", widget: "text" }
+              - { label: "Date (ex : Mars 2025)", name: "date", widget: "string" }
+
       - label: "Paramètres généraux"
         name: "meta"
         file: "src/content/meta.json"

@@ -20,7 +20,14 @@
     "ideal":      "Ideal for",
     "learn_more": "Learn more"
   },
-  "localisation": { "directions": "Get directions" },
+  "faq": {
+    "show_more": "+ View all questions",
+    "show_less": "− View fewer questions"
+  },
+  "localisation": {
+    "directions":  "Get directions",
+    "home_visits": "Home visits available"
+  },
   "gallery":      { "view_all":   "View full gallery" },
   "footer": {
     "tagline":        "High-precision physiotherapy<br>BELTRA method",

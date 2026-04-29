@@ -20,7 +20,14 @@
     "ideal":      "Ideaal voor",
     "learn_more": "Meer weten"
   },
-  "localisation": { "directions": "Routebeschrijving" },
+  "faq": {
+    "show_more": "+ Alle vragen bekijken",
+    "show_less": "− Minder vragen"
+  },
+  "localisation": {
+    "directions":  "Routebeschrijving",
+    "home_visits": "Thuisbezoeken beschikbaar"
+  },
   "gallery":      { "view_all":   "Bekijk de volledige galerij" },
   "footer": {
     "tagline":        "Hoge precisie kinesitherapie<br>BELTRA-methode",

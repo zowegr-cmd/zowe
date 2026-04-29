@@ -1465,6 +1465,32 @@ img {
   max-width: 620px;
 }
 
+.faq-item--extra {
+  display: none;
+}
+.faq-item--extra.faq-item--visible {
+  display: block;
+}
+
+.faq-more-wrap {
+  text-align: center;
+  padding-top: 2rem;
+}
+.faq-more-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--mid);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.faq-more-btn:hover {
+  border-color: var(--bordeaux);
+  color: var(--bordeaux);
+}
+
 /* ==========================================
    LOCALISATION
 ========================================== */
@@ -1592,6 +1618,16 @@ img {
 }
 .footer-col a { color: rgba(255,255,255,0.6); transition: color 0.2s; }
 .footer-col a:hover { color: var(--off-white); }
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6) !important;
+  text-decoration: none;
+  margin-bottom: 0.35rem;
+}
+.footer-social-link:hover { color: var(--off-white) !important; }
 .footer-zones { font-size: 0.72rem !important; color: rgba(255,255,255,0.3) !important; }
 .footer-tarif { color: rgba(255,255,255,0.45) !important; font-style: italic; }
 
@@ -1831,13 +1867,48 @@ img {
   color: var(--mid);
   line-height: 1.65;
 }
+.localisation-home-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bordeaux);
+  margin-bottom: 0.35rem;
+}
 .localisation-zones {
   font-size: 0.74rem;
   color: var(--light);
   line-height: 1.65;
   letter-spacing: 0.02em;
-  padding-top: 0.25rem;
-  border-top: 1px solid var(--border);
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.2rem;
+}
+.localisation-social {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.loc-social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.loc-social-btn:hover { opacity: 0.82; }
+.loc-social-btn--wa {
+  background: #25D366;
+  color: #fff;
+}
+.loc-social-btn--ig {
+  background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+  color: #fff;
 }
 .localisation-contacts {
   display: flex;

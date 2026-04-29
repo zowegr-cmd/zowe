@@ -124,6 +124,138 @@ collections:
             required: false
             hint: "Nom de l'assureur et numéro de police"
 
+      - label: "Galerie photos"
+        name: "gallery"
+        file: "src/content/gallery.json"
+        format: json
+        fields:
+          - label: "Galerie visible sur le site"
+            name: "visible"
+            widget: "boolean"
+            default: false
+            hint: "Activez pour afficher la galerie (aperçu accueil + page /galerie)"
+          - label: "Titre FR"
+            name: "title_fr"
+            widget: "string"
+          - label: "Titre NL"
+            name: "title_nl"
+            widget: "string"
+            required: false
+          - label: "Titre EN"
+            name: "title_en"
+            widget: "string"
+            required: false
+          - label: "Introduction FR"
+            name: "intro_fr"
+            widget: "text"
+          - label: "Introduction NL"
+            name: "intro_nl"
+            widget: "text"
+            required: false
+          - label: "Introduction EN"
+            name: "intro_en"
+            widget: "text"
+            required: false
+          - label: "Photos"
+            name: "photos"
+            widget: "list"
+            summary: "{{fields.title_fr}}"
+            fields:
+              - label: "Photo"
+                name: "image"
+                widget: "image"
+              - label: "Titre FR"
+                name: "title_fr"
+                widget: "string"
+              - label: "Titre NL"
+                name: "title_nl"
+                widget: "string"
+                required: false
+              - label: "Titre EN"
+                name: "title_en"
+                widget: "string"
+                required: false
+              - label: "Description FR"
+                name: "description_fr"
+                widget: "text"
+              - label: "Description NL"
+                name: "description_nl"
+                widget: "text"
+                required: false
+              - label: "Description EN"
+                name: "description_en"
+                widget: "text"
+                required: false
+              - label: "Protocole utilisé"
+                name: "protocol"
+                widget: "string"
+                required: false
+                hint: "Ex : Deep tissue · IASTM · Vacuothérapie"
+
+      - label: "Avant votre première séance"
+        name: "session"
+        file: "src/content/session.json"
+        format: json
+        fields:
+          - label: "Page visible sur le site"
+            name: "visible"
+            widget: "boolean"
+            default: false
+            hint: "Activez pour afficher le lien dans le footer, la page /merci et l'email patient"
+          - label: "Titre FR"
+            name: "title_fr"
+            widget: "string"
+          - label: "Titre NL"
+            name: "title_nl"
+            widget: "string"
+            required: false
+          - label: "Titre EN"
+            name: "title_en"
+            widget: "string"
+            required: false
+          - label: "Comment venir FR"
+            name: "howToGet_fr"
+            widget: "text"
+          - label: "Comment s'habiller FR"
+            name: "dress_fr"
+            widget: "text"
+          - label: "Durée selon protocole FR"
+            name: "duration_fr"
+            widget: "text"
+          - label: "Ce qu'il faut apporter FR"
+            name: "bring_fr"
+            widget: "text"
+          - label: "Paiement FR"
+            name: "payment_fr"
+            widget: "text"
+          - label: "Étapes du déroulé"
+            name: "steps"
+            widget: "list"
+            summary: "{{fields.label_fr}}"
+            fields:
+              - label: "Intitulé FR"
+                name: "label_fr"
+                widget: "string"
+              - label: "Intitulé NL"
+                name: "label_nl"
+                widget: "string"
+                required: false
+              - label: "Intitulé EN"
+                name: "label_en"
+                widget: "string"
+                required: false
+              - label: "Texte FR"
+                name: "text_fr"
+                widget: "text"
+              - label: "Texte NL"
+                name: "text_nl"
+                widget: "text"
+                required: false
+              - label: "Texte EN"
+                name: "text_en"
+                widget: "text"
+                required: false
+
       - label: "Formulaire de contact"
         name: "contact"
         file: "src/content/contact.json"

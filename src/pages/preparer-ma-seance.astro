@@ -1,0 +1,152 @@
+---
+import Layout from '../layouts/Layout.astro';
+import session from '../content/session.json';
+
+if (!session.visible) {
+  return Astro.redirect('/');
+}
+---
+<Layout
+  title="Avant votre première séance — Zowe"
+  description="Tout ce qu'il faut savoir avant votre première séance chez Zoé Grêde — comment venir, s'habiller, ce qui se passe pendant le soin.">
+
+  <style>
+    .session-page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 8rem 2rem 6rem;
+    }
+    .session-back {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--bordeaux); text-decoration: none; margin-bottom: 3rem;
+      transition: opacity 0.2s;
+    }
+    .session-back:hover { opacity: 0.7; }
+    .session-page h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300; font-style: italic;
+      color: var(--bordeaux); margin-bottom: 0.75rem; line-height: 1.1;
+    }
+    .session-page .session-sub {
+      font-size: 0.82rem; color: var(--light);
+      margin-bottom: 3.5rem; padding-bottom: 2rem;
+      border-bottom: 1px solid var(--or-border);
+    }
+    .session-info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+    .session-info-card {
+      padding: 1.75rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+    }
+    .session-info-card__label {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--bordeaux); margin-bottom: 0.75rem;
+    }
+    .session-info-card p {
+      font-size: 0.88rem; color: var(--mid); line-height: 1.75;
+    }
+    .session-timeline-title {
+      font-family: var(--sans); font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--bordeaux); margin-bottom: 2.5rem;
+    }
+    .session-timeline {
+      position: relative;
+      padding-left: 3rem;
+      margin-bottom: 4rem;
+    }
+    .session-timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.75rem; top: 0.5rem; bottom: 0;
+      width: 1px;
+      background: var(--or-border);
+    }
+    .timeline-step {
+      position: relative;
+      padding-bottom: 2.75rem;
+    }
+    .timeline-step:last-child { padding-bottom: 0; }
+    .timeline-step::before {
+      content: '';
+      position: absolute;
+      left: -2.35rem; top: 0.25rem;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--bordeaux);
+      box-shadow: 0 0 0 3px var(--off-white), 0 0 0 5px rgba(201,169,110,0.3);
+    }
+    .timeline-step__label {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--bordeaux); margin-bottom: 0.6rem;
+    }
+    .timeline-step p {
+      font-size: 0.9rem; color: var(--mid); line-height: 1.8;
+    }
+    .session-cta {
+      text-align: center;
+      padding-top: 3rem;
+      border-top: 1px solid var(--or-border);
+    }
+    .session-cta p {
+      font-family: var(--serif); font-size: 1rem; font-style: italic;
+      color: var(--mid); margin-bottom: 1.75rem;
+    }
+    @media (max-width: 640px) {
+      .session-info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <div class="session-page">
+    <a href="/" class="session-back">← Retour à l'accueil</a>
+
+    <h1>{session.title_fr}</h1>
+    <p class="session-sub">Tout ce qu'il faut savoir pour aborder votre séance sereinement.</p>
+
+    <div class="session-info-grid">
+      <div class="session-info-card">
+        <p class="session-info-card__label">Comment venir</p>
+        <p>{session.howToGet_fr}</p>
+      </div>
+      <div class="session-info-card">
+        <p class="session-info-card__label">Comment s'habiller</p>
+        <p>{session.dress_fr}</p>
+      </div>
+      <div class="session-info-card">
+        <p class="session-info-card__label">Durée selon le protocole</p>
+        <p>{session.duration_fr}</p>
+      </div>
+      <div class="session-info-card">
+        <p class="session-info-card__label">Ce qu'il faut apporter</p>
+        <p>{session.bring_fr}</p>
+      </div>
+      <div class="session-info-card" style="grid-column: 1 / -1;">
+        <p class="session-info-card__label">Paiement</p>
+        <p>{session.payment_fr}</p>
+      </div>
+    </div>
+
+    <p class="session-timeline-title">Déroulé de la séance</p>
+    <div class="session-timeline">
+      {session.steps.map((step) => (
+        <div class="timeline-step">
+          <p class="timeline-step__label">{step.label_fr}</p>
+          <p>{step.text_fr}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="session-cta">
+      <p>Prêt à vivre l'expérience ?</p>
+      <a href="/#contact" class="btn btn-primary">Initier mon accompagnement</a>
+    </div>
+  </div>
+</Layout>

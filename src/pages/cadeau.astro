@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import services from '../content/services.json';
+import infos from '../content/infos.json';
+
+const waMsg = encodeURIComponent("Bonjour Zoé, je souhaite offrir une carte cadeau Zowe.");
+const waLink = `https://wa.me/32471783746?text=${waMsg}`;
+---
+<Layout
+  title="Carte cadeau — Offrir l'expérience Zowe"
+  description="Offrez à vos proches un soin d'exception avec une carte cadeau Zowe. Kinésithérapie BELTRA de haute précision à Rhode-Saint-Genèse.">
+
+  <style>
+    .cadeau-page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 8rem 2rem 6rem;
+    }
+    .cadeau-back {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--bordeaux); text-decoration: none; margin-bottom: 3rem;
+      transition: opacity 0.2s;
+    }
+    .cadeau-back:hover { opacity: 0.7; }
+    .cadeau-hero { text-align: center; margin-bottom: 5rem; }
+    .cadeau-hero__label {
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--or); opacity: 0.8; margin-bottom: 1.5rem;
+    }
+    .cadeau-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300; font-style: italic;
+      color: var(--bordeaux); line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+    .cadeau-hero p {
+      font-family: var(--serif); font-size: 1.1rem; font-style: italic;
+      color: var(--mid); max-width: 480px; margin: 0 auto; line-height: 1.7;
+    }
+    .cadeau-divider {
+      width: 60px; height: 1px;
+      background: var(--or-border);
+      margin: 2.5rem auto;
+    }
+    .cadeau-protocols h2 {
+      font-family: var(--sans); font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--bordeaux); text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .cadeau-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+    .cadeau-card {
+      padding: 2rem 1.75rem;
+      border: 1px solid var(--border);
+      background: var(--white);
+      text-align: center;
+      display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .cadeau-card--featured {
+      background: var(--bordeaux);
+      border-color: var(--bordeaux);
+    }
+    .cadeau-card__duration {
+      font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--bordeaux);
+    }
+    .cadeau-card--featured .cadeau-card__duration { color: rgba(255,255,255,0.5); }
+    .cadeau-card__price {
+      font-family: var(--serif); font-size: 2.5rem;
+      font-weight: 300; color: var(--bordeaux); line-height: 1;
+    }
+    .cadeau-card--featured .cadeau-card__price { color: var(--or); }
+    .cadeau-card__name {
+      font-family: var(--serif); font-size: 1.15rem;
+      font-style: italic; color: var(--dark);
+    }
+    .cadeau-card--featured .cadeau-card__name { color: var(--off-white); }
+    .cadeau-card__tagline {
+      font-size: 0.75rem; color: var(--light); font-style: italic;
+    }
+    .cadeau-card--featured .cadeau-card__tagline { color: rgba(255,255,255,0.45); }
+    .cadeau-cta {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--cream);
+      border: 1px solid var(--or-border);
+    }
+    .cadeau-cta p {
+      font-family: var(--serif); font-size: 1rem; font-style: italic;
+      color: var(--mid); margin-bottom: 1.75rem; line-height: 1.7;
+    }
+    .cadeau-cta__actions {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+    @media (max-width: 640px) {
+      .cadeau-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <div class="cadeau-page">
+    <a href="/" class="cadeau-back">← Retour à l'accueil</a>
+
+    <div class="cadeau-hero">
+      <p class="cadeau-hero__label">Carte cadeau · Zowe</p>
+      <h1>Offrir l'expérience Zowe</h1>
+      <div class="cadeau-divider"></div>
+      <p>
+        Offrez à vos proches un soin d'exception.<br>
+        Une attention rare qui marque les esprits.
+      </p>
+    </div>
+
+    <div class="cadeau-protocols">
+      <h2>Choisissez le protocole</h2>
+      <div class="cadeau-grid">
+        {services.tiers.map((tier, i) => (
+          <div class={`cadeau-card${i === 2 ? ' cadeau-card--featured' : ''}`}>
+            <p class="cadeau-card__duration">{tier.duration}</p>
+            <p class="cadeau-card__price">{tier.price}</p>
+            <p class="cadeau-card__name">{tier.name}</p>
+            <p class="cadeau-card__tagline">{tier.tagline}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="cadeau-cta">
+        <p>
+          Zoé prépare chaque carte cadeau avec soin.<br>
+          Contactez-la directement pour convenir des détails.
+        </p>
+        <div class="cadeau-cta__actions">
+          <a href={waLink} target="_blank" rel="noopener" class="btn btn-primary">
+            Contacter Zoé par WhatsApp
+          </a>
+          <a href="/#contact" class="btn" style="background:transparent;border:1px solid var(--bordeaux);color:var(--bordeaux);">
+            Écrire via le formulaire
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

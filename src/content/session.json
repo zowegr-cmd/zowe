@@ -1,0 +1,55 @@
+{
+  "visible": false,
+  "title_fr": "Avant votre première séance",
+  "title_nl": "Voor uw eerste sessie",
+  "title_en": "Before your first session",
+  "howToGet_fr": "Rue des Iris, Boîte 2 — 1640 Rhode-Saint-Genèse. Parking disponible en rue. Accessible depuis Bruxelles en 20 minutes par la N5.",
+  "howToGet_nl": "Irisstraat, Doos 2 — 1640 Rhode-Saint-Genèse. Straatparkeren beschikbaar.",
+  "howToGet_en": "Rue des Iris, Box 2 — 1640 Rhode-Saint-Genèse. Street parking available.",
+  "dress_fr": "Venez en sous-vêtements ou en tenue de sport légère. Évitez les vêtements trop ajustés. Des draps sont fournis pour votre confort.",
+  "dress_nl": "Kom in ondergoed of lichte sportkleding. Draken worden voorzien.",
+  "dress_en": "Come in underwear or light sportswear. Draping is provided for your comfort.",
+  "duration_fr": "Audit Précision : 30 min · Protocole Harmonie : 1h · Expérience Signature : 1h30. Prévoyez 10 min supplémentaires pour la première séance.",
+  "duration_nl": "Precisie Audit: 30 min · Harmonie Protocol: 1u · Signature Ervaring: 1u30.",
+  "duration_en": "Precision Audit: 30 min · Harmony Protocol: 1h · Signature Experience: 1h30.",
+  "bring_fr": "Aucun document n'est requis. Si vous avez des examens récents (IRM, radio), vous pouvez les apporter — sans obligation.",
+  "bring_nl": "Geen documenten vereist. Recente onderzoeken (MRI, röntgenfoto) mogen meegebracht worden.",
+  "bring_en": "No documents required. Recent scans (MRI, X-ray) are welcome but not mandatory.",
+  "payment_fr": "Virement bancaire, Bancontact ou espèces. Non-conventionné — remboursement partiel possible selon votre mutuelle.",
+  "payment_nl": "Bankoverschrijving, Bancontact of contant. Niet-geconventioneerd.",
+  "payment_en": "Bank transfer, Bancontact or cash. Non-conventional — partial reimbursement possible depending on your insurance.",
+  "steps": [
+    {
+      "label_fr": "Accueil",
+      "label_nl": "Ontvangst",
+      "label_en": "Welcome",
+      "text_fr": "Zoé vous accueille dans un espace calme, pensé pour votre confort. Un moment d'échange vous est dédié avant toute intervention.",
+      "text_nl": "Zoé verwelkomt u in een rustige, comfortabele ruimte.",
+      "text_en": "Zoé welcomes you in a calm space designed for your comfort."
+    },
+    {
+      "label_fr": "Bilan & anamnèse",
+      "label_nl": "Evaluatie & anamnese",
+      "label_en": "Assessment",
+      "text_fr": "Un bilan postural et fonctionnel approfondi est réalisé. Zoé cartographie vos zones de tension, vos limitations réelles et les origines profondes de vos douleurs.",
+      "text_nl": "Een uitgebreide posturale en functionele evaluatie wordt uitgevoerd.",
+      "text_en": "A thorough postural and functional assessment is carried out."
+    },
+    {
+      "label_fr": "Le soin",
+      "label_nl": "De behandeling",
+      "label_en": "The treatment",
+      "text_fr": "Le protocole choisi est appliqué avec précision. Deep tissue, IASTM, vacuothérapie, mobilisations articulaires — les techniques BELTRA adaptées à votre situation.",
+      "text_nl": "Het gekozen protocol wordt nauwkeurig toegepast.",
+      "text_en": "The chosen protocol is applied with precision using BELTRA techniques."
+    },
+    {
+      "label_fr": "Recommandations",
+      "label_nl": "Aanbevelingen",
+      "label_en": "Recommendations",
+      "text_fr": "En fin de séance, Zoé vous partage ses observations et recommandations personnalisées pour maintenir et amplifier les bénéfices du soin.",
+      "text_nl": "Aan het einde deelt Zoé haar gepersonaliseerde aanbevelingen.",
+      "text_en": "Zoé shares her personalized recommendations to maintain the benefits of the treatment."
+    }
+  ]
+}

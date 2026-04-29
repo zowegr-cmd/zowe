@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import hero         from '../content/hero.json';
 import experience   from '../content/experience.json';
 import about        from '../content/about.json';
+import gallery      from '../content/gallery.json';
+import session      from '../content/session.json';
 import services     from '../content/services.json';
 import testimonials from '../content/testimonials.json';
 import faq          from '../content/faq.json';
@@ -149,6 +151,31 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       </div>
     </div>
   </section>
+
+  <!-- GALERIE APERÇU (si activée dans le panel admin) -->
+  {gallery.visible && gallery.photos.length > 0 && (
+    <section class="section gallery-preview">
+      <div class="container">
+        <div class="section-header" data-anim="up">
+          <h2 class="section-title">{gallery.title_fr}</h2>
+        </div>
+        <div class="gallery-grid gallery-grid--preview">
+          {gallery.photos.slice(0, 3).map(photo => (
+            <a href="/galerie" class="gallery-card">
+              <img src={photo.image} alt={photo.title_fr} loading="lazy">
+              <div class="gallery-card__overlay">
+                {photo.protocol && <span class="gallery-card__badge">{photo.protocol}</span>}
+                <p class="gallery-card__title">{photo.title_fr}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+        <div style="text-align:center;margin-top:2.5rem;">
+          <a href="/galerie" class="btn btn-primary" data-anim="up">Voir toute la galerie</a>
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- ⑤ TÉMOIGNAGES (fallback statique · Google Reviews chargés dynamiquement) -->
   <section id="testimonials" class="section testimonials">
@@ -338,6 +365,10 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           </a>
         </div>
         <div class="footer-legal-links">
+          <a href="/cadeau">Carte cadeau</a>
+          {gallery.visible && <><span aria-hidden="true">·</span><a href="/galerie">Galerie</a></>}
+          {session.visible && <><span aria-hidden="true">·</span><a href="/preparer-ma-seance">Avant votre séance</a></>}
+          <span aria-hidden="true">·</span>
           <a href="/mentions-legales">Mentions légales</a>
           <span aria-hidden="true">·</span>
           <a href="/confidentialite">Confidentialité</a>

@@ -310,38 +310,40 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
 
   <!-- ⑦ NOUS TROUVER -->
   <section id="localisation" class="section localisation-section">
-    <div class="localisation-grid">
-      <!-- Colonne gauche : infos -->
-      <div class="localisation-info" data-anim="left">
-        <div class="localisation-info__header">
-          <span class="section-number" style="opacity:0.45;">07</span>
-          <h2 class="localisation-title" data-i18n="section.localisation">Nous trouver</h2>
-        </div>
-        <div class="localisation-address-block">
-          <p class="localisation-name">{infos.cabinet}</p>
-          <p class="localisation-street">{infos.address}</p>
-          <p class="localisation-street">{infos.city}</p>
-        </div>
-        <p class="localisation-zones">{infos.zones}</p>
-        <div class="localisation-contacts">
-          <a href={`tel:${infos.phone.replace(/\s/g,'')}`}>{infos.phone}</a>
-          <a href={`mailto:${infos.email}`}>{infos.email}</a>
-        </div>
-        <div class="hours-row">
-          {infos.hours.split('·').map(h => <span class="hours-pill">{h.trim()}</span>)}
-        </div>
-        <a href={mapsUrl} target="_blank" rel="noopener" class="btn btn-primary localisation-cta" data-i18n="localisation.directions">
-          Obtenir l'itinéraire
-        </a>
+    <div class="container">
+      <div class="section-header" data-anim="up">
+        <span class="section-number">07</span>
+        <h2 class="section-title" data-i18n="section.localisation">Nous trouver</h2>
       </div>
-      <!-- Colonne droite : Mapbox -->
-      <div class="localisation-map-col" id="mapbox-container">
-        <div id="mapbox-map">
-          <iframe
-            src="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            width="100%" height="100%" style="border:0;min-height:480px;filter:grayscale(1) brightness(0.7);" loading="lazy"
-            title="Localisation">
-          </iframe>
+      <div class="localisation-grid">
+        <!-- Colonne gauche : infos -->
+        <div class="localisation-info" data-anim="left">
+          <div class="localisation-address-block">
+            <p class="localisation-name">{infos.cabinet}</p>
+            <p class="localisation-street">{infos.address}</p>
+            <p class="localisation-street">{infos.city}</p>
+          </div>
+          <div class="hours-row">
+            {infos.hours.split('·').map(h => <span class="hours-pill">{h.trim()}</span>)}
+          </div>
+          <p class="localisation-zones">{infos.zones}</p>
+          <div class="localisation-contacts">
+            <a href={`tel:${infos.phone.replace(/\s/g,'')}`}>{infos.phone}</a>
+            <a href={`mailto:${infos.email}`}>{infos.email}</a>
+          </div>
+          <a href={mapsUrl} target="_blank" rel="noopener" class="btn btn-primary localisation-cta" data-i18n="localisation.directions">
+            Obtenir l'itinéraire
+          </a>
+        </div>
+        <!-- Colonne droite : carte -->
+        <div class="localisation-map-col" id="mapbox-container" data-anim="right">
+          <div id="mapbox-map">
+            <iframe
+              src="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              width="100%" height="100%" style="border:0;filter:grayscale(1) brightness(0.7);" loading="lazy"
+              title="Localisation">
+            </iframe>
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Page introuvable — Zowe" description="Cette page n'existe pas.">
+  <style>
+    .not-found {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(150deg, #0F0F0F 0%, #2A0A10 60%, #1A0508 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .not-found::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.07;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+    .not-found__inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .not-found__logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      color: rgba(201, 169, 110, 0.7);
+      text-decoration: none;
+      margin-bottom: 2rem;
+    }
+    .not-found__num {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(245, 240, 232, 0.08);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      pointer-events: none;
+      user-select: none;
+    }
+    .not-found__title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #F5F0E8;
+      line-height: 1.1;
+    }
+    .not-found__sub {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.88rem;
+      color: rgba(245, 240, 232, 0.5);
+      line-height: 1.8;
+      max-width: 340px;
+    }
+    .not-found__btn {
+      display: inline-block;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      border: 1px solid rgba(201, 169, 110, 0.4);
+      color: #F5F0E8;
+      text-decoration: none;
+      transition: background 0.25s, border-color 0.25s, color 0.25s;
+      margin-top: 0.5rem;
+    }
+    .not-found__btn:hover {
+      background: rgba(201, 169, 110, 0.08);
+      border-color: #C9A96E;
+      color: #C9A96E;
+    }
+  </style>
+  <div class="not-found">
+    <div class="not-found__inner">
+      <a href="/" class="not-found__logo">ZOWE</a>
+      <h1 class="not-found__title">Page introuvable</h1>
+      <p class="not-found__sub">
+        Cette page n'existe pas ou a été déplacée.<br>
+        L'expérience Zowe vous attend à l'accueil.
+      </p>
+      <a href="/" class="not-found__btn">Retour à l'accueil</a>
+    </div>
+  </div>
+</Layout>

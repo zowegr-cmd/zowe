@@ -1,87 +1,139 @@
 ---
 import meta from '../content/meta.json';
+import infos from '../content/infos.json';
 ---
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Merci — Zowe</title>
+  <meta name="robots" content="noindex">
+  <title>Message reçu — Zowe</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' font-family='Georgia' fill='%236B2437'>Z</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bordeaux: #6B2437;
-      --bordeaux-dark: #4A1827;
-      --off-white: #F8F5F1;
+      --bordeaux: #6B1F2A;
+      --or: #C9A96E;
+      --off-white: #F5F0E8;
+      --dark: #1A1A1A;
       --mid: #5C5C5C;
       --serif: 'Cormorant Garamond', Georgia, serif;
       --sans: 'Inter', system-ui, sans-serif;
     }
     body {
       font-family: var(--sans);
-      background: var(--off-white);
+      background: linear-gradient(150deg, #0F0F0F 0%, #2A0A10 60%, #1A0508 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 2rem;
+      padding: 3rem 2rem;
       -webkit-font-smoothing: antialiased;
+      position: relative;
+      overflow: hidden;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.07; pointer-events: none; mix-blend-mode: overlay;
+    }
+    .inner {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 1.75rem;
+      max-width: 480px;
     }
     .logo {
       font-family: var(--serif);
-      font-size: 1.5rem;
-      font-weight: 500;
-      letter-spacing: 0.28em;
-      color: var(--bordeaux);
-      margin-bottom: 4rem;
-      display: block;
-      text-decoration: none;
+      font-size: 1.4rem; font-weight: 500; letter-spacing: 0.28em;
+      color: rgba(201, 169, 110, 0.7);
+      text-decoration: none; margin-bottom: 1.5rem;
+    }
+    .check {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 1px solid rgba(201, 169, 110, 0.35);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--or); font-size: 1.4rem;
     }
     h1 {
       font-family: var(--serif);
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--bordeaux);
-      margin-bottom: 1.5rem;
-      line-height: 1;
+      font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 300; font-style: italic;
+      color: var(--off-white); line-height: 1.05;
     }
-    p {
-      font-size: 0.93rem;
-      color: var(--mid);
-      line-height: 1.8;
-      max-width: 400px;
-      margin-bottom: 3rem;
+    .sub {
+      font-size: 0.92rem; color: rgba(245, 240, 232, 0.6);
+      line-height: 1.85;
     }
-    a.btn {
-      display: inline-block;
-      font-family: var(--sans);
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      padding: 1rem 2.75rem;
-      background: var(--bordeaux);
+    .sub strong { color: rgba(245, 240, 232, 0.85); font-weight: 400; }
+    .divider {
+      width: 40px; height: 1px;
+      background: rgba(201, 169, 110, 0.3); margin: 0.5rem 0;
+    }
+    .social-row {
+      display: flex; gap: 1rem; align-items: center; margin-top: 0.5rem;
+    }
+    .social-btn {
+      display: flex; align-items: center; gap: 0.55rem;
+      padding: 0.75rem 1.4rem;
+      font-family: var(--sans); font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+      border: 1px solid rgba(201, 169, 110, 0.3);
       color: var(--off-white);
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .social-btn:hover {
+      background: rgba(201, 169, 110, 0.08);
+      border-color: var(--or);
+    }
+    .social-btn svg { width: 16px; height: 16px; fill: currentColor; }
+    .btn-home {
+      display: inline-block;
+      font-family: var(--sans); font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.85rem 2.25rem;
+      background: var(--bordeaux); color: var(--off-white);
       text-decoration: none;
-      transition: background 0.25s, transform 0.25s;
+      transition: background 0.25s, transform 0.2s;
+      margin-top: 0.75rem;
     }
-    a.btn:hover {
-      background: var(--bordeaux-dark);
-      transform: translateY(-2px);
-    }
+    .btn-home:hover { background: #4A1520; transform: translateY(-2px); }
   </style>
 </head>
 <body>
-  <a href="/" class="logo">ZOWE</a>
-  <h1>Merci.</h1>
-  <p>Votre demande a bien été reçue. Je vous recontacterai dans les plus brefs délais pour confirmer votre rendez-vous.</p>
-  <a href="/" class="btn">Retour à l'accueil</a>
+  <div class="inner">
+    <a href="/" class="logo">ZOWE</a>
+    <div class="check">✓</div>
+    <h1>Message bien reçu.</h1>
+    <p class="sub">
+      <strong>Zoé prendra contact avec vous dans la journée</strong><br>
+      pour convenir d'un moment qui vous correspond.<br>
+      En attendant, n'hésitez pas à la rejoindre directement.
+    </p>
+    <div class="divider"></div>
+    <div class="social-row">
+      <a
+        href={`https://wa.me/32471783746?text=${encodeURIComponent("Bonjour Zoé, je souhaite en savoir plus sur l'expérience Zowe.")}`}
+        target="_blank" rel="noopener"
+        class="social-btn">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+      <a
+        href="https://www.instagram.com/kine.zowe"
+        target="_blank" rel="noopener"
+        class="social-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Instagram
+      </a>
+    </div>
+    <a href="/" class="btn-home">Retour à l'accueil</a>
+  </div>
 </body>
 </html>

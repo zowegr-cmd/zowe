@@ -11,16 +11,19 @@
 }
 
 :root {
-  --bordeaux:       #6B2437;
-  --bordeaux-dark:  #4A1827;
-  --bordeaux-alpha: rgba(107, 36, 55, 0.06);
-  --blue:           #2E608A;
-  --off-white:      #F8F5F1;
+  --bordeaux:       #6B1F2A;
+  --bordeaux-dark:  #4A1520;
+  --bordeaux-alpha: rgba(107, 31, 42, 0.06);
+  --or:             #C9A96E;
+  --or-alpha:       rgba(201, 169, 110, 0.12);
+  --or-border:      rgba(201, 169, 110, 0.2);
+  --noir:           #0F0F0F;
+  --off-white:      #F5F0E8;
   --cream:          #EDE8DF;
   --dark:           #1A1A1A;
   --mid:            #5C5C5C;
   --light:          #AAAAAA;
-  --border:         rgba(0, 0, 0, 0.1);
+  --border:         rgba(0, 0, 0, 0.08);
   --white:          #FFFFFF;
 
   --serif: 'Cormorant Garamond', Georgia, serif;
@@ -161,16 +164,19 @@ img {
   padding: 8rem 2rem 5rem;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(150deg, #0F0F0F 0%, #2A0A10 60%, #1A0508 100%);
 }
 
+/* Grain subtil en overlay */
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 65% 40%, rgba(107, 36, 55, 0.05) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 30% 60%, rgba(46, 96, 138, 0.04) 0%, transparent 70%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.07;
   pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 0;
 }
 
 .hero-inner {
@@ -179,13 +185,14 @@ img {
   align-items: center;
   gap: 2rem;
   position: relative;
+  z-index: 1;
 }
 
 .hero-label {
   font-size: 0.65rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--light);
+  color: rgba(201, 169, 110, 0.6);
   font-weight: 400;
 }
 
@@ -195,7 +202,7 @@ img {
   font-weight: 300;
   font-style: italic;
   letter-spacing: -0.02em;
-  color: var(--bordeaux);
+  color: var(--off-white);
   line-height: 0.88;
 }
 
@@ -204,9 +211,24 @@ img {
   font-size: clamp(1rem, 2.2vw, 1.45rem);
   font-weight: 300;
   font-style: italic;
-  color: var(--mid);
+  color: rgba(245, 240, 232, 0.65);
   line-height: 1.55;
   max-width: 380px;
+}
+
+/* CTA hero sur fond sombre — style outline or */
+.hero-inner > .btn-primary {
+  background: transparent;
+  border: 1px solid rgba(201, 169, 110, 0.45);
+  color: var(--off-white);
+  box-shadow: none;
+}
+.hero-inner > .btn-primary:hover {
+  background: rgba(201, 169, 110, 0.08);
+  border-color: var(--or);
+  color: var(--or);
+  box-shadow: 0 0 28px rgba(201, 169, 110, 0.18);
+  transform: translateY(-2px);
 }
 
 .hero-scroll {
@@ -215,7 +237,7 @@ img {
   left: 50%;
   transform: translateX(-50%);
   font-size: 1rem;
-  color: var(--light);
+  color: rgba(245, 240, 232, 0.28);
   animation: heroFade 0.6s ease 1.1s both, floatDown 2.2s ease-in-out 1.7s infinite;
 }
 @keyframes heroFade {
@@ -251,7 +273,7 @@ img {
 .btn-primary:hover {
   background: var(--bordeaux-dark);
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(107, 36, 55, 0.22);
+  box-shadow: 0 6px 24px rgba(107, 31, 42, 0.22), 0 0 0 1px rgba(201, 169, 110, 0.25);
 }
 
 /* ==========================================
@@ -259,6 +281,7 @@ img {
 ========================================== */
 .section {
   padding: var(--section-y) 0;
+  border-top: 1px solid var(--or-border);
 }
 
 .section-header {
@@ -1506,12 +1529,29 @@ img {
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.08);
   padding-top: 1.5rem;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 .footer-bottom p {
   font-size: 0.72rem;
   color: rgba(255,255,255,0.2);
   letter-spacing: 0.05em;
+}
+.footer-bottom__social .instagram-link {
+  color: rgba(201, 169, 110, 0.55);
+  font-size: 0.65rem;
+}
+.footer-bottom__social .instagram-link:hover { opacity: 0.9; }
+
+.about-kine-mention {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--light);
+  font-style: italic;
+  line-height: 1.6;
 }
 
 /* Responsive nouvelles sections */
@@ -1727,4 +1767,121 @@ img {
     padding: 0.45rem 0.85rem !important;
     letter-spacing: 0.08em !important;
   }
+}
+
+/* ==========================================
+   WHATSAPP — BOUTON FLOTTANT
+========================================== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 1.5rem;
+  z-index: 145;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--off-white);
+  border: 1px solid var(--or-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
+}
+.whatsapp-float:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(201, 169, 110, 0.2);
+}
+.whatsapp-float svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--bordeaux);
+}
+@media (max-width: 860px) {
+  .whatsapp-float { bottom: 4.5rem; right: 1rem; }
+}
+
+/* ==========================================
+   INSTAGRAM — LIEN ICÔNE
+========================================== */
+.instagram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--or);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.instagram-link:hover { opacity: 0.7; }
+.instagram-link svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* Lien kinésithérapie conventionnelle */
+.kine-link {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--or);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(201, 169, 110, 0.35);
+  transition: border-color 0.2s, color 0.2s;
+}
+.kine-link:hover { color: var(--bordeaux); border-color: var(--bordeaux); }
+
+/* Bouton partage protocoles */
+.share-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--or);
+  opacity: 0.6;
+  transition: opacity 0.2s, transform 0.2s;
+  padding: 0;
+}
+.share-btn:hover { opacity: 1; transform: scale(1.1); }
+.share-btn svg { width: 16px; height: 16px; fill: currentColor; }
+.beltra-card { position: relative; }
+
+/* Horaires section contact + footer */
+.hours-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.hours-pill {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--mid);
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--or-border);
+  background: rgba(201, 169, 110, 0.04);
+}
+
+/* ==========================================
+   PREFERS-REDUCED-MOTION
+========================================== */
+@media (prefers-reduced-motion: reduce) {
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .hero-inner > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hero-scroll { animation: none !important; }
+  .testimonials-track { animation-play-state: paused; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }

@@ -221,103 +221,62 @@ const igLink = infos.instagram || 'https://www.instagram.com/kine.zowe';
         <h2 class="section-title">Conciergerie</h2>
       </div>
       <p class="contact-intro" data-anim="up" data-delay="1">{contact.intro}</p>
-      <div class="hours-row" data-anim="up" data-delay="2">
-        {infos.hours.split('·').map(h => <span class="hours-pill">{h.trim()}</span>)}
-        <a href={igLink} target="_blank" rel="noopener" class="instagram-link">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+
+      <!-- Infos contact + horaires -->
+      <div class="contact-meta" data-anim="up" data-delay="2">
+        <a href={`tel:${infos.phone.replace(/\s/g,'')}`} class="contact-meta__item">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          {infos.phone}
+        </a>
+        <a href={`mailto:${infos.email}`} class="contact-meta__item">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          {infos.email}
+        </a>
+        <a href={igLink} target="_blank" rel="noopener" class="contact-meta__item">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
           @kine.zowe
         </a>
+        {infos.hours.split('·').map(h => <span class="hours-pill">{h.trim()}</span>)}
       </div>
 
-      <div class="mf-wrapper" data-anim="up" data-delay="3">
-        <div class="mf-progress">
-          <div class="mf-progress__step active" data-step="1">
-            <div class="mf-progress__dot"><span>1</span></div>
-            <p>Identité</p>
+      <!-- Formulaire direct -->
+      <form id="mainForm" class="simple-form" data-anim="up" data-delay="3" novalidate>
+        <div class="ff-row">
+          <div class="ff">
+            <input type="text" id="prenom" name="prenom" placeholder=" " autocomplete="given-name" required>
+            <label for="prenom">Prénom *</label>
           </div>
-          <div class="mf-progress__line"></div>
-          <div class="mf-progress__step" data-step="2">
-            <div class="mf-progress__dot"><span>2</span></div>
-            <p>Protocole</p>
-          </div>
-          <div class="mf-progress__line"></div>
-          <div class="mf-progress__step" data-step="3">
-            <div class="mf-progress__dot"><span>3</span></div>
-            <p>Disponibilités</p>
+          <div class="ff">
+            <input type="text" id="nom" name="nom" placeholder=" " autocomplete="family-name" required>
+            <label for="nom">Nom *</label>
           </div>
         </div>
-
-        <form id="mainForm" action={formAction} method="POST">
-          <input type="hidden" name="_subject" value="Nouvelle demande — Zowe BELTRA">
-          <input type="text"   name="_gotcha"  style="display:none" tabindex="-1" autocomplete="off">
-          <input type="hidden" name="soin_choisi" id="hiddenSoin">
-
-          <!-- Étape 1 : Identité -->
-          <div class="mf-panel" id="panel1">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="prenom">Prénom *</label>
-                <input type="text" id="prenom" name="prenom" autocomplete="given-name" placeholder="Votre prénom">
-              </div>
-              <div class="form-group">
-                <label for="nom">Nom *</label>
-                <input type="text" id="nom" name="nom" autocomplete="family-name" placeholder="Votre nom">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="email">Email *</label>
-                <input type="email" id="email" name="email" autocomplete="email" placeholder="votre@email.com">
-              </div>
-              <div class="form-group">
-                <label for="telephone">GSM</label>
-                <input type="tel" id="telephone" name="telephone" autocomplete="tel" placeholder="0470 00 00 00">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="message">Votre situation</label>
-              <textarea id="message" name="message" rows="3" placeholder="Décrivez brièvement vos douleurs, objectifs ou questions…"></textarea>
-            </div>
-            <div class="mf-nav mf-nav--right">
-              <button type="button" class="btn btn-primary" id="toStep2">Continuer <span>→</span></button>
-            </div>
+        <div class="ff-row">
+          <div class="ff">
+            <input type="email" id="email" name="email" placeholder=" " autocomplete="email" required inputmode="email">
+            <label for="email">Email *</label>
           </div>
-
-          <!-- Étape 2 : Sélection du protocole -->
-          <div class="mf-panel mf-panel--hidden" id="panel2">
-            <div class="soin-cards">
-              {services.tiers.map((tier, i) => (
-                <div class={`soin-card${i === 2 ? ' soin-card--premium' : ''}`} data-soin={`${tier.name} — ${tier.duration} — ${tier.price}`}>
-                  <div class="soin-card__top">
-                    <span class="soin-card__duration">{tier.duration}</span>
-                    <span class="soin-card__price">{tier.price}</span>
-                  </div>
-                  <h3>{tier.name}</h3>
-                  <p>{tier.description}</p>
-                  <div class="soin-card__check">✓</div>
-                </div>
-              ))}
-            </div>
-            <div class="mf-nav">
-              <button type="button" class="mf-back" id="toStep1">← Retour</button>
-              <button type="button" class="btn btn-primary" id="toStep3">Continuer <span>→</span></button>
-            </div>
+          <div class="ff">
+            <input type="tel" id="telephone" name="telephone" placeholder=" " autocomplete="tel" inputmode="tel">
+            <label for="telephone">GSM (optionnel)</label>
           </div>
-
-          <!-- Étape 3 : Disponibilités -->
-          <div class="mf-panel mf-panel--hidden" id="panel3">
-            <div class="form-group">
-              <label for="disponibilites">Vos disponibilités préférées</label>
-              <textarea id="disponibilites" name="disponibilites" rows="4" placeholder="Ex : lundi matin, jeudi après-midi, en semaine uniquement…"></textarea>
-            </div>
-            <p class="mf-note">Zoé vous contactera dans les 24h pour convenir ensemble d'un moment qui vous correspond.</p>
-            <div class="mf-nav">
-              <button type="button" class="mf-back" id="toStep2b">← Retour</button>
-              <button type="submit" class="btn btn-primary">Écrire à Zoé</button>
-            </div>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="ff">
+          <textarea id="message" name="message" placeholder=" " rows="5" required></textarea>
+          <label for="message">Votre message *</label>
+        </div>
+        <div class="newsletter-opt">
+          <input type="checkbox" id="newsletter" name="newsletter" value="true">
+          <label for="newsletter">
+            J'accepte de recevoir les conseils et actualités de Zoé par email.
+            <span class="newsletter-opt__sub">Désinscription possible à tout moment.</span>
+          </label>
+        </div>
+        <div class="simple-form__footer">
+          <p class="mf-note">Zoé vous contactera dans la journée pour convenir ensemble d'un moment.</p>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Écrire à Zoé</button>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -374,76 +333,47 @@ const igLink = infos.instagram || 'https://www.instagram.com/kine.zowe';
 
 <script is:inline>
 (function () {
-  /* ── Formulaire multi-étapes ── */
-  var selSoin = '';
 
-  function showPanel(n) {
-    for (var i = 1; i <= 3; i++) {
-      var p = document.getElementById('panel' + i);
-      if (p) p.classList.toggle('mf-panel--hidden', i !== n);
-    }
-    document.querySelectorAll('.mf-progress__step').forEach(function(el) {
-      var s = parseInt(el.dataset.step);
-      el.classList.toggle('active', s === n);
-      el.classList.toggle('done', s < n);
+  /* ── Formulaire direct → Netlify Function ── */
+  var form = document.getElementById('mainForm');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var prenom = (document.getElementById('prenom') || {}).value || '';
+      var email  = (document.getElementById('email')  || {}).value || '';
+      if (!prenom.trim() || !email.trim()) {
+        alert('Veuillez renseigner votre prénom et votre email.');
+        return;
+      }
+      var btn = document.getElementById('submitBtn');
+      if (btn) { btn.textContent = 'Envoi en cours…'; btn.disabled = true; }
+
+      var payload = {
+        prenom:    prenom.trim(),
+        nom:       ((document.getElementById('nom') || {}).value || '').trim(),
+        email:     email.trim(),
+        telephone: ((document.getElementById('telephone') || {}).value || '').trim(),
+        message:   ((document.getElementById('message')   || {}).value || '').trim(),
+        newsletter: document.getElementById('newsletter') ? document.getElementById('newsletter').checked : false,
+      };
+
+      fetch('/.netlify/functions/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).then(function (r) {
+        if (r.ok) { window.location.href = '/merci/'; }
+        else {
+          r.json().then(function (d) { alert(d.error || 'Une erreur est survenue. Veuillez réessayer.'); })
+           .catch(function () { alert('Une erreur est survenue. Veuillez réessayer.'); });
+          if (btn) { btn.textContent = 'Écrire à Zoé'; btn.disabled = false; }
+        }
+      }).catch(function () {
+        alert('Erreur réseau. Veuillez réessayer.');
+        if (btn) { btn.textContent = 'Écrire à Zoé'; btn.disabled = false; }
+      });
     });
   }
-
-  var b12 = document.getElementById('toStep2');
-  if (b12) b12.addEventListener('click', function () {
-    var p = document.getElementById('prenom').value.trim();
-    var e = document.getElementById('email').value.trim();
-    if (!p || !e) { alert('Veuillez renseigner votre prénom et votre email.'); return; }
-    showPanel(2);
-  });
-  var b21 = document.getElementById('toStep1');
-  if (b21) b21.addEventListener('click', function () { showPanel(1); });
-  var b23 = document.getElementById('toStep3');
-  if (b23) b23.addEventListener('click', function () {
-    if (!selSoin) { alert('Veuillez sélectionner un protocole.'); return; }
-    showPanel(3);
-  });
-  var b32 = document.getElementById('toStep2b');
-  if (b32) b32.addEventListener('click', function () { showPanel(2); });
-
-  document.querySelectorAll('.soin-card').forEach(function (c) {
-    c.addEventListener('click', function () {
-      document.querySelectorAll('.soin-card').forEach(function(x){ x.classList.remove('selected'); });
-      this.classList.add('selected');
-      selSoin = this.dataset.soin;
-      document.getElementById('hiddenSoin').value = selSoin;
-    });
-  });
-
-  /* ── AJAX submit → /merci/ ── */
-  (function () {
-    function attach() {
-      var form = document.getElementById('mainForm');
-      if (!form) return;
-      form.addEventListener('submit', function (e) {
-        e.preventDefault(); e.stopPropagation();
-        if (!selSoin) { alert('Veuillez sélectionner un protocole.'); showPanel(2); return; }
-        var btn = form.querySelector('button[type="submit"]');
-        if (btn) { btn.textContent = 'Envoi en cours…'; btn.disabled = true; }
-        fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        }).then(function(r){
-          if (r.ok) { window.location.href = '/merci/'; }
-          else {
-            r.json().then(function(d){ alert('Erreur : '+(d.error||'Veuillez réessayer.')); })
-             .catch(function(){ alert('Erreur. Veuillez réessayer.'); });
-            if(btn){ btn.textContent='Écrire à Zoé'; btn.disabled=false; }
-          }
-        }).catch(function(){
-          alert('Erreur réseau. Veuillez réessayer.');
-          if(btn){ btn.textContent='Écrire à Zoé'; btn.disabled=false; }
-        });
-      });
-    }
-    document.readyState==='loading' ? document.addEventListener('DOMContentLoaded',attach) : attach();
-  })();
 
   /* ── FAQ accordion icon ── */
   document.querySelectorAll('.faq-item').forEach(function(d){

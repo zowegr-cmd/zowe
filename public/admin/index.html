@@ -5,8 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Administration — Zowe</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    .admin-tools {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-end;
+    }
+    .admin-tools a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #6B1F2A;
+      color: white;
+      padding: 0.6rem 1.1rem;
+      text-decoration: none;
+      font-family: system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border-radius: 2px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .admin-tools a:hover { background: #4A1520; }
+    .admin-tools a.gold { background: #C9A96E; color: #0F0F0F; }
+    .admin-tools a.gold:hover { background: #b8934a; }
+  </style>
 </head>
 <body>
+  <div class="admin-tools">
+    <a href="https://formspree.io/forms/xqewvayo/submissions" target="_blank" rel="noopener">
+      📋 Demandes (Formspree)
+    </a>
+    <a href="https://resend.com/emails" target="_blank" rel="noopener">
+      ✉️ Emails envoyés (Resend)
+    </a>
+    <a href="https://resend.com/audiences" target="_blank" rel="noopener" class="gold">
+      👥 Newsletter (Resend Audiences)
+    </a>
+  </div>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>

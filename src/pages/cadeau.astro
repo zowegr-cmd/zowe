@@ -2,9 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import services from '../content/services.json';
 import infos from '../content/infos.json';
-
-const waMsg = encodeURIComponent("Bonjour Zoé, je souhaite offrir une carte cadeau Zowe.");
-const waLink = `https://wa.me/32471783746?text=${waMsg}`;
 ---
 <Layout
   title="Carte cadeau — Offrir l'expérience Zowe"
@@ -44,48 +41,106 @@ const waLink = `https://wa.me/32471783746?text=${waMsg}`;
       background: var(--or-border);
       margin: 2.5rem auto;
     }
+
+    /* Section protocoles */
     .cadeau-protocols h2 {
       font-family: var(--sans); font-size: 0.65rem; font-weight: 600;
       letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--bordeaux); text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .cadeau-hint {
+      text-align: center; font-size: 0.78rem; color: var(--light);
+      margin-bottom: 2.5rem; font-style: italic;
     }
     .cadeau-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
-      margin-bottom: 4rem;
+      margin-bottom: 2rem;
     }
+
+    /* Carte sélectionnable */
     .cadeau-card {
+      position: relative;
       padding: 2rem 1.75rem;
       border: 1px solid var(--border);
       background: var(--white);
       text-align: center;
       display: flex; flex-direction: column; gap: 0.75rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      user-select: none;
+    }
+    .cadeau-card:hover { border-color: var(--bordeaux); }
+    .cadeau-card.selected {
+      background: var(--bordeaux);
+      border-color: var(--bordeaux);
     }
     .cadeau-card--featured {
       background: var(--bordeaux);
       border-color: var(--bordeaux);
     }
+    .cadeau-card--featured:hover { box-shadow: inset 0 0 0 2px rgba(201,169,110,0.5); }
+    .cadeau-card--featured.selected {
+      box-shadow: inset 0 0 0 2px var(--or);
+    }
+
+    /* Indicateur de sélection */
+    .cadeau-card__check {
+      position: absolute; top: 0.7rem; right: 0.7rem;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--bordeaux); color: var(--off-white);
+      font-size: 0.65rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(0.4);
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+    }
+    .cadeau-card.selected .cadeau-card__check {
+      opacity: 1; transform: scale(1);
+    }
+    .cadeau-card--featured .cadeau-card__check {
+      background: var(--or); color: var(--bordeaux);
+    }
+
+    /* Textes des cartes */
     .cadeau-card__duration {
       font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
       color: var(--bordeaux);
     }
-    .cadeau-card--featured .cadeau-card__duration { color: rgba(255,255,255,0.5); }
+    .cadeau-card--featured .cadeau-card__duration,
+    .cadeau-card.selected .cadeau-card__duration { color: rgba(255,255,255,0.5); }
+
     .cadeau-card__price {
       font-family: var(--serif); font-size: 2.5rem;
       font-weight: 300; color: var(--bordeaux); line-height: 1;
     }
-    .cadeau-card--featured .cadeau-card__price { color: var(--or); }
+    .cadeau-card--featured .cadeau-card__price,
+    .cadeau-card.selected .cadeau-card__price { color: var(--or); }
+
     .cadeau-card__name {
       font-family: var(--serif); font-size: 1.15rem;
       font-style: italic; color: var(--dark);
     }
-    .cadeau-card--featured .cadeau-card__name { color: var(--off-white); }
+    .cadeau-card--featured .cadeau-card__name,
+    .cadeau-card.selected .cadeau-card__name { color: var(--off-white); }
+
     .cadeau-card__tagline {
       font-size: 0.75rem; color: var(--light); font-style: italic;
     }
-    .cadeau-card--featured .cadeau-card__tagline { color: rgba(255,255,255,0.45); }
+    .cadeau-card--featured .cadeau-card__tagline,
+    .cadeau-card.selected .cadeau-card__tagline { color: rgba(255,255,255,0.45); }
+
+    /* Résumé sélection */
+    .cadeau-selection-summary {
+      min-height: 1.6rem; text-align: center;
+      font-size: 0.78rem; color: var(--bordeaux); font-style: italic;
+      margin-bottom: 2.5rem; transition: opacity 0.2s;
+    }
+    .cadeau-selection-summary:empty { opacity: 0; }
+
+    /* CTA */
     .cadeau-cta {
       text-align: center;
       padding: 3rem 2rem;
@@ -99,6 +154,9 @@ const waLink = `https://wa.me/32471783746?text=${waMsg}`;
     .cadeau-cta__actions {
       display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
     }
+    #waBtn { transition: background 0.25s, opacity 0.25s; }
+    #waBtn.disabled { opacity: 0.45; pointer-events: none; }
+
     @media (max-width: 640px) {
       .cadeau-grid { grid-template-columns: 1fr; }
     }
@@ -119,9 +177,20 @@ const waLink = `https://wa.me/32471783746?text=${waMsg}`;
 
     <div class="cadeau-protocols">
       <h2 data-i18n="pages.cadeau.choose">Choisissez le protocole</h2>
+      <p class="cadeau-hint" id="cadeauHint">Sélectionnez un ou plusieurs soins, puis envoyez le message à Zoé.</p>
+
       <div class="cadeau-grid">
         {services.tiers.map((tier, i) => (
-          <div class={`cadeau-card${i === 2 ? ' cadeau-card--featured' : ''}`}>
+          <div
+            class={`cadeau-card${i === 2 ? ' cadeau-card--featured' : ''}`}
+            data-cadeau-idx={i}
+            data-cadeau-name={tier.name.fr}
+            data-cadeau-duration={tier.duration}
+            data-cadeau-price={tier.price}
+            role="checkbox"
+            aria-checked="false"
+            tabindex="0">
+            <div class="cadeau-card__check" aria-hidden="true">✓</div>
             <p class="cadeau-card__duration">{tier.duration}</p>
             <p class="cadeau-card__price">{tier.price}</p>
             <p class="cadeau-card__name" data-i18n={`services.tiers.${i}.name`}>{tier.name.fr}</p>
@@ -130,14 +199,17 @@ const waLink = `https://wa.me/32471783746?text=${waMsg}`;
         ))}
       </div>
 
+      <p class="cadeau-selection-summary" id="selectionSummary"></p>
+
       <div class="cadeau-cta">
-        <p data-i18n="pages.cadeau.cta_text">
+        <p data-i18n="pages.cadeau.cta_text" id="cadeauCtaText">
           Zoé prépare chaque carte cadeau avec soin.<br>
-          Contactez-la directement pour convenir des détails.
+          Sélectionnez un protocole puis envoyez-lui votre demande.
         </p>
         <div class="cadeau-cta__actions">
-          <a href={waLink} target="_blank" rel="noopener" class="btn btn-primary" data-i18n="pages.cadeau.whatsapp">
-            Contacter Zoé par WhatsApp
+          <a id="waBtn" href="#" target="_blank" rel="noopener" class="btn btn-primary disabled">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span id="waBtnLabel">Sélectionnez un protocole</span>
           </a>
           <a href="/#contact" class="btn" style="background:transparent;border:1px solid var(--bordeaux);color:var(--bordeaux);" data-i18n="pages.cadeau.form">
             Écrire via le formulaire
@@ -147,3 +219,98 @@ const waLink = `https://wa.me/32471783746?text=${waMsg}`;
     </div>
   </div>
 </Layout>
+
+<script is:inline>
+(function() {
+  var selected = []; // [{idx, name, duration, price}]
+  var WA_BASE = 'https://wa.me/32471783746?text=';
+
+  var cards   = document.querySelectorAll('[data-cadeau-idx]');
+  var waBtn   = document.getElementById('waBtn');
+  var waLabel = document.getElementById('waBtnLabel');
+  var summary = document.getElementById('selectionSummary');
+  var hint    = document.getElementById('cadeauHint');
+
+  function buildMessage() {
+    if (selected.length === 0) return '';
+    if (selected.length === 1) {
+      var t = selected[0];
+      return 'Bonjour Zoé, je souhaite offrir une carte cadeau Zowe pour le protocole « ' + t.name + ' » (' + t.duration + ' — ' + t.price + ').';
+    }
+    var list = selected.map(function(t){ return '« ' + t.name + ' » (' + t.price + ')'; }).join(', ');
+    return 'Bonjour Zoé, je souhaite offrir une carte cadeau Zowe. Protocoles sélectionnés : ' + list + '.';
+  }
+
+  function update() {
+    // Résumé sous les cartes
+    if (summary) {
+      if (selected.length === 0) {
+        summary.textContent = '';
+      } else {
+        var names = selected.map(function(t){ return t.name; }).join(' + ');
+        var total = selected.reduce(function(s, t){ return s + parseFloat(t.price); }, 0);
+        summary.textContent = names + (selected.length > 1 ? ' — total : ' + total + '€' : '');
+      }
+    }
+
+    // Bouton WhatsApp
+    if (selected.length === 0) {
+      waBtn.classList.add('disabled');
+      waBtn.href = '#';
+      waLabel.textContent = 'Sélectionnez un protocole';
+    } else {
+      waBtn.classList.remove('disabled');
+      waBtn.href = WA_BASE + encodeURIComponent(buildMessage());
+      if (selected.length === 1) {
+        waLabel.textContent = 'Offrir ' + selected[0].name + ' à Zoé';
+      } else {
+        waLabel.textContent = 'Envoyer ma demande à Zoé (' + selected.length + ' soins)';
+      }
+    }
+
+    // Hint
+    if (hint) hint.style.display = selected.length > 0 ? 'none' : '';
+  }
+
+  function toggleCard(card) {
+    var idx  = parseInt(card.dataset.cadeauIdx);
+    // Use the currently displayed name (respects i18n)
+    var name = (card.querySelector('.cadeau-card__name') || {}).textContent || card.dataset.cadeauName;
+    var dur  = card.dataset.cadeauDuration;
+    var price = card.dataset.cadeauPrice;
+
+    var pos = selected.findIndex(function(t){ return t.idx === idx; });
+    if (pos > -1) {
+      selected.splice(pos, 1);
+      card.classList.remove('selected');
+      card.setAttribute('aria-checked', 'false');
+    } else {
+      selected.push({ idx: idx, name: name.trim(), duration: dur, price: price });
+      card.classList.add('selected');
+      card.setAttribute('aria-checked', 'true');
+    }
+    update();
+  }
+
+  cards.forEach(function(card) {
+    card.addEventListener('click', function(){ toggleCard(card); });
+    card.addEventListener('keydown', function(e){
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleCard(card); }
+    });
+  });
+
+  // Sync noms si la langue change
+  window.addEventListener('zowe:langchange', function() {
+    selected.forEach(function(t) {
+      var card = document.querySelector('[data-cadeau-idx="' + t.idx + '"]');
+      if (card) {
+        var el = card.querySelector('.cadeau-card__name');
+        if (el) t.name = el.textContent.trim();
+      }
+    });
+    if (selected.length > 0) update();
+  });
+
+  update();
+})();
+</script>

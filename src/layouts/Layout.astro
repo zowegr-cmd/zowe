@@ -215,6 +215,7 @@ const ogImage = `${siteUrl}/og-image.png`;
       });
       window._i18n = t || null;
       localStorage.setItem('zowe-lang', lang);
+      try { window.dispatchEvent(new CustomEvent('zowe:langchange', { detail: { lang: lang } })); } catch(_) {}
     }
 
     function setLang(lang) {

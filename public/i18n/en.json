@@ -155,5 +155,37 @@
   },
   "sticky": {
     "cta": "Begin my journey"
+  },
+  "pages": {
+    "back": "← Back to homepage",
+    "cadeau": {
+      "label": "Gift card · Zowe",
+      "title": "Give the Zowe experience",
+      "desc": "Give your loved ones an exceptional care experience. A rare gesture that leaves a lasting impression.",
+      "choose": "Choose the protocol",
+      "cta_text": "Zoé prepares every gift card with care. Contact her directly to arrange the details.",
+      "whatsapp": "Contact Zoé on WhatsApp",
+      "form": "Write via the form"
+    },
+    "gallery": {
+      "empty": "The gallery will be available soon."
+    },
+    "session": {
+      "sub": "Everything you need to know to approach your session with peace of mind.",
+      "how_to_get": "How to get here",
+      "dress": "What to wear",
+      "duration": "Duration by protocol",
+      "bring": "What to bring",
+      "payment": "Payment",
+      "timeline_title": "How the session unfolds",
+      "cta_text": "Ready to live the experience?"
+    },
+    "merci": {
+      "title": "Message received.",
+      "sub1": "Zoé will get back to you today",
+      "sub2": "to arrange a time that suits you. In the meantime, feel free to reach her directly.",
+      "session_link": "Prepare my first session →",
+      "home_btn": "Back to homepage"
+    }
   }
 }

@@ -155,5 +155,37 @@
   },
   "sticky": {
     "cta": "Mijn begeleiding starten"
+  },
+  "pages": {
+    "back": "← Terug naar de startpagina",
+    "cadeau": {
+      "label": "Cadeaubon · Zowe",
+      "title": "De Zowe-ervaring cadeau doen",
+      "desc": "Geef uw naasten een uitzonderlijke zorgervaring. Een zeldzame aandacht die de geest raakt.",
+      "choose": "Kies het protocol",
+      "cta_text": "Zoé bereidt elke cadeaubon met zorg voor. Neem rechtstreeks contact met haar op om de details te bespreken.",
+      "whatsapp": "Contacteer Zoé via WhatsApp",
+      "form": "Schrijven via het formulier"
+    },
+    "gallery": {
+      "empty": "De galerij is binnenkort beschikbaar."
+    },
+    "session": {
+      "sub": "Alles wat u moet weten om uw sessie serein aan te vatten.",
+      "how_to_get": "Hoe te komen",
+      "dress": "Hoe u zich te kleden",
+      "duration": "Duur volgens het protocol",
+      "bring": "Wat mee te brengen",
+      "payment": "Betaling",
+      "timeline_title": "Verloop van de sessie",
+      "cta_text": "Klaar om de ervaring te beleven?"
+    },
+    "merci": {
+      "title": "Bericht ontvangen.",
+      "sub1": "Zoé neemt vandaag nog contact met u op",
+      "sub2": "om een geschikt moment te vinden. Tussendoor kunt u haar rechtstreeks bereiken.",
+      "session_link": "Mijn eerste sessie voorbereiden →",
+      "home_btn": "Terug naar de startpagina"
+    }
   }
 }

@@ -105,41 +105,41 @@ const waLink = `https://wa.me/32471783746?text=${waMsg}`;
   </style>
 
   <div class="cadeau-page">
-    <a href="/" class="cadeau-back">← Retour à l'accueil</a>
+    <a href="/" class="cadeau-back" data-i18n="pages.back">← Retour à l'accueil</a>
 
     <div class="cadeau-hero">
-      <p class="cadeau-hero__label">Carte cadeau · Zowe</p>
-      <h1>Offrir l'expérience Zowe</h1>
+      <p class="cadeau-hero__label" data-i18n="pages.cadeau.label">Carte cadeau · Zowe</p>
+      <h1 data-i18n="pages.cadeau.title">Offrir l'expérience Zowe</h1>
       <div class="cadeau-divider"></div>
-      <p>
+      <p data-i18n="pages.cadeau.desc">
         Offrez à vos proches un soin d'exception.<br>
         Une attention rare qui marque les esprits.
       </p>
     </div>
 
     <div class="cadeau-protocols">
-      <h2>Choisissez le protocole</h2>
+      <h2 data-i18n="pages.cadeau.choose">Choisissez le protocole</h2>
       <div class="cadeau-grid">
         {services.tiers.map((tier, i) => (
           <div class={`cadeau-card${i === 2 ? ' cadeau-card--featured' : ''}`}>
             <p class="cadeau-card__duration">{tier.duration}</p>
             <p class="cadeau-card__price">{tier.price}</p>
-            <p class="cadeau-card__name">{tier.name}</p>
-            <p class="cadeau-card__tagline">{tier.tagline}</p>
+            <p class="cadeau-card__name" data-i18n={`services.tiers.${i}.name`}>{tier.name}</p>
+            <p class="cadeau-card__tagline" data-i18n={`services.tiers.${i}.tagline`}>{tier.tagline}</p>
           </div>
         ))}
       </div>
 
       <div class="cadeau-cta">
-        <p>
+        <p data-i18n="pages.cadeau.cta_text">
           Zoé prépare chaque carte cadeau avec soin.<br>
           Contactez-la directement pour convenir des détails.
         </p>
         <div class="cadeau-cta__actions">
-          <a href={waLink} target="_blank" rel="noopener" class="btn btn-primary">
+          <a href={waLink} target="_blank" rel="noopener" class="btn btn-primary" data-i18n="pages.cadeau.whatsapp">
             Contacter Zoé par WhatsApp
           </a>
-          <a href="/#contact" class="btn" style="background:transparent;border:1px solid var(--bordeaux);color:var(--bordeaux);">
+          <a href="/#contact" class="btn" style="background:transparent;border:1px solid var(--bordeaux);color:var(--bordeaux);" data-i18n="pages.cadeau.form">
             Écrire via le formulaire
           </a>
         </div>

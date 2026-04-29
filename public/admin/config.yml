@@ -438,6 +438,48 @@ collections:
             widget: "object"
             fields:
               - { label: "Texte du bouton", name: "cta", widget: "string" }
+          - label: "Autres pages du site"
+            name: "pages"
+            widget: "object"
+            fields:
+              - { label: "Lien retour accueil", name: "back", widget: "string" }
+              - label: "Page Carte cadeau"
+                name: "cadeau"
+                widget: "object"
+                fields:
+                  - { label: "Label (sous-titre)", name: "label", widget: "string" }
+                  - { label: "Titre principal", name: "title", widget: "string" }
+                  - { label: "Description", name: "desc", widget: "string" }
+                  - { label: "Choisissez le protocole", name: "choose", widget: "string" }
+                  - { label: "Texte CTA", name: "cta_text", widget: "string" }
+                  - { label: "Bouton WhatsApp", name: "whatsapp", widget: "string" }
+                  - { label: "Bouton formulaire", name: "form", widget: "string" }
+              - label: "Page Galerie"
+                name: "gallery"
+                widget: "object"
+                fields:
+                  - { label: "Galerie vide", name: "empty", widget: "string" }
+              - label: "Page Avant votre seance"
+                name: "session"
+                widget: "object"
+                fields:
+                  - { label: "Sous-titre", name: "sub", widget: "string" }
+                  - { label: "Comment venir", name: "how_to_get", widget: "string" }
+                  - { label: "Comment s'habiller", name: "dress", widget: "string" }
+                  - { label: "Duree", name: "duration", widget: "string" }
+                  - { label: "Ce qu'il faut apporter", name: "bring", widget: "string" }
+                  - { label: "Paiement", name: "payment", widget: "string" }
+                  - { label: "Titre timeline", name: "timeline_title", widget: "string" }
+                  - { label: "Texte CTA", name: "cta_text", widget: "string" }
+              - label: "Page Merci"
+                name: "merci"
+                widget: "object"
+                fields:
+                  - { label: "Titre", name: "title", widget: "string" }
+                  - { label: "Texte (gras)", name: "sub1", widget: "string" }
+                  - { label: "Texte (suite)", name: "sub2", widget: "string" }
+                  - { label: "Lien preparation seance", name: "session_link", widget: "string" }
+                  - { label: "Bouton retour accueil", name: "home_btn", widget: "string" }
 
   # ─── TRADUCTIONS ANGLAIS ───────────────────────────────────────────────────
   - name: "traductions_en"
@@ -587,3 +629,45 @@ collections:
             widget: "object"
             fields:
               - { label: "Button text", name: "cta", widget: "string" }
+          - label: "Other site pages"
+            name: "pages"
+            widget: "object"
+            fields:
+              - { label: "Back link", name: "back", widget: "string" }
+              - label: "Gift card page"
+                name: "cadeau"
+                widget: "object"
+                fields:
+                  - { label: "Label (subtitle)", name: "label", widget: "string" }
+                  - { label: "Main title", name: "title", widget: "string" }
+                  - { label: "Description", name: "desc", widget: "string" }
+                  - { label: "Choose protocol", name: "choose", widget: "string" }
+                  - { label: "CTA text", name: "cta_text", widget: "string" }
+                  - { label: "WhatsApp button", name: "whatsapp", widget: "string" }
+                  - { label: "Form button", name: "form", widget: "string" }
+              - label: "Gallery page"
+                name: "gallery"
+                widget: "object"
+                fields:
+                  - { label: "Empty gallery", name: "empty", widget: "string" }
+              - label: "Before your session page"
+                name: "session"
+                widget: "object"
+                fields:
+                  - { label: "Subtitle", name: "sub", widget: "string" }
+                  - { label: "How to get here", name: "how_to_get", widget: "string" }
+                  - { label: "What to wear", name: "dress", widget: "string" }
+                  - { label: "Duration", name: "duration", widget: "string" }
+                  - { label: "What to bring", name: "bring", widget: "string" }
+                  - { label: "Payment", name: "payment", widget: "string" }
+                  - { label: "Timeline title", name: "timeline_title", widget: "string" }
+                  - { label: "CTA text", name: "cta_text", widget: "string" }
+              - label: "Thank you page"
+                name: "merci"
+                widget: "object"
+                fields:
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Text (bold)", name: "sub1", widget: "string" }
+                  - { label: "Text (continued)", name: "sub2", widget: "string" }
+                  - { label: "Prepare session link", name: "session_link", widget: "string" }
+                  - { label: "Back home button", name: "home_btn", widget: "string" }

@@ -111,11 +111,11 @@ import session from '../content/session.json';
   <div class="inner">
     <a href="/" class="logo">ZOWE</a>
     <div class="check">✓</div>
-    <h1>Message bien reçu.</h1>
+    <h1 data-i18n="pages.merci.title">Message bien reçu.</h1>
     <p class="sub">
-      <strong>Zoé prendra contact avec vous dans la journée</strong><br>
-      pour convenir d'un moment qui vous correspond.<br>
-      En attendant, n'hésitez pas à la rejoindre directement.
+      <strong data-i18n="pages.merci.sub1">Zoé prendra contact avec vous dans la journée</strong><br>
+      <span data-i18n="pages.merci.sub2">pour convenir d'un moment qui vous correspond.<br>
+      En attendant, n'hésitez pas à la rejoindre directement.</span>
     </p>
     <div class="divider"></div>
     <div class="social-row">
@@ -135,11 +135,32 @@ import session from '../content/session.json';
       </a>
     </div>
     {session.visible && (
-      <a href="/preparer-ma-seance" style="display:inline-block;margin-bottom:1rem;font-family:system-ui,sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(201,169,110,0.7);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#C9A96E'" onmouseout="this.style.color='rgba(201,169,110,0.7)'">
+      <a href="/preparer-ma-seance" data-i18n="pages.merci.session_link" style="display:inline-block;margin-bottom:1rem;font-family:system-ui,sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(201,169,110,0.7);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#C9A96E'" onmouseout="this.style.color='rgba(201,169,110,0.7)'">
         Préparer ma première séance →
       </a>
     )}
-    <a href="/" class="btn-home">Retour à l'accueil</a>
+    <a href="/" class="btn-home" data-i18n="pages.merci.home_btn">Retour à l'accueil</a>
   </div>
+  <script is:inline>
+  (function() {
+    var lang = localStorage.getItem('zowe-lang') || 'fr';
+    if (lang === 'fr') return;
+    fetch('/i18n/' + lang + '.json')
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(t) {
+        if (!t) return;
+        function getVal(obj, key) {
+          return key.split('.').reduce(function(o, k) {
+            return (o != null && typeof o === 'object') ? o[k] : undefined;
+          }, obj);
+        }
+        document.querySelectorAll('[data-i18n]').forEach(function(el) {
+          var val = getVal(t, el.getAttribute('data-i18n'));
+          if (val != null) el.textContent = val;
+        });
+      })
+      .catch(function() {});
+  })();
+  </script>
 </body>
 </html>

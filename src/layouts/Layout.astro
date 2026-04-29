@@ -106,6 +106,15 @@ const ogImage = `${siteUrl}/og-image.png`;
   <slot />
 
   <!-- Cookie banner -->
+  <!-- Sélecteur de langue fixe (pages sans nav) -->
+  <div id="langSelectorFixed" class="lang-selector-fixed" aria-label="Choisir la langue">
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <span aria-hidden="true">·</span>
+    <button class="lang-btn" data-lang="nl">NL</button>
+    <span aria-hidden="true">·</span>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+
   <div id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Consentement cookies" hidden>
     <p class="cookie-banner__text">
       <span data-i18n="cookie.text">Ce site utilise Google Analytics pour mesurer son audience de façon anonymisée.</span>
@@ -117,6 +126,12 @@ const ogImage = `${siteUrl}/og-image.png`;
     </div>
   </div>
   <script is:inline>
+    // Sélecteur de langue fixe — affiché uniquement sur les pages sans nav
+    var fixedSel = document.getElementById('langSelectorFixed');
+    if (fixedSel && !document.querySelector('.nav')) {
+      fixedSel.classList.add('active');
+    }
+
     // Nav scroll effect
     const nav = document.getElementById('nav');
     if (nav) {

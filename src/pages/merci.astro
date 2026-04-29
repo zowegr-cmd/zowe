@@ -108,6 +108,15 @@ import session from '../content/session.json';
   </style>
 </head>
 <body>
+  <!-- Sélecteur de langue -->
+  <div id="langSelectorFixed" style="position:fixed;top:1.2rem;right:2rem;z-index:500;display:flex;align-items:center;gap:0.3rem;background:rgba(15,5,8,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(201,169,110,0.2);padding:0.38rem 0.85rem;">
+    <button class="lang-btn-m" data-lang="fr" onclick="setMerciLang('fr')" style="background:none;border:none;font-size:0.62rem;font-weight:500;letter-spacing:0.1em;color:rgba(245,240,232,0.5);cursor:pointer;padding:0.2rem 0;">FR</button>
+    <span style="color:rgba(201,169,110,0.25);font-size:0.62rem;" aria-hidden="true">·</span>
+    <button class="lang-btn-m" data-lang="nl" onclick="setMerciLang('nl')" style="background:none;border:none;font-size:0.62rem;font-weight:500;letter-spacing:0.1em;color:rgba(245,240,232,0.5);cursor:pointer;padding:0.2rem 0;">NL</button>
+    <span style="color:rgba(201,169,110,0.25);font-size:0.62rem;" aria-hidden="true">·</span>
+    <button class="lang-btn-m" data-lang="en" onclick="setMerciLang('en')" style="background:none;border:none;font-size:0.62rem;font-weight:500;letter-spacing:0.1em;color:rgba(245,240,232,0.5);cursor:pointer;padding:0.2rem 0;">EN</button>
+  </div>
+
   <div class="inner">
     <a href="/" class="logo">ZOWE</a>
     <div class="check">✓</div>
@@ -142,25 +151,39 @@ import session from '../content/session.json';
     <a href="/" class="btn-home" data-i18n="pages.merci.home_btn">Retour à l'accueil</a>
   </div>
   <script is:inline>
-  (function() {
-    var lang = localStorage.getItem('zowe-lang') || 'fr';
-    if (lang === 'fr') return;
+  var _merciCache = {};
+  var _merciLangBtns = document.querySelectorAll('.lang-btn-m');
+
+  function getVal(obj, key) {
+    return key.split('.').reduce(function(o, k) {
+      return (o != null && typeof o === 'object') ? o[k] : undefined;
+    }, obj);
+  }
+
+  function applyMerci(t, lang) {
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var val = t ? getVal(t, el.getAttribute('data-i18n')) : null;
+      if (val != null) el.textContent = val;
+    });
+    _merciLangBtns.forEach(function(b) {
+      b.style.color = b.dataset.lang === lang
+        ? 'rgba(201,169,110,0.9)'
+        : 'rgba(245,240,232,0.5)';
+    });
+    localStorage.setItem('zowe-lang', lang);
+  }
+
+  function setMerciLang(lang) {
+    if (lang === 'fr') { applyMerci(null, 'fr'); return; }
+    if (_merciCache[lang]) { applyMerci(_merciCache[lang], lang); return; }
     fetch('/i18n/' + lang + '.json')
       .then(function(r) { return r.ok ? r.json() : null; })
-      .then(function(t) {
-        if (!t) return;
-        function getVal(obj, key) {
-          return key.split('.').reduce(function(o, k) {
-            return (o != null && typeof o === 'object') ? o[k] : undefined;
-          }, obj);
-        }
-        document.querySelectorAll('[data-i18n]').forEach(function(el) {
-          var val = getVal(t, el.getAttribute('data-i18n'));
-          if (val != null) el.textContent = val;
-        });
-      })
+      .then(function(t) { if (t) { _merciCache[lang] = t; applyMerci(t, lang); } })
       .catch(function() {});
-  })();
+  }
+
+  var _initLang = localStorage.getItem('zowe-lang') || 'fr';
+  setMerciLang(_initLang);
   </script>
 </body>
 </html>

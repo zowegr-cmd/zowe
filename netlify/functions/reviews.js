@@ -49,9 +49,9 @@ exports.handler = async function () {
     return json([]);
   }
 
-  // ── Filtrer 4★ et 5★ UNIQUEMENT ─────────────────────────────────────────
+  // ── Filtrer 4★/5★ avec message obligatoire ───────────────────────────────
   const reviews = raw.result.reviews
-    .filter(r => r.rating >= 4)
+    .filter(r => r.rating >= 4 && r.text && r.text.trim().length >= 15)
     .sort((a, b) => b.rating - a.rating || b.time - a.time)
     .slice(0, 5)
     .map(r => ({

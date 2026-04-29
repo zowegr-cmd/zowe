@@ -4,6 +4,7 @@
 
 const { Resend }   = require('resend');
 const { getStore } = require('@netlify/blobs');
+const { createUnsubToken } = require('./unsubscribe');
 
 exports.handler = async function () {
   const apiKey = process.env.RESEND_API_KEY;
@@ -32,11 +33,13 @@ exports.handler = async function () {
 
     // C'est l'heure d'envoyer
     try {
+      const unsubToken = createUnsubToken(reminder.email);
+      const unsubUrl   = `https://zowe.netlify.app/.netlify/functions/unsubscribe?token=${unsubToken}`;
       await resend.emails.send({
         from: fromEmail,
         to: reminder.email,
         subject: 'Zowe — Votre demande est bien entre nos mains',
-        html: reminderHtml(reminder.prenom),
+        html: reminderHtml(reminder.prenom, unsubUrl),
       });
       await store.delete(blob.key); // Supprimer après envoi
     } catch (e) {
@@ -47,7 +50,7 @@ exports.handler = async function () {
   return { statusCode: 200, body: 'done' };
 };
 
-function reminderHtml(prenom) {
+function reminderHtml(prenom, unsubUrl) {
   return `<!DOCTYPE html>
 <html lang="fr">
 <head><meta charset="UTF-8"></head>
@@ -74,6 +77,9 @@ function reminderHtml(prenom) {
     <p style="margin:0;font-size:11px;color:#AAAAAA;letter-spacing:0.05em;">
       Zoé — Zowe · Kinésithérapie de haute précision · Méthode BELTRA
     </p>
+    ${unsubUrl ? `<p style="margin:8px 0 0;font-size:10px;color:#CCCCCC;">
+      <a href="${unsubUrl}" style="color:#CCCCCC;text-decoration:underline;">Se désinscrire</a>
+    </p>` : ''}
   </div>
 </td></tr>
 </table>

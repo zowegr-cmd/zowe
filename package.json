@@ -7,6 +7,9 @@
     "build": "astro build",
     "preview": "astro preview"
   },
+  "overrides": {
+    "uuid": ">=9.0.0"
+  },
   "dependencies": {
     "@netlify/blobs": "^10.7.4",
     "astro": "^4.15.0",

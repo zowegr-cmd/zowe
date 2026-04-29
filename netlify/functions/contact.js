@@ -1,5 +1,5 @@
 // Netlify Function — contact.js
-// Formspree (Zoé + CC patron) · Brevo API (confirmation patient) · Blobs (rappel 24h)
+// Formspree · Brevo · Blobs rappel 24h · Honeypot · reCAPTCHA · Rate limit
 'use strict';
 
 const { Resend }   = require('resend');
@@ -10,12 +10,68 @@ const PATRON_EMAIL = process.env.PATRON_EMAIL  || 'patron@kinovea.be';
 const AUDIENCE_ID  = process.env.RESEND_AUDIENCE_ID || '';
 const BREVO_KEY    = process.env.BREVO_API_KEY || '';
 const BREVO_SENDER = { name: 'Zoé — Zowe', email: 'zoegrede.kine@gmail.com' };
+const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY || '';
 
-async function brevoSend({ to, toName, subject, html }) {
-  if (!BREVO_KEY) {
-    console.error('[Brevo] BREVO_API_KEY manquant');
-    return;
+// ─── Sanitisation ─────────────────────────────────────────────────────────────
+function sanitize(str, maxLen = 2000) {
+  if (typeof str !== 'string') return '';
+  return str
+    .slice(0, maxLen)
+    .replace(/<[^>]*>/g, '')
+    .replace(/javascript:/gi, '')
+    .replace(/on\w+\s*=/gi, '')
+    .replace(/[<>]/g, '')
+    .trim();
+}
+
+// ─── Validation email ─────────────────────────────────────────────────────────
+function isValidEmail(email) {
+  return /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{2,}$/.test(email);
+}
+
+// ─── Rate limiting (3 soumissions / IP / heure) ───────────────────────────────
+async function checkRateLimit(ip) {
+  try {
+    const store = getStore('rate-limits');
+    const key   = `contact-${(ip || 'unknown').replace(/[^a-z0-9:.]/gi, '')}`;
+    const now   = Date.now();
+    const hour  = 3600 * 1000;
+
+    let timestamps = [];
+    try { timestamps = await store.get(key, { type: 'json' }) || []; } catch (_) {}
+
+    const recent = timestamps.filter(ts => now - ts < hour);
+    if (recent.length >= 3) return false;
+
+    recent.push(now);
+    await store.set(key, JSON.stringify(recent));
+    return true;
+  } catch (e) {
+    console.warn('[RateLimit] Blobs error, skipping:', e.message);
+    return true; // fail open si Blobs indisponible
   }
+}
+
+// ─── Vérification reCAPTCHA v3 ────────────────────────────────────────────────
+async function verifyRecaptcha(token) {
+  if (!RECAPTCHA_SECRET || !token) return true; // désactivé si pas de clé
+  try {
+    const res  = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body   : `secret=${encodeURIComponent(RECAPTCHA_SECRET)}&response=${encodeURIComponent(token)}`,
+    });
+    const data = await res.json();
+    return data.success && data.score >= 0.4;
+  } catch (e) {
+    console.warn('[reCAPTCHA] Vérification échouée:', e.message);
+    return true; // fail open en cas d'erreur réseau
+  }
+}
+
+// ─── Brevo ────────────────────────────────────────────────────────────────────
+async function brevoSend({ to, toName, subject, html }) {
+  if (!BREVO_KEY) return;
   const res  = await fetch('https://api.brevo.com/v3/smtp/email', {
     method  : 'POST',
     headers : { 'api-key': BREVO_KEY, 'Content-Type': 'application/json' },
@@ -27,30 +83,56 @@ async function brevoSend({ to, toName, subject, html }) {
     }),
   });
   const data = await res.json();
-  if (!res.ok) {
-    console.error('[Brevo] Erreur', res.status, JSON.stringify(data));
-  } else {
-    console.log('[Brevo] Envoyé à', to, '— messageId:', data.messageId);
-  }
+  if (!res.ok) console.error('[Brevo] Erreur', res.status, JSON.stringify(data));
+  else         console.log('[Brevo] Envoyé à', to, '— messageId:', data.messageId);
 }
 
+// ─── Handler principal ────────────────────────────────────────────────────────
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
+  // IP client
+  const ip = (event.headers['x-nf-client-connection-ip']
+    || event.headers['x-forwarded-for']
+    || 'unknown').split(',')[0].trim();
+
   let body;
   try { body = JSON.parse(event.body || '{}'); }
   catch { return { statusCode: 400, body: JSON.stringify({ error: 'JSON invalide.' }) }; }
 
-  const {
-    prenom = '', nom = '', email = '',
-    telephone = '', message = '',
-    newsletter = false,
-  } = body;
+  // ── Honeypot (champ "website" invisible) ─────────────────────────────────
+  if (body.website && body.website.trim() !== '') {
+    console.log('[Honeypot] Bot détecté depuis', ip);
+    return { statusCode: 200, body: JSON.stringify({ ok: true }) }; // silencieux
+  }
 
-  if (!prenom.trim() || !email.trim()) {
+  // ── reCAPTCHA v3 ─────────────────────────────────────────────────────────
+  const recaptchaOk = await verifyRecaptcha(body.recaptchaToken);
+  if (!recaptchaOk) {
+    return { statusCode: 403, body: JSON.stringify({ error: 'Requête refusée.' }) };
+  }
+
+  // ── Rate limiting ─────────────────────────────────────────────────────────
+  const allowed = await checkRateLimit(ip);
+  if (!allowed) {
+    return { statusCode: 429, body: JSON.stringify({ error: 'Trop de tentatives. Réessayez dans une heure.' }) };
+  }
+
+  // ── Validation & sanitisation côté serveur ───────────────────────────────
+  const prenom    = sanitize(body.prenom    || '', 100);
+  const nom       = sanitize(body.nom       || '', 100);
+  const email     = sanitize(body.email     || '', 254);
+  const telephone = sanitize(body.telephone || '', 30);
+  const message   = sanitize(body.message   || '', 2000);
+  const newsletter = body.newsletter === true || body.newsletter === 'true';
+
+  if (!prenom || !email) {
     return { statusCode: 422, body: JSON.stringify({ error: 'Prénom et email requis.' }) };
+  }
+  if (!isValidEmail(email)) {
+    return { statusCode: 422, body: JSON.stringify({ error: 'Format email invalide.' }) };
   }
 
   const now     = new Date();
@@ -66,8 +148,7 @@ exports.handler = async function (event) {
     });
   } catch (e) { console.error('[Formspree]', e.message); }
 
-  // ── Brevo — emails transactionnels ──────────────────────────────────────
-  // 2. Confirmation patient
+  // ── 2. Brevo — confirmation patient ─────────────────────────────────────
   try {
     await brevoSend({
       to      : email,
@@ -77,41 +158,34 @@ exports.handler = async function (event) {
     });
   } catch (e) { console.error('[Brevo patient]', e.message); }
 
-  // ── Resend ───────────────────────────────────────────────────────────────
+  // ── 3. Resend — rappel 24h + newsletter ─────────────────────────────────
   const apiKey = process.env.RESEND_API_KEY;
   if (apiKey) {
     const resend = new Resend(apiKey);
 
-    // 4. Rappel 24h — stocker dans Netlify Blobs (envoyé par la cron function)
     try {
       const store = getStore('reminders');
       const key   = `${now.getTime()}-${email.replace(/[^a-z0-9]/gi, '')}`;
       await store.setJSON(key, {
         prenom, email,
-        sendAt: new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString(),
+        sendAt: new Date(now.getTime() + 24 * 3600 * 1000).toISOString(),
       });
     } catch (e) { console.error('[Blobs reminder]', e.message); }
 
-    // 5. Newsletter → Resend Contacts (si audience configurée)
-    if ((newsletter === true || newsletter === 'true') && AUDIENCE_ID) {
+    if (newsletter && AUDIENCE_ID) {
       try {
         await resend.contacts.create({
-          email,
-          firstName: prenom,
-          lastName: nom,
-          audienceId: AUDIENCE_ID,
-          unsubscribed: false,
+          email, firstName: prenom, lastName: nom,
+          audienceId: AUDIENCE_ID, unsubscribed: false,
         });
       } catch (e) { console.error('[Resend contact]', e.message); }
     }
-  } else {
-    console.warn('[Resend] RESEND_API_KEY manquant — emails Resend ignorés.');
   }
 
   return { statusCode: 200, body: JSON.stringify({ ok: true }) };
 };
 
-// ─── Templates email ─────────────────────────────────────────────────────────
+// ─── Templates email ──────────────────────────────────────────────────────────
 
 function emailShell(title, content) {
   return `<!DOCTYPE html>
@@ -155,47 +229,4 @@ function patientConfirmHtml(prenom) {
       <a href="mailto:zoegrede.kine@gmail.com" style="color:#6B1F2A;text-decoration:none;">zoegrede.kine@gmail.com</a>
     </p>
   `);
-}
-
-function patientReminderHtml(prenom) {
-  return emailShell("Votre demande est entre nos mains — Zowe", `
-    <p style="margin:0 0 20px;font-family:Georgia,serif;font-size:28px;font-style:italic;color:#6B1F2A;">${prenom},</p>
-    <p style="margin:0 0 16px;font-size:15px;color:#5C5C5C;line-height:1.8;">
-      Zoé prendra contact avec vous très prochainement pour convenir d'un moment qui vous correspond.
-    </p>
-    <p style="margin:0 0 16px;font-size:15px;color:#5C5C5C;line-height:1.8;">
-      N'hésitez pas à la contacter directement si vous le souhaitez.
-    </p>
-    <div style="width:40px;height:1px;background:#C9A96E;margin:28px 0;opacity:0.6;"></div>
-    <p style="margin:0;font-size:13px;color:#AAAAAA;line-height:1.8;">
-      <a href="tel:+32471783746" style="color:#6B1F2A;text-decoration:none;">0471 78 37 46</a>
-      ·
-      <a href="mailto:zoegrede.kine@gmail.com" style="color:#6B1F2A;text-decoration:none;">zoegrede.kine@gmail.com</a>
-    </p>
-  `);
-}
-
-function patronNotifHtml({ prenom, nom, email, telephone, message, dateStr, timeStr }) {
-  return emailShell(`Nouvelle demande — ${prenom} ${nom}`, `
-    <p style="margin:0 0 24px;font-size:15px;color:#5C5C5C;line-height:1.6;">
-      Nouvelle demande reçue via le formulaire Zowe.
-    </p>
-    <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #EDE8DF;margin-bottom:24px;">
-      ${row('Prénom', prenom)}
-      ${row('Nom', nom)}
-      ${row('Email', `<a href="mailto:${email}" style="color:#6B1F2A;">${email}</a>`)}
-      ${row('GSM', telephone || '—')}
-      ${row('Date', dateStr)}
-      ${row('Heure', timeStr)}
-    </table>
-    <p style="margin:0 0 8px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#C9A96E;">Message</p>
-    <p style="margin:0;padding:16px;background:#F5F0E8;font-size:14px;color:#5C5C5C;line-height:1.75;white-space:pre-wrap;">${message || '—'}</p>
-  `);
-}
-
-function row(label, value) {
-  return `<tr>
-    <td style="padding:10px 14px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#AAAAAA;border-bottom:1px solid #EDE8DF;white-space:nowrap;width:120px;">${label}</td>
-    <td style="padding:10px 14px;font-size:14px;color:#1A1A1A;border-bottom:1px solid #EDE8DF;">${value}</td>
-  </tr>`;
 }

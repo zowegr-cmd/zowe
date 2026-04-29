@@ -269,6 +269,8 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
 
       <!-- Formulaire direct -->
       <form id="mainForm" class="simple-form" data-anim="up" data-delay="3" novalidate>
+        <!-- Honeypot anti-bot : ne doit pas être rempli -->
+        <input type="text" name="website" id="website_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;height:0;width:0;" value="">
         <div class="ff-row">
           <div class="ff">
             <input type="text" id="prenom" name="prenom" placeholder=" " autocomplete="given-name" required>
@@ -486,6 +488,8 @@ window.__i18nContent = { nl: __c_nl, en: __c_en };
         telephone: ((document.getElementById('telephone') || {}).value || '').trim(),
         message:   ((document.getElementById('message')   || {}).value || '').trim(),
         newsletter: document.getElementById('newsletter') ? document.getElementById('newsletter').checked : false,
+        website:   (document.getElementById('website_hp') || {}).value || '',
+        recaptchaToken: window._recaptchaToken || '',
       };
 
       fetch('/.netlify/functions/contact', {

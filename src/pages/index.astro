@@ -635,14 +635,29 @@ window.__i18nContent = { nl: __c_nl, en: __c_en };
     });
   });
 
-  /* ── Sticky CTA : masquer quand on est dans la section contact ── */
-  var stickyCta = document.getElementById('stickyCta');
+  /* ── Sticky CTA : caché sur le hero et la section contact ── */
+  var stickyCta     = document.getElementById('stickyCta');
+  var heroSection   = document.getElementById('hero');
   var contactSection = document.getElementById('contact');
-  if (stickyCta && contactSection) {
-    var stickyObs = new IntersectionObserver(function(entries) {
-      stickyCta.classList.toggle('sticky-cta--hidden', entries[0].isIntersecting);
-    }, { threshold: 0.15 });
-    stickyObs.observe(contactSection);
+  if (stickyCta) {
+    var _heroVisible    = true;  // caché par défaut (on commence sur le hero)
+    var _contactVisible = false;
+    function _updateSticky() {
+      stickyCta.classList.toggle('sticky-cta--hidden', _heroVisible || _contactVisible);
+    }
+    if (heroSection) {
+      new IntersectionObserver(function(e) {
+        _heroVisible = e[0].isIntersecting;
+        _updateSticky();
+      }, { threshold: 0.1 }).observe(heroSection);
+    }
+    if (contactSection) {
+      new IntersectionObserver(function(e) {
+        _contactVisible = e[0].isIntersecting;
+        _updateSticky();
+      }, { threshold: 0.15 }).observe(contactSection);
+    }
+    _updateSticky();
   }
 
 })();

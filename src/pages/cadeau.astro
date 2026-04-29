@@ -177,7 +177,7 @@ import infos from '../content/infos.json';
 
     <div class="cadeau-protocols">
       <h2 data-i18n="pages.cadeau.choose">Choisissez le protocole</h2>
-      <p class="cadeau-hint" id="cadeauHint">Sélectionnez un ou plusieurs soins, puis envoyez le message à Zoé.</p>
+      <p class="cadeau-hint" id="cadeauHint" data-i18n="pages.cadeau.hint">Sélectionnez un ou plusieurs soins, puis envoyez le message à Zoé.</p>
 
       <div class="cadeau-grid">
         {services.tiers.map((tier, i) => (
@@ -231,44 +231,54 @@ import infos from '../content/infos.json';
   var summary = document.getElementById('selectionSummary');
   var hint    = document.getElementById('cadeauHint');
 
+  function tt(key) {
+    var i = window._i18n;
+    if (!i) return null;
+    return key.split('.').reduce(function(o,k){ return (o!=null&&typeof o==='object')?o[k]:undefined; }, i) || null;
+  }
+
   function buildMessage() {
     if (selected.length === 0) return '';
+    var lang = localStorage.getItem('zowe-lang') || 'fr';
     if (selected.length === 1) {
-      var t = selected[0];
-      return 'Bonjour Zoé, je souhaite offrir une carte cadeau Zowe pour le protocole « ' + t.name + ' » (' + t.duration + ' — ' + t.price + ').';
+      var item = selected[0];
+      if (lang === 'nl') return 'Hallo Zoé, ik wil graag een cadeaubon Zowe geven voor « ' + item.name + ' » (' + item.duration + ' — ' + item.price + ').';
+      if (lang === 'en') return 'Hello Zoé, I would like to give a Zowe gift card for « ' + item.name + ' » (' + item.duration + ' — ' + item.price + ').';
+      return 'Bonjour Zoé, je souhaite offrir une carte cadeau Zowe pour le protocole « ' + item.name + ' » (' + item.duration + ' — ' + item.price + ').';
     }
-    var list = selected.map(function(t){ return '« ' + t.name + ' » (' + t.price + ')'; }).join(', ');
-    return 'Bonjour Zoé, je souhaite offrir une carte cadeau Zowe. Protocoles sélectionnés : ' + list + '.';
+    var list = selected.map(function(item){ return '« ' + item.name + ' » (' + item.price + ')'; }).join(', ');
+    if (lang === 'nl') return 'Hallo Zoé, ik wil graag een cadeaubon Zowe geven. Geselecteerde behandelingen: ' + list + '.';
+    if (lang === 'en') return 'Hello Zoé, I would like to give a Zowe gift card. Selected protocols: ' + list + '.';
+    return 'Bonjour Zoé, je souhaite offrir une carte cadeau Zowe. Protocoles sélectionnés : ' + list + '.';
   }
 
   function update() {
-    // Résumé sous les cartes
     if (summary) {
       if (selected.length === 0) {
         summary.textContent = '';
       } else {
-        var names = selected.map(function(t){ return t.name; }).join(' + ');
-        var total = selected.reduce(function(s, t){ return s + parseFloat(t.price); }, 0);
-        summary.textContent = names + (selected.length > 1 ? ' — total : ' + total + '€' : '');
+        var names = selected.map(function(item){ return item.name; }).join(' + ');
+        var total = selected.reduce(function(s, item){ return s + parseFloat(item.price); }, 0);
+        summary.textContent = names + (selected.length > 1 ? ' — total : ' + total + '€' : '');
       }
     }
 
-    // Bouton WhatsApp
     if (selected.length === 0) {
       waBtn.classList.add('disabled');
       waBtn.href = '#';
-      waLabel.textContent = 'Sélectionnez un protocole';
+      waLabel.textContent = tt('pages.cadeau.wa_select') || 'Sélectionnez un protocole';
     } else {
       waBtn.classList.remove('disabled');
       waBtn.href = WA_BASE + encodeURIComponent(buildMessage());
       if (selected.length === 1) {
-        waLabel.textContent = 'Offrir ' + selected[0].name + ' à Zoé';
+        var pre = tt('pages.cadeau.wa_prefix') || 'Offrir ';
+        var suf = tt('pages.cadeau.wa_suffix') || ' à Zoé';
+        waLabel.textContent = pre + selected[0].name + suf;
       } else {
-        waLabel.textContent = 'Envoyer ma demande à Zoé (' + selected.length + ' soins)';
+        waLabel.textContent = (tt('pages.cadeau.wa_multi') || 'Envoyer ma demande à Zoé') + ' (' + selected.length + ')';
       }
     }
 
-    // Hint
     if (hint) hint.style.display = selected.length > 0 ? 'none' : '';
   }
 

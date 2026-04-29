@@ -3,7 +3,8 @@
     "concept":  "Concept",
     "approach": "Approach",
     "protocols":"Protocols",
-    "faq":      "FAQ"
+    "faq":      "FAQ",
+    "cta":      "Begin my journey"
   },
   "section": {
     "testimonials": "Testimonials",
@@ -68,14 +69,24 @@
   },
   "pages": {
     "back": "← Back to homepage",
+    "not_found": {
+      "title": "Page not found",
+      "sub":   "This page does not exist or has been moved.<br>The Zowe experience awaits you on the homepage.",
+      "btn":   "Back to homepage"
+    },
     "cadeau": {
-      "label":    "Gift card · Zowe",
-      "title":    "Give the Zowe experience",
-      "desc":     "Give your loved ones an exceptional care experience. A rare gesture that leaves a lasting impression.",
-      "choose":   "Choose the protocol",
-      "cta_text": "Zoé prepares every gift card with care. Contact her directly to arrange the details.",
-      "whatsapp": "Contact Zoé on WhatsApp",
-      "form":     "Write via the form"
+      "label":     "Gift card · Zowe",
+      "title":     "Give the Zowe experience",
+      "desc":      "Give your loved ones an exceptional care experience. A rare gesture that leaves a lasting impression.",
+      "choose":    "Choose the protocol",
+      "cta_text":  "Zoé prepares every gift card with care. Contact her directly to arrange the details.",
+      "whatsapp":  "Contact Zoé on WhatsApp",
+      "form":      "Write via the form",
+      "hint":      "Select one or more treatments, then send your message to Zoé.",
+      "wa_select": "Select a protocol",
+      "wa_prefix": "Gift ",
+      "wa_suffix": " to Zoé",
+      "wa_multi":  "Send request to Zoé"
     },
     "gallery": { "empty": "The gallery will be available soon." },
     "session": {
@@ -93,7 +104,8 @@
       "sub1":         "Zoé will get back to you today",
       "sub2":         "to arrange a time that suits you. In the meantime, feel free to reach her directly.",
       "session_link": "Prepare my first session →",
-      "home_btn":     "Back to homepage"
+      "home_btn":     "Back to homepage",
+      "wa_text":      "Hello Zoé, I would like to know more about the Zowe experience."
     }
   }
 }

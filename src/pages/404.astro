@@ -94,12 +94,34 @@ import Layout from '../layouts/Layout.astro';
   <div class="not-found">
     <div class="not-found__inner">
       <a href="/" class="not-found__logo">ZOWE</a>
-      <h1 class="not-found__title">Page introuvable</h1>
-      <p class="not-found__sub">
+      <h1 class="not-found__title" data-i18n="pages.not_found.title">Page introuvable</h1>
+      <p class="not-found__sub" data-i18n-html="pages.not_found.sub">
         Cette page n'existe pas ou a été déplacée.<br>
         L'expérience Zowe vous attend à l'accueil.
       </p>
-      <a href="/" class="not-found__btn">Retour à l'accueil</a>
+      <a href="/" class="not-found__btn" data-i18n="pages.not_found.btn">Retour à l'accueil</a>
     </div>
   </div>
+  <script is:inline>
+  (function(){
+    function getVal(obj, key) {
+      return key.split('.').reduce(function(o,k){ return (o!=null&&typeof o==='object')?o[k]:undefined; }, obj);
+    }
+    function apply(t) {
+      document.querySelectorAll('[data-i18n]').forEach(function(el){
+        var v = getVal(t, el.getAttribute('data-i18n')); if(v) el.textContent = v;
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+        var v = getVal(t, el.getAttribute('data-i18n-html')); if(v) el.innerHTML = v;
+      });
+    }
+    var lang = localStorage.getItem('zowe-lang') || 'fr';
+    if (lang !== 'fr') {
+      fetch('/i18n/' + lang + '.json')
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(t){ if(t) apply(t); })
+        .catch(function(){});
+    }
+  })();
+  </script>
 </Layout>

@@ -3,7 +3,8 @@
     "concept":  "Concept",
     "approach": "Aanpak",
     "protocols":"Protocollen",
-    "faq":      "FAQ"
+    "faq":      "FAQ",
+    "cta":      "Mijn begeleiding starten"
   },
   "section": {
     "testimonials": "Getuigenissen",
@@ -68,14 +69,24 @@
   },
   "pages": {
     "back": "← Terug naar de startpagina",
+    "not_found": {
+      "title": "Pagina niet gevonden",
+      "sub":   "Deze pagina bestaat niet of werd verplaatst.<br>De Zowe-ervaring wacht u op de startpagina.",
+      "btn":   "Terug naar de startpagina"
+    },
     "cadeau": {
-      "label":    "Cadeaubon · Zowe",
-      "title":    "De Zowe-ervaring cadeau doen",
-      "desc":     "Geef uw naasten een uitzonderlijke zorgervaring. Een zeldzame aandacht die de geest raakt.",
-      "choose":   "Kies het protocol",
-      "cta_text": "Zoé bereidt elke cadeaubon met zorg voor. Neem rechtstreeks contact met haar op.",
-      "whatsapp": "Contacteer Zoé via WhatsApp",
-      "form":     "Schrijven via het formulier"
+      "label":     "Cadeaubon · Zowe",
+      "title":     "De Zowe-ervaring cadeau doen",
+      "desc":      "Geef uw naasten een uitzonderlijke zorgervaring. Een zeldzame aandacht die de geest raakt.",
+      "choose":    "Kies het protocol",
+      "cta_text":  "Zoé bereidt elke cadeaubon met zorg voor. Neem rechtstreeks contact met haar op.",
+      "whatsapp":  "Contacteer Zoé via WhatsApp",
+      "form":      "Schrijven via het formulier",
+      "hint":      "Selecteer een of meerdere behandelingen en stuur uw bericht naar Zoé.",
+      "wa_select": "Selecteer een protocol",
+      "wa_prefix": "Cadeaubon: ",
+      "wa_suffix": "",
+      "wa_multi":  "Stuur aanvraag naar Zoé"
     },
     "gallery": { "empty": "De galerij is binnenkort beschikbaar." },
     "session": {
@@ -93,7 +104,8 @@
       "sub1":         "Zoé neemt vandaag nog contact met u op",
       "sub2":         "om een geschikt moment te vinden. Tussendoor kunt u haar rechtstreeks bereiken.",
       "session_link": "Mijn eerste sessie voorbereiden →",
-      "home_btn":     "Terug naar de startpagina"
+      "home_btn":     "Terug naar de startpagina",
+      "wa_text":      "Hallo Zoé, ik wil graag meer informatie over de Zowe-ervaring."
     }
   }
 }

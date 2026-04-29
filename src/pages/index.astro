@@ -691,7 +691,7 @@ window.__translationMode = __translationMode;
       e.preventDefault();
       var title = card.dataset.shareTitle || 'Zowe — Kinésithérapie BELTRA';
       var text  = card.dataset.shareText  || 'Découvrez les protocoles Zowe.';
-      var url   = 'https://zowe.netlify.app/#services';
+      var url   = window.location.origin + '/#services';
       if (navigator.share) {
         navigator.share({ title: title, text: text + ' — ' + title, url: url });
       } else {

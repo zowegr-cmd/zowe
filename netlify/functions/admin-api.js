@@ -9,10 +9,32 @@ const ADMIN_PASSWORD  = process.env.ADMIN_PASSWORD || '';
 const RESEND_KEY      = process.env.RESEND_API_KEY || '';
 const AUDIENCE_ID     = process.env.RESEND_AUDIENCE_ID || '';
 
-function auth(event) {
+async function auth(event) {
   const h     = (event.headers['authorization'] || '').replace(/^Bearer\s+/i, '').trim();
   const query = event.queryStringParameters?.token || '';
-  return ADMIN_PASSWORD && (h === ADMIN_PASSWORD || query === ADMIN_PASSWORD);
+  const token = h || query;
+  if (!ADMIN_PASSWORD) return false;
+
+  // Rate limiting: max 5 échecs/IP/heure
+  const ip  = (event.headers['x-nf-client-connection-ip'] || event.headers['x-forwarded-for'] || 'unknown').split(',')[0].trim();
+  const key = `admin-auth-${ip.replace(/[^a-z0-9:.]/gi,'')}`;
+  let ok = false;
+  try {
+    const store = getStore('rate-limits');
+    const now   = Date.now(); const hour = 3600000;
+    let fails = [];
+    try { fails = await store.get(key, { type: 'json' }) || []; } catch {}
+    fails = fails.filter(ts => now - ts < hour);
+    if (token === ADMIN_PASSWORD) {
+      if (fails.length) { fails = []; await store.set(key, JSON.stringify(fails)); }
+      ok = true;
+    } else {
+      if (fails.length >= 5) return false; // bloqué
+      fails.push(now);
+      await store.set(key, JSON.stringify(fails));
+    }
+  } catch { ok = token === ADMIN_PASSWORD; }
+  return ok;
 }
 
 function json(body, status = 200) {
@@ -80,7 +102,7 @@ async function unsubscribe(contactId) {
 
 // ─── Handler ──────────────────────────────────────────────────────────────────
 exports.handler = async function(event) {
-  if (!auth(event)) return json({ error: 'Non autorisé.' }, 401);
+  if (!await auth(event)) return json({ error: 'Non autorisé.' }, 401);
 
   const action = event.queryStringParameters?.action
     || (event.httpMethod === 'POST' ? JSON.parse(event.body || '{}').action : null);

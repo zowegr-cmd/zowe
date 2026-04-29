@@ -64,8 +64,8 @@ import infos from '../content/infos.json';
   <article class="legal-page">
     <a href="/" class="legal-back" data-i18n="pages.back">← Retour à l'accueil</a>
 
-    <h1>Mentions légales</h1>
-    <p class="legal-sub">Conformément à la législation belge en vigueur</p>
+    <h1 data-i18n="pages.legal.title">Mentions légales</h1>
+    <p class="legal-sub" data-i18n="pages.legal.sub">Conformément à la législation belge en vigueur</p>
 
     <h2>Éditeur du site</h2>
     <p><strong>Zoé Grêde</strong> — Kinésithérapeute</p>
@@ -113,4 +113,12 @@ import infos from '../content/infos.json';
       <a href="mailto:zoegrede.kine@gmail.com">zoegrede.kine@gmail.com</a>
     </p>
   </article>
+  <script is:inline>
+  (function(){
+    function getVal(obj,key){return key.split('.').reduce(function(o,k){return(o!=null&&typeof o==='object')?o[k]:undefined;},obj);}
+    function apply(t){document.querySelectorAll('[data-i18n]').forEach(function(el){var v=getVal(t,el.getAttribute('data-i18n'));if(v)el.textContent=v;});}
+    var lang=localStorage.getItem('zowe-lang')||'fr';
+    if(lang!=='fr'){fetch('/i18n/'+lang+'.json').then(function(r){return r.ok?r.json():null;}).then(function(t){if(t)apply(t);}).catch(function(){});}
+  })();
+  </script>
 </Layout>

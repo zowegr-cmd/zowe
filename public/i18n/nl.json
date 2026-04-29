@@ -74,6 +74,14 @@
       "sub":   "Deze pagina bestaat niet of werd verplaatst.<br>De Zowe-ervaring wacht u op de startpagina.",
       "btn":   "Terug naar de startpagina"
     },
+    "legal": {
+      "title": "Wettelijke vermeldingen",
+      "sub":   "Overeenkomstig de geldende Belgische wetgeving"
+    },
+    "privacy": {
+      "title": "Privacybeleid",
+      "sub":   "Laatste update: april 2026 · Conform GDPR en Belgische wet van 30 juli 2018"
+    },
     "cadeau": {
       "label":     "Cadeaubon · Zowe",
       "title":     "De Zowe-ervaring cadeau doen",

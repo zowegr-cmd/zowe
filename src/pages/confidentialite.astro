@@ -64,8 +64,8 @@ import Layout from '../layouts/Layout.astro';
   <article class="legal-page">
     <a href="/" class="legal-back" data-i18n="pages.back">← Retour à l'accueil</a>
 
-    <h1>Politique de confidentialité</h1>
-    <p class="legal-sub">Dernière mise à jour : avril 2026 · Conforme RGPD et loi belge du 30 juillet 2018</p>
+    <h1 data-i18n="pages.privacy.title">Politique de confidentialité</h1>
+    <p class="legal-sub" data-i18n="pages.privacy.sub">Dernière mise à jour : avril 2026 · Conforme RGPD et loi belge du 30 juillet 2018</p>
 
     <h2>Responsable du traitement</h2>
     <p><strong>Zoé Grêde</strong> — Kinésithérapeute</p>
@@ -77,7 +77,7 @@ import Layout from '../layouts/Layout.astro';
     <ul>
       <li>Prénom et nom</li>
       <li>Adresse email</li>
-      <li>Numéro de téléphone (optionnel)</li>
+      <li>Numéro de téléphone</li>
       <li>Message libre</li>
     </ul>
     <p>
@@ -159,4 +159,12 @@ import Layout from '../layouts/Layout.astro';
       de manière chiffrée et ne sont pas stockées sur le serveur du site.
     </p>
   </article>
+  <script is:inline>
+  (function(){
+    function getVal(obj,key){return key.split('.').reduce(function(o,k){return(o!=null&&typeof o==='object')?o[k]:undefined;},obj);}
+    function apply(t){document.querySelectorAll('[data-i18n]').forEach(function(el){var v=getVal(t,el.getAttribute('data-i18n'));if(v)el.textContent=v;});}
+    var lang=localStorage.getItem('zowe-lang')||'fr';
+    if(lang!=='fr'){fetch('/i18n/'+lang+'.json').then(function(r){return r.ok?r.json():null;}).then(function(t){if(t)apply(t);}).catch(function(){});}
+  })();
+  </script>
 </Layout>

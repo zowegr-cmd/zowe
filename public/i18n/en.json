@@ -74,6 +74,14 @@
       "sub":   "This page does not exist or has been moved.<br>The Zowe experience awaits you on the homepage.",
       "btn":   "Back to homepage"
     },
+    "legal": {
+      "title": "Legal notices",
+      "sub":   "In accordance with applicable Belgian law"
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "sub":   "Last updated: April 2026 · Compliant with GDPR and Belgian law of 30 July 2018"
+    },
     "cadeau": {
       "label":     "Gift card · Zowe",
       "title":     "Give the Zowe experience",

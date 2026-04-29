@@ -1705,10 +1705,12 @@ img {
     inset: 0;
     background: var(--off-white);
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 3rem;
+    gap: 2rem;
     z-index: 250;
+    overflow-y: auto;
+    padding: 5.5rem 2rem 3rem;
   }
   .nav-links.open { display: flex; }
   .nav-links a { font-size: 0.9rem; letter-spacing: 0.18em; }

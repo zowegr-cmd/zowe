@@ -1518,25 +1518,9 @@ img {
 }
 .localisation-address p {
   font-size: 0.86rem;
-  color: rgba(255,255,255,0.5);
+  color: var(--mid);
   line-height: 1.7;
 }
-.localisation-zones {
-  font-size: 0.75rem !important;
-  color: rgba(255,255,255,0.28) !important;
-  margin-top: 0.25rem;
-}
-.localisation-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-.localisation-links a {
-  font-size: 0.86rem;
-  color: rgba(255,255,255,0.62);
-  transition: color 0.2s;
-}
-.localisation-links a:hover { color: var(--off-white); }
 
 .btn-outline-light {
   display: inline-block;
@@ -1609,7 +1593,7 @@ img {
 .footer-col a { color: rgba(255,255,255,0.6); transition: color 0.2s; }
 .footer-col a:hover { color: var(--off-white); }
 .footer-zones { font-size: 0.72rem !important; color: rgba(255,255,255,0.3) !important; }
-.footer-tarif { color: rgba(107,36,55,0.7) !important; font-style: italic; }
+.footer-tarif { color: rgba(255,255,255,0.45) !important; font-style: italic; }
 
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.08);

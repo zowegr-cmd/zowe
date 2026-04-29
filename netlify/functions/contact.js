@@ -182,6 +182,17 @@ exports.handler = async function (event) {
     }
   }
 
+  // ── Tracking analytics ─────────────────────────────────────────────────
+  try {
+    const aStore = getStore('analytics');
+    const today  = new Date().toISOString().split('T')[0];
+    const aKey   = `daily/${today}`;
+    let aData = {};
+    try { aData = await aStore.get(aKey, { type: 'json' }) || {}; } catch {}
+    aData.form_submit = (aData.form_submit || 0) + 1;
+    await aStore.setJSON(aKey, aData);
+  } catch {}
+
   return { statusCode: 200, body: JSON.stringify({ ok: true }) };
 };
 

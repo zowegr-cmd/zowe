@@ -665,6 +665,23 @@ window.__translationMode = __translationMode;
     });
   })();
 
+  /* ── Tracking analytics ── */
+  function track(evt) {
+    fetch('/.netlify/functions/track', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event: evt })
+    }).catch(function(){});
+  }
+  // Clics WhatsApp (tous les liens wa.me)
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function(a) {
+    a.addEventListener('click', function() { track('wa_click'); });
+  });
+  // Langue sélectionnée
+  window.addEventListener('zowe:langchange', function(e) {
+    var lang = e.detail && e.detail.lang;
+    if (lang) track('lang_' + lang);
+  });
+
   /* ── Boutons partage (Web Share API) ── */
   document.querySelectorAll('[data-share]').forEach(function(btn) {
     var card = btn.closest('[data-share-title]');

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Zowe</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bx:#6B1F2A; --or:#C9A96E; --cr:#F5F0E8; --dk:#1A1A1A;
+  --mid:#5C5C5C; --lt:#AAAAAA; --wh:#fff; --bd:rgba(0,0,0,.08);
+  --serif:'Georgia',serif; --sans:system-ui,sans-serif;
+}
+body{font-family:var(--sans);background:var(--cr);color:var(--dk);min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased}
+
+/* ── Login ── */
+#loginScreen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#0F0F0F 0%,#2A0A10 60%,#1A0508 100%);z-index:999}
+.login-box{text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.5rem;max-width:360px;width:100%;padding:2rem}
+.login-logo{font-family:var(--serif);font-size:1.6rem;letter-spacing:.3em;color:rgba(201,169,110,.8);font-weight:400}
+.login-box h2{font-family:var(--serif);font-size:1.4rem;font-weight:300;font-style:italic;color:#F5F0E8}
+.login-box input{width:100%;padding:.85rem 1.2rem;background:rgba(255,255,255,.06);border:1px solid rgba(201,169,110,.25);color:#F5F0E8;font-size:.9rem;outline:none;letter-spacing:.05em}
+.login-box input::placeholder{color:rgba(245,240,232,.3)}
+.login-box input:focus{border-color:rgba(201,169,110,.6)}
+.login-btn{width:100%;padding:.9rem;background:var(--bx);color:#F5F0E8;border:none;font-size:.72rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.login-btn:hover{background:#4A1520}
+.login-error{color:#E07070;font-size:.78rem;display:none}
+
+/* ── App ── */
+#app{display:none}
+.topbar{background:var(--dk);color:#F5F0E8;padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.topbar-logo{font-family:var(--serif);font-size:1rem;letter-spacing:.25em;color:var(--or);opacity:.85}
+.topbar-nav{display:flex;align-items:center;gap:1.5rem}
+.topbar-link{color:rgba(245,240,232,.55);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:color .2s;cursor:pointer;background:none;border:none}
+.topbar-link:hover{color:#F5F0E8}
+.topbar-link.active{color:var(--or)}
+.logout-btn{color:rgba(245,240,232,.35);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;background:none;border:none;cursor:pointer}
+.logout-btn:hover{color:#F5F0E8}
+
+.main{max-width:1200px;margin:0 auto;padding:2.5rem 2rem}
+.section-title{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--bx);margin-bottom:1.5rem}
+
+/* ── Tabs ── */
+.tab-bar{display:flex;gap:.5rem;margin-bottom:2.5rem}
+.tab{padding:.5rem 1.25rem;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--bd);color:var(--lt);cursor:pointer;transition:.2s}
+.tab.active{background:var(--bx);border-color:var(--bx);color:#fff}
+
+/* ── Period toggle ── */
+.period-row{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.period-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--lt)}
+.period-toggle{display:flex;border:1px solid var(--bd);overflow:hidden}
+.period-btn{padding:.4rem 1rem;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;background:none;border:none;color:var(--lt);cursor:pointer;transition:.2s}
+.period-btn.active{background:var(--bx);color:#fff}
+
+/* ── Cards ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:2.5rem}
+.card{background:var(--wh);border:1px solid var(--bd);padding:1.5rem 1.5rem 1.25rem;position:relative}
+.card__label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--lt);margin-bottom:.75rem}
+.card__value{font-family:var(--serif);font-size:2.2rem;font-weight:300;color:var(--bx);line-height:1}
+.card__sub{font-size:.7rem;color:var(--lt);margin-top:.4rem}
+.card__badge{position:absolute;top:1rem;right:1rem;font-size:.6rem;letter-spacing:.06em;color:var(--or)}
+.card--accent{background:var(--bx);border-color:var(--bx)}
+.card--accent .card__label{color:rgba(245,240,232,.5)}
+.card--accent .card__value{color:var(--or)}
+.card--accent .card__sub{color:rgba(245,240,232,.4)}
+.card--link{cursor:pointer;text-decoration:none;display:block;transition:border-color .2s}
+.card--link:hover{border-color:var(--or)}
+
+/* ── Chart ── */
+.chart-wrap{background:var(--wh);border:1px solid var(--bd);padding:1.75rem;margin-bottom:2.5rem}
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.chart-legend{display:flex;gap:1.25rem}
+.legend-item{display:flex;align-items:center;gap:.4rem;font-size:.68rem;color:var(--mid)}
+.legend-dot{width:8px;height:8px;border-radius:50%}
+canvas{display:block;width:100%;height:160px}
+
+/* ── Langs bar ── */
+.langs-wrap{background:var(--wh);border:1px solid var(--bd);padding:1.75rem;margin-bottom:2.5rem}
+.lang-bar-row{display:flex;align-items:center;gap:1rem;margin-bottom:.85rem}
+.lang-bar-row:last-child{margin-bottom:0}
+.lang-bar-label{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mid);width:28px;flex-shrink:0}
+.lang-bar-track{flex:1;height:6px;background:var(--bd);border-radius:3px;overflow:hidden}
+.lang-bar-fill{height:100%;border-radius:3px;background:var(--bx);transition:width .6s ease}
+.lang-bar-pct{font-size:.68rem;color:var(--lt);width:32px;text-align:right;flex-shrink:0}
+
+/* ── Newsletter ── */
+.nl-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem}
+.nl-stats{display:flex;gap:1.5rem}
+.nl-stat{font-size:.72rem;color:var(--mid)}.nl-stat strong{color:var(--bx);font-weight:600}
+.export-btn{font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1.1rem;background:none;border:1px solid var(--bd);color:var(--mid);cursor:pointer;transition:.2s;text-decoration:none}
+.export-btn:hover{border-color:var(--bx);color:var(--bx)}
+.nl-table-wrap{background:var(--wh);border:1px solid var(--bd);overflow:auto}
+table{width:100%;border-collapse:collapse}
+thead{background:var(--dk)}
+thead th{padding:.75rem 1rem;text-align:left;font-size:.6rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.5)}
+tbody tr{border-bottom:1px solid var(--bd)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(107,31,42,.03)}
+td{padding:.75rem 1rem;font-size:.8rem;color:var(--mid)}
+td.name{color:var(--dk);font-weight:500}
+td.email a{color:var(--bx);text-decoration:none}
+.unsub-btn{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid rgba(200,100,100,.3);color:#C05050;padding:.28rem .7rem;cursor:pointer;transition:.2s}
+.unsub-btn:hover{background:#C05050;color:#fff;border-color:#C05050}
+.badge-unsub{font-size:.6rem;letter-spacing:.06em;color:var(--lt)}
+.empty{text-align:center;padding:3rem;color:var(--lt);font-style:italic}
+.loading{text-align:center;padding:2rem;color:var(--lt)}
+
+/* ── Responsive ── */
+@media(max-width:640px){
+  .topbar-nav{gap:.75rem}.cards{grid-template-columns:1fr 1fr}
+  .topbar-link{font-size:.62rem}.main{padding:1.5rem 1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">ZOWE</div>
+    <h2>Accès administration</h2>
+    <input type="password" id="pwdInput" placeholder="Mot de passe" autocomplete="current-password">
+    <button class="login-btn" onclick="login()">Accéder au dashboard</button>
+    <p class="login-error" id="loginError">Mot de passe incorrect.</p>
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div id="app">
+  <header class="topbar">
+    <div class="topbar-logo">ZOWE</div>
+    <nav class="topbar-nav">
+      <button class="topbar-link active" onclick="showTab('dashboard',this)">Dashboard</button>
+      <button class="topbar-link" onclick="showTab('newsletter',this)">Newsletter</button>
+      <a href="/admin/" class="topbar-link" target="_blank">Contenu ↗</a>
+      <a href="https://analytics.google.com" class="topbar-link" target="_blank">GA4 ↗</a>
+    </nav>
+    <button class="logout-btn" onclick="logout()">Se déconnecter</button>
+  </header>
+
+  <main class="main">
+
+    <!-- ═══════════ DASHBOARD TAB ═══════════ -->
+    <div id="tab-dashboard">
+      <div class="period-row">
+        <span class="period-label">Période</span>
+        <div class="period-toggle">
+          <button class="period-btn active" onclick="setPeriod(7,this)">7 j</button>
+          <button class="period-btn" onclick="setPeriod(30,this)">30 j</button>
+          <button class="period-btn" onclick="setPeriod(90,this)">90 j</button>
+        </div>
+      </div>
+
+      <!-- Metric cards -->
+      <div class="cards">
+        <div class="card card--accent">
+          <div class="card__label">Demandes contact</div>
+          <div class="card__value" id="stat-form">—</div>
+          <div class="card__sub" id="stat-form-sub">sur la période</div>
+        </div>
+        <div class="card">
+          <div class="card__label">Clics WhatsApp</div>
+          <div class="card__value" id="stat-wa">—</div>
+          <div class="card__sub">sur la période</div>
+        </div>
+        <div class="card">
+          <div class="card__label">Clics partager</div>
+          <div class="card__value" id="stat-share">—</div>
+          <div class="card__sub">sur la période</div>
+        </div>
+        <div class="card">
+          <div class="card__label">Newsletter</div>
+          <div class="card__value" id="stat-nl">—</div>
+          <div class="card__sub" id="stat-nl-sub">inscrits actifs</div>
+        </div>
+        <a href="https://analytics.google.com" target="_blank" class="card card--link">
+          <div class="card__label">Trafic & visiteurs</div>
+          <div class="card__value" style="font-size:1.1rem;margin-top:.3rem;color:var(--mid)">Voir GA4 →</div>
+          <div class="card__sub">Visiteurs · Pages vues · Sources</div>
+        </a>
+      </div>
+
+      <!-- Courbe 30 jours -->
+      <div class="chart-wrap">
+        <div class="chart-header">
+          <p class="section-title" style="margin:0">Activité — <span id="chartPeriodLabel">30 derniers jours</span></p>
+          <div class="chart-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--bx)"></div> Contacts</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--or)"></div> WhatsApp</div>
+          </div>
+        </div>
+        <canvas id="activityChart"></canvas>
+      </div>
+
+      <!-- Langues -->
+      <div class="langs-wrap">
+        <p class="section-title">Sélection de langue sur la période</p>
+        <div class="lang-bar-row">
+          <span class="lang-bar-label">FR</span>
+          <div class="lang-bar-track"><div class="lang-bar-fill" id="bar-fr" style="width:0%"></div></div>
+          <span class="lang-bar-pct" id="pct-fr">—</span>
+        </div>
+        <div class="lang-bar-row">
+          <span class="lang-bar-label">NL</span>
+          <div class="lang-bar-track"><div class="lang-bar-fill" id="bar-nl" style="width:0%;background:var(--or)"></div></div>
+          <span class="lang-bar-pct" id="pct-nl">—</span>
+        </div>
+        <div class="lang-bar-row">
+          <span class="lang-bar-label">EN</span>
+          <div class="lang-bar-track"><div class="lang-bar-fill" id="bar-en" style="width:0%;background:#A0A0A0"></div></div>
+          <span class="lang-bar-pct" id="pct-en">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ NEWSLETTER TAB ═══════════ -->
+    <div id="tab-newsletter" style="display:none">
+      <div class="nl-header">
+        <div>
+          <p class="section-title" style="margin-bottom:.25rem">Abonnés newsletter</p>
+          <div class="nl-stats">
+            <span class="nl-stat">Total actifs : <strong id="nl-total">—</strong></span>
+            <span class="nl-stat">Désinscrits : <strong id="nl-unsub-count">—</strong></span>
+          </div>
+        </div>
+        <a id="csvLink" href="/.netlify/functions/admin-api?action=csv" class="export-btn" onclick="addAuthToLink(this)">Exporter CSV</a>
+      </div>
+
+      <div class="nl-table-wrap">
+        <div class="loading" id="nlLoading">Chargement…</div>
+        <table id="nlTable" style="display:none">
+          <thead>
+            <tr>
+              <th>Prénom · Nom</th>
+              <th>Email</th>
+              <th>Inscrit le</th>
+              <th>Statut</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="nlBody"></tbody>
+        </table>
+        <div class="empty" id="nlEmpty" style="display:none">Aucun abonné trouvé.</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/* ── Auth ── */
+var _token = sessionStorage.getItem('zw_admin_token') || '';
+
+function login() {
+  var pwd = document.getElementById('pwdInput').value.trim();
+  if (!pwd) return;
+  // Vérification : on tente un appel API avec ce mot de passe
+  fetch('/.netlify/functions/admin-api?action=stats&days=7', {
+    headers: { 'Authorization': 'Bearer ' + pwd }
+  }).then(function(r) {
+    if (r.ok) {
+      _token = pwd;
+      sessionStorage.setItem('zw_admin_token', pwd);
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadDashboard(30);
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
+  }).catch(function() {
+    document.getElementById('loginError').style.display = 'block';
+  });
+}
+
+function logout() {
+  sessionStorage.removeItem('zw_admin_token');
+  location.reload();
+}
+
+document.getElementById('pwdInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') login();
+});
+
+// Vérifier le token existant au chargement
+if (_token) {
+  fetch('/.netlify/functions/admin-api?action=stats&days=7', {
+    headers: { 'Authorization': 'Bearer ' + _token }
+  }).then(function(r) {
+    if (r.ok) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadDashboard(30);
+    } else {
+      sessionStorage.removeItem('zw_admin_token');
+      _token = '';
+    }
+  }).catch(function() {});
+}
+
+/* ── Tabs ── */
+function showTab(name, btn) {
+  ['dashboard','newsletter'].forEach(function(t) {
+    document.getElementById('tab-' + t).style.display = t === name ? '' : 'none';
+  });
+  document.querySelectorAll('.topbar-link').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  if (name === 'newsletter') loadNewsletter();
+}
+
+/* ── Period ── */
+var _currentDays = 30;
+function setPeriod(days, btn) {
+  _currentDays = days;
+  document.querySelectorAll('.period-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  loadDashboard(days);
+}
+
+/* ── API call ── */
+function api(path) {
+  return fetch('/.netlify/functions/admin-api' + path, {
+    headers: { 'Authorization': 'Bearer ' + _token }
+  }).then(function(r) { return r.ok ? r.json() : null; });
+}
+
+/* ── Dashboard ── */
+function loadDashboard(days) {
+  document.getElementById('chartPeriodLabel').textContent = days + ' derniers jours';
+  api('?action=stats&days=' + days).then(function(data) {
+    if (!data) return;
+    var t = data.totals;
+    setText('stat-form',  t.form_submit || 0);
+    setText('stat-wa',    t.wa_click    || 0);
+    setText('stat-share', t.share_click || 0);
+
+    // Langues
+    var fr = t.lang_fr || 0, nl = t.lang_nl || 0, en = t.lang_en || 0;
+    var total = fr + nl + en || 1;
+    setBar('fr', fr / total);
+    setBar('nl', nl / total);
+    setBar('en', en / total);
+
+    // Chart
+    drawChart(data.days);
+  });
+  // Newsletter count
+  api('?action=newsletter').then(function(data) {
+    if (!data) return;
+    var active = (data.contacts || []).filter(function(c) { return !c.unsubscribed; }).length;
+    setText('stat-nl', active);
+  });
+}
+
+function setText(id, val) {
+  var el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function setBar(lang, ratio) {
+  var pct = Math.round(ratio * 100);
+  document.getElementById('bar-' + lang).style.width = pct + '%';
+  document.getElementById('pct-' + lang).textContent = pct + '%';
+}
+
+/* ── Chart ── */
+function drawChart(days) {
+  var canvas = document.getElementById('activityChart');
+  if (!canvas) return;
+  var W = canvas.offsetWidth || 800, H = 160;
+  canvas.width  = W * devicePixelRatio;
+  canvas.height = H * devicePixelRatio;
+  canvas.style.height = H + 'px';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+
+  var pad = { t: 12, r: 16, b: 28, l: 28 };
+  var w   = W - pad.l - pad.r;
+  var h   = H - pad.t - pad.b;
+
+  var contacts = days.map(function(d) { return d.form_submit || 0; });
+  var wa       = days.map(function(d) { return d.wa_click    || 0; });
+  var maxVal   = Math.max(1, Math.max.apply(null, contacts.concat(wa)));
+  var n        = days.length;
+
+  function xOf(i) { return pad.l + (i / (n - 1)) * w; }
+  function yOf(v) { return pad.t + h - (v / maxVal) * h; }
+
+  // Grid
+  ctx.strokeStyle = 'rgba(0,0,0,.06)';
+  ctx.lineWidth = 1;
+  [0, .25, .5, .75, 1].forEach(function(f) {
+    var y = pad.t + h - f * h;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + w, y); ctx.stroke();
+  });
+
+  // Lines
+  function drawLine(vals, color) {
+    ctx.beginPath();
+    ctx.strokeStyle = color; ctx.lineWidth = 2;
+    vals.forEach(function(v, i) {
+      i === 0 ? ctx.moveTo(xOf(i), yOf(v)) : ctx.lineTo(xOf(i), yOf(v));
+    });
+    ctx.stroke();
+    // Fill
+    ctx.lineTo(xOf(n - 1), pad.t + h);
+    ctx.lineTo(pad.l, pad.t + h);
+    ctx.closePath();
+    ctx.fillStyle = color.replace(')', ',.08)').replace('rgb','rgba');
+    ctx.fill();
+  }
+  if (n > 1) {
+    drawLine(wa,       'rgb(201,169,110)');
+    drawLine(contacts, 'rgb(107,31,42)');
+  }
+
+  // X-axis labels (every ~7 days)
+  ctx.fillStyle = '#AAAAAA'; ctx.font = '10px system-ui'; ctx.textAlign = 'center';
+  var step = Math.ceil(n / 6);
+  days.forEach(function(d, i) {
+    if (i % step === 0 || i === n - 1) {
+      var label = d.date ? d.date.slice(5) : '';
+      ctx.fillText(label, xOf(i), H - 6);
+    }
+  });
+}
+
+/* ── Newsletter ── */
+var _nlLoaded = false;
+function loadNewsletter() {
+  if (_nlLoaded) return;
+  _nlLoaded = true;
+  api('?action=newsletter').then(function(data) {
+    document.getElementById('nlLoading').style.display = 'none';
+    if (!data || !data.contacts.length) {
+      document.getElementById('nlEmpty').style.display = '';
+      return;
+    }
+    var active   = data.contacts.filter(function(c) { return !c.unsubscribed; });
+    var inactive = data.contacts.filter(function(c) { return c.unsubscribed; });
+    setText('nl-total',       active.length);
+    setText('nl-unsub-count', inactive.length);
+
+    var tbody = document.getElementById('nlBody');
+    var rows  = '';
+    data.contacts.forEach(function(c) {
+      var date = c.created ? c.created.split('T')[0] : '—';
+      var name = [c.prenom, c.nom].filter(Boolean).join(' ') || '—';
+      rows += '<tr>' +
+        '<td class="name">' + esc(name) + '</td>' +
+        '<td class="email"><a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></td>' +
+        '<td>' + date + '</td>' +
+        '<td>' + (c.unsubscribed ? '<span class="badge-unsub">Désinscrit</span>' : '<span style="color:var(--bx);font-size:.65rem">Actif</span>') + '</td>' +
+        '<td>' + (!c.unsubscribed ? '<button class="unsub-btn" onclick="manualUnsub(\'' + esc(c.id) + '\',this)">Désinscrire</button>' : '') + '</td>' +
+        '</tr>';
+    });
+    tbody.innerHTML = rows;
+    document.getElementById('nlTable').style.display = '';
+  });
+}
+
+function manualUnsub(contactId, btn) {
+  if (!confirm('Désinscrire ce contact ?')) return;
+  fetch('/.netlify/functions/admin-api', {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + _token, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'unsub', contactId: contactId }),
+  }).then(function(r) {
+    if (r.ok) {
+      var td = btn.parentElement;
+      td.previousElementSibling.innerHTML = '<span class="badge-unsub">Désinscrit</span>';
+      btn.remove();
+      var count = parseInt(document.getElementById('nl-unsub-count').textContent) || 0;
+      var active = parseInt(document.getElementById('nl-total').textContent) || 0;
+      setText('nl-unsub-count', count + 1);
+      setText('nl-total', Math.max(0, active - 1));
+    }
+  });
+}
+
+function addAuthToLink(a) {
+  a.href = '/.netlify/functions/admin-api?action=csv&token=' + encodeURIComponent(_token);
+  // Note: token in query string — admin-api doit l'accepter aussi
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

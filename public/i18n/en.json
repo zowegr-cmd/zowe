@@ -1,119 +1,159 @@
 {
-  "nav.concept":  "Concept",
-  "nav.approach": "Approach",
-  "nav.protocols":"Protocols",
-  "nav.faq":      "FAQ",
-  "nav.cta":      "Begin my journey",
-
-  "section.testimonials": "Testimonials",
-  "section.faq":          "Frequently asked questions",
-  "section.localisation": "Find us",
-  "section.contact":      "Get in touch",
-
-  "hero.label":   "Physiotherapist — Rhode-Saint-Genèse",
-  "hero.tagline": "The art of precision, the expertise of care.",
-  "hero.cta":     "Begin my journey",
-
-  "experience.title":    "The BELTRA Experience",
-  "experience.subtitle": "The technical mastery of your body",
-  "experience.intro":    "Born from excellence training at the Swiss border, the BELTRA method reinvents physiotherapy as one reinvents haute horlogerie: with precision, depth and an absolute demand for results.",
-  "experience.blocks.0.title": "A high-precision diagnosis",
-  "experience.blocks.0.text":  "Like an engineer inspecting every component before intervening, we identify your real limitations — physical, neurological and emotional — before any treatment.",
-  "experience.blocks.1.title": "Advanced protocols",
-  "experience.blocks.1.text":  "Deep tissue, IASTM, vacuum therapy, targeted joint mobilisations. Precision tools in service of complete and lasting recovery.",
-  "experience.blocks.2.title": "The Performance vision",
-  "experience.blocks.2.text":  "The goal is not simply to eliminate pain. It is to optimise your physical capital so your body functions at its full potential — durably.",
-
-  "about.title":      "Who am I?",
-  "about.lead":       "I designed Zowe with a clear vision: to transform the physiotherapy session into a high-precision experience.",
-  "about.paragraph1": "My approach doesn't stop at the disappearance of pain — it aims for the lasting optimisation of your physical capital.",
-  "about.paragraph2": "To reach this level of excellence, I specifically trained in the BELTRA method. This expertise allows me to integrate advanced care protocols into my practice, focused on technical control and deep re-harmonisation of the body.",
-  "about.paragraph3": "Every patient is unique, and I put my expertise and this specialisation at the service of a bespoke care journey, where scientific rigour meets the comfort of exclusive treatment.",
-  "about.formation":  "Education",
-  "about.kine_mention": "Zoé also practises conventional physiotherapy",
-
-  "services.title": "Protocols & Investments",
-  "services.intro": "Three levels of intervention, one goal: the excellence of your physical capital.",
-  "services.tiers.0.name":        "The Precision Audit",
-  "services.tiers.0.tagline":     "The essential starting point",
-  "services.tiers.0.description": "A complete and rigorous diagnosis of your physical capital. We identify together your real limitations, your tension zones and the deep origins of your pain.",
-  "services.tiers.0.tools.0":     "In-depth anamnesis",
-  "services.tiers.0.tools.1":     "Postural and functional assessment",
-  "services.tiers.0.tools.2":     "Tension chain mapping",
-  "services.tiers.0.ideal":       "First consultation or assessment before any BELTRA protocol.",
-  "services.tiers.1.name":        "The Harmonie Protocol",
-  "services.tiers.1.tagline":     "The balancing care",
-  "services.tiers.1.description": "A targeted intervention, personalised according to your specific needs. Upper or lower body, according to your situation and current goals.",
-  "services.tiers.1.tools.0":     "Joint mobilisations",
-  "services.tiers.1.tools.1":     "Deep tissue massage",
-  "services.tiers.1.tools.2":     "IASTM (scraping) and vacuum therapy",
-  "services.tiers.1.ideal":       "Regular follow-up, sports recovery, localised pain.",
-  "services.tiers.2.name":        "The Signature Experience",
-  "services.tiers.2.tagline":     "The ultimate care — full body",
-  "services.tiers.2.description": "The BELTRA experience in its entirety. A global treatment of the body, nervous system and emotions. The complete reset your body is longing for.",
-  "services.tiers.2.tools.0":     "Complete joint mobilisations",
-  "services.tiers.2.tools.1":     "Deep tissue massage",
-  "services.tiers.2.tools.2":     "IASTM and vacuum therapy",
-  "services.tiers.2.tools.3":     "Nervous system desensitisation",
-  "services.tiers.2.tools.4":     "Emotional and sensory work",
-  "services.tiers.2.ideal":       "Chronic conditions, intensive recovery, complete optimisation of physical capital.",
-  "services.protocol":  "Protocol",
-  "services.ideal":     "Ideal for",
-  "services.learn_more": "Learn more",
-
-  "faq.items.0.question": "Is BELTRA care reimbursed by my health insurance?",
-  "faq.items.0.answer":   "As a non-contracted physiotherapist, BELTRA treatments are not reimbursed under INAMI rates. However, many health insurers offer partial reimbursements through supplementary insurance. Check directly with your insurance provider.",
-  "faq.items.1.question": "Why did you choose non-contracted status?",
-  "faq.items.1.answer":   "Non-contracted status allows me to offer sessions without imposed time constraints, with advanced protocols that require a duration and quality of intervention incompatible with contracted rates. It is a deliberate choice in favour of excellence in care.",
-  "faq.items.2.question": "How does the BELTRA Experience differ from a standard session?",
-  "faq.items.2.answer":   "A standard session generally treats the symptom. The BELTRA Experience treats the cause. We integrate postural assessment, tension chains, the nervous system and emotional dimensions of the body — elements rarely addressed in traditional physiotherapy.",
-  "faq.items.3.question": "Who are BELTRA protocols designed for?",
-  "faq.items.3.answer":   "For anyone seeking a premium approach to their physical health: an athlete in recovery, a patient with years of chronic pain, or simply looking for a complete reset — BELTRA protocols adapt to your profile.",
-  "faq.items.4.question": "How many sessions are needed?",
-  "faq.items.4.answer":   "The Precision Audit is the recommended starting point. Together we establish a bespoke protocol. For chronic pain, 3 to 5 sessions generally lead to significant and lasting improvement.",
-  "faq.items.5.question": "How should I prepare for a session?",
-  "faq.items.5.answer":   "Come comfortably dressed, ideally in underwear or light sportswear. Avoid a heavy meal in the hour before the session. Above all, come with your questions — listening is an integral part of the protocol.",
-  "faq.items.6.question": "Can I give a session as a gift?",
-  "faq.items.6.answer":   "Absolutely. A BELTRA session is a rare and memorable gift. Contact me directly via the form or by phone for gift card details.",
-
-  "contact.intro": "A few details are enough to begin the journey. I will confirm your appointment as soon as possible.",
-
-  "footer.tagline":        "High-precision physiotherapy<br>BELTRA method",
-  "footer.cabinet":        "Practice",
-  "footer.contact":        "Contact",
-  "footer.legal":          "Legal notices",
-  "footer.entreprise":     "Company no.",
-  "footer.rcpro":          "Professional liability",
-  "footer.inami":          "INAMI visa",
-  "footer.to_complete":    "to be completed",
-  "footer.rights":         "All rights reserved.",
-  "footer.gift_card":      "Gift card",
-  "footer.gallery":        "Gallery",
-  "footer.before_session": "Before your session",
-  "footer.legal_notices":  "Legal notices",
-  "footer.privacy":        "Privacy policy",
-
-  "form.prenom":         "First name *",
-  "form.nom":            "Last name *",
-  "form.email":          "Email *",
-  "form.tel":            "Phone (optional)",
-  "form.message":        "Your message *",
-  "form.newsletter":     "I agree to receive tips and news from Zoé by email.",
-  "form.newsletter_sub": "Unsubscribe at any time.",
-  "form.note":           "Zoé will get back to you today to arrange a time that suits you.",
-  "form.submit":         "Write to Zoé",
-  "form.sending":        "Sending…",
-  "form.error_required": "Please enter your first name and email.",
-  "form.error_network":  "Network error. Please try again.",
-  "form.error_server":   "An error occurred. Please try again.",
-
-  "localisation.directions": "Get directions",
-  "gallery.view_all":         "View full gallery",
-
-  "cookie.text":       "This site uses Google Analytics to measure its audience in an anonymised way.",
-  "cookie.learn_more": "Learn more",
-  "cookie.refuse":     "Refuse",
-  "cookie.accept":     "Accept",
-
-  "sticky.cta": "Begin my journey"
+  "nav": {
+    "concept": "Concept",
+    "approach": "Approach",
+    "protocols": "Protocols",
+    "faq": "FAQ",
+    "cta": "Begin my journey"
+  },
+  "hero": {
+    "label": "Physiotherapist — Rhode-Saint-Genèse",
+    "tagline": "The art of precision, the expertise of care.",
+    "cta": "Begin my journey"
+  },
+  "section": {
+    "testimonials": "Testimonials",
+    "faq": "Frequently asked questions",
+    "localisation": "Find us",
+    "contact": "Get in touch"
+  },
+  "experience": {
+    "title": "The BELTRA Experience",
+    "subtitle": "The technical mastery of your body",
+    "intro": "Born from excellence training at the Swiss border, the BELTRA method reinvents physiotherapy as one reinvents haute horlogerie: with precision, depth and an absolute demand for results.",
+    "blocks": [
+      {
+        "title": "A high-precision diagnosis",
+        "text": "Like an engineer inspecting every component before intervening, we identify your real limitations — physical, neurological and emotional — before any treatment."
+      },
+      {
+        "title": "Advanced protocols",
+        "text": "Deep tissue, IASTM, vacuum therapy, targeted joint mobilisations. Precision tools in service of complete and lasting recovery."
+      },
+      {
+        "title": "The Performance vision",
+        "text": "The goal is not simply to eliminate pain. It is to optimise your physical capital so your body functions at its full potential — durably."
+      }
+    ]
+  },
+  "about": {
+    "title": "Who am I?",
+    "lead": "I designed Zowe with a clear vision: to transform the physiotherapy session into a high-precision experience.",
+    "paragraph1": "My approach doesn't stop at the disappearance of pain — it aims for the lasting optimisation of your physical capital.",
+    "paragraph2": "To reach this level of excellence, I specifically trained in the BELTRA method. This expertise allows me to integrate advanced care protocols into my practice, focused on technical control and deep re-harmonisation of the body.",
+    "paragraph3": "Every patient is unique, and I put my expertise and this specialisation at the service of a bespoke care journey, where scientific rigour meets the comfort of exclusive treatment.",
+    "formation": "Education",
+    "kine_mention": "Zoé also practises conventional physiotherapy"
+  },
+  "services": {
+    "title": "Protocols & Investments",
+    "intro": "Three levels of intervention, one goal: the excellence of your physical capital.",
+    "protocol": "Protocol",
+    "ideal": "Ideal for",
+    "learn_more": "Learn more",
+    "tiers": [
+      {
+        "name": "The Precision Audit",
+        "tagline": "The essential starting point",
+        "description": "A complete and rigorous diagnosis of your physical capital. We identify together your real limitations, your tension zones and the deep origins of your pain.",
+        "tools": ["In-depth anamnesis", "Postural and functional assessment", "Tension chain mapping"],
+        "ideal": "First consultation or assessment before any BELTRA protocol."
+      },
+      {
+        "name": "The Harmonie Protocol",
+        "tagline": "The balancing care",
+        "description": "A targeted intervention, personalised according to your specific needs. Upper or lower body, according to your situation and current goals.",
+        "tools": ["Joint mobilisations", "Deep tissue massage", "IASTM (scraping) and vacuum therapy"],
+        "ideal": "Regular follow-up, sports recovery, localised pain."
+      },
+      {
+        "name": "The Signature Experience",
+        "tagline": "The ultimate care — full body",
+        "description": "The BELTRA experience in its entirety. A global treatment of the body, nervous system and emotions. The complete reset your body is longing for.",
+        "tools": ["Complete joint mobilisations", "Deep tissue massage", "IASTM and vacuum therapy", "Nervous system desensitisation", "Emotional and sensory work"],
+        "ideal": "Chronic conditions, intensive recovery, complete optimisation of physical capital."
+      }
+    ]
+  },
+  "faq": {
+    "items": [
+      {
+        "question": "Is BELTRA care reimbursed by my health insurance?",
+        "answer": "As a non-contracted physiotherapist, BELTRA treatments are not reimbursed under INAMI rates. However, many health insurers offer partial reimbursements through supplementary insurance. Check directly with your insurance provider."
+      },
+      {
+        "question": "Why did you choose non-contracted status?",
+        "answer": "Non-contracted status allows me to offer sessions without imposed time constraints, with advanced protocols that require a duration and quality of intervention incompatible with contracted rates. It is a deliberate choice in favour of excellence in care."
+      },
+      {
+        "question": "How does the BELTRA Experience differ from a standard session?",
+        "answer": "A standard session generally treats the symptom. The BELTRA Experience treats the cause. We integrate postural assessment, tension chains, the nervous system and emotional dimensions of the body — elements rarely addressed in traditional physiotherapy."
+      },
+      {
+        "question": "Who are BELTRA protocols designed for?",
+        "answer": "For anyone seeking a premium approach to their physical health: an athlete in recovery, a patient with years of chronic pain, or simply looking for a complete reset — BELTRA protocols adapt to your profile."
+      },
+      {
+        "question": "How many sessions are needed?",
+        "answer": "The Precision Audit is the recommended starting point. Together we establish a bespoke protocol. For chronic pain, 3 to 5 sessions generally lead to significant and lasting improvement."
+      },
+      {
+        "question": "How should I prepare for a session?",
+        "answer": "Come comfortably dressed, ideally in underwear or light sportswear. Avoid a heavy meal in the hour before the session. Above all, come with your questions — listening is an integral part of the protocol."
+      },
+      {
+        "question": "Can I give a session as a gift?",
+        "answer": "Absolutely. A BELTRA session is a rare and memorable gift. Contact me directly via the form or by phone for gift card details."
+      }
+    ]
+  },
+  "contact": {
+    "intro": "A few details are enough to begin the journey. I will confirm your appointment as soon as possible."
+  },
+  "localisation": {
+    "directions": "Get directions"
+  },
+  "gallery": {
+    "view_all": "View full gallery"
+  },
+  "footer": {
+    "tagline": "High-precision physiotherapy<br>BELTRA method",
+    "cabinet": "Practice",
+    "contact": "Contact",
+    "legal": "Legal notices",
+    "entreprise": "Company no.",
+    "rcpro": "Professional liability",
+    "inami": "INAMI visa",
+    "to_complete": "to be completed",
+    "rights": "All rights reserved.",
+    "gift_card": "Gift card",
+    "gallery": "Gallery",
+    "before_session": "Before your session",
+    "legal_notices": "Legal notices",
+    "privacy": "Privacy policy"
+  },
+  "form": {
+    "prenom": "First name *",
+    "nom": "Last name *",
+    "email": "Email *",
+    "tel": "Phone (optional)",
+    "message": "Your message *",
+    "newsletter": "I agree to receive tips and news from Zoé by email.",
+    "newsletter_sub": "Unsubscribe at any time.",
+    "note": "Zoé will get back to you today to arrange a time that suits you.",
+    "submit": "Write to Zoé",
+    "sending": "Sending…",
+    "error_required": "Please enter your first name and email.",
+    "error_network": "Network error. Please try again.",
+    "error_server": "An error occurred. Please try again."
+  },
+  "cookie": {
+    "text": "This site uses Google Analytics to measure its audience in an anonymised way.",
+    "learn_more": "Learn more",
+    "refuse": "Refuse",
+    "accept": "Accept"
+  },
+  "sticky": {
+    "cta": "Begin my journey"
+  }
 }

@@ -420,11 +420,11 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       var prenom = (document.getElementById('prenom') || {}).value || '';
       var email  = (document.getElementById('email')  || {}).value || '';
       if (!prenom.trim() || !email.trim()) {
-        alert((window._i18n && window._i18n['form.error_required']) || 'Veuillez renseigner votre prénom et votre email.');
+        alert((window.__t && window.__t('form.error_required')) || 'Veuillez renseigner votre prénom et votre email.');
         return;
       }
       var btn = document.getElementById('submitBtn');
-      if (btn) { btn.textContent = (window._i18n && window._i18n['form.sending']) || 'Envoi en cours…'; btn.disabled = true; }
+      if (btn) { btn.textContent = (window.__t && window.__t('form.sending')) || 'Envoi en cours…'; btn.disabled = true; }
 
       var payload = {
         prenom:    prenom.trim(),
@@ -442,12 +442,12 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       }).then(function (r) {
         if (r.ok) { window.location.href = '/merci/'; }
         else {
-          r.json().then(function (d) { alert(d.error || (window._i18n && window._i18n['form.error_server']) || 'Une erreur est survenue. Veuillez réessayer.'); })
-           .catch(function () { alert((window._i18n && window._i18n['form.error_server']) || 'Une erreur est survenue. Veuillez réessayer.'); });
-          if (btn) { btn.textContent = (window._i18n && window._i18n['form.submit']) || 'Écrire à Zoé'; btn.disabled = false; }
+          r.json().then(function (d) { alert(d.error || (window.__t && window.__t('form.error_server')) || 'Une erreur est survenue. Veuillez réessayer.'); })
+           .catch(function () { alert((window.__t && window.__t('form.error_server')) || 'Une erreur est survenue. Veuillez réessayer.'); });
+          if (btn) { btn.textContent = (window.__t && window.__t('form.submit')) || 'Écrire à Zoé'; btn.disabled = false; }
         }
       }).catch(function () {
-        alert((window._i18n && window._i18n['form.error_network']) || 'Erreur réseau. Veuillez réessayer.');
+        alert((window.__t && window.__t('form.error_network')) || 'Erreur réseau. Veuillez réessayer.');
         if (btn) { btn.textContent = 'Écrire à Zoé'; btn.disabled = false; }
       });
     });

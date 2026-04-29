@@ -176,8 +176,16 @@ const ogImage = `${siteUrl}/og-image.png`;
   <script is:inline>
   (function() {
     var LANGS = ['fr', 'nl', 'en'];
-    var _cache = {};   // traductions chargées
-    var _fr    = {};   // valeurs FR originales du DOM
+    var _cache = {};
+    var _fr    = {};
+
+    // Lecture d'une clé dot-notation dans un objet imbriqué ("services.tiers.0.name")
+    function getVal(obj, key) {
+      if (!obj || typeof obj !== 'object') return undefined;
+      return key.split('.').reduce(function(o, k) {
+        return (o != null && typeof o === 'object') ? o[k] : undefined;
+      }, obj);
+    }
 
     function saveFr() {
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
@@ -191,13 +199,15 @@ const ogImage = `${siteUrl}/og-image.png`;
     function applyTranslations(lang, t) {
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         var key = el.getAttribute('data-i18n');
-        el.textContent = (t && t[key] !== undefined) ? t[key]
-                       : (_fr['t:' + key] !== undefined ? _fr['t:' + key] : el.textContent);
+        var val = t ? getVal(t, key) : undefined;
+        el.textContent = (val != null) ? val
+                       : (_fr['t:' + key] != null ? _fr['t:' + key] : el.textContent);
       });
       document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
         var key = el.getAttribute('data-i18n-html');
-        el.innerHTML = (t && t[key] !== undefined) ? t[key]
-                     : (_fr['h:' + key] !== undefined ? _fr['h:' + key] : el.innerHTML);
+        var val = t ? getVal(t, key) : undefined;
+        el.innerHTML = (val != null) ? val
+                     : (_fr['h:' + key] != null ? _fr['h:' + key] : el.innerHTML);
       });
       document.documentElement.lang = lang;
       document.querySelectorAll('.lang-btn').forEach(function(btn) {
@@ -239,6 +249,8 @@ const ogImage = `${siteUrl}/og-image.png`;
       if (btn && btn.dataset.lang) setLang(btn.dataset.lang);
     });
 
+    // Helper global : window.__t('form.submit')
+    window.__t = function(key) { return window._i18n ? getVal(window._i18n, key) : null; };
     window.__setLang = setLang;
   })();
   </script>

@@ -1,119 +1,159 @@
 {
-  "nav.concept":          "Concept",
-  "nav.approach":         "Aanpak",
-  "nav.protocols":        "Protocollen",
-  "nav.faq":              "FAQ",
-  "nav.cta":              "Mijn begeleiding starten",
-
-  "section.testimonials": "Getuigenissen",
-  "section.faq":          "Veelgestelde vragen",
-  "section.localisation": "Ons vinden",
-  "section.contact":      "Contact opnemen",
-
-  "hero.label":   "Kinesitherapeut — Rhode-Saint-Genèse",
-  "hero.tagline": "De kunst van precisie, de expertise van de zorg.",
-  "hero.cta":     "Mijn begeleiding starten",
-
-  "experience.title":    "De BELTRA-ervaring",
-  "experience.subtitle": "De technische controle van uw lichaam",
-  "experience.intro":    "Geboren uit een excellente opleiding aan de Zwitserse grens, heruitvindt de BELTRA-methode de kinesitherapie zoals men de haute horlogerie heruitvindt: met precisie, diepgang en een absolute eis naar resultaat.",
-  "experience.blocks.0.title": "Een diagnose van hoge precisie",
-  "experience.blocks.0.text":  "Zoals een ingenieur elk onderdeel inspecteert voor hij ingrijpt, identificeren we uw werkelijke beperkingen — fysiek, neurologisch en emotioneel — voor elke interventie.",
-  "experience.blocks.1.title": "Geavanceerde protocollen",
-  "experience.blocks.1.text":  "Deep tissue, IASTM, vacuumtherapie, gerichte articulaire mobilisaties. Precisiemiddelen ten dienste van een volledig en duurzaam herstel.",
-  "experience.blocks.2.title": "De Prestatie-visie",
-  "experience.blocks.2.text":  "Het doel is niet simpelweg de pijn weg te nemen. Het is uw lichamelijk kapitaal te optimaliseren zodat uw lichaam op zijn volledig potentieel functioneert — duurzaam.",
-
-  "about.title":      "Wie ben ik?",
-  "about.lead":       "Ik heb Zowe ontworpen met een duidelijke visie: de kinesitherapiesessie omvormen tot een ervaring van hoge precisie.",
-  "about.paragraph1": "Mijn aanpak stopt niet bij het verdwijnen van de pijn, maar richt zich op de duurzame optimalisatie van uw lichamelijk kapitaal.",
-  "about.paragraph2": "Om dit niveau van uitmuntendheid te bereiken, heb ik mij specifiek getraind in de BELTRA-methode. Deze expertise stelt me in staat geavanceerde zorgprotocollen in mijn praktijk te integreren, gericht op technische controle en diepe re-harmonisatie van het lichaam.",
-  "about.paragraph3": "Elke patiënt is uniek, en ik zet mijn expertise en deze specialisatie in dienst van een op maat gemaakt begeleidingstraject, waar wetenschappelijke strengheid de exclusieve zorgervaring ontmoet.",
-  "about.formation":  "Opleiding",
-  "about.kine_mention": "Zoé beoefent ook conventionele kinesitherapie",
-
-  "services.title": "Protocollen & Investeringen",
-  "services.intro": "Drie interventieniveaus, één doel: de uitmuntendheid van uw lichamelijk kapitaal.",
-  "services.tiers.0.name":        "De Precisie-audit",
-  "services.tiers.0.tagline":     "Het verplichte startpunt",
-  "services.tiers.0.description": "Een complete en grondige diagnose van uw lichamelijk kapitaal. Samen identificeren we uw werkelijke beperkingen, uw spanningszones en de diepere oorzaken van uw pijnen.",
-  "services.tiers.0.tools.0":     "Diepgaande anamnese",
-  "services.tiers.0.tools.1":     "Posturaal en functioneel onderzoek",
-  "services.tiers.0.tools.2":     "Kartering van de spanningsketens",
-  "services.tiers.0.ideal":       "Eerste consultatie of bilan voor elk BELTRA-protocol.",
-  "services.tiers.1.name":        "Het Harmonie Protocol",
-  "services.tiers.1.tagline":     "De evenwichtszorg",
-  "services.tiers.1.description": "Een gerichte interventie, gepersonaliseerd volgens uw specifieke behoeften. Boven- of onderlichaam, naargelang uw situatie en huidige doelstellingen.",
-  "services.tiers.1.tools.0":     "Articulaire mobilisaties",
-  "services.tiers.1.tools.1":     "Deep tissue massage",
-  "services.tiers.1.tools.2":     "IASTM (scraping) en vacuumtherapie",
-  "services.tiers.1.ideal":       "Regelmatige opvolging, sportief herstel, gelokaliseerde pijnen.",
-  "services.tiers.2.name":        "De Signature Ervaring",
-  "services.tiers.2.tagline":     "De ultieme zorg — volledig lichaam",
-  "services.tiers.2.description": "De BELTRA-ervaring in zijn volledigheid. Een globale behandeling van het lichaam, het zenuwstelsel en de emoties. De volledige reset waarnaar uw lichaam verlangt.",
-  "services.tiers.2.tools.0":     "Volledige articulaire mobilisaties",
-  "services.tiers.2.tools.1":     "Deep tissue massage",
-  "services.tiers.2.tools.2":     "IASTM en vacuumtherapie",
-  "services.tiers.2.tools.3":     "Desensibilisatie van het zenuwstelsel",
-  "services.tiers.2.tools.4":     "Emotioneel en sensorisch werk",
-  "services.tiers.2.ideal":       "Chronische pathologieën, intensief herstel, volledige optimalisatie van het lichamelijk kapitaal.",
-  "services.protocol":  "Protocol",
-  "services.ideal":     "Ideaal voor",
-  "services.learn_more": "Meer weten",
-
-  "faq.items.0.question": "Wordt de BELTRA-zorg vergoed door mijn mutualiteit?",
-  "faq.items.0.answer":   "Als niet-geconventioneerd kinesitherapeut worden BELTRA-zorgen niet terugbetaald volgens RIZIV-tarieven. Veel mutualiteiten bieden echter gedeeltelijke terugbetalingen via hun aanvullende verzekering. Neem contact op met uw verzekeringsorganisme.",
-  "faq.items.1.question": "Waarom heeft u gekozen voor het niet-geconventioneerd statuut?",
-  "faq.items.1.answer":   "Het niet-geconventioneerd statuut stelt me in staat sessies aan te bieden zonder opgelegde tijdsbeperkingen, met geavanceerde protocollen die een duur en kwaliteit van interventie vereisen die onverenigbaar zijn met de geconventioneerde tarieven. Dit is een bewuste keuze ten gunste van de uitmuntendheid van de zorg.",
-  "faq.items.2.question": "Hoe verschilt de BELTRA-ervaring van een klassieke sessie?",
-  "faq.items.2.answer":   "Een klassieke sessie behandelt doorgaans het symptoom. De BELTRA-ervaring behandelt de oorzaak. We integreren het posturale bilan, de spanningsketens, het zenuwstelsel en de emotionele dimensies van het lichaam — elementen die zelden worden behandeld in de traditionele kinesitherapie.",
-  "faq.items.3.question": "Voor wie zijn de BELTRA-protocollen bedoeld?",
-  "faq.items.3.answer":   "Voor iedereen die een premium aanpak van zijn lichamelijke gezondheid wenst: sporter in herstel, patiënt met jarenlange chronische pijnen, of gewoon op zoek naar een volledige reset — de BELTRA-protocollen passen zich aan uw profiel aan.",
-  "faq.items.4.question": "Hoeveel sessies zijn er nodig?",
-  "faq.items.4.answer":   "De Precisie-audit is het aanbevolen startpunt. Samen stellen we een op maat gemaakt protocol op. Voor chronische pijnen laten 3 tot 5 sessies over het algemeen een significante en duurzame verbetering zien.",
-  "faq.items.5.question": "Hoe bereid ik me voor op een sessie?",
-  "faq.items.5.answer":   "Kom comfortabel gekleed, bij voorkeur in ondergoed of lichte sportkleding. Vermijd een zwaar maal in het uur voor de sessie. Kom vooral met uw vragen — luisteren is een integraal onderdeel van het protocol.",
-  "faq.items.6.question": "Kan ik een sessie als cadeau geven?",
-  "faq.items.6.answer":   "Absoluut. Een BELTRA-sessie is een zeldzaam en memorabel cadeau. Neem rechtstreeks contact met me op via het formulier of telefonisch voor de details van een cadeaubon.",
-
-  "contact.intro": "Enkele details volstaan om de verandering te initiëren. Ik bevestig uw afspraak zo snel mogelijk.",
-
-  "footer.tagline":        "Hoge precisie kinesitherapie<br>BELTRA-methode",
-  "footer.cabinet":        "Praktijk",
-  "footer.contact":        "Contact",
-  "footer.legal":          "Wettelijke vermeldingen",
-  "footer.entreprise":     "Ondernemingsnummer",
-  "footer.rcpro":          "BA-verzekering",
-  "footer.inami":          "RIZIV-nummer",
-  "footer.to_complete":    "aan te vullen",
-  "footer.rights":         "Alle rechten voorbehouden.",
-  "footer.gift_card":      "Cadeaubon",
-  "footer.gallery":        "Galerij",
-  "footer.before_session": "Voor uw sessie",
-  "footer.legal_notices":  "Wettelijke vermeldingen",
-  "footer.privacy":        "Privacybeleid",
-
-  "form.prenom":         "Voornaam *",
-  "form.nom":            "Achternaam *",
-  "form.email":          "E-mail *",
-  "form.tel":            "GSM (optioneel)",
-  "form.message":        "Uw bericht *",
-  "form.newsletter":     "Ik ontvang graag tips en nieuws van Zoé per e-mail.",
-  "form.newsletter_sub": "Uitschrijven kan altijd.",
-  "form.note":           "Zoé neemt vandaag nog contact met u op om een geschikt moment te vinden.",
-  "form.submit":         "Schrijf naar Zoé",
-  "form.sending":        "Bezig met verzenden…",
-  "form.error_required": "Gelieve uw voornaam en e-mailadres in te vullen.",
-  "form.error_network":  "Netwerkfout. Probeer opnieuw.",
-  "form.error_server":   "Er is een fout opgetreden. Probeer opnieuw.",
-
-  "localisation.directions": "Routebeschrijving",
-  "gallery.view_all":         "Bekijk de volledige galerij",
-
-  "cookie.text":       "Deze site gebruikt Google Analytics voor geanonimiseerde meting van het bezoekersverkeer.",
-  "cookie.learn_more": "Meer weten",
-  "cookie.refuse":     "Weigeren",
-  "cookie.accept":     "Accepteren",
-
-  "sticky.cta": "Mijn begeleiding starten"
+  "nav": {
+    "concept": "Concept",
+    "approach": "Aanpak",
+    "protocols": "Protocollen",
+    "faq": "FAQ",
+    "cta": "Mijn begeleiding starten"
+  },
+  "hero": {
+    "label": "Kinesitherapeut — Rhode-Saint-Genèse",
+    "tagline": "De kunst van precisie, de expertise van de zorg.",
+    "cta": "Mijn begeleiding starten"
+  },
+  "section": {
+    "testimonials": "Getuigenissen",
+    "faq": "Veelgestelde vragen",
+    "localisation": "Ons vinden",
+    "contact": "Contact opnemen"
+  },
+  "experience": {
+    "title": "De BELTRA-ervaring",
+    "subtitle": "De technische controle van uw lichaam",
+    "intro": "Geboren uit een excellente opleiding aan de Zwitserse grens, heruitvindt de BELTRA-methode de kinesitherapie zoals men de haute horlogerie heruitvindt: met precisie, diepgang en een absolute eis naar resultaat.",
+    "blocks": [
+      {
+        "title": "Een diagnose van hoge precisie",
+        "text": "Zoals een ingenieur elk onderdeel inspecteert voor hij ingrijpt, identificeren we uw werkelijke beperkingen — fysiek, neurologisch en emotioneel — voor elke interventie."
+      },
+      {
+        "title": "Geavanceerde protocollen",
+        "text": "Deep tissue, IASTM, vacuumtherapie, gerichte articulaire mobilisaties. Precisiemiddelen ten dienste van een volledig en duurzaam herstel."
+      },
+      {
+        "title": "De Prestatie-visie",
+        "text": "Het doel is niet simpelweg de pijn weg te nemen. Het is uw lichamelijk kapitaal te optimaliseren zodat uw lichaam op zijn volledig potentieel functioneert — duurzaam."
+      }
+    ]
+  },
+  "about": {
+    "title": "Wie ben ik?",
+    "lead": "Ik heb Zowe ontworpen met een duidelijke visie: de kinesitherapiesessie omvormen tot een ervaring van hoge precisie.",
+    "paragraph1": "Mijn aanpak stopt niet bij het verdwijnen van de pijn, maar richt zich op de duurzame optimalisatie van uw lichamelijk kapitaal.",
+    "paragraph2": "Om dit niveau van uitmuntendheid te bereiken, heb ik mij specifiek getraind in de BELTRA-methode. Deze expertise stelt me in staat geavanceerde zorgprotocollen in mijn praktijk te integreren, gericht op technische controle en diepe re-harmonisatie van het lichaam.",
+    "paragraph3": "Elke patiënt is uniek, en ik zet mijn expertise en deze specialisatie in dienst van een op maat gemaakt begeleidingstraject, waar wetenschappelijke strengheid de exclusieve zorgervaring ontmoet.",
+    "formation": "Opleiding",
+    "kine_mention": "Zoé beoefent ook conventionele kinesitherapie"
+  },
+  "services": {
+    "title": "Protocollen & Investeringen",
+    "intro": "Drie interventieniveaus, één doel: de uitmuntendheid van uw lichamelijk kapitaal.",
+    "protocol": "Protocol",
+    "ideal": "Ideaal voor",
+    "learn_more": "Meer weten",
+    "tiers": [
+      {
+        "name": "De Precisie-audit",
+        "tagline": "Het verplichte startpunt",
+        "description": "Een complete en grondige diagnose van uw lichamelijk kapitaal. Samen identificeren we uw werkelijke beperkingen, uw spanningszones en de diepere oorzaken van uw pijnen.",
+        "tools": ["Diepgaande anamnese", "Posturaal en functioneel onderzoek", "Kartering van de spanningsketens"],
+        "ideal": "Eerste consultatie of bilan voor elk BELTRA-protocol."
+      },
+      {
+        "name": "Het Harmonie Protocol",
+        "tagline": "De evenwichtszorg",
+        "description": "Een gerichte interventie, gepersonaliseerd volgens uw specifieke behoeften. Boven- of onderlichaam, naargelang uw situatie en huidige doelstellingen.",
+        "tools": ["Articulaire mobilisaties", "Deep tissue massage", "IASTM (scraping) en vacuumtherapie"],
+        "ideal": "Regelmatige opvolging, sportief herstel, gelokaliseerde pijnen."
+      },
+      {
+        "name": "De Signature Ervaring",
+        "tagline": "De ultieme zorg — volledig lichaam",
+        "description": "De BELTRA-ervaring in zijn volledigheid. Een globale behandeling van het lichaam, het zenuwstelsel en de emoties. De volledige reset waarnaar uw lichaam verlangt.",
+        "tools": ["Volledige articulaire mobilisaties", "Deep tissue massage", "IASTM en vacuumtherapie", "Desensibilisatie van het zenuwstelsel", "Emotioneel en sensorisch werk"],
+        "ideal": "Chronische pathologieën, intensief herstel, volledige optimalisatie van het lichamelijk kapitaal."
+      }
+    ]
+  },
+  "faq": {
+    "items": [
+      {
+        "question": "Wordt de BELTRA-zorg vergoed door mijn mutualiteit?",
+        "answer": "Als niet-geconventioneerd kinesitherapeut worden BELTRA-zorgen niet terugbetaald volgens RIZIV-tarieven. Veel mutualiteiten bieden echter gedeeltelijke terugbetalingen via hun aanvullende verzekering. Neem contact op met uw verzekeringsorganisme."
+      },
+      {
+        "question": "Waarom heeft u gekozen voor het niet-geconventioneerd statuut?",
+        "answer": "Het niet-geconventioneerd statuut stelt me in staat sessies aan te bieden zonder opgelegde tijdsbeperkingen, met geavanceerde protocollen die een duur en kwaliteit van interventie vereisen die onverenigbaar zijn met de geconventioneerde tarieven. Dit is een bewuste keuze ten gunste van de uitmuntendheid van de zorg."
+      },
+      {
+        "question": "Hoe verschilt de BELTRA-ervaring van een klassieke sessie?",
+        "answer": "Een klassieke sessie behandelt doorgaans het symptoom. De BELTRA-ervaring behandelt de oorzaak. We integreren het posturale bilan, de spanningsketens, het zenuwstelsel en de emotionele dimensies van het lichaam — elementen die zelden worden behandeld in de traditionele kinesitherapie."
+      },
+      {
+        "question": "Voor wie zijn de BELTRA-protocollen bedoeld?",
+        "answer": "Voor iedereen die een premium aanpak van zijn lichamelijke gezondheid wenst: sporter in herstel, patiënt met jarenlange chronische pijnen, of gewoon op zoek naar een volledige reset — de BELTRA-protocollen passen zich aan uw profiel aan."
+      },
+      {
+        "question": "Hoeveel sessies zijn er nodig?",
+        "answer": "De Precisie-audit is het aanbevolen startpunt. Samen stellen we een op maat gemaakt protocol op. Voor chronische pijnen laten 3 tot 5 sessies over het algemeen een significante en duurzame verbetering zien."
+      },
+      {
+        "question": "Hoe bereid ik me voor op een sessie?",
+        "answer": "Kom comfortabel gekleed, bij voorkeur in ondergoed of lichte sportkleding. Vermijd een zwaar maal in het uur voor de sessie. Kom vooral met uw vragen — luisteren is een integraal onderdeel van het protocol."
+      },
+      {
+        "question": "Kan ik een sessie als cadeau geven?",
+        "answer": "Absoluut. Een BELTRA-sessie is een zeldzaam en memorabel cadeau. Neem rechtstreeks contact met me op via het formulier of telefonisch voor de details van een cadeaubon."
+      }
+    ]
+  },
+  "contact": {
+    "intro": "Enkele details volstaan om de verandering te initiëren. Ik bevestig uw afspraak zo snel mogelijk."
+  },
+  "localisation": {
+    "directions": "Routebeschrijving"
+  },
+  "gallery": {
+    "view_all": "Bekijk de volledige galerij"
+  },
+  "footer": {
+    "tagline": "Hoge precisie kinesitherapie<br>BELTRA-methode",
+    "cabinet": "Praktijk",
+    "contact": "Contact",
+    "legal": "Wettelijke vermeldingen",
+    "entreprise": "Ondernemingsnummer",
+    "rcpro": "BA-verzekering",
+    "inami": "RIZIV-nummer",
+    "to_complete": "aan te vullen",
+    "rights": "Alle rechten voorbehouden.",
+    "gift_card": "Cadeaubon",
+    "gallery": "Galerij",
+    "before_session": "Voor uw sessie",
+    "legal_notices": "Wettelijke vermeldingen",
+    "privacy": "Privacybeleid"
+  },
+  "form": {
+    "prenom": "Voornaam *",
+    "nom": "Achternaam *",
+    "email": "E-mail *",
+    "tel": "GSM (optioneel)",
+    "message": "Uw bericht *",
+    "newsletter": "Ik ontvang graag tips en nieuws van Zoé per e-mail.",
+    "newsletter_sub": "Uitschrijven kan altijd.",
+    "note": "Zoé neemt vandaag nog contact met u op om een geschikt moment te vinden.",
+    "submit": "Schrijf naar Zoé",
+    "sending": "Bezig met verzenden…",
+    "error_required": "Gelieve uw voornaam en e-mailadres in te vullen.",
+    "error_network": "Netwerkfout. Probeer opnieuw.",
+    "error_server": "Er is een fout opgetreden. Probeer opnieuw."
+  },
+  "cookie": {
+    "text": "Deze site gebruikt Google Analytics voor geanonimiseerde meting van het bezoekersverkeer.",
+    "learn_more": "Meer weten",
+    "refuse": "Weigeren",
+    "accept": "Accepteren"
+  },
+  "sticky": {
+    "cta": "Mijn begeleiding starten"
+  }
 }

@@ -289,3 +289,301 @@ collections:
             widget: "string"
             required: false
             hint: "A remplir une fois le site en ligne. Ex : https://zowe.netlify.app (sans slash final)"
+
+  # ─── TRADUCTIONS NÉERLANDAIS ───────────────────────────────────────────────
+  - name: "traductions_nl"
+    label: "Traductions — Néerlandais (NL)"
+    files:
+      - label: "Toutes les traductions NL"
+        name: "nl"
+        file: "public/i18n/nl.json"
+        format: json
+        fields:
+          - label: "Navigation"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "Concept", name: "concept", widget: "string" }
+              - { label: "Approche", name: "approach", widget: "string" }
+              - { label: "Protocoles", name: "protocols", widget: "string" }
+              - { label: "FAQ", name: "faq", widget: "string" }
+              - { label: "Bouton principal nav", name: "cta", widget: "string" }
+          - label: "Page d'accueil — Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Sous-titre (spécialité)", name: "label", widget: "string" }
+              - { label: "Accroche (tagline)", name: "tagline", widget: "string" }
+              - { label: "Bouton hero", name: "cta", widget: "string" }
+          - label: "Titres de sections"
+            name: "section"
+            widget: "object"
+            fields:
+              - { label: "Témoignages", name: "testimonials", widget: "string" }
+              - { label: "FAQ", name: "faq", widget: "string" }
+              - { label: "Nous trouver", name: "localisation", widget: "string" }
+              - { label: "Prise de contact", name: "contact", widget: "string" }
+          - label: "L'Expérience BELTRA"
+            name: "experience"
+            widget: "object"
+            fields:
+              - { label: "Titre de section", name: "title", widget: "string" }
+              - { label: "Sous-titre", name: "subtitle", widget: "string" }
+              - { label: "Introduction", name: "intro", widget: "text" }
+              - label: "Les 3 blocs"
+                name: "blocks"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Titre du bloc", name: "title", widget: "string" }
+                  - { label: "Texte du bloc", name: "text", widget: "text" }
+          - label: "Qui suis-je"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Titre de section", name: "title", widget: "string" }
+              - { label: "Phrase d'accroche", name: "lead", widget: "string" }
+              - { label: "Paragraphe 1", name: "paragraph1", widget: "text" }
+              - { label: "Paragraphe 2", name: "paragraph2", widget: "text" }
+              - { label: "Paragraphe 3", name: "paragraph3", widget: "text" }
+              - { label: "Label Formation", name: "formation", widget: "string" }
+              - { label: "Mention Kinovea", name: "kine_mention", widget: "string" }
+          - label: "Protocoles & Investissements"
+            name: "services"
+            widget: "object"
+            fields:
+              - { label: "Titre de section", name: "title", widget: "string" }
+              - { label: "Introduction", name: "intro", widget: "string" }
+              - { label: "Label Protocole", name: "protocol", widget: "string" }
+              - { label: "Label Ideal pour", name: "ideal", widget: "string" }
+              - { label: "Bouton En savoir plus", name: "learn_more", widget: "string" }
+              - label: "Les 3 protocoles"
+                name: "tiers"
+                widget: "list"
+                summary: "{{fields.name}}"
+                fields:
+                  - { label: "Nom", name: "name", widget: "string" }
+                  - { label: "Tagline", name: "tagline", widget: "string" }
+                  - { label: "Description", name: "description", widget: "text" }
+                  - { label: "Outils (une ligne par outil)", name: "tools", widget: "list" }
+                  - { label: "Ideal pour", name: "ideal", widget: "string" }
+          - label: "FAQ"
+            name: "faq"
+            widget: "object"
+            fields:
+              - label: "Questions et reponses"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.question}}"
+                fields:
+                  - { label: "Question", name: "question", widget: "string" }
+                  - { label: "Reponse", name: "answer", widget: "text" }
+          - label: "Prise de contact"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Introduction du formulaire", name: "intro", widget: "text" }
+          - label: "Nous trouver"
+            name: "localisation"
+            widget: "object"
+            fields:
+              - { label: "Bouton itineraire", name: "directions", widget: "string" }
+          - label: "Galerie (si activee)"
+            name: "gallery"
+            widget: "object"
+            fields:
+              - { label: "Voir toute la galerie", name: "view_all", widget: "string" }
+          - label: "Pied de page"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "Tagline (HTML accepte)", name: "tagline", widget: "string" }
+              - { label: "Colonne Pratique", name: "cabinet", widget: "string" }
+              - { label: "Colonne Contact", name: "contact", widget: "string" }
+              - { label: "Colonne Mentions legales", name: "legal", widget: "string" }
+              - { label: "Label N° entreprise", name: "entreprise", widget: "string" }
+              - { label: "Label RC Pro", name: "rcpro", widget: "string" }
+              - { label: "Label INAMI", name: "inami", widget: "string" }
+              - { label: "A completer", name: "to_complete", widget: "string" }
+              - { label: "Droits reserves", name: "rights", widget: "string" }
+              - { label: "Lien Carte cadeau", name: "gift_card", widget: "string" }
+              - { label: "Lien Galerie", name: "gallery", widget: "string" }
+              - { label: "Lien Avant votre seance", name: "before_session", widget: "string" }
+              - { label: "Lien Mentions legales", name: "legal_notices", widget: "string" }
+              - { label: "Lien Confidentialite", name: "privacy", widget: "string" }
+          - label: "Formulaire de contact"
+            name: "form"
+            widget: "object"
+            fields:
+              - { label: "Prenom", name: "prenom", widget: "string" }
+              - { label: "Nom", name: "nom", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "Telephone", name: "tel", widget: "string" }
+              - { label: "Message", name: "message", widget: "string" }
+              - { label: "Newsletter (texte)", name: "newsletter", widget: "string" }
+              - { label: "Newsletter (sous-texte)", name: "newsletter_sub", widget: "string" }
+              - { label: "Note d'envoi", name: "note", widget: "string" }
+              - { label: "Bouton envoyer", name: "submit", widget: "string" }
+              - { label: "Envoi en cours", name: "sending", widget: "string" }
+          - label: "Bandeau cookies"
+            name: "cookie"
+            widget: "object"
+            fields:
+              - { label: "Texte", name: "text", widget: "string" }
+              - { label: "En savoir plus", name: "learn_more", widget: "string" }
+              - { label: "Refuser", name: "refuse", widget: "string" }
+              - { label: "Accepter", name: "accept", widget: "string" }
+          - label: "Bouton flottant"
+            name: "sticky"
+            widget: "object"
+            fields:
+              - { label: "Texte du bouton", name: "cta", widget: "string" }
+
+  # ─── TRADUCTIONS ANGLAIS ───────────────────────────────────────────────────
+  - name: "traductions_en"
+    label: "Traductions — Anglais (EN)"
+    files:
+      - label: "Toutes les traductions EN"
+        name: "en"
+        file: "public/i18n/en.json"
+        format: json
+        fields:
+          - label: "Navigation"
+            name: "nav"
+            widget: "object"
+            fields:
+              - { label: "Concept", name: "concept", widget: "string" }
+              - { label: "Approach", name: "approach", widget: "string" }
+              - { label: "Protocols", name: "protocols", widget: "string" }
+              - { label: "FAQ", name: "faq", widget: "string" }
+              - { label: "Main nav button", name: "cta", widget: "string" }
+          - label: "Homepage — Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Subtitle (specialty)", name: "label", widget: "string" }
+              - { label: "Tagline", name: "tagline", widget: "string" }
+              - { label: "Hero button", name: "cta", widget: "string" }
+          - label: "Section titles"
+            name: "section"
+            widget: "object"
+            fields:
+              - { label: "Testimonials", name: "testimonials", widget: "string" }
+              - { label: "FAQ", name: "faq", widget: "string" }
+              - { label: "Find us", name: "localisation", widget: "string" }
+              - { label: "Get in touch", name: "contact", widget: "string" }
+          - label: "The BELTRA Experience"
+            name: "experience"
+            widget: "object"
+            fields:
+              - { label: "Section title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - { label: "Introduction", name: "intro", widget: "text" }
+              - label: "The 3 blocks"
+                name: "blocks"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Block title", name: "title", widget: "string" }
+                  - { label: "Block text", name: "text", widget: "text" }
+          - label: "Who am I"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Section title", name: "title", widget: "string" }
+              - { label: "Lead sentence", name: "lead", widget: "string" }
+              - { label: "Paragraph 1", name: "paragraph1", widget: "text" }
+              - { label: "Paragraph 2", name: "paragraph2", widget: "text" }
+              - { label: "Paragraph 3", name: "paragraph3", widget: "text" }
+              - { label: "Education label", name: "formation", widget: "string" }
+              - { label: "Kinovea mention", name: "kine_mention", widget: "string" }
+          - label: "Protocols & Investments"
+            name: "services"
+            widget: "object"
+            fields:
+              - { label: "Section title", name: "title", widget: "string" }
+              - { label: "Introduction", name: "intro", widget: "string" }
+              - { label: "Protocol label", name: "protocol", widget: "string" }
+              - { label: "Ideal for label", name: "ideal", widget: "string" }
+              - { label: "Learn more button", name: "learn_more", widget: "string" }
+              - label: "The 3 protocols"
+                name: "tiers"
+                widget: "list"
+                summary: "{{fields.name}}"
+                fields:
+                  - { label: "Name", name: "name", widget: "string" }
+                  - { label: "Tagline", name: "tagline", widget: "string" }
+                  - { label: "Description", name: "description", widget: "text" }
+                  - { label: "Tools (one per line)", name: "tools", widget: "list" }
+                  - { label: "Ideal for", name: "ideal", widget: "string" }
+          - label: "FAQ"
+            name: "faq"
+            widget: "object"
+            fields:
+              - label: "Questions and answers"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.question}}"
+                fields:
+                  - { label: "Question", name: "question", widget: "string" }
+                  - { label: "Answer", name: "answer", widget: "text" }
+          - label: "Get in touch"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "Form introduction", name: "intro", widget: "text" }
+          - label: "Find us"
+            name: "localisation"
+            widget: "object"
+            fields:
+              - { label: "Directions button", name: "directions", widget: "string" }
+          - label: "Gallery (if enabled)"
+            name: "gallery"
+            widget: "object"
+            fields:
+              - { label: "View full gallery", name: "view_all", widget: "string" }
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "Tagline (HTML accepted)", name: "tagline", widget: "string" }
+              - { label: "Practice column", name: "cabinet", widget: "string" }
+              - { label: "Contact column", name: "contact", widget: "string" }
+              - { label: "Legal column", name: "legal", widget: "string" }
+              - { label: "Company no. label", name: "entreprise", widget: "string" }
+              - { label: "Liability label", name: "rcpro", widget: "string" }
+              - { label: "INAMI label", name: "inami", widget: "string" }
+              - { label: "To be completed", name: "to_complete", widget: "string" }
+              - { label: "Rights reserved", name: "rights", widget: "string" }
+              - { label: "Gift card link", name: "gift_card", widget: "string" }
+              - { label: "Gallery link", name: "gallery", widget: "string" }
+              - { label: "Before session link", name: "before_session", widget: "string" }
+              - { label: "Legal notices link", name: "legal_notices", widget: "string" }
+              - { label: "Privacy link", name: "privacy", widget: "string" }
+          - label: "Contact form"
+            name: "form"
+            widget: "object"
+            fields:
+              - { label: "First name", name: "prenom", widget: "string" }
+              - { label: "Last name", name: "nom", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "Phone", name: "tel", widget: "string" }
+              - { label: "Message", name: "message", widget: "string" }
+              - { label: "Newsletter text", name: "newsletter", widget: "string" }
+              - { label: "Newsletter sub-text", name: "newsletter_sub", widget: "string" }
+              - { label: "Sending note", name: "note", widget: "string" }
+              - { label: "Submit button", name: "submit", widget: "string" }
+              - { label: "Sending state", name: "sending", widget: "string" }
+          - label: "Cookie banner"
+            name: "cookie"
+            widget: "object"
+            fields:
+              - { label: "Text", name: "text", widget: "string" }
+              - { label: "Learn more", name: "learn_more", widget: "string" }
+              - { label: "Refuse", name: "refuse", widget: "string" }
+              - { label: "Accept", name: "accept", widget: "string" }
+          - label: "Floating button"
+            name: "sticky"
+            widget: "object"
+            fields:
+              - { label: "Button text", name: "cta", widget: "string" }

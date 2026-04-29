@@ -254,10 +254,8 @@ var _token = sessionStorage.getItem('zw_admin_token') || '';
 function login() {
   var pwd = document.getElementById('pwdInput').value.trim();
   if (!pwd) return;
-  // Vérification : on tente un appel API avec ce mot de passe
-  fetch('/.netlify/functions/admin-api?action=stats&days=7', {
-    headers: { 'Authorization': 'Bearer ' + pwd }
-  }).then(function(r) {
+  fetch('/.netlify/functions/admin-api?action=stats&days=7&token=' + encodeURIComponent(pwd))
+  .then(function(r) {
     if (r.ok) {
       _token = pwd;
       sessionStorage.setItem('zw_admin_token', pwd);
@@ -283,9 +281,8 @@ document.getElementById('pwdInput').addEventListener('keydown', function(e) {
 
 // Vérifier le token existant au chargement
 if (_token) {
-  fetch('/.netlify/functions/admin-api?action=stats&days=7', {
-    headers: { 'Authorization': 'Bearer ' + _token }
-  }).then(function(r) {
+  fetch('/.netlify/functions/admin-api?action=stats&days=7&token=' + encodeURIComponent(_token))
+  .then(function(r) {
     if (r.ok) {
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
@@ -318,9 +315,9 @@ function setPeriod(days, btn) {
 
 /* ── API call ── */
 function api(path) {
-  return fetch('/.netlify/functions/admin-api' + path, {
-    headers: { 'Authorization': 'Bearer ' + _token }
-  }).then(function(r) { return r.ok ? r.json() : null; });
+  var sep = path.includes('?') ? '&' : '?';
+  return fetch('/.netlify/functions/admin-api' + path + sep + 'token=' + encodeURIComponent(_token))
+    .then(function(r) { return r.ok ? r.json() : null; });
 }
 
 /* ── Dashboard ── */

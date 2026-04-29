@@ -1219,10 +1219,18 @@ img {
   padding: 2.5rem 2rem;
   border-right: 1px solid var(--border);
   background: var(--white);
-  transition: background 0.2s;
+  transition: background 0.25s, border-color 0.25s;
 }
 .experience-block:last-child { border-right: none; }
-.experience-block:hover { background: var(--off-white); }
+.experience-block:hover {
+  background: var(--bordeaux);
+  border-color: var(--bordeaux);
+}
+.experience-block:hover .experience-block__num,
+.experience-block:hover h3,
+.experience-block:hover p {
+  color: rgba(245, 240, 232, 0.9);
+}
 
 .experience-block__num {
   display: block;

@@ -279,26 +279,12 @@ const ogImage = `${siteUrl}/og-image.png`;
 
       var mode = window.__translationMode || 'manual';
 
-      // Mode auto : on ignore les traductions manuelles et on laisse l'IA traduire
-      if (mode === 'auto') {
-        applyTranslations(lang, null); // reset à FR d'abord
-        autoTranslatePage(lang);
-        document.documentElement.lang = lang;
-        document.querySelectorAll('.lang-btn').forEach(function(btn) {
-          btn.classList.toggle('active', btn.dataset.lang === lang);
-        });
-        localStorage.setItem('zowe-lang', lang);
-        return;
-      }
+      // Étape 1 — toujours appliquer les traductions depuis les JSON (contenu + UI strings)
+      if (_cache[lang]) { applyTranslations(lang, _cache[lang]); }
 
-      // Mode manuel (défaut)
-      if (_cache[lang])  { applyTranslations(lang, _cache[lang]); return; }
-
-      // Contenu injecté à la compilation (immédiat, zéro réseau)
       var content = window.__i18nContent && window.__i18nContent[lang];
-      if (content) { applyTranslations(lang, content); }
+      if (content && !_cache[lang]) { applyTranslations(lang, content); }
 
-      // UI strings depuis /i18n/{lang}.json — fusionnés par-dessus le contenu
       fetch('/i18n/' + lang + '.json')
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(ui) {
@@ -306,6 +292,40 @@ const ogImage = `${siteUrl}/og-image.png`;
           var merged = content ? mergeDeep(JSON.parse(JSON.stringify(content)), ui) : ui;
           _cache[lang] = merged;
           applyTranslations(lang, merged);
+
+          // Étape 2 — mode auto : compléter via IA les éléments encore en français
+          if (mode === 'auto') {
+            var toTranslate = [];
+            document.querySelectorAll('[data-i18n]').forEach(function(el) {
+              var frText = _fr['t:' + el.getAttribute('data-i18n')];
+              if (frText && el.textContent.trim() === frText.trim()) {
+                toTranslate.push({ el: el, type: 'text', text: frText });
+              }
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+              var frText = _fr['h:' + el.getAttribute('data-i18n-html')];
+              if (frText && el.innerHTML.trim() === frText.trim()) {
+                toTranslate.push({ el: el, type: 'html', text: frText });
+              }
+            });
+            if (toTranslate.length) {
+              fetch('/.netlify/functions/translate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ texts: toTranslate.map(function(e) { return e.text; }), lang: lang }),
+              })
+                .then(function(r) { return r.ok ? r.json() : null; })
+                .then(function(data) {
+                  if (!data || !Array.isArray(data.translations)) return;
+                  data.translations.forEach(function(tr, i) {
+                    if (!hasVal(tr)) return;
+                    if (toTranslate[i].type === 'text') toTranslate[i].el.textContent = tr;
+                    else toTranslate[i].el.innerHTML = tr;
+                  });
+                })
+                .catch(function() {});
+            }
+          }
         })
         .catch(function() { if (content) _cache[lang] = content; });
     }

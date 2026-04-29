@@ -1892,24 +1892,22 @@ img {
 .loc-social-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.1rem;
+  gap: 0.45rem;
+  padding: 0;
   font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.07em;
-  border-radius: 2px;
+  letter-spacing: 0.08em;
   text-decoration: none;
-  transition: opacity 0.2s;
+  color: var(--mid);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.1rem;
+  transition: color 0.2s, border-color 0.2s;
 }
-.loc-social-btn:hover { opacity: 0.82; }
-.loc-social-btn--wa {
-  background: #25D366;
-  color: #fff;
+.loc-social-btn:hover {
+  color: var(--bordeaux);
+  border-color: var(--bordeaux);
 }
-.loc-social-btn--ig {
-  background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
-  color: #fff;
-}
+.loc-social-btn--wa,
+.loc-social-btn--ig { background: none; }
 .localisation-contacts {
   display: flex;
   flex-direction: column;

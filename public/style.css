@@ -1233,12 +1233,18 @@ img {
 }
 
 .about-signature {
-  font-family: 'Great Vibes', cursive;
-  font-size: 3.5rem;
-  color: var(--bordeaux);
-  line-height: 1;
-  margin: 1rem 0;
-  opacity: 0.85;
+  margin: 1.25rem 0;
+}
+.about-signature-img {
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+  opacity: 0.9;
+  mix-blend-mode: multiply; /* fond blanc → transparent sur crème */
+  display: block;
+}
+@media (max-width: 860px) {
+  .about-signature-img { width: 160px; }
 }
 
 .about-formation {

@@ -32,8 +32,19 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       <li><a href="#about" data-i18n="nav.approach">Approche</a></li>
       <li><a href="#services" data-i18n="nav.protocols">Protocoles</a></li>
       <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+      {gallery.visible && <li><a href="/galerie" data-i18n="footer.gallery">Galerie</a></li>}
+      {session.visible && <li><a href="/preparer-ma-seance" data-i18n="footer.before_session">Avant votre séance</a></li>}
       <li><a href="#contact" class="nav-cta" data-i18n="nav.cta">Initier mon accompagnement</a></li>
+      <!-- Sélecteur de langue — visible uniquement dans le menu mobile -->
+      <li class="nav-lang-mobile" aria-label="Choisir la langue">
+        <button class="lang-btn" data-lang="fr">FR</button>
+        <span aria-hidden="true">·</span>
+        <button class="lang-btn" data-lang="nl">NL</button>
+        <span aria-hidden="true">·</span>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </li>
     </ul>
+    <!-- Sélecteur de langue — visible uniquement sur desktop -->
     <div class="lang-selector" id="langSelector" aria-label="Choisir la langue">
       <button class="lang-btn" data-lang="fr">FR</button>
       <span aria-hidden="true">·</span>

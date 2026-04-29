@@ -151,12 +151,18 @@ img {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Language selector */
+/* Language selector — desktop */
 .lang-selector {
   display: flex;
   align-items: center;
   gap: 0.35rem;
   margin-left: 1.5rem;
+}
+
+/* Language selector — mobile (dans le menu déroulant) */
+.nav-lang-mobile {
+  display: none;
+  list-style: none;
 }
 .lang-btn {
   background: none;
@@ -1624,7 +1630,25 @@ img {
   :root { --section-y: 5rem; }
 
   .nav-toggle { display: flex; }
-  .lang-selector { margin-left: auto; margin-right: 0.75rem; }
+  .lang-selector { display: none; }
+
+  .nav-lang-mobile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .nav-lang-mobile .lang-btn {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.5rem;
+  }
+  .nav-lang-mobile > span {
+    color: var(--light);
+    font-size: 0.78rem;
+  }
+
   .nav-links {
     display: none;
     position: fixed;

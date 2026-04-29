@@ -14,7 +14,7 @@
       "id": "audit",
       "duration": "30 min",
       "price": "60€",
-      "name": { "fr": "L'Audit Précision", "nl": "De Precisie-audit", "en": "The Precision Audit" },
+      "name": { "fr": "Le Bilan", "nl": "Het Bilan", "en": "The Assessment" },
       "tagline": { "fr": "Le point de départ obligatoire", "nl": "Het verplichte startpunt", "en": "The essential starting point" },
       "description": {
         "fr": "Un diagnostic complet et rigoureux de votre capital physique. Nous identifions ensemble vos limitations réelles, vos zones de tension et les origines profondes de vos douleurs.",
@@ -36,7 +36,7 @@
       "id": "harmonie",
       "duration": "1h",
       "price": "110€",
-      "name": { "fr": "Le Protocole Harmonie", "nl": "Het Harmonie Protocol", "en": "The Harmonie Protocol" },
+      "name": { "fr": "Le Soin Demi Corps", "nl": "De Halflichaamsbehandeling", "en": "The Half-body Care" },
       "tagline": { "fr": "Le soin d'équilibre", "nl": "De evenwichtszorg", "en": "The balancing care" },
       "description": {
         "fr": "Une intervention ciblée, personnalisée selon vos besoins spécifiques. Haut ou bas du corps, selon votre situation et vos objectifs du moment.",
@@ -58,7 +58,7 @@
       "id": "signature",
       "duration": "1h30",
       "price": "165€",
-      "name": { "fr": "L'Expérience Signature", "nl": "De Signature Ervaring", "en": "The Signature Experience" },
+      "name": { "fr": "Le Contrôle Technique", "nl": "De Technische Controle", "en": "The Technical Check" },
       "tagline": { "fr": "Le soin ultime — corps complet", "nl": "De ultieme zorg — volledig lichaam", "en": "The ultimate care — full body" },
       "description": {
         "fr": "L'expérience BELTRA dans son intégralité. Une prise en charge globale du corps, du système nerveux et des émotions. Le reset complet auquel votre corps aspire.",

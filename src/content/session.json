@@ -1,23 +1,9 @@
 {
-  "visible": false,
-  "title_fr": "Avant votre première séance",
-  "title_nl": "Voor uw eerste sessie",
-  "title_en": "Before your first session",
   "howToGet_fr": "Rue des Iris, Boîte 2 — 1640 Rhode-Saint-Genèse. Parking disponible en rue. Accessible depuis Bruxelles en 20 minutes par la N5.",
-  "howToGet_nl": "Irisstraat, Doos 2 — 1640 Rhode-Saint-Genèse. Straatparkeren beschikbaar.",
-  "howToGet_en": "Rue des Iris, Box 2 — 1640 Rhode-Saint-Genèse. Street parking available.",
-  "dress_fr": "Venez en sous-vêtements ou en tenue de sport légère. Évitez les vêtements trop ajustés. Des draps sont fournis pour votre confort.",
-  "dress_nl": "Kom in ondergoed of lichte sportkleding. Draken worden voorzien.",
-  "dress_en": "Come in underwear or light sportswear. Draping is provided for your comfort.",
-  "duration_fr": "Audit Précision : 30 min · Protocole Harmonie : 1h · Expérience Signature : 1h30. Prévoyez 10 min supplémentaires pour la première séance.",
-  "duration_nl": "Precisie Audit: 30 min · Harmonie Protocol: 1u · Signature Ervaring: 1u30.",
-  "duration_en": "Precision Audit: 30 min · Harmony Protocol: 1h · Signature Experience: 1h30.",
-  "bring_fr": "Aucun document n'est requis. Si vous avez des examens récents (IRM, radio), vous pouvez les apporter — sans obligation.",
-  "bring_nl": "Geen documenten vereist. Recente onderzoeken (MRI, röntgenfoto) mogen meegebracht worden.",
-  "bring_en": "No documents required. Recent scans (MRI, X-ray) are welcome but not mandatory.",
-  "payment_fr": "Virement bancaire, Bancontact ou espèces. Non-conventionné — remboursement partiel possible selon votre mutuelle.",
-  "payment_nl": "Bankoverschrijving, Bancontact of contant. Niet-geconventioneerd.",
   "payment_en": "Bank transfer, Bancontact or cash. Non-conventional — partial reimbursement possible depending on your insurance.",
+  "title_nl": "Voor uw eerste sessie",
+  "payment_fr": "Virement bancaire, Bancontact ou espèces. Non-conventionné — remboursement partiel possible selon votre mutuelle.",
+  "dress_nl": "Kom in ondergoed of lichte sportkleding. Draken worden voorzien.",
   "steps": [
     {
       "label_fr": "Accueil",
@@ -51,5 +37,19 @@
       "text_nl": "Aan het einde deelt Zoé haar gepersonaliseerde aanbevelingen.",
       "text_en": "Zoé shares her personalized recommendations to maintain the benefits of the treatment."
     }
-  ]
+  ],
+  "duration_nl": "Precisie Audit: 30 min · Harmonie Protocol: 1u · Signature Ervaring: 1u30.",
+  "bring_nl": "Geen documenten vereist. Recente onderzoeken (MRI, röntgenfoto) mogen meegebracht worden.",
+  "title_en": "Before your first session",
+  "dress_en": "Come in underwear or light sportswear. Draping is provided for your comfort.",
+  "visible": true,
+  "howToGet_nl": "Irisstraat, Doos 2 — 1640 Rhode-Saint-Genèse. Straatparkeren beschikbaar.",
+  "title_fr": "Avant votre première séance",
+  "duration_en": "Precision Audit: 30 min · Harmony Protocol: 1h · Signature Experience: 1h30.",
+  "dress_fr": "Venez en sous-vêtements ou en tenue de sport légère. Évitez les vêtements trop ajustés. Des draps sont fournis pour votre confort.",
+  "bring_en": "No documents required. Recent scans (MRI, X-ray) are welcome but not mandatory.",
+  "payment_nl": "Bankoverschrijving, Bancontact of contant. Niet-geconventioneerd.",
+  "duration_fr": "Audit Précision : 30 min · Protocole Harmonie : 1h · Expérience Signature : 1h30. Prévoyez 10 min supplémentaires pour la première séance.",
+  "bring_fr": "Aucun document n'est requis. Si vous avez des examens récents (IRM, radio), vous pouvez les apporter — sans obligation.",
+  "howToGet_en": "Rue des Iris, Box 2 — 1640 Rhode-Saint-Genèse. Street parking available."
 }

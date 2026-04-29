@@ -1,6 +1,18 @@
 {
-  "label": "Kinésithérapeute — Rhode-Saint-Genèse",
+  "label": {
+    "fr": "Kinésithérapeute — Rhode-Saint-Genèse",
+    "nl": "Kinesitherapeut — Rhode-Saint-Genèse",
+    "en": "Physiotherapist — Rhode-Saint-Genèse"
+  },
   "title": "Zowe",
-  "tagline": "L'art de la justesse, l'expertise du soin.",
-  "cta": "Initier mon accompagnement"
+  "tagline": {
+    "fr": "L'art de la justesse, l'expertise du soin.",
+    "nl": "De kunst van precisie, de expertise van de zorg.",
+    "en": "The art of precision, the expertise of care."
+  },
+  "cta": {
+    "fr": "Initier mon accompagnement",
+    "nl": "Mijn begeleiding starten",
+    "en": "Begin my journey"
+  }
 }

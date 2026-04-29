@@ -233,16 +233,37 @@ const ogImage = `${siteUrl}/og-image.png`;
       try { window.dispatchEvent(new CustomEvent('zowe:langchange', { detail: { lang: lang } })); } catch(_) {}
     }
 
+    // Fusionne deux objets imbriqués — source remplace target uniquement si target est undefined
+    function mergeDeep(target, source) {
+      Object.keys(source || {}).forEach(function(k) {
+        if (target[k] === undefined) {
+          target[k] = source[k];
+        } else if (typeof target[k] === 'object' && !Array.isArray(target[k]) && typeof source[k] === 'object') {
+          mergeDeep(target[k], source[k]);
+        }
+      });
+      return target;
+    }
+
     function setLang(lang) {
       if (LANGS.indexOf(lang) === -1) lang = 'fr';
       if (lang === 'fr') { applyTranslations('fr', null); return; }
       if (_cache[lang])  { applyTranslations(lang, _cache[lang]); return; }
+
+      // Contenu injecté à la compilation (immédiat, zéro réseau)
+      var content = window.__i18nContent && window.__i18nContent[lang];
+      if (content) { applyTranslations(lang, content); }
+
+      // UI strings depuis /i18n/{lang}.json — fusionnés par-dessus le contenu
       fetch('/i18n/' + lang + '.json')
         .then(function(r) { return r.ok ? r.json() : null; })
-        .then(function(data) {
-          if (data) { _cache[lang] = data; applyTranslations(lang, data); }
+        .then(function(ui) {
+          if (!ui) return;
+          var merged = content ? mergeDeep(JSON.parse(JSON.stringify(content)), ui) : ui;
+          _cache[lang] = merged;
+          applyTranslations(lang, merged);
         })
-        .catch(function() {});
+        .catch(function() { if (content) _cache[lang] = content; });
     }
 
     saveFr();

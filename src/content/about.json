@@ -1,11 +1,30 @@
 {
-  "title": "Qui suis-je ?",
+  "title": {
+    "fr": "Qui suis-je ?",
+    "nl": "Wie ben ik?",
+    "en": "Who am I?"
+  },
   "image": "/images/zoe.jpg",
-  "lead": "J'ai conçu Zowe avec une vision précise : transformer la séance de kinésithérapie en une expérience de haute précision.",
-  "paragraph1": "Mon approche ne s'arrête pas à la disparition de la douleur, elle vise l'optimisation durable de votre capital physique.",
-  "paragraph2": "Pour atteindre ce niveau d'exigence, je me suis spécifiquement formé à la méthode Beltra. Cette expertise me permet d'intégrer à ma pratique des protocoles de soin avancés, axés sur le contrôle technique et la réharmonisation profonde du corps.",
-  "paragraph3": "Chaque patient étant unique, je mets mon savoir-faire et cette spécialisation au service d'un accompagnement sur mesure, où la rigueur scientifique rencontre le confort d'une prise en charge exclusive.",
-  "signature": "Zoé",
+  "lead": {
+    "fr": "J'ai conçu Zowe avec une vision précise : transformer la séance de kinésithérapie en une expérience de haute précision.",
+    "nl": "Ik heb Zowe ontworpen met een duidelijke visie: de kinesitherapiesessie omvormen tot een ervaring van hoge precisie.",
+    "en": "I designed Zowe with a clear vision: to transform the physiotherapy session into a high-precision experience."
+  },
+  "paragraph1": {
+    "fr": "Mon approche ne s'arrête pas à la disparition de la douleur, elle vise l'optimisation durable de votre capital physique.",
+    "nl": "Mijn aanpak stopt niet bij het verdwijnen van de pijn, maar richt zich op de duurzame optimalisatie van uw lichamelijk kapitaal.",
+    "en": "My approach doesn't stop at the disappearance of pain — it aims for the lasting optimisation of your physical capital."
+  },
+  "paragraph2": {
+    "fr": "Pour atteindre ce niveau d'exigence, je me suis spécifiquement formé à la méthode Beltra. Cette expertise me permet d'intégrer à ma pratique des protocoles de soin avancés, axés sur le contrôle technique et la réharmonisation profonde du corps.",
+    "nl": "Om dit niveau van uitmuntendheid te bereiken, heb ik mij specifiek getraind in de BELTRA-methode. Deze expertise stelt me in staat geavanceerde zorgprotocollen in mijn praktijk te integreren, gericht op technische controle en diepe re-harmonisatie van het lichaam.",
+    "en": "To reach this level of excellence, I specifically trained in the BELTRA method. This expertise allows me to integrate advanced care protocols into my practice, focused on technical control and deep re-harmonisation of the body."
+  },
+  "paragraph3": {
+    "fr": "Chaque patient étant unique, je mets mon savoir-faire et cette spécialisation au service d'un accompagnement sur mesure, où la rigueur scientifique rencontre le confort d'une prise en charge exclusive.",
+    "nl": "Elke patiënt is uniek, en ik zet mijn expertise en deze specialisatie in dienst van een op maat gemaakt begeleidingstraject, waar wetenschappelijke strengheid de exclusieve zorgervaring ontmoet.",
+    "en": "Every patient is unique, and I put my expertise and this specialisation at the service of a bespoke care journey, where scientific rigour meets the comfort of exclusive treatment."
+  },
   "school": "Université Libre de Bruxelles",
   "degree": "Master en kinésithérapie et réadaptation"
 }

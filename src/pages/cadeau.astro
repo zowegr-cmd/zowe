@@ -124,8 +124,8 @@ const waLink = `https://wa.me/32471783746?text=${waMsg}`;
           <div class={`cadeau-card${i === 2 ? ' cadeau-card--featured' : ''}`}>
             <p class="cadeau-card__duration">{tier.duration}</p>
             <p class="cadeau-card__price">{tier.price}</p>
-            <p class="cadeau-card__name" data-i18n={`services.tiers.${i}.name`}>{tier.name}</p>
-            <p class="cadeau-card__tagline" data-i18n={`services.tiers.${i}.tagline`}>{tier.tagline}</p>
+            <p class="cadeau-card__name" data-i18n={`services.tiers.${i}.name`}>{tier.name.fr}</p>
+            <p class="cadeau-card__tagline" data-i18n={`services.tiers.${i}.tagline`}>{tier.tagline.fr}</p>
           </div>
         ))}
       </div>

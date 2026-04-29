@@ -60,10 +60,10 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
   <!-- ① HERO -->
   <section id="hero" class="hero">
     <div class="hero-inner">
-      <p class="hero-label" data-i18n="hero.label">{hero.label}</p>
+      <p class="hero-label" data-i18n="hero.label">{hero.label.fr}</p>
       <h1 class="hero-title">{hero.title}</h1>
-      <p class="hero-tagline" data-i18n="hero.tagline" set:html={hero.tagline.replace(/\n/g,'<br>')}></p>
-      <a href="#contact" class="btn btn-primary" data-i18n="hero.cta">{hero.cta}</a>
+      <p class="hero-tagline" data-i18n="hero.tagline" set:html={hero.tagline.fr.replace(/\n/g,'<br>')}></p>
+      <a href="#contact" class="btn btn-primary" data-i18n="hero.cta">{hero.cta.fr}</a>
     </div>
     <div class="hero-scroll" aria-hidden="true">&#8595;</div>
   </section>
@@ -73,16 +73,16 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     <div class="container">
       <div class="section-header" data-anim="up">
         <span class="section-number">01</span>
-        <h2 class="section-title" data-i18n="experience.title">{experience.title}</h2>
+        <h2 class="section-title" data-i18n="experience.title">{experience.title.fr}</h2>
       </div>
-      <p class="experience-subtitle" data-anim="up" data-delay="1" data-i18n="experience.subtitle">{experience.subtitle}</p>
-      <p class="experience-intro" data-anim="up" data-delay="2" data-i18n="experience.intro">{experience.intro}</p>
+      <p class="experience-subtitle" data-anim="up" data-delay="1" data-i18n="experience.subtitle">{experience.subtitle.fr}</p>
+      <p class="experience-intro" data-anim="up" data-delay="2" data-i18n="experience.intro">{experience.intro.fr}</p>
       <div class="experience-blocks">
         {experience.blocks.map((block, i) => (
           <div class="experience-block" data-anim="up" data-delay={String(i + 1)}>
             <span class="experience-block__num">0{i + 1}</span>
-            <h3 data-i18n={`experience.blocks.${i}.title`}>{block.title}</h3>
-            <p data-i18n={`experience.blocks.${i}.text`}>{block.text}</p>
+            <h3 data-i18n={`experience.blocks.${i}.title`}>{block.title.fr}</h3>
+            <p data-i18n={`experience.blocks.${i}.text`}>{block.text.fr}</p>
           </div>
         ))}
       </div>
@@ -94,7 +94,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     <div class="container">
       <div class="section-header" data-anim="up">
         <span class="section-number">02</span>
-        <h2 class="section-title" data-i18n="about.title">{about.title}</h2>
+        <h2 class="section-title" data-i18n="about.title">{about.title.fr}</h2>
       </div>
       <div class="about-grid">
         <div class="about-photo" data-anim="left">
@@ -104,10 +104,10 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           }
         </div>
         <div class="about-content" data-anim="right">
-          <p class="about-lead" data-i18n="about.lead">{about.lead}</p>
-          <p data-i18n="about.paragraph1">{about.paragraph1}</p>
-          <p data-i18n="about.paragraph2">{about.paragraph2}</p>
-          <p data-i18n="about.paragraph3">{about.paragraph3}</p>
+          <p class="about-lead" data-i18n="about.lead">{about.lead.fr}</p>
+          <p data-i18n="about.paragraph1">{about.paragraph1.fr}</p>
+          <p data-i18n="about.paragraph2">{about.paragraph2.fr}</p>
+          <p data-i18n="about.paragraph3">{about.paragraph3.fr}</p>
           <div class="about-signature">
             <img
               src="/images/signature_zoe_premium.png"
@@ -135,29 +135,29 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     <div class="container">
       <div class="section-header" data-anim="up">
         <span class="section-number">03</span>
-        <h2 class="section-title" data-i18n="services.title">{services.title}</h2>
+        <h2 class="section-title" data-i18n="services.title">{services.title.fr}</h2>
       </div>
-      <p class="services-intro" data-anim="up" data-delay="1" data-i18n="services.intro">{services.intro}</p>
+      <p class="services-intro" data-anim="up" data-delay="1" data-i18n="services.intro">{services.intro.fr}</p>
       <div class="beltra-grid">
         {services.tiers.map((tier, i) => (
-          <div class={`beltra-card${i === 2 ? ' beltra-card--featured' : ''}`} data-anim="up" data-delay={String(i + 1)} data-share-title={tier.name} data-share-text={tier.tagline}>
+          <div class={`beltra-card${i === 2 ? ' beltra-card--featured' : ''}`} data-anim="up" data-delay={String(i + 1)} data-share-title={tier.name.fr} data-share-text={tier.tagline.fr}>
             <div class="beltra-card__header">
               <div class="beltra-card__meta">
                 <span class="beltra-card__duration">{tier.duration}</span>
                 <span class="beltra-card__price">{tier.price}</span>
               </div>
-              <h3 class="beltra-card__name" data-i18n={`services.tiers.${i}.name`}>{tier.name}</h3>
-              <p class="beltra-card__tagline" data-i18n={`services.tiers.${i}.tagline`}>{tier.tagline}</p>
+              <h3 class="beltra-card__name" data-i18n={`services.tiers.${i}.name`}>{tier.name.fr}</h3>
+              <p class="beltra-card__tagline" data-i18n={`services.tiers.${i}.tagline`}>{tier.tagline.fr}</p>
             </div>
             <div class="beltra-card__body">
-              <p class="beltra-card__desc" data-i18n={`services.tiers.${i}.description`}>{tier.description}</p>
+              <p class="beltra-card__desc" data-i18n={`services.tiers.${i}.description`}>{tier.description.fr}</p>
               <div class="beltra-card__tools">
                 <p class="beltra-label" data-i18n="services.protocol">Protocole</p>
-                <ul>{tier.tools.map((t, j) => <li data-i18n={`services.tiers.${i}.tools.${j}`}>{t}</li>)}</ul>
+                <ul>{tier.tools.fr.map((t, j) => <li data-i18n={`services.tiers.${i}.tools.${j}`}>{t}</li>)}</ul>
               </div>
               <div class="beltra-card__ideal">
                 <p class="beltra-label" data-i18n="services.ideal">Idéal pour</p>
-                <p data-i18n={`services.tiers.${i}.ideal`}>{tier.ideal}</p>
+                <p data-i18n={`services.tiers.${i}.ideal`}>{tier.ideal.fr}</p>
               </div>
             </div>
             <button class="share-btn" aria-label="Partager" data-share>
@@ -230,10 +230,10 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         {faq.items.map((item, i) => (
           <details class="faq-item" id={`faq-${i}`} data-anim="up" data-delay={String(Math.min(i, 3))}>
             <summary class="faq-question">
-              <span data-i18n={`faq.items.${i}.question`}>{item.question}</span>
+              <span data-i18n={`faq.items.${i}.question`}>{item.question.fr}</span>
               <span class="faq-icon" aria-hidden="true">+</span>
             </summary>
-            <p class="faq-answer" data-i18n={`faq.items.${i}.answer`}>{item.answer}</p>
+            <p class="faq-answer" data-i18n={`faq.items.${i}.answer`}>{item.answer.fr}</p>
           </details>
         ))}
       </div>
@@ -248,7 +248,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         <span class="section-number">06</span>
         <h2 class="section-title" data-i18n="section.contact">Prise de contact</h2>
       </div>
-      <p class="contact-intro" data-anim="up" data-delay="1" data-i18n="contact.intro">{contact.intro}</p>
+      <p class="contact-intro" data-anim="up" data-delay="1" data-i18n="contact.intro">{contact.intro.fr}</p>
 
       <!-- Infos contact + horaires -->
       <div class="contact-meta" data-anim="up" data-delay="2">
@@ -408,6 +408,59 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
   </a>
 
 </Layout>
+
+<script is:inline define:vars={{
+  __c_nl: {
+    hero:       { label: hero.label.nl,       tagline: hero.tagline.nl,       cta: hero.cta.nl },
+    nav:        { cta: hero.cta.nl },
+    sticky:     { cta: hero.cta.nl },
+    experience: {
+      title:    experience.title.nl,
+      subtitle: experience.subtitle.nl,
+      intro:    experience.intro.nl,
+      blocks:   experience.blocks.map(function(b){ return { title: b.title.nl, text: b.text.nl }; })
+    },
+    about: {
+      title: about.title.nl, lead: about.lead.nl,
+      paragraph1: about.paragraph1.nl, paragraph2: about.paragraph2.nl, paragraph3: about.paragraph3.nl
+    },
+    services: {
+      title: services.title.nl, intro: services.intro.nl,
+      tiers: services.tiers.map(function(t){ return {
+        name: t.name.nl, tagline: t.tagline.nl, description: t.description.nl,
+        tools: t.tools.nl, ideal: t.ideal.nl
+      }; })
+    },
+    faq:     { items: faq.items.map(function(q){ return { question: q.question.nl, answer: q.answer.nl }; }) },
+    contact: { intro: contact.intro.nl }
+  },
+  __c_en: {
+    hero:       { label: hero.label.en,       tagline: hero.tagline.en,       cta: hero.cta.en },
+    nav:        { cta: hero.cta.en },
+    sticky:     { cta: hero.cta.en },
+    experience: {
+      title:    experience.title.en,
+      subtitle: experience.subtitle.en,
+      intro:    experience.intro.en,
+      blocks:   experience.blocks.map(function(b){ return { title: b.title.en, text: b.text.en }; })
+    },
+    about: {
+      title: about.title.en, lead: about.lead.en,
+      paragraph1: about.paragraph1.en, paragraph2: about.paragraph2.en, paragraph3: about.paragraph3.en
+    },
+    services: {
+      title: services.title.en, intro: services.intro.en,
+      tiers: services.tiers.map(function(t){ return {
+        name: t.name.en, tagline: t.tagline.en, description: t.description.en,
+        tools: t.tools.en, ideal: t.ideal.en
+      }; })
+    },
+    faq:     { items: faq.items.map(function(q){ return { question: q.question.en, answer: q.answer.en }; }) },
+    contact: { intro: contact.intro.en }
+  }
+}}>
+window.__i18nContent = { nl: __c_nl, en: __c_en };
+</script>
 
 <script is:inline define:vars={{ mapboxToken, mapLng, mapLat }}>
 (function () {

@@ -1,32 +1,32 @@
 {
   "items": [
     {
-      "question": "Le soin BELTRA est-il remboursé par ma mutuelle ?",
-      "answer": "En tant que kinésithérapeute non-conventionné, les soins BELTRA ne sont pas remboursés selon les tarifs INAMI. Cependant, de nombreuses mutuelles proposent des remboursements partiels via leur assurance complémentaire. Renseignez-vous directement auprès de votre organisme assureur."
+      "question": { "fr": "Le soin BELTRA est-il remboursé par ma mutuelle ?", "nl": "Wordt de BELTRA-zorg vergoed door mijn mutualiteit?", "en": "Is BELTRA care reimbursed by my health insurance?" },
+      "answer": { "fr": "En tant que kinésithérapeute non-conventionné, les soins BELTRA ne sont pas remboursés selon les tarifs INAMI. Cependant, de nombreuses mutuelles proposent des remboursements partiels via leur assurance complémentaire. Renseignez-vous directement auprès de votre organisme assureur.", "nl": "Als niet-geconventioneerd kinesitherapeut worden BELTRA-zorgen niet terugbetaald volgens RIZIV-tarieven. Veel mutualiteiten bieden echter gedeeltelijke terugbetalingen via hun aanvullende verzekering. Neem contact op met uw verzekeringsorganisme.", "en": "As a non-contracted physiotherapist, BELTRA treatments are not reimbursed under INAMI rates. However, many health insurers offer partial reimbursements through supplementary insurance. Check directly with your insurance provider." }
     },
     {
-      "question": "Pourquoi avoir choisi le statut hors-convention ?",
-      "answer": "Le statut hors-convention me permet de vous offrir des séances sans contrainte de temps imposée, avec des protocoles avancés qui exigent une durée et une qualité d'intervention incompatibles avec les tarifs conventionnés. C'est un choix délibéré en faveur de l'excellence de la prise en charge."
+      "question": { "fr": "Pourquoi avoir choisi le statut hors-convention ?", "nl": "Waarom heeft u gekozen voor het niet-geconventioneerd statuut?", "en": "Why did you choose non-contracted status?" },
+      "answer": { "fr": "Le statut hors-convention me permet de vous offrir des séances sans contrainte de temps imposée, avec des protocoles avancés qui exigent une durée et une qualité d'intervention incompatibles avec les tarifs conventionnés. C'est un choix délibéré en faveur de l'excellence de la prise en charge.", "nl": "Het niet-geconventioneerd statuut stelt me in staat sessies aan te bieden zonder opgelegde tijdsbeperkingen, met geavanceerde protocollen die een duur en kwaliteit van interventie vereisen die onverenigbaar zijn met de geconventioneerde tarieven. Dit is een bewuste keuze ten gunste van de uitmuntendheid van de zorg.", "en": "Non-contracted status allows me to offer sessions without imposed time constraints, with advanced protocols that require a duration and quality of intervention incompatible with contracted rates. It is a deliberate choice in favour of excellence in care." }
     },
     {
-      "question": "En quoi l'Expérience BELTRA diffère-t-elle d'une séance classique ?",
-      "answer": "Une séance classique traite généralement le symptôme. L'Expérience BELTRA traite la cause. Nous intégrons le bilan postural, les chaînes de tension, le système nerveux et les dimensions émotionnelles du corps — des éléments rarement adressés en kinésithérapie traditionnelle."
+      "question": { "fr": "En quoi l'Expérience BELTRA diffère-t-elle d'une séance classique ?", "nl": "Hoe verschilt de BELTRA-ervaring van een klassieke sessie?", "en": "How does the BELTRA Experience differ from a standard session?" },
+      "answer": { "fr": "Une séance classique traite généralement le symptôme. L'Expérience BELTRA traite la cause. Nous intégrons le bilan postural, les chaînes de tension, le système nerveux et les dimensions émotionnelles du corps — des éléments rarement adressés en kinésithérapie traditionnelle.", "nl": "Een klassieke sessie behandelt doorgaans het symptoom. De BELTRA-ervaring behandelt de oorzaak. We integreren het posturale bilan, de spanningsketens, het zenuwstelsel en de emotionele dimensies van het lichaam — elementen die zelden worden behandeld in de traditionele kinesitherapie.", "en": "A standard session generally treats the symptom. The BELTRA Experience treats the cause. We integrate postural assessment, tension chains, the nervous system and emotional dimensions of the body — elements rarely addressed in traditional physiotherapy." }
     },
     {
-      "question": "À qui s'adressent les protocoles BELTRA ?",
-      "answer": "À toute personne souhaitant une approche premium de sa santé physique : sportif en récupération, patient portant des douleurs chroniques depuis des années, ou simplement à la recherche d'un reset complet — les protocoles BELTRA s'adaptent à votre profil."
+      "question": { "fr": "À qui s'adressent les protocoles BELTRA ?", "nl": "Voor wie zijn de BELTRA-protocollen bedoeld?", "en": "Who are BELTRA protocols designed for?" },
+      "answer": { "fr": "À toute personne souhaitant une approche premium de sa santé physique : sportif en récupération, patient portant des douleurs chroniques depuis des années, ou simplement à la recherche d'un reset complet — les protocoles BELTRA s'adaptent à votre profil.", "nl": "Voor iedereen die een premium aanpak van zijn lichamelijke gezondheid wenst: sporter in herstel, patiënt met jarenlange chronische pijnen, of gewoon op zoek naar een volledige reset — de BELTRA-protocollen passen zich aan uw profiel aan.", "en": "For anyone seeking a premium approach to their physical health: an athlete in recovery, a patient with years of chronic pain, or simply looking for a complete reset — BELTRA protocols adapt to your profile." }
     },
     {
-      "question": "Combien de séances sont nécessaires ?",
-      "answer": "L'Audit Précision est le point de départ recommandé. Il nous permet d'établir ensemble un protocole sur mesure. Pour les douleurs chroniques, 3 à 5 séances permettent généralement d'observer une amélioration significative et durable."
+      "question": { "fr": "Combien de séances sont nécessaires ?", "nl": "Hoeveel sessies zijn er nodig?", "en": "How many sessions are needed?" },
+      "answer": { "fr": "L'Audit Précision est le point de départ recommandé. Il nous permet d'établir ensemble un protocole sur mesure. Pour les douleurs chroniques, 3 à 5 séances permettent généralement d'observer une amélioration significative et durable.", "nl": "De Precisie-audit is het aanbevolen startpunt. Samen stellen we een op maat gemaakt protocol op. Voor chronische pijnen laten 3 tot 5 sessies over het algemeen een significante en duurzame verbetering zien.", "en": "The Precision Audit is the recommended starting point. Together we establish a bespoke protocol. For chronic pain, 3 to 5 sessions generally lead to significant and lasting improvement." }
     },
     {
-      "question": "Comment se préparer à une séance ?",
-      "answer": "Venez confortablement vêtu, idéalement en sous-vêtements ou tenue de sport légère. Évitez un repas lourd dans l'heure précédant la séance. Surtout, venez avec vos questions — l'écoute fait partie intégrante du protocole."
+      "question": { "fr": "Comment se préparer à une séance ?", "nl": "Hoe bereid ik me voor op een sessie?", "en": "How should I prepare for a session?" },
+      "answer": { "fr": "Venez confortablement vêtu, idéalement en sous-vêtements ou tenue de sport légère. Évitez un repas lourd dans l'heure précédant la séance. Surtout, venez avec vos questions — l'écoute fait partie intégrante du protocole.", "nl": "Kom comfortabel gekleed, bij voorkeur in ondergoed of lichte sportkleding. Vermijd een zwaar maal in het uur voor de sessie. Kom vooral met uw vragen — luisteren is een integraal onderdeel van het protocol.", "en": "Come comfortably dressed, ideally in underwear or light sportswear. Avoid a heavy meal in the hour before the session. Above all, come with your questions — listening is an integral part of the protocol." }
     },
     {
-      "question": "Puis-je offrir une séance en cadeau ?",
-      "answer": "Absolument. Une séance BELTRA constitue un cadeau rare et mémorable. Contactez-moi directement via le formulaire ou par téléphone pour les détails d'une carte cadeau."
+      "question": { "fr": "Puis-je offrir une séance en cadeau ?", "nl": "Kan ik een sessie als cadeau geven?", "en": "Can I give a session as a gift?" },
+      "answer": { "fr": "Absolument. Une séance BELTRA constitue un cadeau rare et mémorable. Contactez-moi directement via le formulaire ou par téléphone pour les détails d'une carte cadeau.", "nl": "Absoluut. Een BELTRA-sessie is een zeldzaam en memorabel cadeau. Neem rechtstreeks contact met me op via het formulier of telefonisch voor de details van een cadeaubon.", "en": "Absolutely. A BELTRA session is a rare and memorable gift. Contact me directly via the form or by phone for gift card details." }
     }
   ]
 }

@@ -1,191 +1,92 @@
 {
   "nav": {
-    "concept": "Concept",
+    "concept":  "Concept",
     "approach": "Approach",
-    "protocols": "Protocols",
-    "faq": "FAQ",
-    "cta": "Begin my journey"
-  },
-  "hero": {
-    "label": "Physiotherapist — Rhode-Saint-Genèse",
-    "tagline": "The art of precision, the expertise of care.",
-    "cta": "Begin my journey"
+    "protocols":"Protocols",
+    "faq":      "FAQ"
   },
   "section": {
     "testimonials": "Testimonials",
-    "faq": "Frequently asked questions",
+    "faq":          "Frequently asked questions",
     "localisation": "Find us",
-    "contact": "Get in touch"
-  },
-  "experience": {
-    "title": "The BELTRA Experience",
-    "subtitle": "The technical mastery of your body",
-    "intro": "Born from excellence training at the Swiss border, the BELTRA method reinvents physiotherapy as one reinvents haute horlogerie: with precision, depth and an absolute demand for results.",
-    "blocks": [
-      {
-        "title": "A high-precision diagnosis",
-        "text": "Like an engineer inspecting every component before intervening, we identify your real limitations — physical, neurological and emotional — before any treatment."
-      },
-      {
-        "title": "Advanced protocols",
-        "text": "Deep tissue, IASTM, vacuum therapy, targeted joint mobilisations. Precision tools in service of complete and lasting recovery."
-      },
-      {
-        "title": "The Performance vision",
-        "text": "The goal is not simply to eliminate pain. It is to optimise your physical capital so your body functions at its full potential — durably."
-      }
-    ]
+    "contact":      "Get in touch"
   },
   "about": {
-    "title": "Who am I?",
-    "lead": "I designed Zowe with a clear vision: to transform the physiotherapy session into a high-precision experience.",
-    "paragraph1": "My approach doesn't stop at the disappearance of pain — it aims for the lasting optimisation of your physical capital.",
-    "paragraph2": "To reach this level of excellence, I specifically trained in the BELTRA method. This expertise allows me to integrate advanced care protocols into my practice, focused on technical control and deep re-harmonisation of the body.",
-    "paragraph3": "Every patient is unique, and I put my expertise and this specialisation at the service of a bespoke care journey, where scientific rigour meets the comfort of exclusive treatment.",
-    "formation": "Education",
+    "formation":    "Education",
     "kine_mention": "Zoé also practises conventional physiotherapy"
   },
   "services": {
-    "title": "Protocols & Investments",
-    "intro": "Three levels of intervention, one goal: the excellence of your physical capital.",
-    "protocol": "Protocol",
-    "ideal": "Ideal for",
-    "learn_more": "Learn more",
-    "tiers": [
-      {
-        "name": "The Precision Audit",
-        "tagline": "The essential starting point",
-        "description": "A complete and rigorous diagnosis of your physical capital. We identify together your real limitations, your tension zones and the deep origins of your pain.",
-        "tools": ["In-depth anamnesis", "Postural and functional assessment", "Tension chain mapping"],
-        "ideal": "First consultation or assessment before any BELTRA protocol."
-      },
-      {
-        "name": "The Harmonie Protocol",
-        "tagline": "The balancing care",
-        "description": "A targeted intervention, personalised according to your specific needs. Upper or lower body, according to your situation and current goals.",
-        "tools": ["Joint mobilisations", "Deep tissue massage", "IASTM (scraping) and vacuum therapy"],
-        "ideal": "Regular follow-up, sports recovery, localised pain."
-      },
-      {
-        "name": "The Signature Experience",
-        "tagline": "The ultimate care — full body",
-        "description": "The BELTRA experience in its entirety. A global treatment of the body, nervous system and emotions. The complete reset your body is longing for.",
-        "tools": ["Complete joint mobilisations", "Deep tissue massage", "IASTM and vacuum therapy", "Nervous system desensitisation", "Emotional and sensory work"],
-        "ideal": "Chronic conditions, intensive recovery, complete optimisation of physical capital."
-      }
-    ]
+    "protocol":   "Protocol",
+    "ideal":      "Ideal for",
+    "learn_more": "Learn more"
   },
-  "faq": {
-    "items": [
-      {
-        "question": "Is BELTRA care reimbursed by my health insurance?",
-        "answer": "As a non-contracted physiotherapist, BELTRA treatments are not reimbursed under INAMI rates. However, many health insurers offer partial reimbursements through supplementary insurance. Check directly with your insurance provider."
-      },
-      {
-        "question": "Why did you choose non-contracted status?",
-        "answer": "Non-contracted status allows me to offer sessions without imposed time constraints, with advanced protocols that require a duration and quality of intervention incompatible with contracted rates. It is a deliberate choice in favour of excellence in care."
-      },
-      {
-        "question": "How does the BELTRA Experience differ from a standard session?",
-        "answer": "A standard session generally treats the symptom. The BELTRA Experience treats the cause. We integrate postural assessment, tension chains, the nervous system and emotional dimensions of the body — elements rarely addressed in traditional physiotherapy."
-      },
-      {
-        "question": "Who are BELTRA protocols designed for?",
-        "answer": "For anyone seeking a premium approach to their physical health: an athlete in recovery, a patient with years of chronic pain, or simply looking for a complete reset — BELTRA protocols adapt to your profile."
-      },
-      {
-        "question": "How many sessions are needed?",
-        "answer": "The Precision Audit is the recommended starting point. Together we establish a bespoke protocol. For chronic pain, 3 to 5 sessions generally lead to significant and lasting improvement."
-      },
-      {
-        "question": "How should I prepare for a session?",
-        "answer": "Come comfortably dressed, ideally in underwear or light sportswear. Avoid a heavy meal in the hour before the session. Above all, come with your questions — listening is an integral part of the protocol."
-      },
-      {
-        "question": "Can I give a session as a gift?",
-        "answer": "Absolutely. A BELTRA session is a rare and memorable gift. Contact me directly via the form or by phone for gift card details."
-      }
-    ]
-  },
-  "contact": {
-    "intro": "A few details are enough to begin the journey. I will confirm your appointment as soon as possible."
-  },
-  "localisation": {
-    "directions": "Get directions"
-  },
-  "gallery": {
-    "view_all": "View full gallery"
-  },
+  "localisation": { "directions": "Get directions" },
+  "gallery":      { "view_all":   "View full gallery" },
   "footer": {
-    "tagline": "High-precision physiotherapy<br>BELTRA method",
-    "cabinet": "Practice",
-    "contact": "Contact",
-    "legal": "Legal notices",
-    "entreprise": "Company no.",
-    "rcpro": "Professional liability",
-    "inami": "INAMI visa",
-    "to_complete": "to be completed",
-    "rights": "All rights reserved.",
-    "gift_card": "Gift card",
-    "gallery": "Gallery",
+    "tagline":        "High-precision physiotherapy<br>BELTRA method",
+    "cabinet":        "Practice",
+    "contact":        "Contact",
+    "legal":          "Legal notices",
+    "entreprise":     "Company no.",
+    "rcpro":          "Professional liability",
+    "inami":          "INAMI visa",
+    "to_complete":    "to be completed",
+    "rights":         "All rights reserved.",
+    "gift_card":      "Gift card",
+    "gallery":        "Gallery",
     "before_session": "Before your session",
-    "legal_notices": "Legal notices",
-    "privacy": "Privacy policy"
+    "legal_notices":  "Legal notices",
+    "privacy":        "Privacy policy"
   },
   "form": {
-    "prenom": "First name *",
-    "nom": "Last name *",
-    "email": "Email *",
-    "tel": "Phone (optional)",
-    "message": "Your message *",
-    "newsletter": "I agree to receive tips and news from Zoé by email.",
+    "prenom":         "First name *",
+    "nom":            "Last name *",
+    "email":          "Email *",
+    "tel":            "Phone (optional)",
+    "message":        "Your message *",
+    "newsletter":     "I agree to receive tips and news from Zoé by email.",
     "newsletter_sub": "Unsubscribe at any time.",
-    "note": "Zoé will get back to you today to arrange a time that suits you.",
-    "submit": "Write to Zoé",
-    "sending": "Sending…",
+    "note":           "Zoé will get back to you today to arrange a time that suits you.",
+    "submit":         "Write to Zoé",
+    "sending":        "Sending…",
     "error_required": "Please enter your first name and email.",
-    "error_network": "Network error. Please try again.",
-    "error_server": "An error occurred. Please try again."
+    "error_network":  "Network error. Please try again.",
+    "error_server":   "An error occurred. Please try again."
   },
   "cookie": {
-    "text": "This site uses Google Analytics to measure its audience in an anonymised way.",
+    "text":       "This site uses Google Analytics to measure its audience in an anonymised way.",
     "learn_more": "Learn more",
-    "refuse": "Refuse",
-    "accept": "Accept"
-  },
-  "sticky": {
-    "cta": "Begin my journey"
+    "refuse":     "Refuse",
+    "accept":     "Accept"
   },
   "pages": {
     "back": "← Back to homepage",
     "cadeau": {
-      "label": "Gift card · Zowe",
-      "title": "Give the Zowe experience",
-      "desc": "Give your loved ones an exceptional care experience. A rare gesture that leaves a lasting impression.",
-      "choose": "Choose the protocol",
+      "label":    "Gift card · Zowe",
+      "title":    "Give the Zowe experience",
+      "desc":     "Give your loved ones an exceptional care experience. A rare gesture that leaves a lasting impression.",
+      "choose":   "Choose the protocol",
       "cta_text": "Zoé prepares every gift card with care. Contact her directly to arrange the details.",
       "whatsapp": "Contact Zoé on WhatsApp",
-      "form": "Write via the form"
+      "form":     "Write via the form"
     },
-    "gallery": {
-      "empty": "The gallery will be available soon."
-    },
+    "gallery": { "empty": "The gallery will be available soon." },
     "session": {
-      "sub": "Everything you need to know to approach your session with peace of mind.",
-      "how_to_get": "How to get here",
-      "dress": "What to wear",
-      "duration": "Duration by protocol",
-      "bring": "What to bring",
-      "payment": "Payment",
+      "sub":            "Everything you need to know to approach your session with peace of mind.",
+      "how_to_get":     "How to get here",
+      "dress":          "What to wear",
+      "duration":       "Duration by protocol",
+      "bring":          "What to bring",
+      "payment":        "Payment",
       "timeline_title": "How the session unfolds",
-      "cta_text": "Ready to live the experience?"
+      "cta_text":       "Ready to live the experience?"
     },
     "merci": {
-      "title": "Message received.",
-      "sub1": "Zoé will get back to you today",
-      "sub2": "to arrange a time that suits you. In the meantime, feel free to reach her directly.",
+      "title":        "Message received.",
+      "sub1":         "Zoé will get back to you today",
+      "sub2":         "to arrange a time that suits you. In the meantime, feel free to reach her directly.",
       "session_link": "Prepare my first session →",
-      "home_btn": "Back to homepage"
+      "home_btn":     "Back to homepage"
     }
   }
 }

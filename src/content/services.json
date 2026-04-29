@@ -1,36 +1,80 @@
 {
-  "title": "Protocoles & Investissements",
-  "intro": "Trois niveaux d'intervention, un seul objectif : l'excellence de votre capital physique.",
+  "title": {
+    "fr": "Protocoles & Investissements",
+    "nl": "Protocollen & Investeringen",
+    "en": "Protocols & Investments"
+  },
+  "intro": {
+    "fr": "Trois niveaux d'intervention, un seul objectif : l'excellence de votre capital physique.",
+    "nl": "Drie interventieniveaus, één doel: de uitmuntendheid van uw lichamelijk kapitaal.",
+    "en": "Three levels of intervention, one goal: the excellence of your physical capital."
+  },
   "tiers": [
     {
       "id": "audit",
-      "name": "L'Audit Précision",
-      "tagline": "Le point de départ obligatoire",
       "duration": "30 min",
       "price": "60€",
-      "description": "Un diagnostic complet et rigoureux de votre capital physique. Nous identifions ensemble vos limitations réelles, vos zones de tension et les origines profondes de vos douleurs.",
-      "tools": ["Anamnèse approfondie", "Bilan postural et fonctionnel", "Cartographie des chaînes de tension"],
-      "ideal": "Première consultation ou bilan avant tout protocole BELTRA."
+      "name": { "fr": "L'Audit Précision", "nl": "De Precisie-audit", "en": "The Precision Audit" },
+      "tagline": { "fr": "Le point de départ obligatoire", "nl": "Het verplichte startpunt", "en": "The essential starting point" },
+      "description": {
+        "fr": "Un diagnostic complet et rigoureux de votre capital physique. Nous identifions ensemble vos limitations réelles, vos zones de tension et les origines profondes de vos douleurs.",
+        "nl": "Een complete en grondige diagnose van uw lichamelijk kapitaal. Samen identificeren we uw werkelijke beperkingen, uw spanningszones en de diepere oorzaken van uw pijnen.",
+        "en": "A complete and rigorous diagnosis of your physical capital. We identify together your real limitations, your tension zones and the deep origins of your pain."
+      },
+      "tools": {
+        "fr": ["Anamnèse approfondie", "Bilan postural et fonctionnel", "Cartographie des chaînes de tension"],
+        "nl": ["Diepgaande anamnese", "Posturaal en functioneel onderzoek", "Kartering van de spanningsketens"],
+        "en": ["In-depth anamnesis", "Postural and functional assessment", "Tension chain mapping"]
+      },
+      "ideal": {
+        "fr": "Première consultation ou bilan avant tout protocole BELTRA.",
+        "nl": "Eerste consultatie of bilan voor elk BELTRA-protocol.",
+        "en": "First consultation or assessment before any BELTRA protocol."
+      }
     },
     {
       "id": "harmonie",
-      "name": "Le Protocole Harmonie",
-      "tagline": "Le soin d'équilibre",
       "duration": "1h",
       "price": "110€",
-      "description": "Une intervention ciblée, personnalisée selon vos besoins spécifiques. Haut ou bas du corps, selon votre situation et vos objectifs du moment.",
-      "tools": ["Mobilisations articulaires", "Massage deep tissue", "IASTM (scraping) et vacuothérapie"],
-      "ideal": "Suivi régulier, récupération sportive, douleurs localisées."
+      "name": { "fr": "Le Protocole Harmonie", "nl": "Het Harmonie Protocol", "en": "The Harmonie Protocol" },
+      "tagline": { "fr": "Le soin d'équilibre", "nl": "De evenwichtszorg", "en": "The balancing care" },
+      "description": {
+        "fr": "Une intervention ciblée, personnalisée selon vos besoins spécifiques. Haut ou bas du corps, selon votre situation et vos objectifs du moment.",
+        "nl": "Een gerichte interventie, gepersonaliseerd volgens uw specifieke behoeften. Boven- of onderlichaam, naargelang uw situatie en huidige doelstellingen.",
+        "en": "A targeted intervention, personalised according to your specific needs. Upper or lower body, according to your situation and current goals."
+      },
+      "tools": {
+        "fr": ["Mobilisations articulaires", "Massage deep tissue", "IASTM (scraping) et vacuothérapie"],
+        "nl": ["Articulaire mobilisaties", "Deep tissue massage", "IASTM (scraping) en vacuumtherapie"],
+        "en": ["Joint mobilisations", "Deep tissue massage", "IASTM (scraping) and vacuum therapy"]
+      },
+      "ideal": {
+        "fr": "Suivi régulier, récupération sportive, douleurs localisées.",
+        "nl": "Regelmatige opvolging, sportief herstel, gelokaliseerde pijnen.",
+        "en": "Regular follow-up, sports recovery, localised pain."
+      }
     },
     {
       "id": "signature",
-      "name": "L'Expérience Signature",
-      "tagline": "Le soin ultime — corps complet",
       "duration": "1h30",
       "price": "165€",
-      "description": "L'expérience BELTRA dans son intégralité. Une prise en charge globale du corps, du système nerveux et des émotions. Le reset complet auquel votre corps aspire.",
-      "tools": ["Mobilisations articulaires complètes", "Massage deep tissue", "IASTM et vacuothérapie", "Désensibilisation du système nerveux", "Travail émotionnel et sensoriel"],
-      "ideal": "Pathologies chroniques, récupération intensive, optimisation complète du capital physique."
+      "name": { "fr": "L'Expérience Signature", "nl": "De Signature Ervaring", "en": "The Signature Experience" },
+      "tagline": { "fr": "Le soin ultime — corps complet", "nl": "De ultieme zorg — volledig lichaam", "en": "The ultimate care — full body" },
+      "description": {
+        "fr": "L'expérience BELTRA dans son intégralité. Une prise en charge globale du corps, du système nerveux et des émotions. Le reset complet auquel votre corps aspire.",
+        "nl": "De BELTRA-ervaring in zijn volledigheid. Een globale behandeling van het lichaam, het zenuwstelsel en de emoties. De volledige reset waarnaar uw lichaam verlangt.",
+        "en": "The BELTRA experience in its entirety. A global treatment of the body, nervous system and emotions. The complete reset your body is longing for."
+      },
+      "tools": {
+        "fr": ["Mobilisations articulaires complètes", "Massage deep tissue", "IASTM et vacuothérapie", "Désensibilisation du système nerveux", "Travail émotionnel et sensoriel"],
+        "nl": ["Volledige articulaire mobilisaties", "Deep tissue massage", "IASTM en vacuumtherapie", "Desensibilisatie van het zenuwstelsel", "Emotioneel en sensorisch werk"],
+        "en": ["Complete joint mobilisations", "Deep tissue massage", "IASTM and vacuum therapy", "Nervous system desensitisation", "Emotional and sensory work"]
+      },
+      "ideal": {
+        "fr": "Pathologies chroniques, récupération intensive, optimisation complète du capital physique.",
+        "nl": "Chronische pathologieën, intensief herstel, volledige optimalisatie van het lichamelijk kapitaal.",
+        "en": "Chronic conditions, intensive recovery, complete optimisation of physical capital."
+      }
     }
   ]
 }

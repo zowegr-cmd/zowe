@@ -1,19 +1,55 @@
 {
-  "title": "L'Expérience BELTRA",
-  "subtitle": "Le contrôle technique de votre corps",
-  "intro": "Née d'une formation d'excellence à la frontière suisse, la méthode BELTRA réinvente la kinésithérapie comme on réinvente la haute horlogerie : avec précision, profondeur et une exigence absolue du résultat.",
+  "title": {
+    "fr": "L'Expérience BELTRA",
+    "nl": "De BELTRA-ervaring",
+    "en": "The BELTRA Experience"
+  },
+  "subtitle": {
+    "fr": "Le contrôle technique de votre corps",
+    "nl": "De technische controle van uw lichaam",
+    "en": "The technical mastery of your body"
+  },
+  "intro": {
+    "fr": "Née d'une formation d'excellence à la frontière suisse, la méthode BELTRA réinvente la kinésithérapie comme on réinvente la haute horlogerie : avec précision, profondeur et une exigence absolue du résultat.",
+    "nl": "Geboren uit een excellente opleiding aan de Zwitserse grens, heruitvindt de BELTRA-methode de kinesitherapie zoals men de haute horlogerie heruitvindt: met precisie, diepgang en een absolute eis naar resultaat.",
+    "en": "Born from excellence training at the Swiss border, the BELTRA method reinvents physiotherapy as one reinvents haute horlogerie: with precision, depth and an absolute demand for results."
+  },
   "blocks": [
     {
-      "title": "Un diagnostic de haute précision",
-      "text": "Comme un ingénieur inspecte chaque composant avant d'intervenir, nous identifions vos limitations réelles — physiques, neurologiques et émotionnelles — avant toute intervention."
+      "title": {
+        "fr": "Un diagnostic de haute précision",
+        "nl": "Een diagnose van hoge precisie",
+        "en": "A high-precision diagnosis"
+      },
+      "text": {
+        "fr": "Comme un ingénieur inspecte chaque composant avant d'intervenir, nous identifions vos limitations réelles — physiques, neurologiques et émotionnelles — avant toute intervention.",
+        "nl": "Zoals een ingenieur elk onderdeel inspecteert voor hij ingrijpt, identificeren we uw werkelijke beperkingen — fysiek, neurologisch en emotioneel — voor elke interventie.",
+        "en": "Like an engineer inspecting every component before intervening, we identify your real limitations — physical, neurological and emotional — before any treatment."
+      }
     },
     {
-      "title": "Des protocoles avancés",
-      "text": "Deep tissue, IASTM, vacuothérapie, mobilisations articulaires ciblées. Des outils de précision au service d'une récupération complète et durable."
+      "title": {
+        "fr": "Des protocoles avancés",
+        "nl": "Geavanceerde protocollen",
+        "en": "Advanced protocols"
+      },
+      "text": {
+        "fr": "Deep tissue, IASTM, vacuothérapie, mobilisations articulaires ciblées. Des outils de précision au service d'une récupération complète et durable.",
+        "nl": "Deep tissue, IASTM, vacuumtherapie, gerichte articulaire mobilisaties. Precisiemiddelen ten dienste van een volledig en duurzaam herstel.",
+        "en": "Deep tissue, IASTM, vacuum therapy, targeted joint mobilisations. Precision tools in service of complete and lasting recovery."
+      }
     },
     {
-      "title": "La vision Performance",
-      "text": "L'objectif n'est pas simplement de supprimer la douleur. C'est d'optimiser votre capital physique pour que votre corps fonctionne à son plein potentiel — durablement."
+      "title": {
+        "fr": "La vision Performance",
+        "nl": "De Prestatie-visie",
+        "en": "The Performance vision"
+      },
+      "text": {
+        "fr": "L'objectif n'est pas simplement de supprimer la douleur. C'est d'optimiser votre capital physique pour que votre corps fonctionne à son plein potentiel — durablement.",
+        "nl": "Het doel is niet simpelweg de pijn weg te nemen. Het is uw lichamelijk kapitaal te optimaliseren zodat uw lichaam op zijn volledig potentieel functioneert — duurzaam.",
+        "en": "The goal is not simply to eliminate pain. It is to optimise your physical capital so your body functions at its full potential — durably."
+      }
     }
   ]
 }

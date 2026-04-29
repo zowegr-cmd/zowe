@@ -60,10 +60,10 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
   <!-- ① HERO -->
   <section id="hero" class="hero">
     <div class="hero-inner">
-      <p class="hero-label">{hero.label}</p>
+      <p class="hero-label" data-i18n="hero.label">{hero.label}</p>
       <h1 class="hero-title">{hero.title}</h1>
-      <p class="hero-tagline" set:html={hero.tagline.replace(/\n/g,'<br>')}></p>
-      <a href="#contact" class="btn btn-primary">{hero.cta}</a>
+      <p class="hero-tagline" data-i18n="hero.tagline" set:html={hero.tagline.replace(/\n/g,'<br>')}></p>
+      <a href="#contact" class="btn btn-primary" data-i18n="hero.cta">{hero.cta}</a>
     </div>
     <div class="hero-scroll" aria-hidden="true">&#8595;</div>
   </section>
@@ -73,16 +73,16 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     <div class="container">
       <div class="section-header" data-anim="up">
         <span class="section-number">01</span>
-        <h2 class="section-title">{experience.title}</h2>
+        <h2 class="section-title" data-i18n="experience.title">{experience.title}</h2>
       </div>
-      <p class="experience-subtitle" data-anim="up" data-delay="1">{experience.subtitle}</p>
-      <p class="experience-intro" data-anim="up" data-delay="2">{experience.intro}</p>
+      <p class="experience-subtitle" data-anim="up" data-delay="1" data-i18n="experience.subtitle">{experience.subtitle}</p>
+      <p class="experience-intro" data-anim="up" data-delay="2" data-i18n="experience.intro">{experience.intro}</p>
       <div class="experience-blocks">
         {experience.blocks.map((block, i) => (
           <div class="experience-block" data-anim="up" data-delay={String(i + 1)}>
             <span class="experience-block__num">0{i + 1}</span>
-            <h3>{block.title}</h3>
-            <p>{block.text}</p>
+            <h3 data-i18n={`experience.blocks.${i}.title`}>{block.title}</h3>
+            <p data-i18n={`experience.blocks.${i}.text`}>{block.text}</p>
           </div>
         ))}
       </div>
@@ -94,7 +94,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     <div class="container">
       <div class="section-header" data-anim="up">
         <span class="section-number">02</span>
-        <h2 class="section-title">{about.title}</h2>
+        <h2 class="section-title" data-i18n="about.title">{about.title}</h2>
       </div>
       <div class="about-grid">
         <div class="about-photo" data-anim="left">
@@ -104,10 +104,10 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           }
         </div>
         <div class="about-content" data-anim="right">
-          <p class="about-lead">{about.lead}</p>
-          <p>{about.paragraph1}</p>
-          <p>{about.paragraph2}</p>
-          <p>{about.paragraph3}</p>
+          <p class="about-lead" data-i18n="about.lead">{about.lead}</p>
+          <p data-i18n="about.paragraph1">{about.paragraph1}</p>
+          <p data-i18n="about.paragraph2">{about.paragraph2}</p>
+          <p data-i18n="about.paragraph3">{about.paragraph3}</p>
           <div class="about-signature">
             <img
               src="/images/signature_zoe_premium.png"
@@ -135,9 +135,9 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     <div class="container">
       <div class="section-header" data-anim="up">
         <span class="section-number">03</span>
-        <h2 class="section-title">{services.title}</h2>
+        <h2 class="section-title" data-i18n="services.title">{services.title}</h2>
       </div>
-      <p class="services-intro" data-anim="up" data-delay="1">{services.intro}</p>
+      <p class="services-intro" data-anim="up" data-delay="1" data-i18n="services.intro">{services.intro}</p>
       <div class="beltra-grid">
         {services.tiers.map((tier, i) => (
           <div class={`beltra-card${i === 2 ? ' beltra-card--featured' : ''}`} data-anim="up" data-delay={String(i + 1)} data-share-title={tier.name} data-share-text={tier.tagline}>
@@ -146,18 +146,18 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
                 <span class="beltra-card__duration">{tier.duration}</span>
                 <span class="beltra-card__price">{tier.price}</span>
               </div>
-              <h3 class="beltra-card__name">{tier.name}</h3>
-              <p class="beltra-card__tagline">{tier.tagline}</p>
+              <h3 class="beltra-card__name" data-i18n={`services.tiers.${i}.name`}>{tier.name}</h3>
+              <p class="beltra-card__tagline" data-i18n={`services.tiers.${i}.tagline`}>{tier.tagline}</p>
             </div>
             <div class="beltra-card__body">
-              <p class="beltra-card__desc">{tier.description}</p>
+              <p class="beltra-card__desc" data-i18n={`services.tiers.${i}.description`}>{tier.description}</p>
               <div class="beltra-card__tools">
                 <p class="beltra-label" data-i18n="services.protocol">Protocole</p>
-                <ul>{tier.tools.map(t => <li>{t}</li>)}</ul>
+                <ul>{tier.tools.map((t, j) => <li data-i18n={`services.tiers.${i}.tools.${j}`}>{t}</li>)}</ul>
               </div>
               <div class="beltra-card__ideal">
                 <p class="beltra-label" data-i18n="services.ideal">Idéal pour</p>
-                <p>{tier.ideal}</p>
+                <p data-i18n={`services.tiers.${i}.ideal`}>{tier.ideal}</p>
               </div>
             </div>
             <button class="share-btn" aria-label="Partager" data-share>
@@ -230,10 +230,10 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         {faq.items.map((item, i) => (
           <details class="faq-item" id={`faq-${i}`} data-anim="up" data-delay={String(Math.min(i, 3))}>
             <summary class="faq-question">
-              <span>{item.question}</span>
+              <span data-i18n={`faq.items.${i}.question`}>{item.question}</span>
               <span class="faq-icon" aria-hidden="true">+</span>
             </summary>
-            <p class="faq-answer">{item.answer}</p>
+            <p class="faq-answer" data-i18n={`faq.items.${i}.answer`}>{item.answer}</p>
           </details>
         ))}
       </div>
@@ -288,7 +288,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         <span class="section-number">07</span>
         <h2 class="section-title" data-i18n="section.contact">Conciergerie</h2>
       </div>
-      <p class="contact-intro" data-anim="up" data-delay="1">{contact.intro}</p>
+      <p class="contact-intro" data-anim="up" data-delay="1" data-i18n="contact.intro">{contact.intro}</p>
 
       <!-- Infos contact + horaires -->
       <div class="contact-meta" data-anim="up" data-delay="2">

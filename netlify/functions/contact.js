@@ -38,7 +38,7 @@ exports.handler = async function (event) {
     await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ prenom, nom, email, telephone, message }),
+      body: JSON.stringify({ prenom, nom, email, telephone, message, _cc: PATRON_EMAIL }),
     });
   } catch (e) { console.error('[Formspree]', e.message); }
 

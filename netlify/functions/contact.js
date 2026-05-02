@@ -4,7 +4,11 @@
 
 const { Resend }   = require('resend');
 const { getStore } = require('./_blobs');
-const { buildPatientConfirm } = require('./_email-templates');
+const { buildPatientConfirm }  = require('./_email-templates');
+const { createUnsubToken }     = require('./unsubscribe');
+
+const SITE_URL  = process.env.SITE_URL || 'https://zowekine.com';
+const EMAIL_ZOE = 'zoegrede.kine@gmail.com';
 
 const FORMSPREE_ID     = process.env.FORMSPREE_ID          || 'xqewvayo';
 const PATRON_EMAIL     = process.env.PATRON_EMAIL          || 'patron@kinovea.be';
@@ -149,13 +153,21 @@ exports.handler = async function (event) {
     const from   = process.env.RESEND_FROM_EMAIL || 'Zoé — Zowe <onboarding@resend.dev>';
 
     try {
-      const { subject, html } = buildPatientConfirm(prenom, lang);
+      const unsubToken = createUnsubToken(email);
+      const unsubUrl   = `${SITE_URL}/.netlify/functions/unsubscribe?token=${unsubToken}`;
+      const { subject, html, text } = buildPatientConfirm(prenom, lang);
       const { data, error } = await resend.emails.send({
         from,
         to      : email,
         replyTo : 'zoegrede.kine@gmail.com',
         subject,
         html,
+        text,
+        headers : {
+          'X-Mailer'             : 'Zowe Mailer 1.0',
+          'List-Unsubscribe'     : `<mailto:${EMAIL_ZOE}?subject=unsubscribe>, <${unsubUrl}>`,
+          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+        },
       });
       if (error) throw new Error(error.message);
       console.log(`[contact] step:resend-patient status:ok messageId:${data.id} ts:${ts}`);

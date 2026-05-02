@@ -1,5 +1,5 @@
 // netlify/functions/_email-templates.js
-// Templates email centralisés — multilingue (fr/nl/en) + dark mode
+// Templates email centralisés — multilingue (fr/nl/en) + dark mode + plain text
 'use strict';
 
 const SITE_URL   = process.env.SITE_URL || 'https://zowekine.com';
@@ -15,8 +15,8 @@ const TR = {
     body1_confirm:    "Votre demande a été reçue avec toute l'attention qu'elle mérite.",
     body2_confirm:    "Zoé prendra personnellement contact avec vous dans la journée afin d'échanger sur vos besoins et de convenir ensemble du moment qui vous conviendra le mieux.",
     footer_cta:       "D'ici là :",
-    body1_reminder:   'Zoé prendra contact avec vous très prochainement pour convenir d\'un moment qui vous correspond.',
-    body2_reminder:   'N\'hésitez pas à la contacter directement si vous le souhaitez.',
+    body1_reminder:   "Zoé prendra contact avec vous très prochainement pour convenir d'un moment qui vous correspond.",
+    body2_reminder:   "N'hésitez pas à la contacter directement si vous le souhaitez.",
     unsub:            'Se désinscrire',
     tagline:          'Kinésithérapie de haute précision · Méthode BELTRA',
   },
@@ -103,10 +103,14 @@ function emailShell(lang, content) {
 </body></html>`;
 }
 
+// ── Séparateur texte plain ────────────────────────────────────────────────────
+const SEP = '────────────────────────────────────────';
+
 // ── Email 1 : confirmation patient ────────────────────────────────────────────
 function buildPatientConfirm(prenom, lang) {
   if (!TR[lang]) lang = 'fr';
-  const content = `
+
+  const html = emailShell(lang, `
     <p class="em-hd" style="margin:0 0 20px;font-family:Georgia,serif;font-size:28px;font-style:italic;color:#6B1F2A;">${prenom},</p>
     <p class="em-bd" style="margin:0 0 16px;font-size:15px;color:#5C5C5C;line-height:1.8;">${t(lang, 'body1_confirm')}</p>
     <p class="em-bd" style="margin:0 0 16px;font-size:15px;color:#5C5C5C;line-height:1.8;">${t(lang, 'body2_confirm')}</p>
@@ -116,20 +120,39 @@ function buildPatientConfirm(prenom, lang) {
       <a href="tel:${PHONE_INTL}" class="em-lb" style="color:#6B1F2A;text-decoration:none;">${PHONE}</a>
       ·
       <a href="mailto:${EMAIL_ZOE}" class="em-lb" style="color:#6B1F2A;text-decoration:none;">${EMAIL_ZOE}</a>
-    </p>`;
-  return {
-    subject: t(lang, 'subject_confirm'),
-    html:    emailShell(lang, content),
-  };
+    </p>`);
+
+  const text = [
+    'ZOWE',
+    SEP,
+    '',
+    `${prenom},`,
+    '',
+    t(lang, 'body1_confirm'),
+    '',
+    t(lang, 'body2_confirm'),
+    '',
+    `${t(lang, 'footer_cta')}`,
+    `  ${PHONE}`,
+    `  ${EMAIL_ZOE}`,
+    '',
+    SEP,
+    `Zoé — Zowe · ${t(lang, 'tagline')}`,
+    SITE_URL,
+  ].join('\n');
+
+  return { subject: t(lang, 'subject_confirm'), html, text };
 }
 
 // ── Email 2 : rappel 24h ──────────────────────────────────────────────────────
 function buildReminder24h(prenom, lang, unsubUrl) {
   if (!TR[lang]) lang = 'fr';
+
   const unsubHtml = unsubUrl
     ? `<p style="margin:8px 0 0;font-size:10px;"><a href="${unsubUrl}" class="em-us" style="color:#CCCCCC;text-decoration:underline;">${t(lang, 'unsub')}</a></p>`
     : '';
-  const content = `
+
+  const html = emailShell(lang, `
     <p class="em-hd" style="margin:0 0 20px;font-family:Georgia,serif;font-size:28px;font-style:italic;color:#6B1F2A;">${prenom},</p>
     <p class="em-bd" style="margin:0 0 16px;font-size:15px;color:#5C5C5C;line-height:1.8;">${t(lang, 'body1_reminder')}</p>
     <p class="em-bd" style="margin:0 0 16px;font-size:15px;color:#5C5C5C;line-height:1.8;">${t(lang, 'body2_reminder')}</p>
@@ -139,11 +162,29 @@ function buildReminder24h(prenom, lang, unsubUrl) {
       ·
       <a href="mailto:${EMAIL_ZOE}" class="em-lb" style="color:#6B1F2A;text-decoration:none;">${EMAIL_ZOE}</a>
     </p>
-    ${unsubHtml}`;
-  return {
-    subject: t(lang, 'subject_reminder'),
-    html:    emailShell(lang, content),
-  };
+    ${unsubHtml}`);
+
+  const unsubLine = unsubUrl ? [`${t(lang, 'unsub')}: ${unsubUrl}`] : [];
+
+  const text = [
+    'ZOWE',
+    SEP,
+    '',
+    `${prenom},`,
+    '',
+    t(lang, 'body1_reminder'),
+    '',
+    t(lang, 'body2_reminder'),
+    '',
+    `  ${PHONE}`,
+    `  ${EMAIL_ZOE}`,
+    '',
+    SEP,
+    `Zoé — Zowe · ${t(lang, 'tagline')}`,
+    ...unsubLine,
+  ].join('\n');
+
+  return { subject: t(lang, 'subject_reminder'), html, text };
 }
 
 module.exports = { buildPatientConfirm, buildReminder24h };

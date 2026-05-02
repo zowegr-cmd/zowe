@@ -39,7 +39,7 @@ exports.handler = async function () {
       const unsubUrl   = `${SITE_URL}/.netlify/functions/unsubscribe?token=${unsubToken}`;
       const lang       = reminder.lang || 'fr';
 
-      const { subject, html } = buildReminder24h(reminder.prenom, lang, unsubUrl);
+      const { subject, html, text } = buildReminder24h(reminder.prenom, lang, unsubUrl);
 
       await resend.emails.send({
         from   : fromEmail,
@@ -47,6 +47,12 @@ exports.handler = async function () {
         replyTo: 'zoegrede.kine@gmail.com',
         subject,
         html,
+        text,
+        headers: {
+          'X-Mailer'             : 'Zowe Mailer 1.0',
+          'List-Unsubscribe'     : `<mailto:zoegrede.kine@gmail.com?subject=unsubscribe>, <${unsubUrl}>`,
+          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+        },
       });
       console.log(`[Reminders] Envoyé à ${reminder.email} (${lang})`);
       await store.delete(blob.key);

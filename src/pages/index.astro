@@ -305,9 +305,30 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         </div>
         <div class="simple-form__footer">
           <p class="mf-note" data-i18n="form.note">Zoé vous contactera dans la journée pour convenir ensemble d'un moment.</p>
-          <button type="submit" class="btn btn-primary" id="submitBtn" data-i18n="form.submit">Écrire à Zoé</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <svg id="btnSpinner" class="btn-spinner" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2a10 10 0 0 1 0 20"/></svg>
+            <span id="submitBtnText" data-i18n="form.submit">Écrire à Zoé</span>
+          </button>
+        </div>
+        <div class="form-error" id="formError" hidden>
+          <p class="form-error__msg" id="formErrorMsg">Un instant — la connexion semble lente. Réessayez ou contactez Zoé directement au 0471 78 37 46.</p>
+          <a class="form-error__wa" id="formErrorWa" href={waLink} target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Contacter via WhatsApp →
+          </a>
         </div>
       </form>
+      <!-- Confirmation succès (s'affiche avant la redirection /merci) -->
+      <div class="form-success" id="formSuccess" hidden aria-live="polite">
+        <div class="form-success__inner">
+          <svg class="form-success__circle" viewBox="0 0 52 52" width="52" height="52">
+            <circle cx="26" cy="26" r="23" fill="none" stroke="#C9A96E" stroke-width="1.5"/>
+            <path class="form-success__tick" fill="none" stroke="#C9A96E" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round" d="M 14,26 L 22,34 L 38,18"/>
+          </svg>
+          <p>Votre demande est en route.<br>Zoé revient vers vous bientôt.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -486,49 +507,134 @@ window.__translationMode = __translationMode;
 <script is:inline define:vars={{ mapboxToken, mapLng, mapLat }}>
 (function () {
 
-  /* ── Formulaire direct → Netlify Function ── */
-  var form = document.getElementById('mainForm');
-  if (form) {
-    form.addEventListener('submit', function (e) {
+  /* ── Formulaire ── */
+  (function() {
+    var form        = document.getElementById('mainForm');
+    if (!form) return;
+    var btn         = document.getElementById('submitBtn');
+    var btnText     = document.getElementById('submitBtnText');
+    var spinner     = document.getElementById('btnSpinner');
+    var formError   = document.getElementById('formError');
+    var formErrorMsg= document.getElementById('formErrorMsg');
+    var formSuccess = document.getElementById('formSuccess');
+    var isSubmitting= false;
+
+    /* Validation email */
+    var EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{2,}$/;
+    function validateEmailField(el) {
+      var val = (el.value || '').trim();
+      if (!val) { el.classList.remove('field-valid','field-error'); return; }
+      var ok = EMAIL_RE.test(val);
+      el.classList.toggle('field-valid', ok);
+      el.classList.toggle('field-error', !ok);
+      var hint = el.parentElement.querySelector('.field-hint');
+      if (hint) hint.hidden = ok;
+    }
+    var emailEl = document.getElementById('email');
+    if (emailEl) {
+      /* Créer le hint une seule fois */
+      var hint = document.createElement('span');
+      hint.className = 'field-hint'; hint.hidden = true;
+      hint.textContent = 'Vérifiez le format de votre email';
+      emailEl.parentElement.appendChild(hint);
+      emailEl.addEventListener('blur',  function(){ validateEmailField(this); });
+      emailEl.addEventListener('input', function(){ if (this.classList.contains('field-error')) validateEmailField(this); });
+    }
+    /* Validation champs requis au blur */
+    ['prenom','telephone','message'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('blur', function(){
+        if (this.value.trim()) { this.classList.remove('field-error'); this.classList.add('field-valid'); }
+        else                   { this.classList.remove('field-valid'); this.classList.add('field-error'); }
+      });
+      el.addEventListener('input', function(){
+        if (this.value.trim()) { this.classList.remove('field-error'); }
+      });
+    });
+
+    /* État chargement */
+    function setLoading(on) {
+      form.querySelectorAll('input,textarea,button').forEach(function(f){ f.disabled = on; });
+      if (spinner) spinner.style.display = on ? '' : 'none';
+      if (btn) { btn.style.opacity = on ? '0.82' : ''; btn.style.pointerEvents = on ? 'none' : ''; }
+      if (btnText) btnText.textContent = on
+        ? ((window.__t && window.__t('form.sending')) || 'Envoi en cours…')
+        : ((window.__t && window.__t('form.submit'))  || 'Écrire à Zoé');
+    }
+
+    /* Afficher erreur */
+    function showError(msg) {
+      if (formErrorMsg) formErrorMsg.textContent = msg ||
+        'Un instant — la connexion semble lente. Réessayez ou contactez Zoé directement au 0471 78 37 46.';
+      if (formError) formError.hidden = false;
+    }
+
+    /* Afficher succès puis rediriger */
+    function showSuccess() {
+      form.style.transition = 'opacity 0.35s';
+      form.style.opacity    = '0';
+      form.style.pointerEvents = 'none';
+      if (formSuccess) {
+        formSuccess.hidden = false;
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){ formSuccess.classList.add('is-visible'); });
+        });
+      }
+      setTimeout(function(){ window.location.href = '/merci/'; }, 2000);
+    }
+
+    /* Soumission */
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
-      var prenom = (document.getElementById('prenom')    || {}).value || '';
-      var email  = (document.getElementById('email')     || {}).value || '';
-      var tel    = (document.getElementById('telephone') || {}).value || '';
+      if (isSubmitting) return;
+      if (formError) formError.hidden = true;
+
+      var prenom = (document.getElementById('prenom')    ||{}).value || '';
+      var email  = (document.getElementById('email')     ||{}).value || '';
+      var tel    = (document.getElementById('telephone') ||{}).value || '';
+
       if (!prenom.trim() || !email.trim() || !tel.trim()) {
-        alert((window.__t && window.__t('form.error_required')) || 'Veuillez renseigner votre prénom, email et numéro de téléphone.');
+        ['prenom','email','telephone'].forEach(function(id){
+          var el = document.getElementById(id);
+          if (el && !el.value.trim()) el.classList.add('field-error');
+        });
+        showError((window.__t && window.__t('form.error_required')) ||
+          'Veuillez renseigner votre prénom, email et numéro de téléphone.');
         return;
       }
-      var btn = document.getElementById('submitBtn');
-      if (btn) { btn.textContent = (window.__t && window.__t('form.sending')) || 'Envoi en cours…'; btn.disabled = true; }
 
-      var payload = {
-        prenom:    prenom.trim(),
-        nom:       ((document.getElementById('nom') || {}).value || '').trim(),
-        email:     email.trim(),
-        telephone: ((document.getElementById('telephone') || {}).value || '').trim(),
-        message:   ((document.getElementById('message')   || {}).value || '').trim(),
-        newsletter: document.getElementById('newsletter') ? document.getElementById('newsletter').checked : false,
-        website:   (document.getElementById('website_hp') || {}).value || '',
-        recaptchaToken: window._recaptchaToken || '',
-      };
+      isSubmitting = true;
+      setLoading(true);
 
       fetch('/.netlify/functions/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      }).then(function (r) {
-        if (r.ok) { window.location.href = '/merci/'; }
-        else {
-          r.json().then(function (d) { alert(d.error || (window.__t && window.__t('form.error_server')) || 'Une erreur est survenue. Veuillez réessayer.'); })
-           .catch(function () { alert((window.__t && window.__t('form.error_server')) || 'Une erreur est survenue. Veuillez réessayer.'); });
-          if (btn) { btn.textContent = (window.__t && window.__t('form.submit')) || 'Écrire à Zoé'; btn.disabled = false; }
+        body: JSON.stringify({
+          prenom:    prenom.trim(),
+          nom:       ((document.getElementById('nom')     ||{}).value||'').trim(),
+          email:     email.trim(),
+          telephone: tel.trim(),
+          message:   ((document.getElementById('message') ||{}).value||'').trim(),
+          newsletter: document.getElementById('newsletter')
+            ? document.getElementById('newsletter').checked : false,
+          website:   (document.getElementById('website_hp')||{}).value||'',
+          recaptchaToken: window._recaptchaToken || '',
+        }),
+      }).then(function(r) {
+        if (r.ok) {
+          showSuccess();
+        } else {
+          r.json().then(function(d){ showError(d.error); }).catch(function(){ showError(); });
+          setLoading(false); isSubmitting = false;
         }
-      }).catch(function () {
-        alert((window.__t && window.__t('form.error_network')) || 'Erreur réseau. Veuillez réessayer.');
-        if (btn) { btn.textContent = 'Écrire à Zoé'; btn.disabled = false; }
+      }).catch(function() {
+        showError((window.__t && window.__t('form.error_network')) ||
+          'Un instant — la connexion semble lente. Réessayez ou contactez Zoé directement au 0471 78 37 46.');
+        setLoading(false); isSubmitting = false;
       });
     });
-  }
+  })();
 
   /* ── Google Reviews dynamiques ── */
   (function loadReviews() {

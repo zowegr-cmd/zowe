@@ -777,7 +777,7 @@ const EAGER = 5;
     /* ── Auto-play ── */
     function startAuto() {
       if (autoTimer) clearInterval(autoTimer);
-      autoTimer = setInterval(next, 5000);
+      autoTimer = setInterval(next, 2500);
     }
     function stopAuto() {
       if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }

@@ -314,7 +314,6 @@ img {
 ========================================== */
 .hero {
   min-height: 100vh;
-  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2796,6 +2795,7 @@ img {
   padding-top: calc(1.1rem + env(safe-area-inset-top, 0px));
 }
 .is-pwa .hero {
+  min-height: 100vh;
   min-height: 100dvh;
   padding-top: calc(80px + env(safe-area-inset-top, 0px));
 }

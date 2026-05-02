@@ -1747,6 +1747,10 @@ img {
     -webkit-backdrop-filter: none;
   }
 
+  /* Nav non scrollée sur le hero sombre — monogramme + hamburger en doré */
+  .nav:not(.scrolled) .nav-logo { color: var(--or); }
+  .nav:not(.scrolled) .nav-toggle span { background: var(--or); }
+
   .nav-lang-mobile {
     display: flex;
     align-items: center;
@@ -1778,7 +1782,8 @@ img {
     padding: 5.5rem 2rem 3rem;
   }
   .nav-links.open { display: flex; }
-  .nav-links a { font-size: 0.9rem; letter-spacing: 0.18em; }
+  .nav-links a { font-size: 0.9rem; letter-spacing: 0.18em; color: var(--bordeaux); }
+  .nav-links a:hover { color: var(--bordeaux-dark, #4A1520); }
 
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
 

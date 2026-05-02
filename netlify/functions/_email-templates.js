@@ -217,21 +217,9 @@ function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
 
 <!-- ══ SIGNATURE ══ -->
 <tr>
-  <td align="center" bgcolor="#F5F0E8" class="cream-bg sig-block" style="background-color:#F5F0E8;padding:36px 40px 32px;">
+  <td align="center" bgcolor="#F5F0E8" class="cream-bg sig-block" style="background-color:#F5F0E8;padding:36px 40px 40px;">
     ${sigTag}
-    <p style="margin:0 0 12px;font-family:Georgia,serif;font-size:28px;font-style:italic;color:#6B1F2A;text-align:center;">${tx.sig_name || 'Zoé'}</p>
-    <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:4px;color:#C9A96E;text-align:center;text-transform:uppercase;">${tx.sig1}</p>
-    ${goldLine(30)}
-    <p style="margin:14px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:3px;color:#6B1F2A;text-align:center;text-transform:uppercase;">${tx.sig2}</p>
-  </td>
-</tr>
-
-<!-- ══ FOOTER ══ -->
-<tr>
-  <td align="center" bgcolor="#0F0F0F" class="footer-bg" style="background-color:#0F0F0F;padding:24px 32px;">
-    <p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#888888;text-align:center;">&copy; 2025 Zowe &mdash; Zoé Grêde. ${tx.rights}</p>
-    ${unsubRow}
-    <p style="margin:6px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#565656;text-align:center;">zowekine.com</p>
+    <p style="margin:0;font-family:Georgia,serif;font-size:28px;font-style:italic;color:#6B1F2A;text-align:center;">${tx.sig_name || 'Zoé'}</p>
   </td>
 </tr>
 
@@ -263,9 +251,7 @@ function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
     `  ${IG_HANDLE}`,
     '',
     SEP,
-    'Zoé',
-    `${tx.sig1} · ${tx.sig2}`,
-    SITE_URL,
+    tx.sig_name || 'Zoé',
     ...unsubLine,
   ].join('\n');
 

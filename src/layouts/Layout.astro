@@ -156,33 +156,43 @@ const ogImage = `${siteUrl}/og-image.png`;
       fixedSel.classList.add('active');
     }
 
-    // Nav scroll effect
+    // Partie C — logo doré sur la page d'accueil
     const nav = document.getElementById('nav');
     if (nav) {
+      if (window.location.pathname === '/' || window.location.pathname === '') {
+        nav.classList.add('is-homepage');
+      }
       window.addEventListener('scroll', () => {
         nav.classList.toggle('scrolled', window.scrollY > 60);
       }, { passive: true });
     }
 
-    // Mobile menu toggle
-    const toggle = document.getElementById('navToggle');
-    const links  = document.getElementById('navLinks');
+    // Mobile menu toggle + overlay + animation slide
+    const toggle  = document.getElementById('navToggle');
+    const links   = document.getElementById('navLinks');
+    const overlay = document.getElementById('navOverlay');
+
+    function closeMenu() {
+      if (!links) return;
+      links.classList.remove('open');
+      if (toggle) { toggle.classList.remove('open'); toggle.setAttribute('aria-label', 'Ouvrir le menu'); }
+      if (overlay) overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
     if (toggle && links) {
       toggle.addEventListener('click', () => {
         const isOpen = links.classList.toggle('open');
         toggle.classList.toggle('open', isOpen);
         toggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+        if (overlay) overlay.classList.toggle('active', isOpen);
         document.body.style.overflow = isOpen ? 'hidden' : '';
       });
       links.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          links.classList.remove('open');
-          toggle.classList.remove('open');
-          toggle.setAttribute('aria-label', 'Ouvrir le menu');
-          document.body.style.overflow = '';
-        });
+        link.addEventListener('click', closeMenu);
       });
     }
+    if (overlay) overlay.addEventListener('click', closeMenu);
 
     // Fade-in on scroll (progressive enhancement) — re-joue à chaque passage
     document.body.classList.add('js-ready');

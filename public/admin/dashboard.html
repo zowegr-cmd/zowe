@@ -218,6 +218,16 @@ td.email a{color:var(--bx);text-decoration:none}
           <div class="card__value" style="font-size:1.1rem;margin-top:.3rem;color:var(--mid)">Voir GA4 →</div>
           <div class="card__sub">Visiteurs · Pages vues · Sources</div>
         </a>
+        <div class="card" style="border-left:2px solid var(--or)">
+          <div class="card__label">Domaine</div>
+          <div class="card__value" style="font-size:1rem;color:var(--or);margin-top:.2rem">zowekine.com</div>
+          <div class="card__sub" style="line-height:1.6">HTTPS ✓ &nbsp;·&nbsp; Resend ✓<br>DKIM · SPF · DMARC ✓</div>
+        </div>
+        <div class="card" style="border-left:2px solid rgba(160,160,160,0.3)">
+          <div class="card__label">Kinequick</div>
+          <div class="card__value" style="font-size:1rem;color:var(--lt);margin-top:.2rem">À venir</div>
+          <div class="card__sub">Emplacement réservé<br>réservations en ligne</div>
+        </div>
       </div>
 
       <div class="chart-wrap">
@@ -280,9 +290,19 @@ td.email a{color:var(--bx);text-decoration:none}
 
     <!-- ═══════════ EMAILS TAB ═══════════ -->
     <div id="tab-emails" style="display:none">
+      <!-- Previews + test email -->
+      <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;margin-bottom:1.75rem;padding:1.25rem 1.5rem;background:var(--wh);border:1px solid var(--bd);">
+        <p class="section-title" style="margin:0;flex:1">Aperçu des templates</p>
+        <a href="/admin/email-preview.html" target="_blank" class="export-btn">Aperçu FR ↗</a>
+        <a href="/admin/email-preview-nl.html" target="_blank" class="export-btn">Aperçu NL ↗</a>
+        <a href="/admin/email-preview-en.html" target="_blank" class="export-btn">Aperçu EN ↗</a>
+        <button class="save-btn" style="padding:.5rem 1.1rem;font-size:.65rem" onclick="sendEmailTestFromEmailsTab()">Envoyer test → Zoé</button>
+        <span id="emailTestStatus" style="font-size:.68rem;color:var(--lt);"></span>
+      </div>
+
       <div class="nl-header">
         <div>
-          <p class="section-title" style="margin-bottom:.25rem">File d'envoi email (7 derniers jours)</p>
+          <p class="section-title" style="margin-bottom:.25rem">File d'envoi (7 derniers jours)</p>
           <div class="nl-stats">
             <span class="nl-stat">Envoyés : <strong id="eq-sent">—</strong></span>
             <span class="nl-stat">En attente : <strong id="eq-pending">—</strong></span>
@@ -792,6 +812,26 @@ function _renderLogs() {
 
 function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function sendEmailTestFromEmailsTab() {
+  var btn = document.querySelector('#tab-emails .save-btn');
+  var status = document.getElementById('emailTestStatus');
+  if (btn) { btn.disabled = true; btn.textContent = 'Envoi…'; }
+  fetch('/.netlify/functions/admin-api?action=email-send-test', {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + _token, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ lang: 'fr' }),
+  }).then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (btn) { btn.disabled = false; btn.textContent = 'Envoyer test → Zoé'; }
+      if (status) {
+        status.textContent = d && d.ok ? '✓ Email envoyé à zoegrede.kine@gmail.com' : 'Erreur : ' + (d && d.error || '?');
+        setTimeout(function() { if(status) status.textContent = ''; }, 5000);
+      }
+    }).catch(function() {
+      if (btn) { btn.disabled = false; btn.textContent = 'Envoyer test → Zoé'; }
+    });
 }
 
 /* ══════════════════════════════════════════════════════════════

@@ -376,4 +376,287 @@ function buildReminder24h(prenom, lang, unsubUrl) {
   return { subject, html, text };
 }
 
-module.exports = { buildPatientConfirm, buildReminder24h, CT_DEFAULTS: CT };
+// ── Helpers date ─────────────────────────────────────────────────────────────
+function fmtDate(iso) {
+  try {
+    const d = iso ? new Date(iso) : new Date();
+    const days = ['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
+    const months = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+    return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()} à ${String(d.getHours()).padStart(2,'0')}h${String(d.getMinutes()).padStart(2,'0')}`;
+  } catch { return new Date().toISOString(); }
+}
+const LANG_LABELS = { fr: 'Français', nl: 'Néerlandais', en: 'Anglais' };
+
+// ── Email 3 : notification staff (Zoé) ───────────────────────────────────────
+function buildStaffNotification(data) {
+  const { prenom = '', nom = '', email = '', telephone = '', message = '', lang = 'fr', date } = data || {};
+  const fullName  = [prenom, nom].filter(Boolean).join(' ') || '—';
+  const langLabel = LANG_LABELS[lang] || 'Français';
+  const dateStr   = fmtDate(date);
+  const subject   = `Nouvelle demande — ${fullName}`;
+  const monogramSrc = `${SITE_URL}/images/monogram-email.png`;
+  const sigSrc      = `${SITE_URL}/images/signature_zoe_premium.png`;
+
+  const infoRows = [
+    ['👤', 'Patient', fullName],
+    ['✉️', 'Email',   email],
+    telephone ? ['📱', 'Téléphone', telephone] : null,
+    ['🌐', 'Langue',  langLabel],
+    ['📅', 'Date',    dateStr],
+  ].filter(Boolean).map(([icon, label, val], i) => {
+    const bg = i % 2 === 0 ? '#FAFAFA' : '#FFFFFF';
+    const border = i % 2 === 0 ? 'border-left:3px solid #C9A96E;' : '';
+    return `<tr style="background-color:${bg};">
+      <td style="padding:10px 16px;font-size:18px;width:36px;">${icon}</td>
+      <td style="padding:10px 8px 10px 0;${border}">
+        <span style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#AAAAAA;text-transform:uppercase;letter-spacing:1.5px;">${label}</span>
+        <span style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#2A2A2A;font-weight:500;">${val}</span>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="fr" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light">
+  <title>${subject}</title>
+  <style>
+    :root{color-scheme:light only;}
+    .header-bg{background-color:#6B1F2A!important;}.action-bg{background-color:#6B1F2A!important;}
+    .cream-bg{background-color:#F5F0E8!important;}.white-bg{background-color:#FFFFFF!important;}
+    .kinoquick-bg{background-color:#FFF8F0!important;}
+    [data-ogsc] .header-bg,[data-ogsb] .header-bg{background-color:#6B1F2A!important;}
+    [data-ogsc] .action-bg,[data-ogsb] .action-bg{background-color:#6B1F2A!important;}
+    @media(prefers-color-scheme:dark){.header-bg,.action-bg{background-color:#6B1F2A!important;}.cream-bg{background-color:#F5F0E8!important;}}
+    @media only screen and (max-width:600px){.email-container{width:100%!important;}.email-body{padding:24px 16px!important;}}
+  </style>
+</head>
+<body style="margin:0;padding:0;background-color:#F5F0E8;font-family:Arial,Helvetica,sans-serif;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#F5F0E8;">
+<tr><td align="center" style="padding:32px 16px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="email-container" style="max-width:600px;width:100%;">
+
+<!-- HEADER -->
+<tr>
+  <td align="center" bgcolor="#6B1F2A" class="header-bg" style="background-color:#6B1F2A;padding:32px 32px 20px;">
+    <img src="${monogramSrc}" width="64" height="62" alt="" border="0" style="border:0;outline:none;display:block;margin:0 auto 14px;">
+    <p style="margin:0;font-family:Georgia,serif;font-size:11px;letter-spacing:4px;color:#C9A96E;text-transform:uppercase;">Nouvelle demande de contact</p>
+  </td>
+</tr>
+
+<!-- ACCROCHE -->
+<tr>
+  <td align="center" bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;padding:24px 40px 20px;">
+    <p style="margin:0;font-family:Georgia,serif;font-size:18px;font-style:italic;color:#6B1F2A;line-height:1.5;">${fullName} souhaite initier son accompagnement.</p>
+  </td>
+</tr>
+<tr><td bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;font-size:0;">${goldLine()}</td></tr>
+
+<!-- BLOC INFO -->
+<tr>
+  <td bgcolor="#FFFFFF" class="white-bg email-body" style="background-color:#FFFFFF;padding:36px 40px 28px;border-left:1px solid #EDE8E0;border-right:1px solid #EDE8E0;">
+    <p style="margin:0 0 16px;font-family:Georgia,serif;font-size:11px;font-style:italic;color:#C9A96E;letter-spacing:2px;text-transform:uppercase;">Informations du patient</p>
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="border:1px solid #EDE8E0;border-collapse:collapse;">
+      ${infoRows}
+    </table>
+  </td>
+</tr>
+
+<!-- BLOC MESSAGE -->
+<tr>
+  <td bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;padding:0 40px 0;border-left:1px solid #EDE8E0;border-right:1px solid #EDE8E0;">
+    <div style="padding:24px;border:1px solid #C9A96E;border-radius:2px;background:#FFFFFF;">
+      <p style="margin:0 0 10px;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#C9A96E;letter-spacing:2px;text-transform:uppercase;">Message du patient</p>
+      <p style="margin:0;font-family:Georgia,serif;font-size:15px;font-style:italic;color:#6B1F2A;line-height:1.8;">${message || '—'}</p>
+    </div>
+  </td>
+</tr>
+<tr><td bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;padding:24px 40px 0;border-left:1px solid #EDE8E0;border-right:1px solid #EDE8E0;font-size:0;">${goldLine()}</td></tr>
+
+<!-- ACTION -->
+<tr>
+  <td align="center" bgcolor="#6B1F2A" class="action-bg" style="background-color:#6B1F2A;padding:28px 40px;">
+    <p style="margin:0 0 16px;font-family:Georgia,serif;font-size:13px;font-style:italic;color:#F5F0E8;">Répondez directement à cet email pour contacter ${prenom}.</p>
+    <a href="mailto:${email}" style="display:inline-block;background:#F5F0E8;color:#6B1F2A;font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:12px 32px;text-decoration:none;">Répondre à ${prenom}</a>
+  </td>
+</tr>
+
+<!-- KINOQUICK -->
+<tr>
+  <td bgcolor="#FFF8F0" class="kinoquick-bg" style="background-color:#FFF8F0;padding:20px 40px;border-left:4px solid #C9A96E;border-right:1px solid #EDE8E0;">
+    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#5C5C5C;line-height:1.7;">
+      📅 &nbsp;<strong style="color:#2A2A2A;">N'oubliez pas d'enregistrer ce rendez-vous dans KinoQuick</strong><br>
+      <span style="font-size:11px;">Une fois le créneau convenu avec ${prenom}, pensez à le créer dans le logiciel.</span>
+    </p>
+  </td>
+</tr>
+
+<!-- SIGNATURE -->
+<tr>
+  <td bgcolor="#FFFFFF" class="white-bg" style="background-color:#FFFFFF;padding:28px 40px 32px;border-left:1px solid #EDE8E0;border-right:1px solid #EDE8E0;">
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+      <tr><td align="right"><img src="${sigSrc}" width="140" height="auto" alt="Signature Zoé Grêde" border="0" style="display:block;max-width:140px;border:0;outline:none;"></td></tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td align="center" bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;padding:16px 40px 24px;">
+    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#AAAAAA;text-align:center;line-height:1.8;">
+      Zoé Grêde · Kinésithérapeute · Méthode BELTRA<br>
+      Rue des Iris, Boîte 2 · 1640 Rhode-Saint-Genèse<br>
+      <a href="${SITE_URL}" style="color:#AAAAAA;text-decoration:none;">zowekine.com</a>
+    </p>
+  </td>
+</tr>
+</table></td></tr></table>
+</body></html>`;
+
+  const text = [
+    `ZOWE — Nouvelle demande de contact`,
+    `────────────────────────────────────────`,
+    ``,
+    `Patient : ${fullName}`,
+    `Email   : ${email}`,
+    telephone ? `Tél.    : ${telephone}` : '',
+    `Langue  : ${langLabel}`,
+    `Date    : ${dateStr}`,
+    ``,
+    `Message :`,
+    message || '—',
+    ``,
+    `────────────────────────────────────────`,
+    `Répondre à ${prenom} : ${email}`,
+    `N'oubliez pas d'enregistrer dans KinoQuick.`,
+  ].filter(l => l !== undefined).join('\n');
+
+  return { subject, html, text };
+}
+
+// ── Email 4 : notification patron ────────────────────────────────────────────
+function buildPatronNotification(data) {
+  const { prenom = '', nom = '', email = '', telephone = '', message = '', lang = 'fr', date } = data || {};
+  const fullName  = [prenom, nom].filter(Boolean).join(' ') || '—';
+  const langLabel = LANG_LABELS[lang] || 'Français';
+  const dateStr   = fmtDate(date);
+  const subject   = `Nouvelle demande — Cabinet Zowe`;
+  const monogramSrc = `${SITE_URL}/images/monogram-email.png`;
+
+  const infoRows = [
+    ['👤', 'Patient', fullName],
+    ['✉️', 'Email',   email],
+    telephone ? ['📱', 'Téléphone', telephone] : null,
+    ['🌐', 'Langue',  langLabel],
+    ['📅', 'Date',    dateStr],
+  ].filter(Boolean).map(([icon, label, val], i) => {
+    const bg = i % 2 === 0 ? '#FAFAFA' : '#FFFFFF';
+    const border = i % 2 === 0 ? 'border-left:3px solid #C9A96E;' : '';
+    return `<tr style="background-color:${bg};">
+      <td style="padding:10px 16px;font-size:18px;width:36px;">${icon}</td>
+      <td style="padding:10px 8px 10px 0;${border}">
+        <span style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#AAAAAA;text-transform:uppercase;letter-spacing:1.5px;">${label}</span>
+        <span style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#2A2A2A;font-weight:500;">${val}</span>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="fr" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light">
+  <title>${subject}</title>
+  <style>
+    :root{color-scheme:light only;}
+    .header-bg{background-color:#6B1F2A!important;}.kinoquick-bg{background-color:#6B1F2A!important;}
+    .cream-bg{background-color:#F5F0E8!important;}.white-bg{background-color:#FFFFFF!important;}
+    [data-ogsc] .header-bg,[data-ogsb] .header-bg{background-color:#6B1F2A!important;}
+    @media(prefers-color-scheme:dark){.header-bg,.kinoquick-bg{background-color:#6B1F2A!important;}.cream-bg{background-color:#F5F0E8!important;}}
+    @media only screen and (max-width:600px){.email-container{width:100%!important;}.email-body{padding:24px 16px!important;}}
+  </style>
+</head>
+<body style="margin:0;padding:0;background-color:#F5F0E8;font-family:Arial,Helvetica,sans-serif;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#F5F0E8;">
+<tr><td align="center" style="padding:32px 16px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="email-container" style="max-width:600px;width:100%;">
+
+<!-- HEADER -->
+<tr>
+  <td align="center" bgcolor="#6B1F2A" class="header-bg" style="background-color:#6B1F2A;padding:32px 32px 20px;">
+    <img src="${monogramSrc}" width="64" height="62" alt="" border="0" style="border:0;outline:none;display:block;margin:0 auto 14px;">
+    <p style="margin:0;font-family:Georgia,serif;font-size:11px;letter-spacing:4px;color:#C9A96E;text-transform:uppercase;">Nouvelle demande — Cabinet Zowe</p>
+  </td>
+</tr>
+
+<!-- ACCROCHE -->
+<tr>
+  <td align="center" bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;padding:24px 40px 20px;">
+    <p style="margin:0;font-family:Georgia,serif;font-size:17px;font-style:italic;color:#6B1F2A;line-height:1.5;">Une nouvelle demande a été reçue via le site Zowe.</p>
+  </td>
+</tr>
+<tr><td bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;font-size:0;">${goldLine()}</td></tr>
+
+<!-- BLOC INFO -->
+<tr>
+  <td bgcolor="#FFFFFF" class="white-bg email-body" style="background-color:#FFFFFF;padding:36px 40px 28px;border-left:1px solid #EDE8E0;border-right:1px solid #EDE8E0;">
+    <p style="margin:0 0 16px;font-family:Georgia,serif;font-size:11px;font-style:italic;color:#C9A96E;letter-spacing:2px;text-transform:uppercase;">Informations du patient</p>
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="border:1px solid #EDE8E0;border-collapse:collapse;">
+      ${infoRows}
+    </table>
+  </td>
+</tr>
+<tr><td bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;padding:0 40px;border-left:1px solid #EDE8E0;border-right:1px solid #EDE8E0;font-size:0;">${goldLine()}</td></tr>
+
+<!-- ACTION -->
+<tr>
+  <td bgcolor="#FFFFFF" class="white-bg" style="background-color:#FFFFFF;padding:24px 40px;border-left:1px solid #EDE8E0;border-right:1px solid #EDE8E0;">
+    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#4A4A4A;line-height:1.75;">
+      Cette demande a été transmise à Zoé Grêde.<br>
+      Elle prendra contact avec le patient dans la journée.
+    </p>
+  </td>
+</tr>
+
+<!-- KINOQUICK -->
+<tr>
+  <td bgcolor="#6B1F2A" class="kinoquick-bg" style="background-color:#6B1F2A;padding:24px 40px;">
+    <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#F5F0E8;">
+      📅 &nbsp;À enregistrer dans KinoQuick
+    </p>
+    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:rgba(245,240,232,0.75);line-height:1.6;">
+      Zoé vous contactera pour confirmer le créneau une fois convenu avec le patient.
+    </p>
+  </td>
+</tr>
+
+<tr>
+  <td align="center" bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;padding:16px 40px 24px;">
+    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#AAAAAA;text-align:center;line-height:1.8;">
+      Zowe · Cabinet Kinovea Rhode-Saint-Genèse<br>
+      <a href="${SITE_URL}" style="color:#AAAAAA;text-decoration:none;">zowekine.com</a>
+    </p>
+  </td>
+</tr>
+</table></td></tr></table>
+</body></html>`;
+
+  const text = [
+    `ZOWE — Nouvelle demande Cabinet Zowe`,
+    `────────────────────────────────────────`,
+    ``,
+    `Patient  : ${fullName}`,
+    `Email    : ${email}`,
+    telephone ? `Tél.     : ${telephone}` : '',
+    `Langue   : ${langLabel}`,
+    `Date     : ${dateStr}`,
+    ``,
+    `Zoé prendra contact avec le patient dans la journée.`,
+    ``,
+    `────────────────────────────────────────`,
+    `À enregistrer dans KinoQuick.`,
+  ].filter(l => l !== undefined).join('\n');
+
+  return { subject, html, text };
+}
+
+module.exports = { buildPatientConfirm, buildReminder24h, buildStaffNotification, buildPatronNotification, CT_DEFAULTS: CT };

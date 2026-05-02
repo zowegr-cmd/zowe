@@ -298,10 +298,14 @@ td.email a{color:var(--bx);text-decoration:none}
       <!-- Previews + test email -->
       <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;margin-bottom:1.75rem;padding:1.25rem 1.5rem;background:var(--wh);border:1px solid var(--bd);">
         <p class="section-title" style="margin:0;flex:1">Aperçu des templates</p>
-        <a href="/admin/email-preview.html" target="_blank" class="export-btn">Aperçu FR ↗</a>
-        <a href="/admin/email-preview-nl.html" target="_blank" class="export-btn">Aperçu NL ↗</a>
-        <a href="/admin/email-preview-en.html" target="_blank" class="export-btn">Aperçu EN ↗</a>
-        <button class="save-btn" style="padding:.5rem 1.1rem;font-size:.65rem" onclick="sendEmailTestFromEmailsTab()">Envoyer test → Zoé</button>
+        <a href="/admin/email-preview.html" target="_blank" class="export-btn">Patient FR ↗</a>
+        <a href="/admin/email-preview-nl.html" target="_blank" class="export-btn">Patient NL ↗</a>
+        <a href="/admin/email-preview-en.html" target="_blank" class="export-btn">Patient EN ↗</a>
+        <a href="/admin/email-preview-zoe.html" target="_blank" class="export-btn">Zoé ↗</a>
+        <a href="/admin/email-preview-patron.html" target="_blank" class="export-btn">Patron ↗</a>
+        <button class="save-btn" style="padding:.5rem 1.1rem;font-size:.65rem" onclick="sendEmailTestFromEmailsTab('patient')">Test patient</button>
+        <button class="test-btn" style="padding:.5rem 1.1rem;font-size:.65rem" onclick="sendEmailTestFromEmailsTab('zoe')">Test Zoé</button>
+        <button class="test-btn" style="padding:.5rem 1.1rem;font-size:.65rem" onclick="sendEmailTestFromEmailsTab('patron')">Test patron</button>
         <span id="emailTestStatus" style="font-size:.68rem;color:var(--lt);"></span>
       </div>
 
@@ -894,23 +898,23 @@ function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function sendEmailTestFromEmailsTab() {
-  var btn = document.querySelector('#tab-emails .save-btn');
+function sendEmailTestFromEmailsTab(type) {
+  var actionMap = { patient: 'email-send-test', zoe: 'email-send-test-zoe', patron: 'email-send-test-patron' };
+  var action = actionMap[type] || 'email-send-test';
   var status = document.getElementById('emailTestStatus');
-  if (btn) { btn.disabled = true; btn.textContent = 'Envoi…'; }
-  fetch('/.netlify/functions/admin-api?action=email-send-test', {
+  if (status) status.textContent = 'Envoi…';
+  fetch('/.netlify/functions/admin-api?action=' + action, {
     method: 'POST',
     headers: { 'Authorization': 'Bearer ' + _token, 'Content-Type': 'application/json' },
     body: JSON.stringify({ lang: 'fr' }),
   }).then(function(r) { return r.json(); })
     .then(function(d) {
-      if (btn) { btn.disabled = false; btn.textContent = 'Envoyer test → Zoé'; }
       if (status) {
-        status.textContent = d && d.ok ? '✓ Email envoyé à zoegrede.kine@gmail.com' : 'Erreur : ' + (d && d.error || '?');
-        setTimeout(function() { if(status) status.textContent = ''; }, 5000);
+        status.textContent = d && d.ok ? '✓ Envoyé à zoegrede.kine@gmail.com' : '✗ ' + (d && d.error || 'Erreur');
+        setTimeout(function() { if (status) status.textContent = ''; }, 5000);
       }
     }).catch(function() {
-      if (btn) { btn.disabled = false; btn.textContent = 'Envoyer test → Zoé'; }
+      if (status) { status.textContent = '✗ Erreur réseau'; setTimeout(function() { if(status) status.textContent=''; }, 4000); }
     });
 }
 

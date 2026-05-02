@@ -201,6 +201,12 @@ async function generateEmailPreview(lang, prenom, overrides) {
 }
 
 // ─── Envoi email de test ──────────────────────────────────────────────────────
+const TEST_DATA = {
+  prenom: 'Test', nom: 'Patient', email: 'zoegrede.kine@gmail.com',
+  telephone: '0471 78 37 46', message: 'Ceci est un email de test envoyé depuis le panel admin Zowe.',
+  lang: 'fr', date: new Date().toISOString(),
+};
+
 async function sendEmailTest(lang) {
   if (!RESEND_KEY) throw new Error('RESEND_API_KEY non défini');
   const { buildPatientConfirm } = require('./_email-templates');
@@ -212,6 +218,27 @@ async function sendEmailTest(lang) {
     from,
     to     : 'zoegrede.kine@gmail.com',
     replyTo: 'zoegrede.kine@gmail.com',
+    subject: `[TEST] ${subject}`,
+    html,
+    text,
+    headers: { 'X-Mailer': 'Zowe Mailer 1.0 (test)' },
+  });
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+async function sendEmailTestStaff(type) {
+  if (!RESEND_KEY) throw new Error('RESEND_API_KEY non défini');
+  const { buildStaffNotification, buildPatronNotification } = require('./_email-templates');
+  const resend = new Resend(RESEND_KEY);
+  const from   = process.env.RESEND_FROM_EMAIL || 'Zoé — Zowe <onboarding@resend.dev>';
+  const { subject, html, text } = type === 'patron'
+    ? buildPatronNotification(TEST_DATA)
+    : buildStaffNotification(TEST_DATA);
+  const { data, error } = await resend.emails.send({
+    from,
+    to     : 'zoegrede.kine@gmail.com',
+    replyTo: TEST_DATA.email,
     subject: `[TEST] ${subject}`,
     html,
     text,
@@ -344,12 +371,32 @@ exports.handler = async function(event) {
     };
   }
 
-  // POST email-send-test
+  // POST email-send-test (patient)
   if (action === 'email-send-test' && event.httpMethod === 'POST') {
     let body = {};
     try { body = JSON.parse(event.body || '{}'); } catch {}
     try {
       const data = await sendEmailTest(body.lang || 'fr');
+      return json({ ok: true, messageId: data?.id });
+    } catch (e) {
+      return json({ error: e.message }, 500);
+    }
+  }
+
+  // POST email-send-test-zoe
+  if (action === 'email-send-test-zoe' && event.httpMethod === 'POST') {
+    try {
+      const data = await sendEmailTestStaff('zoe');
+      return json({ ok: true, messageId: data?.id });
+    } catch (e) {
+      return json({ error: e.message }, 500);
+    }
+  }
+
+  // POST email-send-test-patron
+  if (action === 'email-send-test-patron' && event.httpMethod === 'POST') {
+    try {
+      const data = await sendEmailTestStaff('patron');
       return json({ ok: true, messageId: data?.id });
     } catch (e) {
       return json({ error: e.message }, 500);

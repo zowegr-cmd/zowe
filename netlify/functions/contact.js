@@ -4,13 +4,12 @@
 
 const { Resend }   = require('resend');
 const { getStore } = require('./_blobs');
-const { buildPatientConfirm }  = require('./_email-templates');
+const { buildPatientConfirm, buildStaffNotification, buildPatronNotification } = require('./_email-templates');
 const { createUnsubToken }     = require('./unsubscribe');
 
 const SITE_URL  = process.env.SITE_URL || 'https://zowekine.com';
 const EMAIL_ZOE = 'zoegrede.kine@gmail.com';
 
-const FORMSPREE_ID     = process.env.FORMSPREE_ID          || 'xqewvayo';
 const PATRON_EMAIL     = process.env.PATRON_EMAIL          || 'patron@kinovea.be';
 const AUDIENCE_ID      = process.env.RESEND_AUDIENCE_ID    || '';
 const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET_KEY  || '';
@@ -134,19 +133,7 @@ exports.handler = async function (event) {
 
   const ts = Date.now();
 
-  // ── 1. Formspree → Zoé ──────────────────────────────────────────────────────
-  try {
-    await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body   : JSON.stringify({ prenom, nom, email, telephone, message, _cc: PATRON_EMAIL }),
-    });
-    console.log(`[contact] step:formspree status:ok ts:${ts}`);
-  } catch (e) {
-    console.error(`[contact] step:formspree status:error ts:${ts}`, e.message);
-  }
-
-  // ── 2. Resend — confirmation patient ────────────────────────────────────────
+  // ── 1. Resend — confirmation patient ────────────────────────────────────────
   const apiKey = process.env.RESEND_API_KEY;
   if (apiKey) {
     const resend = new Resend(apiKey);
@@ -180,7 +167,48 @@ exports.handler = async function (event) {
       await queueEmail({ to: email, prenom, lang, type: 'patient_confirm', ts });
     }
 
-    // ── 3. Queue rappel 24h ────────────────────────────────────────────────────
+    // ── 2. Resend — notification Zoé ──────────────────────────────────────────
+    const staffData = { prenom, nom, email, telephone, message, lang, date: new Date(ts).toISOString() };
+    try {
+      const { subject: szs, html: szh, text: szt } = buildStaffNotification(staffData);
+      const { error: sze } = await resend.emails.send({
+        from,
+        to     : EMAIL_ZOE,
+        replyTo: email,
+        subject: szs,
+        html   : szh,
+        text   : szt,
+        headers: { 'X-Mailer': 'Zowe Mailer 1.0' },
+      });
+      if (sze) throw new Error(sze.message);
+      console.log(`[contact] step:resend-zoe status:ok ts:${ts}`);
+    } catch (e) {
+      console.error(`[contact] step:resend-zoe status:error ts:${ts}`, e.message);
+      await queueEmail({ to: EMAIL_ZOE, prenom, lang, type: 'staff_notification', staffData, ts });
+    }
+
+    // ── 3. Resend — notification Patron ───────────────────────────────────────
+    if (PATRON_EMAIL) {
+      try {
+        const { subject: sps, html: sph, text: spt } = buildPatronNotification(staffData);
+        const { error: spe } = await resend.emails.send({
+          from,
+          to     : PATRON_EMAIL,
+          replyTo: email,
+          subject: sps,
+          html   : sph,
+          text   : spt,
+          headers: { 'X-Mailer': 'Zowe Mailer 1.0' },
+        });
+        if (spe) throw new Error(spe.message);
+        console.log(`[contact] step:resend-patron status:ok ts:${ts}`);
+      } catch (e) {
+        console.error(`[contact] step:resend-patron status:error ts:${ts}`, e.message);
+        await queueEmail({ to: PATRON_EMAIL, prenom, lang, type: 'patron_notification', staffData, ts });
+      }
+    }
+
+    // ── 4. Queue rappel 24h ────────────────────────────────────────────────────
     try {
       const store = getStore('reminders');
       const key   = `${ts}-${email.replace(/[^a-z0-9]/gi, '')}`;

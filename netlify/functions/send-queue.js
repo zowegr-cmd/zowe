@@ -4,13 +4,11 @@
 
 const { Resend }   = require('resend');
 const { getStore } = require('./_blobs');
-const { buildPatientConfirm } = require('./_email-templates');
-const { createUnsubToken }    = require('./unsubscribe');
+const { buildPatientConfirm, buildStaffNotification, buildPatronNotification } = require('./_email-templates');
+const { createUnsubToken } = require('./unsubscribe');
 
-const FORMSPREE_ID = process.env.FORMSPREE_ID || 'xqewvayo';
-const PATRON_EMAIL = process.env.PATRON_EMAIL || 'patron@kinovea.be';
-const SITE_URL     = process.env.SITE_URL     || 'https://zowekine.com';
-const EMAIL_ZOE    = 'zoegrede.kine@gmail.com';
+const SITE_URL  = process.env.SITE_URL || 'https://zowekine.com';
+const EMAIL_ZOE = 'zoegrede.kine@gmail.com';
 
 exports.handler = async function () {
   const apiKey = process.env.RESEND_API_KEY;
@@ -39,18 +37,28 @@ exports.handler = async function () {
     if (!item || item.status !== 'pending') continue;
 
     try {
-      const unsubToken = createUnsubToken(item.to);
-      const unsubUrl   = `${SITE_URL}/.netlify/functions/unsubscribe?token=${unsubToken}`;
+      let subject, html, text, replyTo;
 
-      let subject, html, text;
       if (item.type === 'patient_confirm') {
-        const itemLang = item.lang || 'fr';
+        const unsubToken = createUnsubToken(item.to);
+        const unsubUrl   = `${SITE_URL}/.netlify/functions/unsubscribe?token=${unsubToken}`;
+        const itemLang   = item.lang || 'fr';
         let emailContent = null;
         try {
           const cStore = getStore('email-content');
           emailContent = await cStore.get(`confirm:${itemLang}`, { type: 'json' });
         } catch (_) {}
         ({ subject, html, text } = buildPatientConfirm(item.prenom, itemLang, unsubUrl, emailContent));
+        replyTo = EMAIL_ZOE;
+
+      } else if (item.type === 'staff_notification') {
+        ({ subject, html, text } = buildStaffNotification(item.staffData || {}));
+        replyTo = item.staffData?.email || EMAIL_ZOE;
+
+      } else if (item.type === 'patron_notification') {
+        ({ subject, html, text } = buildPatronNotification(item.staffData || {}));
+        replyTo = item.staffData?.email || EMAIL_ZOE;
+
       } else {
         console.warn('[send-queue] type inconnu:', item.type);
         continue;
@@ -59,23 +67,16 @@ exports.handler = async function () {
       const { data, error } = await resend.emails.send({
         from   : fromEmail,
         to     : item.to,
-        replyTo: EMAIL_ZOE,
+        replyTo,
         subject,
         html,
         text,
-        headers: {
-          'X-Mailer'             : 'Zowe Mailer 1.0',
-          'List-Unsubscribe'     : `<mailto:${EMAIL_ZOE}?subject=unsubscribe>, <${unsubUrl}>`,
-          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
-        },
+        headers: { 'X-Mailer': 'Zowe Mailer 1.0' },
       });
       if (error) throw new Error(error.message);
 
-      await store.setJSON(blob.key, {
-        ...item, status: 'sent',
-        sentAt: new Date().toISOString(),
-      });
-      console.log(`[send-queue] sent id:${item.id} to:${item.to}`);
+      await store.setJSON(blob.key, { ...item, status: 'sent', sentAt: new Date().toISOString() });
+      console.log(`[send-queue] sent id:${item.id} type:${item.type} to:${item.to}`);
       sent++;
 
     } catch (e) {
@@ -83,28 +84,20 @@ exports.handler = async function () {
       console.error(`[send-queue] error id:${item.id} attempts:${attempts}`, e.message);
 
       if (attempts >= 3) {
-        await store.setJSON(blob.key, {
-          ...item, status: 'failed', attempts,
-          lastAttempt: new Date().toISOString(),
-        });
-        // Alerter Zoé via Formspree
+        await store.setJSON(blob.key, { ...item, status: 'failed', attempts, lastAttempt: new Date().toISOString() });
+        // Alerte Resend → Zoé
         try {
-          await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-            method : 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body   : JSON.stringify({
-              _to     : PATRON_EMAIL,
-              subject : `[Zowe] Email échoué : ${item.to}`,
-              message : `L'email de type "${item.type}" n'a pas pu être envoyé à ${item.to} après ${attempts} tentatives.`,
-            }),
+          await resend.emails.send({
+            from   : fromEmail,
+            to     : EMAIL_ZOE,
+            subject: `[Zowe] ⚠️ Email échoué : ${item.to}`,
+            html   : `<p>L'email de type <strong>${item.type}</strong> n'a pas pu être envoyé à ${item.to} après ${attempts} tentatives.</p>`,
+            text   : `Email échoué : ${item.type} → ${item.to} (${attempts} tentatives)`,
           });
         } catch {}
         failed++;
       } else {
-        await store.setJSON(blob.key, {
-          ...item, status: 'pending', attempts,
-          lastAttempt: new Date().toISOString(),
-        });
+        await store.setJSON(blob.key, { ...item, status: 'pending', attempts, lastAttempt: new Date().toISOString() });
       }
     }
   }

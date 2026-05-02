@@ -285,10 +285,11 @@ const EAGER = 5;
       .gc-m-photo {
         position: relative;
         width: 100vw;
-        height: 75vh;
-        min-height: 380px;
+        height: 72vh;
+        min-height: 360px;
         overflow: hidden;
         background: #0A0205;
+        transition: background .8s ease;
       }
 
       /* Header overlay en haut */
@@ -296,9 +297,12 @@ const EAGER = 5;
         position: absolute;
         top: 0; left: 0; right: 0;
         z-index: 10;
-        padding: calc(env(safe-area-inset-top) + 16px) 20px 40px;
-        background: linear-gradient(to bottom, rgba(5,1,2,.75) 0%, transparent 100%);
+        padding: calc(env(safe-area-inset-top) + 16px) 20px 48px;
+        background: linear-gradient(to bottom, rgba(5,1,2,.8) 0%, transparent 100%);
         pointer-events: none;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
       }
       .gc-m-back {
         pointer-events: all;
@@ -309,20 +313,28 @@ const EAGER = 5;
       }
       .gc-m-back:hover { color: #F5F0E8; }
 
-      /* Track container — clips les slides */
+      /* Compteur top-right */
+      .gc-m-counter-top {
+        font-family: Georgia, serif;
+        font-size: .68rem; font-style: italic;
+        letter-spacing: .18em;
+        color: rgba(245,240,232,.6);
+        white-space: nowrap;
+        pointer-events: none;
+      }
+
+      /* Track container */
       .gc-m-outer {
         width: 100%; height: 100%;
         overflow: hidden;
         touch-action: pan-y;
-        cursor: grab;
       }
-      .gc-m-outer:active { cursor: grabbing; }
 
-      /* Flex track — translatable */
+      /* Flex track */
       .gc-m-track {
         display: flex;
         height: 100%;
-        padding-left: 60px;
+        padding-left: 50px;
         will-change: transform;
         transform: translateZ(0) translateX(0);
         transition: transform .35s cubic-bezier(.25,.46,.45,.94);
@@ -331,35 +343,51 @@ const EAGER = 5;
         .gc-m-track { transition: none !important; }
       }
 
-      /* Chaque slide */
+      /* Chaque slide — non-active par défaut */
       .gc-m-slide {
-        width: calc(100vw - 120px);
-        min-width: calc(100vw - 120px);
+        width: calc(100vw - 100px);
+        min-width: calc(100vw - 100px);
         height: 100%;
         flex-shrink: 0;
         position: relative;
         overflow: hidden;
         background: #1A0508;
+        transform-origin: center;
+        transform: scale(0.88);
+        filter: blur(3px);
+        opacity: 0.7;
+        transition:
+          transform  .45s cubic-bezier(.25,.46,.45,.94),
+          filter     .45s cubic-bezier(.25,.46,.45,.94),
+          opacity    .45s cubic-bezier(.25,.46,.45,.94),
+          box-shadow .45s cubic-bezier(.25,.46,.45,.94);
+      }
+      /* Photo active */
+      .gc-m-slide.active {
+        transform: scale(1);
+        filter: none;
+        opacity: 1;
+        z-index: 2;
+        box-shadow: 0 0 40px rgba(107,31,42,.5);
       }
       .gc-m-img {
         width: 100%; height: 100%;
         object-fit: cover; object-position: center;
-        display: block;
-        background: #1A0508;
+        display: block; background: #1A0508;
       }
 
-      /* Overlay sur slides non-actives (peek sombres) */
+      /* Overlay obscurcissant les non-actives */
       .gc-m-slide::after {
         content: '';
         position: absolute; inset: 0;
-        background: rgba(26,5,8,.52);
-        transition: opacity .35s ease;
+        background: rgba(26,5,8,.45);
+        transition: opacity .45s cubic-bezier(.25,.46,.45,.94);
         pointer-events: none;
         z-index: 2;
       }
       .gc-m-slide.active::after { opacity: 0; }
 
-      /* Overlay info dégradé en bas de la photo active */
+      /* Gradient info bas photo */
       .gc-m-slide-info {
         position: absolute; bottom: 0; left: 0; right: 0;
         z-index: 3;
@@ -383,29 +411,30 @@ const EAGER = 5;
         margin: 0;
       }
 
-      /* ── Dots (fixed bas de l'écran) ── */
+      /* ── Dots — pill animé ── */
       .gc-m-dots {
         position: fixed;
-        bottom: calc(16px + env(safe-area-inset-bottom));
+        bottom: calc(24px + env(safe-area-inset-bottom));
         left: 0; right: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 6px;
         z-index: 20;
         pointer-events: none;
       }
       .gc-m-dot {
-        width: 5px; height: 5px;
-        border-radius: 50%;
+        height: 6px;
+        width: 6px;
+        border-radius: 3px;
         background: rgba(245,240,232,.3);
         border: none; padding: 0;
         flex-shrink: 0;
         pointer-events: all;
         cursor: pointer;
-        transition: width .25s, height .25s, background .25s, opacity .25s, margin .25s;
+        transition: width .3s ease, background .3s ease, opacity .25s, margin .25s;
       }
-      .gc-m-dot.active { width: 8px; height: 8px; background: #C9A96E; }
+      .gc-m-dot.active { width: 20px; background: #C9A96E; }
 
       /* ── Section info sous la photo ── */
       .gc-m-info {
@@ -547,6 +576,7 @@ const EAGER = 5;
             <!-- Header overlay -->
             <div class="gc-m-header">
               <a href="/" class="gc-m-back">← Accueil</a>
+              <span class="gc-m-counter-top" id="gcMCounterTop">01 / {photos.length}</span>
             </div>
 
             <!-- Slides container -->
@@ -790,31 +820,63 @@ const EAGER = 5;
     var track = document.getElementById('gcMTrack');
     if (!outer || !track) return;
 
-    var SW = window.innerWidth - 120; // slide width
+    var SW = window.innerWidth - 100; // slide width (50px peek each side)
+
+    var mBgColors  = {};   // cache couleurs extraites
+    var lastHapticDist = 0;
 
     function mTX(idx) { return -(idx * SW); }
 
-    function mSetTX(x, anim) {
-      track.style.transition = anim ? 'transform .35s cubic-bezier(.25,.46,.45,.94)' : 'none';
+    function mSetTX(x, ease) {
+      track.style.transition = ease
+        ? 'transform .35s cubic-bezier(.25,.46,.45,.94)'
+        : 'none';
+      track.style.transform = 'translateZ(0) translateX(' + x + 'px)';
+    }
+
+    function mSetTXSpring(x) {
+      track.style.transition = 'transform .4s cubic-bezier(.34,1.56,.64,1)';
       track.style.transform  = 'translateZ(0) translateX(' + x + 'px)';
     }
 
+    /* ── Lazy loading ── */
     function mLoad(idx) {
       if (mLoaded.has(idx)) return;
       var sl = document.querySelector('.gc-m-slide[data-index="' + idx + '"]');
       if (!sl) return;
       var img = sl.querySelector('.gc-m-img');
-      if (!img || (img.src && !img.src.endsWith('#') && img.src !== window.location.href)) { mLoaded.add(idx); return; }
+      if (!img) return;
+      if (img.src && img.src.length > 10 && !img.src.endsWith('#')) { mLoaded.add(idx); return; }
       var src = img.dataset.src;
       if (!src) return;
+      img.onload = function() { mExtractBg(img, idx); };
       img.src = src;
       mLoaded.add(idx);
     }
-
     function mLoadNearby(idx) {
       for (var i = -2; i <= 2; i++) mLoad(((idx + i) % total + total) % total);
     }
 
+    /* ── Fond dynamique ── */
+    function mExtractBg(img, idx) {
+      try {
+        var c = document.createElement('canvas');
+        c.width = c.height = 1;
+        var ctx = c.getContext('2d');
+        ctx.drawImage(img, 0, 0, 1, 1);
+        var d = ctx.getImageData(0, 0, 1, 1).data;
+        var r = Math.round(d[0] * 0.3 + 26 * 0.7);
+        var g = Math.round(d[1] * 0.3 + 5  * 0.7);
+        var b = Math.round(d[2] * 0.3 + 8  * 0.7);
+        mBgColors[idx] = 'rgb(' + r + ',' + g + ',' + b + ')';
+      } catch(_) { mBgColors[idx] = '#1A0508'; }
+    }
+    function mApplyBg(idx) {
+      var photo = document.getElementById('gcMPhoto') || document.querySelector('.gc-m-photo');
+      if (photo && mBgColors[idx]) photo.style.background = mBgColors[idx];
+    }
+
+    /* ── Dots pill ── */
     function mUpdateDots(idx) {
       var MAX = 7, half = 3;
       var start = Math.max(0, Math.min(idx - half, total - MAX));
@@ -822,66 +884,103 @@ const EAGER = 5;
       document.querySelectorAll('.gc-m-dot').forEach(function(dot, i) {
         var active  = i === idx;
         var visible = i >= start && i <= end;
+        var edge    = visible && (i === start || i === end) && total > MAX;
         dot.classList.toggle('active', active);
-        dot.style.width   = visible ? (active ? '8px' : '5px') : '0';
-        dot.style.height  = visible ? (active ? '8px' : '5px') : '0';
-        dot.style.opacity = visible ? (active ? '1' : '0.35') : '0';
-        dot.style.margin  = visible ? '' : '0';
+        dot.style.width   = !visible ? '0' : active ? '20px' : edge ? '4px' : '6px';
+        dot.style.opacity = !visible ? '0' : active ? '1' : edge ? '0.25' : '0.35';
+        dot.style.margin  = !visible ? '0' : '';
       });
     }
 
+    /* ── Slides active class ── */
     function mUpdateSlides(idx) {
       document.querySelectorAll('.gc-m-slide').forEach(function(sl) {
         sl.classList.toggle('active', parseInt(sl.dataset.index, 10) === idx);
       });
     }
 
+    /* ── Compteur top-right ── */
+    function mUpdateCounter(idx) {
+      var el = document.getElementById('gcMCounterTop');
+      if (el) el.textContent = (idx + 1 < 10 ? '0' : '') + (idx + 1) + ' / ' + total;
+    }
+
+    /* ── Navigation ── */
     function mGoTo(idx, anim) {
+      var atEdge = (idx <= 0 && mCur === 0) || (idx >= total - 1 && mCur === total - 1);
       mCur = ((idx % total) + total) % total;
-      mSetTX(mTX(mCur), anim !== false);
+      if (anim === false) mSetTX(mTX(mCur), false);
+      else mSetTX(mTX(mCur), true);
       mLoadNearby(mCur);
       mUpdateDots(mCur);
       mUpdateSlides(mCur);
-      if (navigator.vibrate) navigator.vibrate(8);
+      mUpdateCounter(mCur);
+      mApplyBg(mCur);
+      if (navigator.vibrate) {
+        navigator.vibrate(atEdge ? [4, 30, 4] : 8);
+      }
     }
     function mNext() { mGoTo(mCur + 1); }
     function mPrev() { mGoTo(mCur - 1); }
 
     function mStartAuto() { if (mAuto) clearInterval(mAuto); mAuto = setInterval(mNext, 2500); }
     function mStopAuto()  { if (mAuto) { clearInterval(mAuto); mAuto = null; } }
-    function mScheduleResume() { mStopAuto(); if (mResume) clearTimeout(mResume); mResume = setTimeout(mStartAuto, 3000); }
+    function mScheduleResume() {
+      mStopAuto();
+      if (mResume) clearTimeout(mResume);
+      mResume = setTimeout(mStartAuto, 3000);
+    }
 
-    /* ── Pointer Events swipe ── */
+    /* ── Pointer Events swipe + rubber band ── */
     outer.addEventListener('pointerdown', function(e) {
       e.currentTarget.setPointerCapture(e.pointerId);
       startX  = e.clientX;
       isDrag  = true;
+      lastHapticDist = 0;
       mStopAuto();
       mSetTX(mTX(mCur), false);
     }, { passive: true });
 
     outer.addEventListener('pointermove', function(e) {
       if (!isDrag) return;
-      mSetTX(mTX(mCur) + (e.clientX - startX), false);
+      var raw = e.clientX - startX;
+
+      // Rubber band aux extrémités (résistance 25%)
+      var isFirst = mCur === 0 && raw > 0;
+      var isLast  = mCur === total - 1 && raw < 0;
+      var dx = (isFirst || isLast) ? raw * 0.25 : raw;
+
+      mSetTX(mTX(mCur) + dx, false);
+
+      // Haptic gradué toutes les 100px
+      var dist = Math.abs(raw);
+      if (dist > lastHapticDist + 100) {
+        if (navigator.vibrate) navigator.vibrate(2);
+        lastHapticDist = Math.floor(dist / 100) * 100;
+      }
     }, { passive: true });
 
     outer.addEventListener('pointerup', function(e) {
       if (!isDrag) return;
       isDrag = false;
       var dx = startX - e.clientX;
-      if (Math.abs(dx) > 50) dx > 0 ? mNext() : mPrev();
-      else mSetTX(mTX(mCur), true);
+      if (Math.abs(dx) > 50) {
+        dx > 0 ? mNext() : mPrev();
+      } else {
+        // Spring snap-back
+        mSetTXSpring(mTX(mCur));
+      }
       mScheduleResume();
     }, { passive: true });
 
     outer.addEventListener('pointercancel', function() {
       if (!isDrag) return;
       isDrag = false;
-      mSetTX(mTX(mCur), true);
+      mSetTXSpring(mTX(mCur));
       mScheduleResume();
     }, { passive: true });
 
-    /* ── Dots ── */
+    /* ── Dots clicks ── */
     document.querySelectorAll('.gc-m-dot').forEach(function(dot) {
       dot.addEventListener('click', function() {
         mGoTo(parseInt(dot.dataset.index, 10));
@@ -892,13 +991,14 @@ const EAGER = 5;
     /* ── KQ CTA ── */
     fetch('/.netlify/functions/settings?type=kinoquick')
       .then(function(r) { return r.ok ? r.json() : null; })
-      .then(function(kq) { if (kq && kq.enabled) { var b = document.getElementById('gcMCtaReserver'); if (b) b.style.display = ''; } })
-      .catch(function() {});
+      .then(function(kq) {
+        if (kq && kq.enabled) { var b = document.getElementById('gcMCtaReserver'); if (b) b.style.display = ''; }
+      }).catch(function() {});
 
     /* ── Init ── */
     mGoTo(0, false);
     mStartAuto();
-    // Load rest in background
+    // Background load de toutes les photos
     setTimeout(function() {
       for (var i = 0; i < total; i++) {
         (function(idx) { setTimeout(function() { mLoad(idx); }, idx * 80); })(i);

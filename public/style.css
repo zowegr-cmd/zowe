@@ -2033,11 +2033,12 @@ img {
 .ff input.field-error,
 .ff textarea.field-error { border-color: rgba(160,60,60,0.4); }
 .field-hint {
+  display: none;
   font-size: 0.68rem;
   color: rgba(150,50,50,0.75);
   margin-top: 0.2rem;
-  display: block;
 }
+.field-hint.is-visible { display: block; }
 
 .ff label {
   position: absolute;

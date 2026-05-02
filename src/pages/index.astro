@@ -523,18 +523,21 @@ window.__translationMode = __translationMode;
     var EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{2,}$/;
     function validateEmailField(el) {
       var val = (el.value || '').trim();
-      if (!val) { el.classList.remove('field-valid','field-error'); return; }
+      var hint = el.parentElement.querySelector('.field-hint');
+      if (!val) {
+        el.classList.remove('field-valid','field-error');
+        if (hint) hint.classList.remove('is-visible');
+        return;
+      }
       var ok = EMAIL_RE.test(val);
       el.classList.toggle('field-valid', ok);
       el.classList.toggle('field-error', !ok);
-      var hint = el.parentElement.querySelector('.field-hint');
-      if (hint) hint.hidden = ok;
+      if (hint) hint.classList.toggle('is-visible', !ok);
     }
     var emailEl = document.getElementById('email');
     if (emailEl) {
-      /* Créer le hint une seule fois */
       var hint = document.createElement('span');
-      hint.className = 'field-hint'; hint.hidden = true;
+      hint.className = 'field-hint';
       hint.textContent = 'Vérifiez le format de votre email';
       emailEl.parentElement.appendChild(hint);
       emailEl.addEventListener('blur',  function(){ validateEmailField(this); });

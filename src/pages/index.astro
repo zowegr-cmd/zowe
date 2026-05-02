@@ -517,8 +517,16 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       <!-- Carte cadeau -->
       <div class="fab-item" role="listitem">
         <span class="fab-tooltip" aria-hidden="true">Carte cadeau</span>
-        <a href="#contact" class="fab-sub" aria-label="Carte cadeau" data-action="fab_gift">
+        <a href="/cadeau" class="fab-sub" aria-label="Carte cadeau" data-action="fab_gift">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.06,1.93C7.17,1.92 5.33,3.74 6.17,6H3C1.9,6 1,6.9 1,8V10C1,10.55 1.45,11 2,11H11V8H13V11H22C22.55,11 23,10.55 23,10V8C23,6.9 22.1,6 21,6H17.83C18.99,3.49 16.16,1.02 13.65,2.33C13.08,2.62 12.6,3.07 12,3.5C11.42,3.07 10.47,1.93 9.06,1.93M9,4C9.89,4 10.34,5.08 9.71,5.71C9.08,6.34 8,5.89 8,5C8,4.45 8.45,4 9,4M15,4C15.55,4 16,4.45 16,5C16,5.89 14.92,6.34 14.29,5.71C13.66,5.08 14.11,4 15,4M3,12V21C3,21.5 3.5,22 4,22H11V12H3M13,12V22H20C20.5,22 21,21.5 21,21V12H13Z"/></svg>
+        </a>
+      </div>
+
+      <!-- Nous trouver -->
+      <div class="fab-item" role="listitem">
+        <span class="fab-tooltip" aria-hidden="true">Nous trouver</span>
+        <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="fab-sub" aria-label="Obtenir l'itinéraire" data-action="fab_map">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
         </a>
       </div>
 

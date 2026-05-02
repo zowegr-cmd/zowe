@@ -2500,12 +2500,11 @@ img {
     transform: translateY(10px);
     transition: opacity 0.22s ease, transform 0.22s ease;
   }
-  .fab-container.open .fab-item:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 250ms; }
-  .fab-container.open .fab-item:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 200ms; }
-  .fab-container.open .fab-item:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 150ms; }
-  .fab-container.open .fab-item:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 100ms; }
-  .fab-container.open .fab-item:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 50ms;  }
-  .fab-container.open .fab-item:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0ms;   }
+  .fab-container.open .fab-item:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 200ms; }
+  .fab-container.open .fab-item:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 150ms; }
+  .fab-container.open .fab-item:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 100ms; }
+  .fab-container.open .fab-item:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 50ms;  }
+  .fab-container.open .fab-item:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0ms;   }
 
   .fab-tooltip {
     font-family: var(--sans);

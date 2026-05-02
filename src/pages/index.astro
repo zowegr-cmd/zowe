@@ -317,8 +317,11 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       </div>
       <p class="contact-intro" data-anim="up" data-delay="1" data-i18n="contact.intro">{contact.intro.fr}</p>
 
-      <!-- Icônes contact rapide -->
-      <div class="contact-meta" data-anim="up" data-delay="2">
+      <!-- Sous-titre KinoQuick (caché par défaut) -->
+      <p class="kq-subtitle" id="kqSubtitle" style="display:none">Choisissez comment vous souhaitez commencer.</p>
+
+      <!-- Icônes contact rapide (cachées quand KinoQuick actif) -->
+      <div class="contact-meta" id="contactMeta" data-anim="up" data-delay="2">
         <a href={waLink} target="_blank" rel="noopener" class="contact-meta__item contact-meta__item--icon" aria-label="WhatsApp">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
         </a>
@@ -330,11 +333,11 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         </a>
       </div>
 
-      <!-- Layout KinoQuick + formulaire -->
+      <!-- Layout 2 chemins : KinoQuick + Formulaire -->
       <div class="kq-contact-layout" id="kqContactWrap">
 
-        <!-- Colonne KinoQuick (cachée par défaut, activée via JS) -->
-        <div class="kq-column" id="kqColumn" style="display:none" aria-hidden="true">
+        <!-- CHEMIN 1 — Réservation directe (caché par défaut) -->
+        <div class="kq-column" id="kqColumn" style="display:none">
           <span class="kq-badge" id="kqBadge">Disponibilité immédiate</span>
           <h3 class="kq-titre" id="kqTitre">Réserver un Bilan Précision</h3>
           <p class="kq-desc" id="kqDesc">Choisissez directement votre créneau dans l'agenda de Zoé.</p>
@@ -343,15 +346,16 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         </div>
 
         <!-- Séparateur (caché par défaut) -->
-        <div class="kq-sep" id="kqSep" style="display:none" aria-hidden="true">
+        <div class="kq-sep" id="kqSep" style="display:none">
           <div class="kq-sep-line"></div>
           <span id="kqSepText">ou</span>
           <div class="kq-sep-line"></div>
         </div>
 
-        <!-- Colonne formulaire -->
+        <!-- CHEMIN 2 — Formulaire (toujours visible) -->
         <div class="kq-form-col" id="kqFormCol">
-          <p class="kq-form-label" id="kqFormLabel" style="display:none">Écrire à Zoé</p>
+          <p class="kq-form-title" id="kqFormTitle" style="display:none">Écrire à Zoé</p>
+          <p class="kq-form-desc" id="kqFormDesc" style="display:none">Vous avez des questions ? Zoé vous répond dans la journée.</p>
 
       <!-- Formulaire direct -->
       <form id="mainForm" class="simple-form" data-anim="up" data-delay="3" novalidate>
@@ -413,7 +417,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           </svg>
           <p data-i18n="form.success_msg">Votre demande est en route. Zoé revient vers vous bientôt.</p>
         </div>
-      </div><!-- /form-success -->
+        </div><!-- /form-success -->
         </div><!-- /kq-form-col -->
       </div><!-- /kq-contact-layout -->
     </div>
@@ -1193,29 +1197,37 @@ window.__translationMode = __translationMode;
           btn.addEventListener('click', function() { trackKq('protocoles'); });
         });
 
-        // Section contact — layout 2 colonnes
-        var col = document.getElementById('kqColumn');
-        var sep = document.getElementById('kqSep');
+        // Section contact — layout 2 chemins
+        var col  = document.getElementById('kqColumn');
+        var sep  = document.getElementById('kqSep');
         var wrap = document.getElementById('kqContactWrap');
-        var formLabel = document.getElementById('kqFormLabel');
         if (col) {
-          var el = function(id) { return document.getElementById(id); };
-          var badge = el('kqBadge'); if (badge) badge.textContent = g('badge');
-          var titre = el('kqTitre'); if (titre) titre.textContent = g('titre');
-          var desc  = el('kqDesc');  if (desc)  desc.textContent  = g('description');
-          var det   = el('kqDetail'); if (det)  det.textContent   = g('detail');
-          var btn   = el('kqContactBtn');
+          var ge = function(id) { return document.getElementById(id); };
+          var badge = ge('kqBadge');      if (badge) badge.textContent = g('badge');
+          var titre = ge('kqTitre');      if (titre) titre.textContent = g('titre');
+          var desc  = ge('kqDesc');       if (desc)  desc.textContent  = g('description');
+          var det   = ge('kqDetail');     if (det)   det.textContent   = g('detail');
+          var sepTx = ge('kqSepText');    if (sepTx) sepTx.textContent = g('separateur');
+          var btn   = ge('kqContactBtn');
           if (btn) {
             btn.href = url;
             btn.textContent = g('btn');
             btn.addEventListener('click', function() { trackKq('contact'); });
           }
-          var sepTxt = el('kqSepText'); if (sepTxt) sepTxt.textContent = g('separateur');
+          // Afficher éléments KinoQuick
           col.style.display = '';
-          col.removeAttribute('aria-hidden');
-          if (sep) { sep.style.display = ''; sep.removeAttribute('aria-hidden'); }
+          if (sep) sep.style.display = '';
+          // Activer la grille 2 colonnes
           if (wrap) wrap.classList.add('kq-active');
-          if (formLabel) formLabel.style.display = '';
+          // Sous-titre
+          var sub = document.getElementById('kqSubtitle');
+          if (sub) sub.style.display = '';
+          // Masquer icônes contact (remplacées par les colonnes)
+          var meta = document.getElementById('contactMeta');
+          if (meta) meta.style.display = 'none';
+          // Titres colonne formulaire
+          var ft = ge('kqFormTitle'); if (ft) ft.style.display = '';
+          var fd = ge('kqFormDesc');  if (fd) fd.style.display = '';
         }
 
         // FAB

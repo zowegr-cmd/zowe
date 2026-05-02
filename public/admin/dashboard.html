@@ -123,6 +123,10 @@ td.email a{color:var(--bx);text-decoration:none}
 .editor-actions{display:flex;align-items:center;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap}
 .save-btn{padding:.65rem 1.4rem;background:var(--bx);color:#F5F0E8;border:none;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s}
 .save-btn:hover{background:#4A1520}
+.settings-toggle{width:44px;height:24px;border-radius:12px;background:#ccc;position:relative;transition:background .25s;flex-shrink:0}
+.settings-toggle.on{background:var(--bx)}
+.settings-toggle-knob{width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:left .25s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.settings-toggle.on .settings-toggle-knob{left:22px}
 .test-btn{padding:.65rem 1.2rem;background:none;border:1px solid var(--or);color:var(--or);font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.2s}
 .test-btn:hover{background:var(--or);color:#fff}
 .modified-badge{font-size:.62rem;color:var(--or);letter-spacing:.06em;display:none}
@@ -165,6 +169,7 @@ td.email a{color:var(--bx);text-decoration:none}
       <button class="topbar-link" onclick="showTab('emails',this)">Emails</button>
       <button class="topbar-link" onclick="showTab('security',this)">Sécurité</button>
       <button class="topbar-link" onclick="showTab('content',this)">Contenu</button>
+      <button class="topbar-link" onclick="showTab('settings',this)">Paramètres</button>
       <a href="/admin/" class="topbar-link" target="_blank">Contenu ↗</a>
       <a href="https://analytics.google.com" class="topbar-link" target="_blank">GA4 ↗</a>
     </nav>
@@ -323,6 +328,32 @@ td.email a{color:var(--bx);text-decoration:none}
           <tbody id="eqBody"></tbody>
         </table>
         <div class="empty" id="eqEmpty" style="display:none">Aucun email dans les 7 derniers jours.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════ PARAMÈTRES TAB ═══════════ -->
+    <div id="tab-settings" style="display:none">
+      <div class="nl-header">
+        <div>
+          <p class="section-title" style="margin-bottom:.25rem">Paramètres</p>
+          <p class="section-sub">Configuration des automatisations Zowe</p>
+        </div>
+      </div>
+
+      <div class="card" style="max-width:520px">
+        <p class="section-title" style="font-size:.75rem;margin-bottom:.25rem">Rappel automatique 24h</p>
+        <p class="section-sub" style="margin-bottom:1.25rem">Envoie un email de rappel 24h après la demande si Zoé n'a pas encore répondu.</p>
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+          <label class="settings-toggle-wrap" style="display:flex;align-items:center;gap:.75rem;cursor:pointer">
+            <input type="checkbox" id="reminderToggle" style="display:none" onchange="onReminderToggle(this)">
+            <div class="settings-toggle" id="reminderToggleVisual">
+              <div class="settings-toggle-knob"></div>
+            </div>
+            <span id="reminderToggleLabel" style="font-size:.8rem;font-weight:500;color:var(--lt)">OFF</span>
+          </label>
+        </div>
+        <button class="save-btn" onclick="saveSettings()" id="settingsSaveBtn">Sauvegarder</button>
+        <p id="settingsMsg" style="font-size:.75rem;color:var(--ok);margin-top:.75rem;display:none"></p>
       </div>
     </div>
 
@@ -554,7 +585,7 @@ function exportCsv() {
 
 /* ── Tabs ── */
 function showTab(name, btn) {
-  ['dashboard','newsletter','emails','security','content'].forEach(function(t) {
+  ['dashboard','newsletter','emails','security','content','settings'].forEach(function(t) {
     document.getElementById('tab-' + t).style.display = t === name ? '' : 'none';
   });
   document.querySelectorAll('.topbar-link').forEach(function(b) { b.classList.remove('active'); });
@@ -562,6 +593,55 @@ function showTab(name, btn) {
   if (name === 'newsletter') loadNewsletter();
   if (name === 'emails')     loadEmailQueue();
   if (name === 'security')   loadSecurityLogs();
+  if (name === 'settings')   loadSettings();
+}
+
+/* ── Paramètres ── */
+function loadSettings() {
+  api('?action=settings-get').then(function(data) {
+    if (!data) return;
+    var enabled = !!data.reminder_24h_enabled;
+    document.getElementById('reminderToggle').checked = enabled;
+    var vis = document.getElementById('reminderToggleVisual');
+    var lbl = document.getElementById('reminderToggleLabel');
+    vis.classList.toggle('on', enabled);
+    lbl.textContent = enabled ? 'ON' : 'OFF';
+    lbl.style.color = enabled ? 'var(--bx)' : 'var(--lt)';
+  });
+}
+
+function onReminderToggle(cb) {
+  var enabled = cb.checked;
+  var vis = document.getElementById('reminderToggleVisual');
+  var lbl = document.getElementById('reminderToggleLabel');
+  vis.classList.toggle('on', enabled);
+  lbl.textContent = enabled ? 'ON' : 'OFF';
+  lbl.style.color = enabled ? 'var(--bx)' : 'var(--lt)';
+}
+
+function saveSettings() {
+  var enabled = document.getElementById('reminderToggle').checked;
+  var btn = document.getElementById('settingsSaveBtn');
+  var msg = document.getElementById('settingsMsg');
+  btn.disabled = true;
+  api('?action=settings-save', { method: 'POST', body: JSON.stringify({ reminder_24h_enabled: enabled }) }).then(function(data) {
+    btn.disabled = false;
+    msg.style.display = 'block';
+    if (data && data.ok) {
+      msg.textContent = 'Paramètres sauvegardés ✓';
+      msg.style.color = 'var(--ok)';
+    } else {
+      msg.textContent = 'Erreur lors de la sauvegarde.';
+      msg.style.color = '#c0392b';
+    }
+    setTimeout(function() { msg.style.display = 'none'; }, 3000);
+  }).catch(function() {
+    btn.disabled = false;
+    msg.textContent = 'Erreur réseau.';
+    msg.style.color = '#c0392b';
+    msg.style.display = 'block';
+    setTimeout(function() { msg.style.display = 'none'; }, 3000);
+  });
   if (name === 'content')    initEmailEditor();
 }
 

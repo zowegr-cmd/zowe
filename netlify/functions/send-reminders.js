@@ -10,6 +10,20 @@ const { buildReminder24h } = require('./_email-templates');
 const SITE_URL = process.env.SITE_URL || 'https://zowekine.com';
 
 exports.handler = async function () {
+  // Vérifier si le rappel 24h est activé (Blobs, défaut: désactivé)
+  try {
+    const settingsStore = getStore('settings');
+    const settings = await settingsStore.get('reminder_24h_enabled', { type: 'json' }).catch(() => null);
+    const enabled = settings !== null ? settings : false;
+    if (!enabled) {
+      console.log('[reminder] Désactivé — skipping');
+      return { statusCode: 200, body: 'Rappel 24h désactivé' };
+    }
+  } catch (e) {
+    console.log('[reminder] Impossible de lire le setting, désactivé par défaut');
+    return { statusCode: 200, body: 'Rappel 24h désactivé (erreur Blobs)' };
+  }
+
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return { statusCode: 200, body: 'No API key' };
 

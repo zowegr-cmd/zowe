@@ -356,5 +356,34 @@ exports.handler = async function(event) {
     }
   }
 
+  // GET settings-get
+  if (action === 'settings-get') {
+    try {
+      const settingsStore = getStore('settings');
+      const val = await settingsStore.get('reminder_24h_enabled', { type: 'json' }).catch(() => null);
+      return json({ reminder_24h_enabled: val !== null ? val : false });
+    } catch (e) {
+      return json({ reminder_24h_enabled: false });
+    }
+  }
+
+  // POST settings-save
+  if (action === 'settings-save' && event.httpMethod === 'POST') {
+    let body = {};
+    try { body = JSON.parse(event.body || '{}'); } catch {}
+    const { reminder_24h_enabled } = body;
+    if (typeof reminder_24h_enabled !== 'boolean') {
+      return json({ error: 'reminder_24h_enabled (boolean) requis.' }, 400);
+    }
+    try {
+      const settingsStore = getStore('settings');
+      await settingsStore.setJSON('reminder_24h_enabled', reminder_24h_enabled);
+      await logAdminAction(`settings-save: reminder_24h_enabled=${reminder_24h_enabled}`);
+      return json({ ok: true, reminder_24h_enabled });
+    } catch (e) {
+      return json({ error: e.message }, 500);
+    }
+  }
+
   return json({ error: 'Action inconnue.' }, 400);
 };

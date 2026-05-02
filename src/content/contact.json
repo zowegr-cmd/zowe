@@ -4,5 +4,8 @@
     "nl": "Enkele details volstaan om de verandering te initiëren. Ik bevestig uw afspraak zo snel mogelijk.",
     "en": "A few details are enough to begin the journey. I will confirm your appointment as soon as possible."
   },
-  "formspreeId": "xqewvayo"
+  "formspreeId": "xqewvayo",
+  "settings": {
+    "reminder_24h_enabled": false
+  }
 }

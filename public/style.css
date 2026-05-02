@@ -2932,56 +2932,73 @@ img {
 }
 .kq-btn:hover { opacity: 0.88; }
 
-/* Séparateur */
+/* Séparateur "ou" */
 .kq-sep {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
   gap: 1rem;
-  min-height: 200px;
+  min-height: 180px;
 }
 .kq-sep-line {
   width: 1px;
   flex: 1;
-  background: rgba(201,169,110,0.35);
-  min-height: 32px;
+  background: rgba(201,169,110,0.3);
+  min-height: 24px;
 }
 .kq-sep span {
   font-family: var(--serif);
   font-style: italic;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--or);
   white-space: nowrap;
 }
-@media (max-width: 768px) {
+@media (max-width: 860px) {
   .kq-sep { flex-direction: row; padding: 1.5rem 0; min-height: auto; }
   .kq-sep-line { width: auto; height: 1px; flex: 1; min-height: unset; }
 }
 
 /* Colonne formulaire dans le mode 2 chemins */
 .kq-contact-layout.kq-active .kq-form-col {
-  background: var(--off-white);
-  padding: 2.5rem;
-  border-radius: 4px;
-  border: 1px solid var(--or-border);
+  padding: 0 0 0 3rem;
+  position: relative;
+}
+.kq-contact-layout.kq-active .kq-form-col::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--or) 0%, transparent 100%);
+  opacity: 0.35;
+}
+@media (max-width: 860px) {
+  .kq-contact-layout.kq-active .kq-form-col {
+    padding: 2rem 0 0;
+  }
+  .kq-contact-layout.kq-active .kq-form-col::before { display: none; }
 }
 .kq-form-title {
   font-family: var(--serif);
-  font-size: 1.4rem;
+  font-size: 1.75rem;
   font-style: italic;
   font-weight: 300;
   color: var(--bordeaux);
   margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
 .kq-form-desc {
   font-family: var(--sans);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-style: italic;
-  color: var(--mid);
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
+  color: var(--light);
+  margin-bottom: 1.75rem;
+  line-height: 1.65;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--or-border);
 }
 
 /* FAB stagger — KinoQuick en position 1 (caché par défaut) */

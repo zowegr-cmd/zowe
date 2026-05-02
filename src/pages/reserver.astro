@@ -186,6 +186,19 @@ import Layout from '../layouts/Layout.astro';
     }
     .rv-secondary:hover { color: var(--bordeaux); }
 
+    .rv-help-note {
+      font-size: 0.8rem;
+      color: var(--light);
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+    .rv-help-note a {
+      color: var(--bordeaux);
+      text-decoration: none;
+      border-bottom: 1px solid var(--or-border);
+    }
+    .rv-help-note a:hover { border-bottom-color: var(--bordeaux); }
+
     .rv-domicile {
       padding-top: 2.5rem;
       border-top: 1px solid var(--or-border);
@@ -295,6 +308,11 @@ import Layout from '../layouts/Layout.astro';
       </a>
       <a href="/#contact" class="rv-secondary">Une question ? Écrire à Zoé</a>
     </div>
+
+    <p class="rv-help-note">
+      Vous rencontrez une difficulté avec l'agenda en ligne ?
+      <a href="/#contact">Contactez Zoé directement</a> — elle s'occupe de la réservation pour vous.
+    </p>
 
     <div class="rv-domicile" id="rvDomicile" style="display:none">
       <h2 class="rv-domicile-title">Consultation à domicile</h2>

@@ -170,9 +170,7 @@ exports.handler = async function (event) {
         html,
         text,
         headers : {
-          'X-Mailer'             : 'Zowe Mailer 1.0',
-          'List-Unsubscribe'     : `<mailto:${EMAIL_ZOE}?subject=unsubscribe>, <${unsubUrl}>`,
-          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+          'X-Mailer': 'Zowe Mailer 1.0',
         },
       });
       if (error) throw new Error(error.message);

@@ -207,18 +207,31 @@ function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
 
 <!-- ══ BLOC CONTACT ══ -->
 <tr>
-  <td align="center" bgcolor="#6B1F2A" class="contact-bg contact-block" style="background-color:#6B1F2A;padding:28px 44px 32px;">
-    <p style="margin:0 0 16px;font-family:Georgia,serif;font-size:13px;font-style:italic;color:#C9A96E;letter-spacing:2px;text-align:center;">${tx.contact_title}</p>
-    ${goldLine(60)}
-    <p style="margin:18px 0 12px;text-align:center;">
-      <a href="tel:${PHONE_INTL}" class="phone-link" style="font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:700;color:#C9A96E;text-decoration:none;letter-spacing:1px;">${PHONE}</a>
-    </p>
-    <p style="margin:0 0 8px;text-align:center;">
-      <a href="mailto:${EMAIL_ZOE}" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#F5F0E8;text-decoration:none;">${EMAIL_ZOE}</a>
-    </p>
-    <p style="margin:0;text-align:center;">
-      <a href="${IG_URL}" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#C9A96E;text-decoration:none;">${IG_HANDLE}</a>
-    </p>
+  <td align="center" bgcolor="#6B1F2A" class="contact-bg contact-block" style="background-color:#6B1F2A;padding:32px 44px 36px;">
+    <p style="margin:0 0 24px;font-family:Georgia,serif;font-size:13px;font-style:italic;color:#C9A96E;letter-spacing:2px;text-align:center;">${tx.contact_title}</p>
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="max-width:360px;margin:0 auto;">
+      <!-- Téléphone -->
+      <tr>
+        <td style="padding:14px 0 13px;border-top:1px solid rgba(201,169,110,0.25);text-align:center;">
+          <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:3px;color:rgba(245,240,232,0.4);text-transform:uppercase;">Téléphone</p>
+          <a href="tel:${PHONE_INTL}" style="font-family:Georgia,serif;font-size:22px;color:#C9A96E;text-decoration:none;letter-spacing:1px;font-weight:400;">${PHONE}</a>
+        </td>
+      </tr>
+      <!-- Email -->
+      <tr>
+        <td style="padding:13px 0;border-top:1px solid rgba(201,169,110,0.25);text-align:center;">
+          <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:3px;color:rgba(245,240,232,0.4);text-transform:uppercase;">Email</p>
+          <a href="mailto:${EMAIL_ZOE}" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#F5F0E8;text-decoration:none;">${EMAIL_ZOE}</a>
+        </td>
+      </tr>
+      <!-- Instagram -->
+      <tr>
+        <td style="padding:13px 0 0;border-top:1px solid rgba(201,169,110,0.25);text-align:center;">
+          <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:3px;color:rgba(245,240,232,0.4);text-transform:uppercase;">Instagram</p>
+          <a href="${IG_URL}" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#C9A96E;text-decoration:none;">${IG_HANDLE}</a>
+        </td>
+      </tr>
+    </table>
   </td>
 </tr>
 <tr><td bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;font-size:0;line-height:0;">${goldLine()}</td></tr>

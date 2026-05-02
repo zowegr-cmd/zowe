@@ -67,17 +67,17 @@ async function verifyRecaptcha(token) {
 }
 
 // ─── File de retry email ──────────────────────────────────────────────────────
-async function queueEmail({ to, prenom, lang, type, ts }) {
+async function queueEmail({ to, prenom, lang, type, ts, staffData }) {
   try {
     const store = getStore('email-queue');
     const id    = `${ts}-${Math.random().toString(36).slice(2,8)}-${type}`;
     await store.setJSON(id, {
-      id, to, prenom, lang, type,
+      id, to, prenom, lang, type, staffData: staffData || null,
       attempts: 0, status: 'pending',
       created: new Date(ts).toISOString(),
       lastAttempt: null,
     });
-    console.log(`[contact] step:email-queued id:${id}`);
+    console.log(`[contact] step:email-queued id:${id} type:${type}`);
   } catch (e) {
     console.error('[contact] step:email-queue-error', e.message);
   }
@@ -169,9 +169,10 @@ exports.handler = async function (event) {
 
     // ── 2. Resend — notification Zoé ──────────────────────────────────────────
     const staffData = { prenom, nom, email, telephone, message, lang, date: new Date(ts).toISOString() };
+    console.log(`[contact] step:resend-zoe attempt from:${from} to:${EMAIL_ZOE}`);
     try {
       const { subject: szs, html: szh, text: szt } = buildStaffNotification(staffData);
-      const { error: sze } = await resend.emails.send({
+      const { data: szd, error: sze } = await resend.emails.send({
         from,
         to     : EMAIL_ZOE,
         replyTo: email,
@@ -180,18 +181,19 @@ exports.handler = async function (event) {
         text   : szt,
         headers: { 'X-Mailer': 'Zowe Mailer 1.0' },
       });
-      if (sze) throw new Error(sze.message);
-      console.log(`[contact] step:resend-zoe status:ok ts:${ts}`);
+      if (sze) throw new Error(JSON.stringify(sze));
+      console.log(`[contact] step:resend-zoe status:ok id:${szd?.id} ts:${ts}`);
     } catch (e) {
-      console.error(`[contact] step:resend-zoe status:error ts:${ts}`, e.message);
+      console.error(`[contact] step:resend-zoe status:error ts:${ts} err:${e.message}`);
       await queueEmail({ to: EMAIL_ZOE, prenom, lang, type: 'staff_notification', staffData, ts });
     }
 
     // ── 3. Resend — notification Patron ───────────────────────────────────────
     if (PATRON_EMAIL) {
+      console.log(`[contact] step:resend-patron attempt to:${PATRON_EMAIL}`);
       try {
         const { subject: sps, html: sph, text: spt } = buildPatronNotification(staffData);
-        const { error: spe } = await resend.emails.send({
+        const { data: spd, error: spe } = await resend.emails.send({
           from,
           to     : PATRON_EMAIL,
           replyTo: email,
@@ -200,8 +202,8 @@ exports.handler = async function (event) {
           text   : spt,
           headers: { 'X-Mailer': 'Zowe Mailer 1.0' },
         });
-        if (spe) throw new Error(spe.message);
-        console.log(`[contact] step:resend-patron status:ok ts:${ts}`);
+        if (spe) throw new Error(JSON.stringify(spe));
+        console.log(`[contact] step:resend-patron status:ok id:${spd?.id} ts:${ts}`);
       } catch (e) {
         console.error(`[contact] step:resend-patron status:error ts:${ts}`, e.message);
         await queueEmail({ to: PATRON_EMAIL, prenom, lang, type: 'patron_notification', staffData, ts });

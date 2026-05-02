@@ -219,8 +219,8 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           <h2 class="section-title">{gallery.title_fr}</h2>
         </div>
         <div class="gallery-grid gallery-grid--preview">
-          {gallery.photos.slice(0, 3).map(photo => (
-            <a href="/galerie" class="gallery-card">
+          {gallery.photos.slice(0, 3).map((photo, i) => (
+            <a href="/galerie" class={`gallery-card${i !== 1 ? ' gallery-card--hide-mobile' : ''}`}>
               <img src={photo.image} alt={photo.title_fr} loading="lazy" style="height:280px;width:100%;object-fit:cover;display:block;">
               <div class="gallery-card__overlay">
                 {photo.protocol && <span class="gallery-card__badge">{photo.protocol}</span>}

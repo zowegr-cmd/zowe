@@ -2645,6 +2645,7 @@ img {
   gap: 1.25rem;
 }
 .gallery-grid--preview .gallery-card { text-decoration: none; }
+@media (max-width: 768px) { .gallery-card--hide-mobile { display: none; } }
 .gallery-card {
   position: relative;
   overflow: hidden;

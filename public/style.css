@@ -2060,6 +2060,7 @@ img {
 }
 .ff input,
 .ff textarea {
+  scroll-margin-bottom: 120px;
   width: 100%;
   padding: 1.55rem 1rem 0.55rem;
   background: var(--off-white);

@@ -297,26 +297,26 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         <input type="text" name="website" id="website_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;height:0;width:0;" value="">
         <div class="ff-row">
           <div class="ff">
-            <input type="text" id="prenom" name="prenom" placeholder=" " autocomplete="given-name" required>
+            <input type="text" id="prenom" name="prenom" placeholder=" " autocomplete="given-name" required enterkeyhint="next">
             <label for="prenom" data-i18n="form.prenom">Prénom *</label>
           </div>
           <div class="ff">
-            <input type="text" id="nom" name="nom" placeholder=" " autocomplete="family-name" required>
+            <input type="text" id="nom" name="nom" placeholder=" " autocomplete="family-name" required enterkeyhint="next">
             <label for="nom" data-i18n="form.nom">Nom *</label>
           </div>
         </div>
         <div class="ff-row">
           <div class="ff">
-            <input type="email" id="email" name="email" placeholder=" " autocomplete="email" required inputmode="email">
+            <input type="email" id="email" name="email" placeholder=" " autocomplete="email" required inputmode="email" enterkeyhint="next">
             <label for="email" data-i18n="form.email">Email *</label>
           </div>
           <div class="ff">
-            <input type="tel" id="telephone" name="telephone" placeholder=" " autocomplete="tel" inputmode="tel" required>
+            <input type="tel" id="telephone" name="telephone" placeholder=" " autocomplete="tel" inputmode="tel" required enterkeyhint="next">
             <label for="telephone" data-i18n="form.tel">Numéro de téléphone *</label>
           </div>
         </div>
         <div class="ff">
-          <textarea id="message" name="message" placeholder=" " rows="5" required></textarea>
+          <textarea id="message" name="message" placeholder=" " rows="5" required autocomplete="off" enterkeyhint="send"></textarea>
           <label for="message" data-i18n="form.message">Votre message *</label>
         </div>
         <div class="newsletter-opt">
@@ -529,6 +529,18 @@ window.__translationMode = __translationMode;
 
 <script is:inline define:vars={{ mapboxToken, mapLng, mapLat }}>
 (function () {
+
+  /* ── Clavier mobile : scroll vers le champ actif quand le viewport rétrécit ── */
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', function() {
+      var el = document.activeElement;
+      if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA')) {
+        setTimeout(function() {
+          el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }, 50);
+      }
+    });
+  }
 
   /* ── Formulaire ── */
   (function() {

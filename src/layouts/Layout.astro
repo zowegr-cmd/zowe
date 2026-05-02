@@ -12,10 +12,11 @@ const _igLink     = infos.instagram || 'https://www.instagram.com/kine.zowe';
 const _reviewLink = infos.googleReviews || '';
 const _mapsUrl    = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent((infos.address||'') + ', ' + (infos.city||'') + ', Belgique')}`;
 
-const GA4_ID = 'G-P7ZL8QPS87';
+const GA4_ID  = 'G-P7ZL8QPS87';
 const GSC_CODE = 'L-ZMZr7109ivNV3YWlnWh7mgmSHN_kzAz2-Woa316AA';
-const siteUrl = 'https://zowekine.com';
-const ogImage = `${siteUrl}/og-image.png`;
+const siteUrl  = 'https://zowekine.com';
+const ogImage  = `${siteUrl}/og-image.png`;
+const pageUrl  = Astro.url.href;          // URL complète de la page courante
 ---
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,9 +26,12 @@ const ogImage = `${siteUrl}/og-image.png`;
   <meta name="description" content={description}>
   <title>{title}</title>
 
+  <!-- Canonical -->
+  <link rel="canonical" href={pageUrl}>
+
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content={siteUrl}>
+  <meta property="og:url" content={pageUrl}>
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>
   <meta property="og:image" content={ogImage}>
@@ -39,11 +43,11 @@ const ogImage = `${siteUrl}/og-image.png`;
 
   {GSC_CODE && <meta name="google-site-verification" content={GSC_CODE}>}
 
-  <!-- Hreflang : même URL pour toutes les langues -->
-  <link rel="alternate" hreflang="fr" href={siteUrl + "/"}>
-  <link rel="alternate" hreflang="nl" href={siteUrl + "/"}>
-  <link rel="alternate" hreflang="en" href={siteUrl + "/"}>
-  <link rel="alternate" hreflang="x-default" href={siteUrl + "/"}>
+  <!-- Hreflang : même URL par langue (contenu JS client-side) -->
+  <link rel="alternate" hreflang="fr" href={pageUrl}>
+  <link rel="alternate" hreflang="nl" href={pageUrl}>
+  <link rel="alternate" hreflang="en" href={pageUrl}>
+  <link rel="alternate" hreflang="x-default" href={pageUrl}>
 
   <!-- Favicon -->
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">

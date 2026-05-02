@@ -37,6 +37,17 @@
   </url>
 
   <url>
+    <loc>https://zowekine.com/reserver</loc>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://zowekine.com/reserver"/>
+    <xhtml:link rel="alternate" hreflang="nl"        href="https://zowekine.com/reserver"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://zowekine.com/reserver"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zowekine.com/reserver"/>
+    <lastmod>2026-05-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://zowekine.com/galerie</loc>
     <xhtml:link rel="alternate" hreflang="fr"        href="https://zowekine.com/galerie"/>
     <xhtml:link rel="alternate" hreflang="nl"        href="https://zowekine.com/galerie"/>

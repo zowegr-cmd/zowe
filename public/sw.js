@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zowe-v1';
+const CACHE_NAME = 'zowe-v2';
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',
@@ -32,6 +32,12 @@ self.addEventListener('fetch', (event) => {
 
   // Ignorer les requêtes non-HTTP et extensions navigateur
   if (!url.protocol.startsWith('http')) return;
+
+  // /admin/* toujours Network First — jamais mis en cache
+  if (url.pathname.startsWith('/admin')) {
+    event.respondWith(fetch(request));
+    return;
+  }
 
   // Network first pour les pages HTML et les fonctions Netlify
   if (request.mode === 'navigate' || url.pathname.startsWith('/.netlify/')) {

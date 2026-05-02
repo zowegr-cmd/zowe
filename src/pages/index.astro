@@ -514,6 +514,14 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
   <div class="fab-container" id="fabContainer" role="region" aria-label="Actions rapides">
     <div class="fab-actions" id="fabActions" aria-hidden="true" role="list">
 
+      <!-- Email -->
+      <div class="fab-item" role="listitem">
+        <span class="fab-tooltip" aria-hidden="true">Email</span>
+        <a href={`mailto:${infos.email}`} class="fab-sub" aria-label="Envoyer un email" data-action="fab_email">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </a>
+      </div>
+
       <!-- Carte cadeau -->
       <div class="fab-item" role="listitem">
         <span class="fab-tooltip" aria-hidden="true">Carte cadeau</span>

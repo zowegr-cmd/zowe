@@ -243,10 +243,13 @@ img {
   color: var(--or);
   transition: color 0.35s ease;
 }
-.nav.is-homepage:not(.scrolled) .nav-links a:not(.nav-cta) {
-  color: rgba(245,240,232,0.72);
+/* Liens crème desktop uniquement — pas dans le menu mobile (fond crème) */
+@media (min-width: 861px) {
+  .nav.is-homepage:not(.scrolled) .nav-links a:not(.nav-cta) {
+    color: rgba(245,240,232,0.72);
+  }
+  .nav.is-homepage:not(.scrolled) .nav-links a:not(.nav-cta):hover { color: var(--or); }
 }
-.nav.is-homepage:not(.scrolled) .nav-links a:not(.nav-cta):hover { color: var(--or); }
 
 /* Sur le fond sombre du hero (nav non scrollée) — desktop uniquement, pas le menu mobile */
 .nav:not(.scrolled) .lang-selector .lang-btn { color: rgba(245,240,232,0.6); }

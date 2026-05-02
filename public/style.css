@@ -2818,7 +2818,8 @@ img {
 /* Lien discret protocole card */
 .kq-card-link {
   display: block;
-  margin-top: 0.6rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
   font-family: var(--serif);
   font-size: 0.8rem;
   font-style: italic;

@@ -94,9 +94,6 @@ html, body {
   width: 100%;
 }
 
-html {
-  height: -webkit-fill-available;
-}
 
 /* Safe areas iOS (Dynamic Island, encoche, home indicator) */
 :root {
@@ -316,8 +313,8 @@ img {
    HERO
 ========================================== */
 .hero {
+  min-height: 100vh;
   min-height: 100dvh;
-  min-height: -webkit-fill-available;
   display: flex;
   flex-direction: column;
   align-items: center;

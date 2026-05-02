@@ -262,7 +262,6 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
               <p class="testimonial-text">"{t.text}"</p>
               <div class="testimonial-meta">
                 <span class="testimonial-name">{t.name}</span>
-                <span class="testimonial-date">{t.date}</span>
               </div>
             </div>
           ))}
@@ -903,7 +902,6 @@ window.__translationMode = __translationMode;
               + '<p class="testimonial-text">&ldquo;' + escHtml(t.text) + '&rdquo;</p>'
               + '<div class="testimonial-meta">'
               + '<span class="testimonial-name">' + escHtml(t.name) + '</span>'
-              + '<span class="testimonial-date">' + escHtml(t.date) + '</span>'
               + '</div></div>';
           }).join('');
         }

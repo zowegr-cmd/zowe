@@ -209,32 +209,42 @@ function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
 <tr>
   <td align="center" bgcolor="#6B1F2A" class="contact-bg contact-block" style="background-color:#6B1F2A;padding:32px 44px 36px;">
     <p style="margin:0 0 24px;font-family:Georgia,serif;font-size:13px;font-style:italic;color:#C9A96E;letter-spacing:2px;text-align:center;">${tx.contact_title}</p>
-    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="max-width:360px;margin:0 auto;">
-      <!-- Téléphone -->
+    <!-- Icônes cliquables -->
+    <table cellpadding="0" cellspacing="0" role="presentation" style="margin:0 auto;">
       <tr>
-        <td style="padding:14px 0 13px;border-top:1px solid rgba(201,169,110,0.25);text-align:center;">
-          <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:3px;color:rgba(245,240,232,0.4);text-transform:uppercase;">Téléphone</p>
-          <a href="tel:${PHONE_INTL}" style="font-family:Georgia,serif;font-size:22px;color:#C9A96E;text-decoration:none;letter-spacing:1px;font-weight:400;">${PHONE}</a>
+        <td style="padding:0 10px;">
+          <a href="mailto:${EMAIL_ZOE}" style="text-decoration:none;">
+            <img src="${SITE_URL}/images/icon-email.png" width="44" height="44" alt="Email" border="0" style="display:block;border:0;outline:none;">
+          </a>
         </td>
-      </tr>
-      <!-- Email -->
-      <tr>
-        <td style="padding:13px 0;border-top:1px solid rgba(201,169,110,0.25);text-align:center;">
-          <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:3px;color:rgba(245,240,232,0.4);text-transform:uppercase;">Email</p>
-          <a href="mailto:${EMAIL_ZOE}" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#F5F0E8;text-decoration:none;">${EMAIL_ZOE}</a>
+        <td style="padding:0 10px;">
+          <a href="${IG_URL}" style="text-decoration:none;">
+            <img src="${SITE_URL}/images/icon-instagram.png" width="44" height="44" alt="Instagram" border="0" style="display:block;border:0;outline:none;">
+          </a>
         </td>
-      </tr>
-      <!-- Instagram -->
-      <tr>
-        <td style="padding:13px 0 0;border-top:1px solid rgba(201,169,110,0.25);text-align:center;">
-          <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:3px;color:rgba(245,240,232,0.4);text-transform:uppercase;">Instagram</p>
-          <a href="${IG_URL}" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#C9A96E;text-decoration:none;">${IG_HANDLE}</a>
+        <td style="padding:0 10px;">
+          <a href="https://wa.me/${PHONE_INTL.replace('+','')}" style="text-decoration:none;">
+            <img src="${SITE_URL}/images/icon-whatsapp.png" width="44" height="44" alt="WhatsApp" border="0" style="display:block;border:0;outline:none;">
+          </a>
         </td>
       </tr>
     </table>
   </td>
 </tr>
-<tr><td bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;font-size:0;line-height:0;">${goldLine()}</td></tr>
+<!-- ══ MENTIONS LÉGALES ══ -->
+<tr>
+  <td align="center" bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;padding:20px 40px 28px;">
+    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#AAAAAA;text-align:center;line-height:1.8;">
+      Zoé Grêde · Kinésithérapeute · Méthode BELTRA<br>
+      Rue des Iris, Boîte 2 · 1640 Rhode-Saint-Genèse<br>
+      <a href="${SITE_URL}/mentions-legales" style="color:#AAAAAA;text-decoration:none;">Mentions légales</a>
+      &nbsp;·&nbsp;
+      <a href="${SITE_URL}/confidentialite" style="color:#AAAAAA;text-decoration:none;">Confidentialité</a>
+      &nbsp;·&nbsp;
+      <a href="${SITE_URL}" style="color:#AAAAAA;text-decoration:none;">zowekine.com</a>
+    </p>
+  </td>
+</tr>
 
 
 </table>

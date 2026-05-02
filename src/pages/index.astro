@@ -221,7 +221,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         <div class="gallery-grid gallery-grid--preview">
           {gallery.photos.slice(0, 3).map(photo => (
             <a href="/galerie" class="gallery-card">
-              <img src={photo.image} alt={photo.title_fr} loading="lazy">
+              <img src={photo.image} alt={photo.title_fr} loading="lazy" style="height:300px;width:100%;object-fit:cover;display:block;">
               <div class="gallery-card__overlay">
                 {photo.protocol && <span class="gallery-card__badge">{photo.protocol}</span>}
                 <p class="gallery-card__title">{photo.title_fr}</p>

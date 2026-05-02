@@ -267,24 +267,24 @@ import Layout from '../layouts/Layout.astro';
       <div class="rv-step">
         <div class="rv-step-num">1</div>
         <div class="rv-step-body">
-          <strong>Ouvrez l'agenda</strong>
-          <p>Choisissez votre créneau dans le calendrier en ligne de Zoé.</p>
+          <strong>Choisissez l'emplacement</strong>
+          <p id="rvStep1Desc">Sélectionnez Rhode-Saint-Genèse comme emplacement.</p>
         </div>
       </div>
 
       <div class="rv-step">
         <div class="rv-step-num">2</div>
         <div class="rv-step-body">
-          <strong>Confirmez</strong>
-          <p>Entrez vos informations et validez votre réservation en quelques clics.</p>
+          <strong>Sélectionnez le soin</strong>
+          <p>Choisissez le Bilan Précision dans la liste des soins proposés par Zoé Grêde.</p>
         </div>
       </div>
 
       <div class="rv-step">
         <div class="rv-step-num">3</div>
         <div class="rv-step-body">
-          <strong>Préparez votre séance</strong>
-          <p>Vous recevrez une confirmation avec les informations pratiques.</p>
+          <strong>Confirmez votre créneau</strong>
+          <p>Choisissez le jour et l'heure qui vous conviennent, remplissez vos informations et validez. Vous recevrez une confirmation par email de KinoQuick.</p>
         </div>
       </div>
     </div>
@@ -307,6 +307,7 @@ import Layout from '../layouts/Layout.astro';
   <script is:inline>
   (function() {
     var src = (new URLSearchParams(window.location.search)).get('s') || 'direct';
+    var step1Set = false;
 
     fetch('/.netlify/functions/settings?type=kinoquick')
       .then(function(r) { return r.ok ? r.json() : null; })
@@ -315,6 +316,10 @@ import Layout from '../layouts/Layout.astro';
 
         if (typeof gtag === 'function') gtag('event', 'reserver_view', { source: src });
 
+        var lang = localStorage.getItem('zowe-lang') || 'fr';
+        function g(field) { return kq[field] && (kq[field][lang] || kq[field]['fr']) || ''; }
+
+        // CTA button
         if (kq.enabled && kq.url) {
           var btn = document.getElementById('rvBtn');
           if (btn) {
@@ -326,13 +331,18 @@ import Layout from '../layouts/Layout.astro';
           }
         }
 
+        // Étape 1 — description conditionnelle selon domicile
+        var step1El = document.getElementById('rvStep1Desc');
+        if (step1El) {
+          var s1 = kq.domicile_enabled ? g('step1_desc_domicile') : g('step1_desc');
+          if (s1) { step1El.textContent = s1; step1Set = true; }
+        }
+
+        // Domicile block
         if (kq.domicile_enabled) {
           var block = document.getElementById('rvDomicile');
           if (block) {
             block.style.display = '';
-            var lang = localStorage.getItem('zowe-lang') || 'fr';
-            function g(field) { return kq[field] && (kq[field][lang] || kq[field]['fr']) || ''; }
-
             var zones = Array.isArray(kq.domicile_zones) ? kq.domicile_zones : [];
             var zonesEl = document.getElementById('rvZones');
             if (zonesEl && zones.length) {
@@ -340,10 +350,8 @@ import Layout from '../layouts/Layout.astro';
                 return '<span class="rv-zone">' + String(z).replace(/[<>]/g,'') + '</span>';
               }).join('');
             }
-
             var descEl = document.getElementById('rvDomicileDesc');
             if (descEl && kq.domicile_desc) descEl.textContent = g('domicile_desc');
-
             var contactEl = document.getElementById('rvDomicileContact');
             if (contactEl) {
               contactEl.addEventListener('click', function() {
@@ -378,7 +386,8 @@ import Layout from '../layouts/Layout.astro';
               var strong = steps[i].querySelector('strong');
               var p = steps[i].querySelector('p');
               if (strong && s.title) strong.textContent = s.title;
-              if (p && s.desc)       p.textContent = s.desc;
+              // Étape 1 desc déjà gérée par KQ settings si disponible
+              if (p && s.desc && !(i === 0 && step1Set)) p.textContent = s.desc;
             });
           }
           if (rv.cta_btn) {

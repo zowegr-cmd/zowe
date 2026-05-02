@@ -129,9 +129,9 @@
     "card_note":   "Subsequent sessions (postural assessment, rehabilitation…) will be defined with Zoé during this first appointment.",
     "steps_label": "How to book",
     "steps": [
-      { "title": "Open the calendar", "desc": "Choose your slot in Zoé's online calendar." },
-      { "title": "Confirm",           "desc": "Enter your details and confirm your booking in a few clicks." },
-      { "title": "Prepare your session", "desc": "You will receive a confirmation with practical information." }
+      { "title": "Choose the location",    "desc": "Select Rhode-Saint-Genèse as the location." },
+      { "title": "Select the treatment",   "desc": "Choose the Precision Assessment from the list of treatments offered by Zoé Grêde." },
+      { "title": "Confirm your slot",      "desc": "Choose the day and time that suits you, fill in your details and confirm. You will receive a confirmation email from KinoQuick." }
     ],
     "cta_btn":   "Open Zoé's calendar →",
     "secondary": "A question? Write to Zoé"

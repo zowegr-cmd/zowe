@@ -129,9 +129,9 @@
     "card_note":   "De volgende sessies (houdingsbilan, revalidatie…) worden tijdens dit eerste afspraak met Zoé vastgelegd.",
     "steps_label": "Hoe reserveren",
     "steps": [
-      { "title": "Open de agenda", "desc": "Kies uw tijdslot in de online agenda van Zoé." },
-      { "title": "Bevestig",       "desc": "Vul uw gegevens in en bevestig uw reservering in enkele klikken." },
-      { "title": "Bereid uw sessie voor", "desc": "U ontvangt een bevestiging met praktische informatie." }
+      { "title": "Kies de locatie",          "desc": "Selecteer Rhode-Saint-Genèse als locatie." },
+      { "title": "Selecteer de behandeling", "desc": "Kies de Precisie-audit uit de lijst van behandelingen aangeboden door Zoé Grêde." },
+      { "title": "Bevestig uw tijdslot",     "desc": "Kies de dag en het uur die u schikken, vul uw gegevens in en bevestig. U ontvangt een bevestigingsmail van KinoQuick." }
     ],
     "cta_btn":   "Agenda van Zoé openen →",
     "secondary": "Een vraag? Schrijf naar Zoé"

@@ -89,14 +89,18 @@ img {
 }
 
 .nav-logo {
-  font-family: var(--serif);
-  font-size: 1.5rem;
-  font-weight: 500;
-  letter-spacing: 0.28em;
+  display: flex;
+  align-items: center;
   color: var(--bordeaux);
   transition: opacity 0.2s;
+  text-decoration: none;
 }
-.nav-logo:hover { opacity: 0.75; }
+.nav-logo:hover { opacity: 0.72; }
+.nav-monogram {
+  height: 34px;
+  width: auto;
+  display: block;
+}
 
 .nav-links {
   display: flex;
@@ -268,13 +272,14 @@ img {
 }
 
 .hero-title {
-  font-family: var(--serif);
-  font-size: clamp(5.5rem, 20vw, 15rem);
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: -0.02em;
+  margin: 0;
+  line-height: 1;
   color: var(--off-white);
-  line-height: 0.88;
+}
+.hero-logo-svg {
+  width: clamp(240px, 46vw, 560px);
+  height: auto;
+  display: block;
 }
 
 .hero-tagline {

@@ -1323,53 +1323,8 @@ img {
   display: block;
 }
 
-/* ── Signature SVG animée ── */
-.signature-svg {
-  width: 200px;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  overflow: visible;
-}
-.signature-svg path {
-  stroke-dasharray: 2000;
-  stroke-dashoffset: 2000;
-  transition:
-    stroke-dashoffset 2s ease-out,
-    opacity 0.3s ease;
-  opacity: 0;
-}
-/* Stroke 1 : Z + o (le plus long) */
-.signature-svg path:nth-child(1) {
-  transition-duration: 2s, 0.3s;
-  transition-delay: 0s, 0s;
-}
-/* Stroke 2 : accent aigu (court, 0.4s) */
-.signature-svg path:nth-child(2) {
-  transition-duration: 0.4s, 0.2s;
-  transition-delay: 1.2s, 1.2s;
-}
-/* Stroke 3 : é + volute (1.5s, décalé après le Z) */
-.signature-svg path:nth-child(3) {
-  transition-duration: 1.5s, 0.3s;
-  transition-delay: 0.8s, 0.8s;
-}
-/* Déclenchement → classe ajoutée par IntersectionObserver */
-.signature-svg.is-visible path {
-  stroke-dashoffset: 0;
-  opacity: 1;
-}
-/* prefers-reduced-motion : affichage immédiat, sans transition */
-@media (prefers-reduced-motion: reduce) {
-  .signature-svg path {
-    transition: none !important;
-    stroke-dashoffset: 0 !important;
-    opacity: 1 !important;
-  }
-}
 @media (max-width: 860px) {
   .about-signature-img { width: 160px; }
-  .signature-svg { width: 160px; }
 }
 
 .about-formation {

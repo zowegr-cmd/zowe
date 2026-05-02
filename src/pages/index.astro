@@ -108,33 +108,13 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           <p data-i18n="about.paragraph1">{about.paragraph1.fr}</p>
           <p data-i18n="about.paragraph2">{about.paragraph2.fr}</p>
           <p data-i18n="about.paragraph3">{about.paragraph3.fr}</p>
-          <div class="about-signature" id="signatureWrap">
-            <!-- SVG animé stroke-dashoffset -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 90"
-                 class="signature-svg"
-                 aria-label="Signature Zoé Grêde" role="img">
-              <!-- Z + liaison o -->
-              <path fill="none" stroke="#6B1F2A" stroke-width="2.3"
-                stroke-linecap="round" stroke-linejoin="round"
-                d="M 12,22 C 25,18 48,18 68,22 L 14,70
-                   C 32,70 58,72 78,68 C 90,65 98,56 98,48
-                   C 98,35 106,26 120,26 C 134,26 142,37 140,52
-                   C 138,66 126,74 113,71 C 100,68 95,55 101,46"/>
-              <!-- Accent aigu -->
-              <path fill="none" stroke="#6B1F2A" stroke-width="2.1"
-                stroke-linecap="round"
-                d="M 150,35 L 166,22"/>
-              <!-- é + volute -->
-              <path fill="none" stroke="#6B1F2A" stroke-width="2.3"
-                stroke-linecap="round" stroke-linejoin="round"
-                d="M 142,53 C 142,38 152,26 166,26 C 180,26 188,38 186,53
-                   C 184,67 170,76 156,72 C 142,68 140,54 146,46 L 188,43
-                   M 14,82 C 65,91 148,92 205,84 C 242,78 265,68 278,58"/>
-            </svg>
-            <!-- PNG fallback si SVG non supporté -->
-            <noscript>
-              <img src="/images/signature_zoe_premium.png" alt="Signature Zoé Grêde" class="about-signature-img">
-            </noscript>
+          <div class="about-signature">
+            <img
+              src="/images/signature_zoe_premium.png"
+              alt="Signature Zoé Grêde"
+              class="about-signature-img"
+              loading="lazy"
+            >
           </div>
           <div class="about-formation">
             <p class="label" data-i18n="about.formation">Formation</p>
@@ -684,25 +664,6 @@ window.__translationMode = __translationMode;
       var label = btn.querySelector('.faq-more-label');
       if (label && window.__t) label.textContent = window.__t('faq.show_less') || '− Voir moins';
     });
-  })();
-
-  /* ── Signature SVG — animation au scroll (une seule fois) ── */
-  (function() {
-    var svg = document.querySelector('.signature-svg');
-    if (!svg) return;
-    // prefers-reduced-motion → classe immédiatement, pas d'animation
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      svg.classList.add('is-visible');
-      return;
-    }
-    var done = false;
-    var obs  = new IntersectionObserver(function(entries) {
-      if (done || !entries[0].isIntersecting) return;
-      done = true;
-      svg.classList.add('is-visible');
-      obs.disconnect();
-    }, { threshold: 0.5 });
-    obs.observe(svg);
   })();
 
   /* ── Tracking analytics ── */

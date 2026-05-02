@@ -451,7 +451,7 @@ function buildStaffNotification(data) {
     <p style="margin:0;font-family:Georgia,serif;font-size:17px;font-style:italic;color:#6B1F2A;line-height:1.5;">${fullName} souhaite initier son accompagnement.</p>
   </td>
 </tr>
-<tr><td bgcolor="#F5F0E8" class="cbg" style="background-color:#F5F0E8;padding:16px 40px 0;font-size:0;">${goldLine()}</td></tr>
+<tr><td bgcolor="#F5F0E8" class="cbg" style="background-color:#F5F0E8;padding:16px 0 0;font-size:0;">${goldLine()}</td></tr>
 
 <!-- BLOC INFO -->
 <tr>
@@ -562,8 +562,7 @@ function buildPatronNotification(data) {
 <!-- HEADER -->
 <tr>
   <td align="center" bgcolor="#6B1F2A" class="hbg" style="background-color:#6B1F2A;padding:28px 32px 24px;">
-    <img src="${monogramSrc}" width="52" height="50" alt="" border="0" style="border:0;outline:none;display:block;margin:0 auto 12px;">
-    <p style="margin:0;font-family:Georgia,serif;font-size:10px;letter-spacing:4px;color:#C9A96E;text-transform:uppercase;">Nouvelle demande — Cabinet Zowe</p>
+    <img src="${monogramSrc}" width="52" height="50" alt="" border="0" style="border:0;outline:none;display:block;margin:0 auto;">
   </td>
 </tr>
 
@@ -573,7 +572,7 @@ function buildPatronNotification(data) {
     <p style="margin:0;font-family:Georgia,serif;font-size:16px;font-style:italic;color:#6B1F2A;line-height:1.5;">${fullName} souhaite initier son accompagnement via le site Zowe.</p>
   </td>
 </tr>
-<tr><td bgcolor="#F5F0E8" class="cbg" style="background-color:#F5F0E8;padding:16px 40px 0;font-size:0;">${goldLine()}</td></tr>
+<tr><td bgcolor="#F5F0E8" class="cbg" style="background-color:#F5F0E8;padding:16px 0 0;font-size:0;">${goldLine()}</td></tr>
 
 <!-- BLOC INFO -->
 <tr>
@@ -584,6 +583,18 @@ function buildPatronNotification(data) {
     </table>
   </td>
 </tr>
+
+${message ? `<!-- BLOC MESSAGE -->
+<tr>
+  <td bgcolor="#FFFFFF" class="wbg" style="background-color:#FFFFFF;padding:0 40px 28px;border-left:1px solid #EDE8E0;border-right:1px solid #EDE8E0;">
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#F9F6F2;border-left:3px solid #C9A96E;">
+      <tr><td style="padding:16px 20px;">
+        <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:#C9A96E;">Message</p>
+        <p style="margin:0;font-family:Georgia,serif;font-size:14px;font-style:italic;color:#4A4A4A;line-height:1.75;">${message}</p>
+      </td></tr>
+    </table>
+  </td>
+</tr>` : ''}
 
 <tr>
   <td align="center" bgcolor="#F5F0E8" class="cbg" style="background-color:#F5F0E8;padding:14px 40px 22px;">

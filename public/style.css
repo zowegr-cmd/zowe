@@ -2815,6 +2815,21 @@ img {
 }
 .kq-hero-link:hover { opacity: 1; }
 
+/* Lien discret protocole card */
+.kq-card-link {
+  display: block;
+  margin-top: 0.6rem;
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--or);
+  text-decoration: none;
+  opacity: 0.85;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+.kq-card-link:hover { opacity: 1; }
+
 /* Bouton protocole card */
 .kq-card-btn {
   display: block;
@@ -2833,7 +2848,10 @@ img {
 }
 .kq-card-btn:hover { background: var(--bordeaux); color: var(--off-white); }
 
-/* Bouton menu mobile */
+/* Bouton KinoQuick — menu mobile uniquement */
+@media (min-width: 861px) {
+  #kqMenuBtn { display: none !important; }
+}
 .kq-menu-link {
   display: block;
   background: var(--bordeaux);

@@ -1,6 +1,6 @@
 // netlify/functions/_email-templates.js
 // Templates email — confirmation patient premium + rappel 24h
-// multilingue (fr/nl/en) · dark mode · plain text
+// multilingue (fr/nl/en) · anti dark-mode inversion · plain text
 'use strict';
 
 const SITE_URL   = process.env.SITE_URL || 'https://zowekine.com';
@@ -9,6 +9,12 @@ const PHONE_INTL = '+32471783746';
 const EMAIL_ZOE  = 'zoegrede.kine@gmail.com';
 const IG_HANDLE  = '@kine.zowe';
 const IG_URL     = 'https://instagram.com/kine.zowe';
+
+// ── Actifs binaires chargés au démarrage du module (mis en cache) ─────────────
+let _SIG_B64      = '';
+let _MONOGRAM_B64 = '';
+try { _SIG_B64      = require('./_sig_b64');      } catch (_) {}
+try { _MONOGRAM_B64 = require('./_monogram_b64'); } catch (_) {}
 
 // ── Traductions partagées (rappel 24h + chaînes communes) ─────────────────────
 const TR = {
@@ -97,12 +103,15 @@ function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
   const tx      = Object.assign({}, CT[lang], overrides || {});
   const subject = tx.subject || t(lang, 'subject_confirm');
 
-  // Signature base64 — require() est mis en cache par Node après le 1er appel
-  let sigTag = '';
-  try {
-    const b64 = require('./_sig_b64');
-    sigTag = `<img src="data:image/png;base64,${b64}" width="180" alt="Signature Zoé Grêde" style="display:block;margin:0 auto 14px;max-width:180px;">`;
-  } catch (_) {}
+  // Monogramme PNG (exact monogramme du site, gold sur fond bordeaux)
+  const monogramTag = _MONOGRAM_B64
+    ? `<img src="data:image/png;base64,${_MONOGRAM_B64}" width="70" height="67" alt="Monogramme Zowe" border="0" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;">`
+    : `<p style="margin:0;font-family:Georgia,serif;font-size:48px;font-weight:bold;color:#C9A96E;letter-spacing:4px;line-height:1;text-align:center;">ZW</p>`;
+
+  // Signature manuscrite PNG base64
+  const sigTag = _SIG_B64
+    ? `<img src="data:image/png;base64,${_SIG_B64}" width="200" height="auto" alt="Signature Zoé Grêde" border="0" style="display:block;margin:0 auto 14px;max-width:200px;border:0;outline:none;text-decoration:none;">`
+    : '';
 
   const unsubRow = unsubUrl
     ? `<p style="margin:6px 0 0;text-align:center;"><a href="${unsubUrl}" style="font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#C9A96E;text-decoration:underline;">${tx.unsub}</a></p>`
@@ -113,68 +122,77 @@ function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="color-scheme" content="light dark">
-  <meta name="supported-color-schemes" content="light dark">
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light">
   <title>${subject}</title>
   <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
-  <style>
-    :root { color-scheme: light dark; }
+  <style type="text/css">
+    /* Bloquer TOUTE inversion automatique de couleur (Samsung, Gmail) */
+    :root { color-scheme: light only; }
+    * { -webkit-text-size-adjust: 100%; }
+
+    /* ── Classes couleur forcées ── */
+    .header-bg  { background-color: #6B1F2A !important; }
+    .contact-bg { background-color: #6B1F2A !important; }
+    .cream-bg   { background-color: #F5F0E8 !important; }
+    .white-bg   { background-color: #FFFFFF !important; }
+    .footer-bg  { background-color: #0F0F0F !important; }
+
+    /* ── Bloquer inversion Outlook.com mode sombre ── */
+    [data-ogsc] .header-bg,  [data-ogsb] .header-bg  { background-color: #6B1F2A !important; }
+    [data-ogsc] .contact-bg, [data-ogsb] .contact-bg { background-color: #6B1F2A !important; }
+    [data-ogsc] .cream-bg,   [data-ogsb] .cream-bg   { background-color: #F5F0E8 !important; }
+    [data-ogsc] .white-bg,   [data-ogsb] .white-bg   { background-color: #FFFFFF !important; }
+    [data-ogsc] .footer-bg,  [data-ogsb] .footer-bg  { background-color: #0F0F0F !important; }
+
+    /* ── Samsung Mail / clients qui ignorent color-scheme ── */
     @media (prefers-color-scheme: dark) {
-      .bg-cream  { background-color: #1A0508 !important; }
-      .bg-white  { background-color: #2A0A10 !important; }
-      .text-body { color: #E8DFD0 !important; }
-      .text-sub  { color: #B0A090 !important; }
+      .header-bg  { background-color: #6B1F2A !important; }
+      .contact-bg { background-color: #6B1F2A !important; }
+      .cream-bg   { background-color: #F5F0E8 !important; }
+      .white-bg   { background-color: #1a1a1a !important; }
+      .footer-bg  { background-color: #0F0F0F !important; }
+      .text-body  { color: #E8DFD0 !important; }
     }
-    [data-ogsc] .bg-cream,[data-ogsb] .bg-cream { background-color: #1A0508 !important; }
-    [data-ogsc] .bg-white,[data-ogsb] .bg-white  { background-color: #2A0A10 !important; }
-    [data-ogsc] .text-body,[data-ogsb] .text-body { color: #E8DFD0 !important; }
+
+    /* ── Mobile ── */
+    @media only screen and (max-width: 600px) {
+      .email-container { width: 100% !important; }
+      .email-body      { padding: 28px 20px !important; }
+      .contact-block   { padding: 22px 20px !important; }
+      .sig-block       { padding: 28px 20px !important; }
+      .phone-link      { font-size: 22px !important; }
+      .accroche-text   { font-size: 18px !important; }
+    }
   </style>
 </head>
 <body style="margin:0;padding:0;background-color:#F5F0E8;font-family:Arial,Helvetica,sans-serif;">
 
-<table width="100%" cellpadding="0" cellspacing="0" class="bg-cream" style="background-color:#F5F0E8;padding:40px 16px;" role="presentation">
-<tr><td align="center">
-<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;" role="presentation">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#F5F0E8;">
+<tr>
+<td align="center" style="padding:32px 16px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="email-container" style="max-width:600px;width:100%;">
 
 <!-- ══ HEADER ══ -->
 <tr>
-  <td align="center" bgcolor="#6B1F2A" style="background-color:#6B1F2A;padding:36px 32px 24px;">
-    <!--[if !mso]><!-->
-    <svg width="70" height="70" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto;">
-      <g fill="#C9A96E">
-        <path d="M 100 150 L 100 130 L 220 130 L 220 150 L 130 150 L 130 175 L 100 175 Z"/>
-        <path d="M 220 130 L 240 130 L 100 290 L 80 290 Z"/>
-        <path d="M 80 290 L 80 270 L 200 270 L 200 295 L 230 295 L 230 315 L 80 315 Z"/>
-      </g>
-      <g fill="#C9A96E" opacity="0.95">
-        <path d="M 145 80 L 165 80 L 215 320 L 195 320 Z"/>
-        <path d="M 140 80 L 170 80 L 170 88 L 140 88 Z"/>
-        <path d="M 215 320 L 235 320 L 250 200 L 230 200 Z"/>
-        <path d="M 250 200 L 270 200 L 285 320 L 265 320 Z"/>
-        <path d="M 285 320 L 305 320 L 355 80 L 335 80 Z"/>
-        <path d="M 330 80 L 360 80 L 360 88 L 330 88 Z"/>
-      </g>
-    </svg>
-    <!--<![endif]-->
-    <!--[if mso]><p style="font-family:Georgia,serif;font-size:40px;color:#C9A96E;text-align:center;margin:0;letter-spacing:8px;mso-line-height-rule:exactly;line-height:48px;">ZW</p><![endif]-->
-    <p style="margin:14px 0 0;font-family:Georgia,serif;font-size:11px;letter-spacing:6px;color:#C9A96E;text-align:center;font-weight:400;text-transform:uppercase;">ZOWE</p>
-    <p style="margin:20px 0 0;font-size:0;line-height:0;">&nbsp;</p>
+  <td align="center" bgcolor="#6B1F2A" class="header-bg" style="background-color:#6B1F2A;padding:36px 32px 24px;">
+    ${monogramTag}
+    <p style="margin:14px 0 0;font-family:Georgia,serif;font-size:11px;letter-spacing:8px;color:#C9A96E;text-align:center;font-weight:400;text-transform:uppercase;">Z O W E</p>
+    <p style="margin:16px 0 0;font-size:0;line-height:0;">${goldLine(40)}</p>
   </td>
 </tr>
-<!-- Gold separator -->
-<tr><td style="font-size:0;line-height:0;">${goldLine()}</td></tr>
 
 <!-- ══ ACCROCHE ══ -->
 <tr>
-  <td align="center" class="bg-cream" style="background-color:#F5F0E8;padding:30px 48px 26px;">
-    <p style="margin:0;font-family:Georgia,serif;font-size:22px;font-style:italic;color:#6B1F2A;line-height:1.5;text-align:center;">${tx.tagline_hero}</p>
+  <td align="center" bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;padding:30px 48px 26px;">
+    <p class="accroche-text" style="margin:0;font-family:Georgia,serif;font-size:22px;font-style:italic;color:#6B1F2A;line-height:1.5;text-align:center;">${tx.tagline_hero}</p>
   </td>
 </tr>
-<tr><td style="font-size:0;line-height:0;">${goldLine()}</td></tr>
+<tr><td bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;font-size:0;line-height:0;">${goldLine()}</td></tr>
 
 <!-- ══ CORPS ══ -->
 <tr>
-  <td class="bg-white" style="background-color:#ffffff;padding:44px 48px 40px;">
+  <td bgcolor="#FFFFFF" class="white-bg email-body" style="background-color:#FFFFFF;padding:44px 48px 40px;border-left:1px solid #EDE8E0;border-right:1px solid #EDE8E0;">
     <p style="margin:0 0 22px;font-family:Georgia,serif;font-size:20px;font-style:italic;color:#6B1F2A;">${prenom},</p>
     <p class="text-body" style="margin:0 0 18px;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#4A4A4A;line-height:1.85;">${tx.p1}</p>
     <p class="text-body" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#4A4A4A;line-height:1.85;">${tx.p2}</p>
@@ -183,39 +201,36 @@ function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
 
 <!-- ══ BLOC CONTACT ══ -->
 <tr>
-  <td bgcolor="#6B1F2A" style="background-color:#6B1F2A;padding:28px 44px 32px;">
+  <td align="center" bgcolor="#6B1F2A" class="contact-bg contact-block" style="background-color:#6B1F2A;padding:28px 44px 32px;">
     <p style="margin:0 0 16px;font-family:Georgia,serif;font-size:13px;font-style:italic;color:#C9A96E;letter-spacing:2px;text-align:center;">${tx.contact_title}</p>
-    <table width="60" cellpadding="0" cellspacing="0" role="presentation" style="margin:0 auto 22px;">${goldLine(60)}</table>
-    <!-- Téléphone -->
-    <p style="margin:0 0 12px;text-align:center;">
-      <a href="tel:${PHONE_INTL}" style="font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:700;color:#C9A96E;text-decoration:none;letter-spacing:1px;">${PHONE}</a>
+    ${goldLine(60)}
+    <p style="margin:18px 0 12px;text-align:center;">
+      <a href="tel:${PHONE_INTL}" class="phone-link" style="font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:700;color:#C9A96E;text-decoration:none;letter-spacing:1px;">${PHONE}</a>
     </p>
-    <!-- Email -->
     <p style="margin:0 0 8px;text-align:center;">
       <a href="mailto:${EMAIL_ZOE}" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#F5F0E8;text-decoration:none;">${EMAIL_ZOE}</a>
     </p>
-    <!-- Instagram -->
     <p style="margin:0;text-align:center;">
       <a href="${IG_URL}" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#C9A96E;text-decoration:none;">${IG_HANDLE}</a>
     </p>
   </td>
 </tr>
-<tr><td style="font-size:0;line-height:0;">${goldLine()}</td></tr>
+<tr><td bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;font-size:0;line-height:0;">${goldLine()}</td></tr>
 
 <!-- ══ SIGNATURE ══ -->
 <tr>
-  <td align="center" class="bg-cream" style="background-color:#F5F0E8;padding:36px 40px 32px;">
+  <td align="center" bgcolor="#F5F0E8" class="cream-bg sig-block" style="background-color:#F5F0E8;padding:36px 40px 32px;">
     ${sigTag}
     <p style="margin:0 0 12px;font-family:Georgia,serif;font-size:28px;font-style:italic;color:#6B1F2A;text-align:center;">${tx.sig_name || 'Zoé'}</p>
     <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:4px;color:#C9A96E;text-align:center;text-transform:uppercase;">${tx.sig1}</p>
-    <table width="30" cellpadding="0" cellspacing="0" role="presentation" style="margin:0 auto 14px;">${goldLine(30)}</table>
-    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:3px;color:#6B1F2A;text-align:center;text-transform:uppercase;">${tx.sig2}</p>
+    ${goldLine(30)}
+    <p style="margin:14px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:3px;color:#6B1F2A;text-align:center;text-transform:uppercase;">${tx.sig2}</p>
   </td>
 </tr>
 
 <!-- ══ FOOTER ══ -->
 <tr>
-  <td align="center" bgcolor="#0F0F0F" style="background-color:#0F0F0F;padding:24px 32px;">
+  <td align="center" bgcolor="#0F0F0F" class="footer-bg" style="background-color:#0F0F0F;padding:24px 32px;">
     <p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#888888;text-align:center;">&copy; 2025 Zowe &mdash; Zoé Grêde. ${tx.rights}</p>
     ${unsubRow}
     <p style="margin:6px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#565656;text-align:center;">zowekine.com</p>
@@ -223,7 +238,8 @@ function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
 </tr>
 
 </table>
-</td></tr>
+</td>
+</tr>
 </table>
 </body></html>`;
 

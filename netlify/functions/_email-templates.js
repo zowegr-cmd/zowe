@@ -583,8 +583,7 @@ function buildPatronNotification(data) {
 <!-- HEADER -->
 <tr>
   <td align="center" bgcolor="#6B1F2A" class="header-bg" style="background-color:#6B1F2A;padding:32px 32px 20px;">
-    <img src="${monogramSrc}" width="64" height="62" alt="" border="0" style="border:0;outline:none;display:block;margin:0 auto 14px;">
-    <p style="margin:0;font-family:Georgia,serif;font-size:11px;letter-spacing:4px;color:#C9A96E;text-transform:uppercase;">Nouvelle demande — Cabinet Zowe</p>
+    <img src="${monogramSrc}" width="64" height="62" alt="" border="0" style="border:0;outline:none;display:block;margin:0 auto;">
   </td>
 </tr>
 
@@ -605,30 +604,6 @@ function buildPatronNotification(data) {
     </table>
   </td>
 </tr>
-<tr><td bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;padding:0 40px;border-left:1px solid #EDE8E0;border-right:1px solid #EDE8E0;font-size:0;">${goldLine()}</td></tr>
-
-<!-- ACTION -->
-<tr>
-  <td bgcolor="#FFFFFF" class="white-bg" style="background-color:#FFFFFF;padding:24px 40px;border-left:1px solid #EDE8E0;border-right:1px solid #EDE8E0;">
-    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#4A4A4A;line-height:1.75;">
-      Cette demande a été transmise à Zoé Grêde.<br>
-      Elle prendra contact avec le patient dans la journée.
-    </p>
-  </td>
-</tr>
-
-<!-- KINOQUICK -->
-<tr>
-  <td bgcolor="#6B1F2A" class="kinoquick-bg" style="background-color:#6B1F2A;padding:24px 40px;">
-    <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#F5F0E8;">
-      📅 &nbsp;À enregistrer dans KinoQuick
-    </p>
-    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:rgba(245,240,232,0.75);line-height:1.6;">
-      Zoé vous contactera pour confirmer le créneau une fois convenu avec le patient.
-    </p>
-  </td>
-</tr>
-
 <tr>
   <td align="center" bgcolor="#F5F0E8" class="cream-bg" style="background-color:#F5F0E8;padding:16px 40px 24px;">
     <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#AAAAAA;text-align:center;line-height:1.8;">
@@ -650,10 +625,7 @@ function buildPatronNotification(data) {
     `Langue   : ${langLabel}`,
     `Date     : ${dateStr}`,
     ``,
-    `Zoé prendra contact avec le patient dans la journée.`,
-    ``,
     `────────────────────────────────────────`,
-    `À enregistrer dans KinoQuick.`,
   ].filter(l => l !== undefined).join('\n');
 
   return { subject, html, text };

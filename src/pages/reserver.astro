@@ -1,0 +1,395 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout
+  title="Réserver un Bilan Précision — Zowe · Kinésithérapie Rhode-Saint-Genèse"
+  description="Réservez votre Bilan Précision avec Zoé Grêde, kinésithérapeute à Rhode-Saint-Genèse. Premier rendez-vous 30 min · 60€.">
+
+  <style>
+    .rv-page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 8rem 2rem 6rem;
+    }
+    .rv-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bordeaux);
+      text-decoration: none;
+      margin-bottom: 3rem;
+      transition: opacity 0.2s;
+    }
+    .rv-back:hover { opacity: 0.7; }
+
+    .rv-header {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--or-border);
+    }
+    .rv-header h1 {
+      font-family: var(--serif);
+      font-size: clamp(1.9rem, 5vw, 2.8rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--bordeaux);
+      margin-bottom: 0.6rem;
+      line-height: 1.15;
+    }
+    .rv-header p {
+      font-size: 0.9rem;
+      color: var(--light);
+      margin: 0;
+    }
+
+    .rv-card {
+      background: var(--off-white);
+      border: 1px solid var(--or-border);
+      padding: 2rem 2rem 1.75rem 2.3rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .rv-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--or);
+    }
+    .rv-card-badge {
+      display: inline-block;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--or);
+      border: 1px solid var(--or);
+      padding: 0.25rem 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+    .rv-card-title {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--bordeaux);
+      margin-bottom: 0.3rem;
+    }
+    .rv-card-detail {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--or);
+      margin-bottom: 1.1rem;
+    }
+    .rv-card-desc {
+      font-size: 0.9rem;
+      color: var(--mid);
+      line-height: 1.75;
+      margin-bottom: 1.1rem;
+    }
+    .rv-card-note {
+      font-size: 0.78rem;
+      color: var(--light);
+      line-height: 1.7;
+      padding-top: 1rem;
+      border-top: 1px solid var(--or-border);
+    }
+
+    .rv-steps { margin-bottom: 2.5rem; }
+    .rv-steps-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bordeaux);
+      margin-bottom: 1.5rem;
+    }
+    .rv-step {
+      display: flex;
+      gap: 1.25rem;
+      position: relative;
+    }
+    .rv-step:not(:last-child) { padding-bottom: 1.75rem; }
+    .rv-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 14px; top: 32px; bottom: 0;
+      width: 1px;
+      background: var(--or);
+      opacity: 0.35;
+    }
+    .rv-step-num {
+      flex-shrink: 0;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--or);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--or);
+      background: var(--off-white);
+      position: relative;
+      z-index: 1;
+    }
+    .rv-step-body { padding-top: 0.3rem; }
+    .rv-step-body strong {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--bordeaux);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+    .rv-step-body p {
+      font-size: 0.82rem;
+      color: var(--mid);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .rv-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .rv-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      background: var(--bordeaux);
+      color: #F5F0E8;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .rv-cta-btn:hover { background: #4A1520; }
+    .rv-cta-btn[aria-disabled="true"] { opacity: 0.42; pointer-events: none; }
+    .rv-secondary {
+      font-size: 0.8rem;
+      color: var(--light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .rv-secondary:hover { color: var(--bordeaux); }
+
+    .rv-domicile {
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--or-border);
+    }
+    .rv-domicile-title {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--bordeaux);
+      margin-bottom: 0.5rem;
+    }
+    .rv-domicile-desc {
+      font-size: 0.85rem;
+      color: var(--mid);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .rv-zones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .rv-zone {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--or-border);
+      color: var(--mid);
+      padding: 0.3rem 0.8rem;
+    }
+    .rv-domicile-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bordeaux);
+      text-decoration: none;
+      border-bottom: 1px solid var(--or);
+      padding-bottom: 0.15rem;
+      transition: opacity 0.2s;
+    }
+    .rv-domicile-cta:hover { opacity: 0.7; }
+
+    @media (max-width: 480px) {
+      .rv-page { padding: 7rem 1.5rem 5rem; }
+      .rv-cta-btn { width: 100%; justify-content: center; }
+    }
+  </style>
+
+  <article class="rv-page">
+    <a href="/" class="rv-back">← Retour à l'accueil</a>
+
+    <header class="rv-header">
+      <h1>Réserver un Bilan Précision</h1>
+      <p>Le point de départ de votre expérience Zowe.</p>
+    </header>
+
+    <div class="rv-card">
+      <span class="rv-card-badge">Point de départ obligatoire</span>
+      <h2 class="rv-card-title">Le Bilan Précision</h2>
+      <p class="rv-card-detail">30 min · 60€</p>
+      <p class="rv-card-desc">
+        Lors de ce premier rendez-vous, Zoé évalue vos besoins, analyse vos mouvements et établit un programme personnalisé — l'étape fondatrice de votre parcours.
+      </p>
+      <p class="rv-card-note">
+        Les séances suivantes (bilan postural, rééducation…) seront définies avec Zoé lors de ce premier rendez-vous.
+      </p>
+    </div>
+
+    <div class="rv-steps">
+      <p class="rv-steps-label">Comment réserver</p>
+
+      <div class="rv-step">
+        <div class="rv-step-num">1</div>
+        <div class="rv-step-body">
+          <strong>Ouvrez l'agenda</strong>
+          <p>Choisissez votre créneau dans le calendrier en ligne de Zoé.</p>
+        </div>
+      </div>
+
+      <div class="rv-step">
+        <div class="rv-step-num">2</div>
+        <div class="rv-step-body">
+          <strong>Confirmez</strong>
+          <p>Entrez vos informations et validez votre réservation en quelques clics.</p>
+        </div>
+      </div>
+
+      <div class="rv-step">
+        <div class="rv-step-num">3</div>
+        <div class="rv-step-body">
+          <strong>Préparez votre séance</strong>
+          <p>Vous recevrez une confirmation avec les informations pratiques.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rv-cta">
+      <a href="#" id="rvBtn" class="rv-cta-btn" aria-disabled="true" target="_blank" rel="noopener noreferrer">
+        Ouvrir l'agenda de Zoé →
+      </a>
+      <a href="/#contact" class="rv-secondary">Une question ? Écrire à Zoé</a>
+    </div>
+
+    <div class="rv-domicile" id="rvDomicile" style="display:none">
+      <h2 class="rv-domicile-title">Consultation à domicile</h2>
+      <p class="rv-domicile-desc" id="rvDomicileDesc">Zoé se déplace à votre domicile dans les zones suivantes :</p>
+      <div class="rv-zones" id="rvZones"></div>
+      <a href="/#contact" class="rv-domicile-cta" id="rvDomicileContact">Prendre contact →</a>
+    </div>
+  </article>
+
+  <script is:inline>
+  (function() {
+    var src = (new URLSearchParams(window.location.search)).get('s') || 'direct';
+
+    fetch('/.netlify/functions/settings?type=kinoquick')
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(kq) {
+        if (!kq) return;
+
+        if (typeof gtag === 'function') gtag('event', 'reserver_view', { source: src });
+
+        if (kq.enabled && kq.url) {
+          var btn = document.getElementById('rvBtn');
+          if (btn) {
+            btn.href = kq.url;
+            btn.removeAttribute('aria-disabled');
+            btn.addEventListener('click', function() {
+              if (typeof gtag === 'function') gtag('event', 'kinoquick_open', { source: 'reserver_' + src });
+            });
+          }
+        }
+
+        if (kq.domicile_enabled) {
+          var block = document.getElementById('rvDomicile');
+          if (block) {
+            block.style.display = '';
+            var lang = localStorage.getItem('zowe-lang') || 'fr';
+            function g(field) { return kq[field] && (kq[field][lang] || kq[field]['fr']) || ''; }
+
+            var zones = Array.isArray(kq.domicile_zones) ? kq.domicile_zones : [];
+            var zonesEl = document.getElementById('rvZones');
+            if (zonesEl && zones.length) {
+              zonesEl.innerHTML = zones.map(function(z) {
+                return '<span class="rv-zone">' + String(z).replace(/[<>]/g,'') + '</span>';
+              }).join('');
+            }
+
+            var descEl = document.getElementById('rvDomicileDesc');
+            if (descEl && kq.domicile_desc) descEl.textContent = g('domicile_desc');
+
+            var contactEl = document.getElementById('rvDomicileContact');
+            if (contactEl) {
+              contactEl.addEventListener('click', function() {
+                if (typeof gtag === 'function') gtag('event', 'domicile_click', { source: 'reserver' });
+              });
+            }
+          }
+        }
+      })
+      .catch(function() {});
+
+    var lang = localStorage.getItem('zowe-lang') || 'fr';
+    if (lang !== 'fr') {
+      fetch('/i18n/' + lang + '.json')
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(t) {
+          if (!t || !t.reserver) return;
+          var rv = t.reserver;
+          function setQ(sel, val) { var el = document.querySelector(sel); if (el && val) el.textContent = val; }
+          if (rv.title)       setQ('.rv-header h1',    rv.title);
+          if (rv.subtitle)    setQ('.rv-header p',     rv.subtitle);
+          if (rv.badge)       setQ('.rv-card-badge',   rv.badge);
+          if (rv.card_title)  setQ('.rv-card-title',   rv.card_title);
+          if (rv.card_detail) setQ('.rv-card-detail',  rv.card_detail);
+          if (rv.card_desc)   setQ('.rv-card-desc',    rv.card_desc);
+          if (rv.card_note)   setQ('.rv-card-note',    rv.card_note);
+          if (rv.steps_label) setQ('.rv-steps-label',  rv.steps_label);
+          var steps = document.querySelectorAll('.rv-step-body');
+          if (rv.steps && Array.isArray(rv.steps)) {
+            rv.steps.forEach(function(s, i) {
+              if (!steps[i]) return;
+              var strong = steps[i].querySelector('strong');
+              var p = steps[i].querySelector('p');
+              if (strong && s.title) strong.textContent = s.title;
+              if (p && s.desc)       p.textContent = s.desc;
+            });
+          }
+          if (rv.cta_btn) {
+            var btn = document.getElementById('rvBtn');
+            if (btn) btn.textContent = rv.cta_btn;
+          }
+          if (rv.secondary) setQ('.rv-secondary', rv.secondary);
+          if (rv.back)      setQ('.rv-back',      rv.back);
+        })
+        .catch(function() {});
+    }
+  })();
+  </script>
+</Layout>

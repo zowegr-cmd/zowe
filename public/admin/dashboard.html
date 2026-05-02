@@ -376,10 +376,24 @@ td.email a{color:var(--bx);text-decoration:none}
           </label>
         </div>
 
-        <div class="field-group" style="margin-bottom:1rem">
+        <div class="field-group" style="margin-bottom:1.5rem">
           <label style="font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--lt);">Lien de réservation KinoQuick</label>
           <input type="url" id="kqUrl" placeholder="https://..." style="width:100%;padding:.6rem .85rem;border:1px solid var(--bd);font-size:.82rem;background:var(--wh);color:var(--dk);outline:none;" oninput="kqDirty=true">
           <p style="font-size:.68rem;color:var(--lt);margin-top:.35rem">Fourni par le dirigeant du cabinet.</p>
+        </div>
+
+        <!-- Domicile -->
+        <p style="font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--bx);margin-bottom:.75rem;padding-top:1rem;border-top:1px solid var(--bd)">Consultation à domicile</p>
+        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem">
+          <label style="display:flex;align-items:center;gap:.75rem;cursor:pointer">
+            <input type="checkbox" id="kqDomicileToggle" style="display:none" onchange="onKqDomicileToggle(this)">
+            <div class="settings-toggle" id="kqDomicileVisual"><div class="settings-toggle-knob"></div></div>
+            <span id="kqDomicileLabel" style="font-size:.8rem;font-weight:500;color:var(--lt)">OFF</span>
+          </label>
+        </div>
+        <div class="field-group" style="margin-bottom:1.5rem">
+          <label style="font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--lt);">Zones desservies (séparées par des virgules)</label>
+          <input type="text" id="kqDomicileZones" placeholder="Rhode-Saint-Genèse, Uccle, Linkebeek" style="width:100%;padding:.6rem .85rem;border:1px solid var(--bd);font-size:.82rem;background:var(--wh);color:var(--dk);outline:none;" oninput="kqDirty=true">
         </div>
 
         <button class="save-btn" onclick="saveKq()" id="kqSaveBtn">Sauvegarder KinoQuick</button>
@@ -650,6 +664,13 @@ function loadSettings() {
     document.getElementById('kqToggleLabel').textContent = en ? 'ON' : 'OFF';
     document.getElementById('kqToggleLabel').style.color = en ? 'var(--bx)' : 'var(--lt)';
     document.getElementById('kqUrl').value = data.url || '';
+    var dom = !!data.domicile_enabled;
+    document.getElementById('kqDomicileToggle').checked = dom;
+    document.getElementById('kqDomicileVisual').classList.toggle('on', dom);
+    document.getElementById('kqDomicileLabel').textContent = dom ? 'ON' : 'OFF';
+    document.getElementById('kqDomicileLabel').style.color = dom ? 'var(--bx)' : 'var(--lt)';
+    var zones = Array.isArray(data.domicile_zones) ? data.domicile_zones : (data.domicile_zones || '');
+    document.getElementById('kqDomicileZones').value = Array.isArray(zones) ? zones.join(', ') : zones;
   });
 }
 
@@ -661,13 +682,23 @@ function onKqToggle(cb) {
   document.getElementById('kqToggleLabel').style.color = en ? 'var(--bx)' : 'var(--lt)';
   kqDirty = true;
 }
+function onKqDomicileToggle(cb) {
+  var en = cb.checked;
+  document.getElementById('kqDomicileVisual').classList.toggle('on', en);
+  document.getElementById('kqDomicileLabel').textContent = en ? 'ON' : 'OFF';
+  document.getElementById('kqDomicileLabel').style.color = en ? 'var(--bx)' : 'var(--lt)';
+  kqDirty = true;
+}
 function saveKq() {
   var enabled = document.getElementById('kqToggle').checked;
   var url     = document.getElementById('kqUrl').value.trim();
+  var domicileEnabled = document.getElementById('kqDomicileToggle').checked;
+  var zonesRaw = document.getElementById('kqDomicileZones').value;
+  var domicileZones = zonesRaw.split(',').map(function(z) { return z.trim(); }).filter(Boolean);
   var btn = document.getElementById('kqSaveBtn');
   var msg = document.getElementById('kqMsg');
   btn.disabled = true;
-  api('?action=kinoquick-save', { method: 'POST', body: JSON.stringify({ enabled: enabled, url: url }) })
+  api('?action=kinoquick-save', { method: 'POST', body: JSON.stringify({ enabled: enabled, url: url, domicile_enabled: domicileEnabled, domicile_zones: domicileZones }) })
     .then(function(d) {
       btn.disabled = false;
       msg.style.display = 'block';

@@ -3020,6 +3020,24 @@ img {
   border-bottom: 1px solid var(--or-border);
 }
 
+/* Bouton nav desktop RÉSERVER (KinoQuick) */
+.kq-nav-btn {
+  display: none; /* contrôlé par JS */
+  padding: 0.42rem 1rem;
+  background: var(--bordeaux);
+  color: var(--off-white);
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.kq-nav-btn:hover { background: #4A1520; }
+@media (max-width: 768px) { .kq-nav-btn { display: none !important; } }
+
 /* FAB stagger — KinoQuick en position 1 (caché par défaut) */
 .fab-container.open .fab-item:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 250ms; }
 .fab-container.open .fab-item:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 200ms; }

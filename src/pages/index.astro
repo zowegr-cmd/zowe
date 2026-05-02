@@ -44,7 +44,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
       {gallery.visible && <li><a href="/galerie" data-i18n="footer.gallery">Galerie</a></li>}
       {session.visible && <li><a href="/preparer-ma-seance" data-i18n="footer.before_session">Avant votre séance</a></li>}
-      <li id="kqMenuBtn" style="display:none"><a href="#" id="kqMenuLink" class="kq-menu-link" target="_blank" rel="noopener noreferrer">Réserver un Bilan</a></li>
+      <li id="kqMenuBtn" style="display:none"><a href="/reserver?s=menu" id="kqMenuLink" class="kq-menu-link">Réserver un Bilan</a></li>
       <li><a href="#contact" class="nav-cta" data-i18n="nav.cta">Initier mon accompagnement</a></li>
       <!-- Sélecteur de langue — visible uniquement dans le menu mobile -->
       <li class="nav-lang-mobile" aria-label="Choisir la langue">
@@ -75,6 +75,8 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         </div>
       </li>
     </ul>
+    <!-- Bouton Réserver desktop (visible uniquement si KinoQuick actif) -->
+    <a href="/reserver?s=nav" id="kqNavBtn" class="kq-nav-btn" style="display:none" aria-label="Réserver un Bilan Précision">Réserver</a>
     <!-- Sélecteur de langue — visible uniquement sur desktop -->
     <div class="lang-selector" id="langSelector" aria-label="Choisir la langue">
       <button class="lang-btn" data-lang="fr">FR</button>
@@ -101,7 +103,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       </h1>
       <p class="hero-tagline" data-i18n="hero.tagline" set:html={hero.tagline.fr.replace(/\n/g,'<br>')}></p>
       <a href="#contact" class="btn btn-primary" data-i18n="hero.cta">{hero.cta.fr}</a>
-      <a href="#" id="kqHeroLink" class="kq-hero-link" style="display:none" target="_blank" rel="noopener noreferrer" aria-hidden="true">ou réserver directement →</a>
+      <a href="/reserver?s=hero" id="kqHeroLink" class="kq-hero-link" style="display:none" aria-hidden="true">ou réserver directement →</a>
     </div>
     <div class="hero-scroll" aria-hidden="true">&#8595;</div>
   </section>
@@ -202,7 +204,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
               <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
             </button>
             <a href="#contact" class={`btn ${i === 2 ? 'btn-light' : 'btn-primary'}`} data-i18n="services.learn_more">En savoir plus</a>
-            {i === 0 && <a href="#" class="kq-card-link" style="display:none" target="_blank" rel="noopener noreferrer">ou réserver directement →</a>}
+            {i === 0 && <a href="/reserver?s=protocoles" class="kq-card-link" style="display:none">ou réserver directement →</a>}
           </div>
         ))}
       </div>
@@ -342,7 +344,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           <h3 class="kq-titre" id="kqTitre">Réserver un Bilan Précision</h3>
           <p class="kq-desc" id="kqDesc">Choisissez directement votre créneau dans l'agenda de Zoé.</p>
           <p class="kq-detail" id="kqDetail">30 min · 60€</p>
-          <a href="#" id="kqContactBtn" class="kq-btn" target="_blank" rel="noopener noreferrer">Réserver maintenant</a>
+          <a href="/reserver?s=contact" id="kqContactBtn" class="kq-btn">Réserver maintenant</a>
         </div>
 
         <!-- Séparateur (caché par défaut) -->
@@ -549,7 +551,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       <!-- KinoQuick (caché par défaut) -->
       <div class="fab-item" id="kqFabItem" style="display:none" role="listitem">
         <span class="fab-tooltip" id="kqFabTooltip" aria-hidden="true">Réserver</span>
-        <a href="#" id="kqFabBtn" class="fab-sub" aria-label="Réserver sur KinoQuick" data-action="fab_kinoquick" target="_blank" rel="noopener noreferrer">
+        <a href="/reserver?s=fab" id="kqFabBtn" class="fab-sub" aria-label="Réserver un Bilan Précision" data-action="fab_kinoquick">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-7-9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
         </a>
       </div>
@@ -1164,7 +1166,6 @@ window.__translationMode = __translationMode;
       .then(function(kq) {
         if (!kq || !kq.enabled || !kq.url) return;
         var lang = localStorage.getItem('zowe-lang') || 'fr';
-        var url  = kq.url;
         function g(field) { return kq[field] && (kq[field][lang] || kq[field]['fr']) || ''; }
 
         function trackKq(source) {
@@ -1174,16 +1175,21 @@ window.__translationMode = __translationMode;
         // Hero
         var heroLink = document.getElementById('kqHeroLink');
         if (heroLink) {
-          heroLink.href = url;
           heroLink.style.display = '';
           heroLink.addEventListener('click', function() { trackKq('hero'); });
+        }
+
+        // Nav desktop
+        var navBtn = document.getElementById('kqNavBtn');
+        if (navBtn) {
+          navBtn.style.display = '';
+          navBtn.addEventListener('click', function() { trackKq('nav'); });
         }
 
         // Menu mobile
         var menuBtn = document.getElementById('kqMenuBtn');
         var menuLink = document.getElementById('kqMenuLink');
         if (menuBtn && menuLink) {
-          menuLink.href = url;
           menuLink.textContent = g('button_text');
           menuBtn.style.display = '';
           menuLink.addEventListener('click', function() { trackKq('menu'); });
@@ -1191,7 +1197,6 @@ window.__translationMode = __translationMode;
 
         // Liens discrets protocoles
         document.querySelectorAll('.kq-card-link').forEach(function(lnk) {
-          lnk.href = url;
           lnk.style.display = '';
           lnk.addEventListener('click', function() { trackKq('protocoles'); });
         });
@@ -1209,7 +1214,6 @@ window.__translationMode = __translationMode;
           var sepTx = ge('kqSepText');    if (sepTx) sepTx.textContent = g('separateur');
           var btn   = ge('kqContactBtn');
           if (btn) {
-            btn.href = url;
             btn.textContent = g('btn');
             btn.addEventListener('click', function() { trackKq('contact'); });
           }
@@ -1234,7 +1238,6 @@ window.__translationMode = __translationMode;
         var fabBtn  = document.getElementById('kqFabBtn');
         var fabTip  = document.getElementById('kqFabTooltip');
         if (fabItem && fabBtn) {
-          fabBtn.href = url;
           if (fabTip) fabTip.textContent = g('btn');
           fabItem.style.display = '';
           fabBtn.addEventListener('click', function() { trackKq('fab'); });

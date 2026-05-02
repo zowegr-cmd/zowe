@@ -117,5 +117,23 @@
       "home_btn":     "Back to homepage",
       "wa_text":      "Hello Zoé, I would like to know more about the Zowe experience."
     }
+  },
+  "reserver": {
+    "title":       "Book a Precision Assessment",
+    "subtitle":    "The starting point of your Zowe experience.",
+    "back":        "← Back to homepage",
+    "badge":       "Mandatory first step",
+    "card_title":  "The Precision Assessment",
+    "card_detail": "30 min · 60€",
+    "card_desc":   "During this first appointment, Zoé evaluates your needs, analyses your movements and establishes a personalised programme — the founding step of your journey.",
+    "card_note":   "Subsequent sessions (postural assessment, rehabilitation…) will be defined with Zoé during this first appointment.",
+    "steps_label": "How to book",
+    "steps": [
+      { "title": "Open the calendar", "desc": "Choose your slot in Zoé's online calendar." },
+      { "title": "Confirm",           "desc": "Enter your details and confirm your booking in a few clicks." },
+      { "title": "Prepare your session", "desc": "You will receive a confirmation with practical information." }
+    ],
+    "cta_btn":   "Open Zoé's calendar →",
+    "secondary": "A question? Write to Zoé"
   }
 }

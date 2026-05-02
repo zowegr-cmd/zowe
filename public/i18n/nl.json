@@ -117,5 +117,23 @@
       "home_btn":     "Terug naar de startpagina",
       "wa_text":      "Hallo Zoé, ik wil graag meer informatie over de Zowe-ervaring."
     }
+  },
+  "reserver": {
+    "title":       "Een Precisie-audit boeken",
+    "subtitle":    "Het startpunt van uw Zowe-ervaring.",
+    "back":        "← Terug naar de startpagina",
+    "badge":       "Verplicht startpunt",
+    "card_title":  "De Precisie-audit",
+    "card_detail": "30 min · 60€",
+    "card_desc":   "Tijdens dit eerste afspraak evalueert Zoé uw behoeften, analyseert uw bewegingen en stelt een gepersonaliseerd programma op — de grondslag van uw traject.",
+    "card_note":   "De volgende sessies (houdingsbilan, revalidatie…) worden tijdens dit eerste afspraak met Zoé vastgelegd.",
+    "steps_label": "Hoe reserveren",
+    "steps": [
+      { "title": "Open de agenda", "desc": "Kies uw tijdslot in de online agenda van Zoé." },
+      { "title": "Bevestig",       "desc": "Vul uw gegevens in en bevestig uw reservering in enkele klikken." },
+      { "title": "Bereid uw sessie voor", "desc": "U ontvangt een bevestiging met praktische informatie." }
+    ],
+    "cta_btn":   "Agenda van Zoé openen →",
+    "secondary": "Een vraag? Schrijf naar Zoé"
   }
 }

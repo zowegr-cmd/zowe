@@ -7,6 +7,9 @@ const { getStore } = require('./_blobs');
 const KQ_DEFAULTS = {
   enabled: false,
   url: '',
+  domicile_enabled: false,
+  domicile_zones:   ['Rhode-Saint-Genèse', 'Uccle', 'Linkebeek', 'Beersel'],
+  domicile_desc:    { fr: 'Zoé se déplace à votre domicile dans les zones suivantes :', nl: 'Zoé komt aan huis in de volgende zones :', en: 'Zoé visits you at home in the following areas :' },
   button_text: { fr: 'Réserver un Bilan Précision', nl: 'Boek een Precisie-audit', en: 'Book a Precision Assessment' },
   badge:       { fr: 'Disponibilité immédiate', nl: 'Directe beschikbaarheid', en: 'Immediate availability' },
   titre:       { fr: 'Réserver un Bilan Précision', nl: 'Boek een Precisie-audit', en: 'Book a Precision Assessment' },

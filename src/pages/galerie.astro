@@ -54,8 +54,8 @@ const EAGER = 5;
       margin: 0 auto;
       padding: 0 2rem 2.5rem;
     }
-    /* Cacher le sélecteur de langue flottant sur toutes les tailles */
-    #langSelectorFixed { display: none !important; }
+    /* Cacher le sélecteur de langue flottant (global — échappe le scope Astro) */
+    :global(#langSelectorFixed) { display: none !important; }
 
     .gc-back {
       display: inline-flex; align-items: center; gap: .5rem;
@@ -283,7 +283,10 @@ const EAGER = 5;
       .gc-lightbox    { display: none !important; }
 
       /* Afficher le mobile */
-      .gc-mobile { display: block; }
+      .gc-mobile {
+        display: block;
+        padding-bottom: calc(64px + env(safe-area-inset-bottom));
+      }
 
       /* ── Barre du haut ── */
       .gc-m-topbar {
@@ -339,6 +342,7 @@ const EAGER = 5;
         width: 100%; height: 100%;
         overflow: hidden;
         touch-action: pan-y;
+        background: #1A0508;
       }
 
       /* Flex track */
@@ -349,6 +353,7 @@ const EAGER = 5;
         will-change: transform;
         transform: translateZ(0) translateX(0);
         transition: transform .35s cubic-bezier(.25,.46,.45,.94);
+        background: #1A0508;
       }
       @media (prefers-reduced-motion: reduce) {
         .gc-m-track { transition: none !important; }

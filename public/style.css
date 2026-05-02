@@ -94,6 +94,18 @@ html, body {
   width: 100%;
 }
 
+html {
+  height: -webkit-fill-available;
+}
+
+/* Safe areas iOS (Dynamic Island, encoche, home indicator) */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+}
+
 body {
   font-family: var(--sans);
   background-color: var(--off-white);
@@ -133,11 +145,13 @@ img {
   align-items: center;
   justify-content: space-between;
   padding: 1.75rem 3rem;
+  padding-top: calc(1.75rem + env(safe-area-inset-top, 0px));
   transition: background 0.4s ease, box-shadow 0.4s ease, padding 0.3s ease;
 }
 
 .nav.scrolled {
   padding: 1.1rem 3rem;
+  padding-top: calc(1.1rem + env(safe-area-inset-top, 0px));
   background: rgba(248, 245, 241, 0.96);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -302,7 +316,8 @@ img {
    HERO
 ========================================== */
 .hero {
-  min-height: 100vh;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2408,6 +2423,7 @@ img {
     text-transform: uppercase;
     text-decoration: none;
     padding: 1.15rem 2rem;
+    padding-bottom: calc(1.15rem + env(safe-area-inset-bottom, 0px));
     box-shadow: 0 -2px 20px rgba(107,36,55,0.2);
     transition: opacity 0.35s ease, transform 0.35s ease;
   }
@@ -2463,8 +2479,8 @@ img {
   .fab-container {
     display: block;
     position: fixed;
-    bottom: 4.5rem;
-    right: 1.25rem;
+    bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+    right: calc(1.25rem + env(safe-area-inset-right, 0px));
     z-index: 160;
   }
 
@@ -2771,4 +2787,18 @@ img {
   .hero-scroll { animation: none !important; }
   .testimonials-track { will-change: auto; }
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* ==========================================
+   PWA — MODE STANDALONE iOS
+========================================== */
+.is-pwa .nav {
+  padding-top: calc(1.75rem + env(safe-area-inset-top, 0px));
+}
+.is-pwa .nav.scrolled {
+  padding-top: calc(1.1rem + env(safe-area-inset-top, 0px));
+}
+.is-pwa .hero {
+  min-height: 100dvh;
+  padding-top: calc(80px + env(safe-area-inset-top, 0px));
 }

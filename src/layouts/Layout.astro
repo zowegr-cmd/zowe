@@ -519,6 +519,11 @@ const ogImage = `${siteUrl}/og-image.png`;
     });
   }
 
+  /* ── Détection mode PWA standalone ── */
+  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+    document.documentElement.classList.add('is-pwa');
+  }
+
   /* ── Popup installation iOS Safari ── */
   (function() {
     function isIOS() { return /iphone|ipad|ipod/i.test(navigator.userAgent); }

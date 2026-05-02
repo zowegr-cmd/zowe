@@ -175,8 +175,6 @@ function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
 <tr>
   <td align="center" bgcolor="#6B1F2A" class="header-bg" style="background-color:#6B1F2A;padding:36px 32px 24px;">
     ${monogramTag}
-    <p style="margin:14px 0 0;font-family:Georgia,serif;font-size:11px;letter-spacing:8px;color:#C9A96E;text-align:center;font-weight:400;text-transform:uppercase;">Z O W E</p>
-    <p style="margin:16px 0 0;font-size:0;line-height:0;">${goldLine(40)}</p>
   </td>
 </tr>
 

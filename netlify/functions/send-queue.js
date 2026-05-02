@@ -41,7 +41,7 @@ exports.handler = async function () {
     try {
       let subject, html, text;
       if (item.type === 'patient_confirm') {
-        ({ subject, html, text } = buildPatientConfirm(item.prenom, item.lang || 'fr'));
+        ({ subject, html, text } = buildPatientConfirm(item.prenom, item.lang || 'fr', unsubUrl));
       } else {
         console.warn('[send-queue] type inconnu:', item.type);
         continue;

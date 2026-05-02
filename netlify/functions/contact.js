@@ -155,7 +155,7 @@ exports.handler = async function (event) {
     try {
       const unsubToken = createUnsubToken(email);
       const unsubUrl   = `${SITE_URL}/.netlify/functions/unsubscribe?token=${unsubToken}`;
-      const { subject, html, text } = buildPatientConfirm(prenom, lang);
+      const { subject, html, text } = buildPatientConfirm(prenom, lang, unsubUrl);
       const { data, error } = await resend.emails.send({
         from,
         to      : email,

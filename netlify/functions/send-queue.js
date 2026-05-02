@@ -39,16 +39,22 @@ exports.handler = async function () {
     if (!item || item.status !== 'pending') continue;
 
     try {
+      const unsubToken = createUnsubToken(item.to);
+      const unsubUrl   = `${SITE_URL}/.netlify/functions/unsubscribe?token=${unsubToken}`;
+
       let subject, html, text;
       if (item.type === 'patient_confirm') {
-        ({ subject, html, text } = buildPatientConfirm(item.prenom, item.lang || 'fr', unsubUrl));
+        const itemLang = item.lang || 'fr';
+        let emailContent = null;
+        try {
+          const cStore = getStore('email-content');
+          emailContent = await cStore.get(`confirm:${itemLang}`, { type: 'json' });
+        } catch (_) {}
+        ({ subject, html, text } = buildPatientConfirm(item.prenom, itemLang, unsubUrl, emailContent));
       } else {
         console.warn('[send-queue] type inconnu:', item.type);
         continue;
       }
-
-      const unsubToken = createUnsubToken(item.to);
-      const unsubUrl   = `${SITE_URL}/.netlify/functions/unsubscribe?token=${unsubToken}`;
 
       const { data, error } = await resend.emails.send({
         from   : fromEmail,

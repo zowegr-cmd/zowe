@@ -173,6 +173,54 @@ async function getAdminLogs() {
   }
 }
 
+// ─── Email content — lecture (Blobs → fallback defaults) ─────────────────────
+async function getEmailContent(lang) {
+  const { CT_DEFAULTS } = require('./_email-templates');
+  const def = CT_DEFAULTS[lang] || CT_DEFAULTS.fr;
+  try {
+    const store = getStore('email-content');
+    const saved = await store.get(`confirm:${lang}`, { type: 'json' }) || {};
+    return Object.assign({}, def, saved);
+  } catch (_) {
+    return Object.assign({}, def);
+  }
+}
+
+// ─── Email content — écriture dans Blobs ─────────────────────────────────────
+async function saveEmailContent(lang, content) {
+  const store = getStore('email-content');
+  await store.setJSON(`confirm:${lang}`, content);
+}
+
+// ─── Génération preview HTML (rendu serveur) ──────────────────────────────────
+async function generateEmailPreview(lang, prenom, overrides) {
+  const { buildPatientConfirm } = require('./_email-templates');
+  const content = overrides || await getEmailContent(lang);
+  const { html } = buildPatientConfirm(prenom || 'Marie', lang || 'fr', null, content);
+  return html;
+}
+
+// ─── Envoi email de test ──────────────────────────────────────────────────────
+async function sendEmailTest(lang) {
+  if (!RESEND_KEY) throw new Error('RESEND_API_KEY non défini');
+  const { buildPatientConfirm } = require('./_email-templates');
+  const resend  = new Resend(RESEND_KEY);
+  const from    = process.env.RESEND_FROM_EMAIL || 'Zoé — Zowe <onboarding@resend.dev>';
+  const content = await getEmailContent(lang || 'fr');
+  const { subject, html, text } = buildPatientConfirm('Test', lang || 'fr', null, content);
+  const { data, error } = await resend.emails.send({
+    from,
+    to     : 'zoegrede.kine@gmail.com',
+    replyTo: 'zoegrede.kine@gmail.com',
+    subject: `[TEST] ${subject}`,
+    html,
+    text,
+    headers: { 'X-Mailer': 'Zowe Mailer 1.0 (test)' },
+  });
+  if (error) throw new Error(error.message);
+  return data;
+}
+
 // ─── Handler ──────────────────────────────────────────────────────────────────
 exports.handler = async function(event) {
   const ip = (event.headers['x-nf-client-connection-ip']
@@ -262,6 +310,50 @@ exports.handler = async function(event) {
   // GET admin-logs
   if (action === 'admin-logs') {
     return json(await getAdminLogs());
+  }
+
+  // GET email-content-get
+  if (action === 'email-content-get') {
+    const lang = (event.queryStringParameters?.lang || 'fr').toLowerCase();
+    if (!['fr','nl','en'].includes(lang)) return json({ error: 'lang invalide' }, 400);
+    return json({ content: await getEmailContent(lang), lang });
+  }
+
+  // POST email-content-save
+  if (action === 'email-content-save' && event.httpMethod === 'POST') {
+    let body = {};
+    try { body = JSON.parse(event.body || '{}'); } catch {}
+    const { lang, content } = body;
+    if (!['fr','nl','en'].includes(lang) || !content || typeof content !== 'object') {
+      return json({ error: 'lang et content (objet) requis.' }, 400);
+    }
+    await saveEmailContent(lang, content);
+    return json({ ok: true });
+  }
+
+  // POST email-preview (retourne du HTML brut)
+  if (action === 'email-preview' && event.httpMethod === 'POST') {
+    let body = {};
+    try { body = JSON.parse(event.body || '{}'); } catch {}
+    const { lang, prenom, content } = body;
+    const html = await generateEmailPreview(lang || 'fr', prenom || 'Marie', content || null);
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' },
+      body: html,
+    };
+  }
+
+  // POST email-send-test
+  if (action === 'email-send-test' && event.httpMethod === 'POST') {
+    let body = {};
+    try { body = JSON.parse(event.body || '{}'); } catch {}
+    try {
+      const data = await sendEmailTest(body.lang || 'fr');
+      return json({ ok: true, messageId: data?.id });
+    } catch (e) {
+      return json({ error: e.message }, 500);
+    }
   }
 
   return json({ error: 'Action inconnue.' }, 400);

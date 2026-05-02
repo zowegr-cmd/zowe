@@ -110,6 +110,31 @@ td.email a{color:var(--bx);text-decoration:none}
 .loading{text-align:center;padding:2rem;color:var(--lt)}
 .session-info{font-size:.62rem;color:rgba(245,240,232,.25);margin-left:.5rem}
 
+/* ── Email editor ── */
+.lang-switch{display:flex;gap:.35rem;margin-bottom:1.75rem}
+.lang-sw-btn{padding:.4rem 1.1rem;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--bd);color:var(--lt);cursor:pointer;transition:.2s}
+.lang-sw-btn.active{background:var(--bx);border-color:var(--bx);color:#fff}
+.field-group{margin-bottom:1.25rem}
+.field-group label{display:block;font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--bx);margin-bottom:.45rem}
+.field-hint{display:block;font-size:.62rem;color:var(--lt);margin-bottom:.45rem;font-style:italic}
+.field-group input,.field-group textarea{width:100%;padding:.65rem .9rem;background:var(--wh);border:1px solid var(--bd);color:var(--dk);font-size:.85rem;font-family:var(--sans);outline:none;resize:vertical;transition:border-color .15s}
+.field-group input:focus,.field-group textarea:focus{border-color:var(--or)}
+.field-group textarea{min-height:80px;line-height:1.6}
+.editor-actions{display:flex;align-items:center;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap}
+.save-btn{padding:.65rem 1.4rem;background:var(--bx);color:#F5F0E8;border:none;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.save-btn:hover{background:#4A1520}
+.test-btn{padding:.65rem 1.2rem;background:none;border:1px solid var(--or);color:var(--or);font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:.2s}
+.test-btn:hover{background:var(--or);color:#fff}
+.modified-badge{font-size:.62rem;color:var(--or);letter-spacing:.06em;display:none}
+.modified-badge.visible{display:inline}
+.preview-section{margin-top:2rem}
+.preview-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem}
+.preview-open-btn{font-size:.62rem;font-weight:500;letter-spacing:.08em;color:var(--bx);background:none;border:1px solid var(--bd);padding:.35rem .9rem;cursor:pointer;transition:.2s;text-transform:uppercase}
+.preview-open-btn:hover{border-color:var(--bx)}
+.preview-frame{width:100%;border:1px solid var(--bd);background:var(--wh)}
+.field-cols{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:600px){.field-cols{grid-template-columns:1fr}}
+
 /* ── Responsive ── */
 @media(max-width:640px){
   .topbar-nav{gap:.75rem}.cards{grid-template-columns:1fr 1fr}
@@ -139,6 +164,7 @@ td.email a{color:var(--bx);text-decoration:none}
       <button class="topbar-link" onclick="showTab('newsletter',this)">Newsletter</button>
       <button class="topbar-link" onclick="showTab('emails',this)">Emails</button>
       <button class="topbar-link" onclick="showTab('security',this)">Sécurité</button>
+      <button class="topbar-link" onclick="showTab('content',this)">Contenu</button>
       <a href="/admin/" class="topbar-link" target="_blank">Contenu ↗</a>
       <a href="https://analytics.google.com" class="topbar-link" target="_blank">GA4 ↗</a>
     </nav>
@@ -307,6 +333,92 @@ td.email a{color:var(--bx);text-decoration:none}
       </div>
     </div>
 
+    <!-- ═══════════ CONTENU EMAIL TAB ═══════════ -->
+    <div id="tab-content" style="display:none">
+      <div class="nl-header">
+        <div>
+          <p class="section-title" style="margin-bottom:.25rem">Email de confirmation — Éditeur</p>
+          <p style="font-size:.75rem;color:var(--lt);">Utilisez <strong>{prenom}</strong> pour le prénom du patient.</p>
+        </div>
+      </div>
+
+      <!-- Sélecteur de langue -->
+      <div class="lang-switch">
+        <button class="lang-sw-btn active" onclick="switchEditorLang('fr',this)">FR</button>
+        <button class="lang-sw-btn" onclick="switchEditorLang('nl',this)">NL</button>
+        <button class="lang-sw-btn" onclick="switchEditorLang('en',this)">EN</button>
+      </div>
+
+      <!-- Éditeurs par langue -->
+      <div id="editor-wrap">
+        <!-- Chargement initial -->
+        <div class="loading" id="editorLoading">Chargement…</div>
+        <div id="editorFields" style="display:none">
+
+          <div class="field-group">
+            <label>Objet de l'email</label>
+            <input type="text" id="ef-subject" oninput="markModified()">
+          </div>
+
+          <div class="field-group">
+            <label>Phrase d'accroche</label>
+            <span class="field-hint">Affichée en italique bordeaux sous le monogramme</span>
+            <input type="text" id="ef-tagline_hero" oninput="markModified()">
+          </div>
+
+          <div class="field-group">
+            <label>Paragraphe 1</label>
+            <textarea id="ef-p1" rows="3" oninput="markModified()"></textarea>
+          </div>
+
+          <div class="field-group">
+            <label>Paragraphe 2</label>
+            <textarea id="ef-p2" rows="4" oninput="markModified()"></textarea>
+          </div>
+
+          <div class="field-group">
+            <label>Titre du bloc contact</label>
+            <span class="field-hint">Affiché en italique or dans le bandeau bordeaux</span>
+            <input type="text" id="ef-contact_title" oninput="markModified()">
+          </div>
+
+          <div class="field-cols">
+            <div class="field-group">
+              <label>Nom de la signature</label>
+              <input type="text" id="ef-sig_name" oninput="markModified()">
+            </div>
+            <div class="field-group">
+              <label>Tagline (ligne 1)</label>
+              <input type="text" id="ef-sig1" oninput="markModified()">
+            </div>
+          </div>
+
+          <div class="field-group" style="max-width:320px">
+            <label>Tagline (ligne 2 — méthode)</label>
+            <input type="text" id="ef-sig2" oninput="markModified()">
+          </div>
+
+          <!-- Actions -->
+          <div class="editor-actions">
+            <button class="save-btn" onclick="saveEmailContent()">Sauvegarder</button>
+            <button class="test-btn" onclick="sendEmailTest()">Envoyer email test</button>
+            <span class="modified-badge" id="modifiedBadge">● Modifié</span>
+            <span id="saveStatus" style="font-size:.68rem;color:var(--lt);"></span>
+          </div>
+
+          <!-- Preview -->
+          <div class="preview-section">
+            <div class="preview-header">
+              <p class="section-title" style="margin:0">Aperçu en direct</p>
+              <button class="preview-open-btn" onclick="openPreviewWindow()">Ouvrir dans un nouvel onglet ↗</button>
+            </div>
+            <iframe id="previewFrame" class="preview-frame" height="700" sandbox="allow-same-origin" srcdoc="<p style='padding:2rem;color:#aaa;font-family:system-ui'>Chargement de l'aperçu…</p>"></iframe>
+          </div>
+
+        </div><!-- /editorFields -->
+      </div><!-- /editor-wrap -->
+    </div><!-- /tab-content -->
+
   </main>
 </div>
 
@@ -422,7 +534,7 @@ function exportCsv() {
 
 /* ── Tabs ── */
 function showTab(name, btn) {
-  ['dashboard','newsletter','emails','security'].forEach(function(t) {
+  ['dashboard','newsletter','emails','security','content'].forEach(function(t) {
     document.getElementById('tab-' + t).style.display = t === name ? '' : 'none';
   });
   document.querySelectorAll('.topbar-link').forEach(function(b) { b.classList.remove('active'); });
@@ -430,6 +542,7 @@ function showTab(name, btn) {
   if (name === 'newsletter') loadNewsletter();
   if (name === 'emails')     loadEmailQueue();
   if (name === 'security')   loadSecurityLogs();
+  if (name === 'content')    initEmailEditor();
 }
 
 /* ── Period ── */
@@ -679,6 +792,164 @@ function _renderLogs() {
 
 function esc(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EMAIL EDITOR
+══════════════════════════════════════════════════════════════ */
+var _editorLang    = 'fr';
+var _editorLoaded  = {};   // { fr: {content}, nl:..., en:... }
+var _editorSaved   = {};   // snapshot of last save
+var _previewTimer  = null;
+var EDITOR_FIELDS  = ['subject','tagline_hero','p1','p2','contact_title','sig_name','sig1','sig2'];
+
+function initEmailEditor() {
+  if (_editorLoaded[_editorLang]) return;
+  _loadEditorLang(_editorLang);
+}
+
+function switchEditorLang(lang, btn) {
+  _editorLang = lang;
+  document.querySelectorAll('.lang-sw-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  if (_editorLoaded[lang]) {
+    _fillFields(lang);
+  } else {
+    document.getElementById('editorLoading').style.display = '';
+    document.getElementById('editorFields').style.display  = 'none';
+    _loadEditorLang(lang);
+  }
+}
+
+function _loadEditorLang(lang) {
+  fetch('/.netlify/functions/admin-api?action=email-content-get&lang=' + lang, {
+    headers: { 'Authorization': 'Bearer ' + _token }
+  }).then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (!data || !data.content) return;
+      _editorLoaded[lang] = data.content;
+      _editorSaved[lang]  = JSON.stringify(data.content);
+      if (_editorLang === lang) _fillFields(lang);
+    });
+}
+
+function _fillFields(lang) {
+  var c = _editorLoaded[lang] || {};
+  EDITOR_FIELDS.forEach(function(f) {
+    var el = document.getElementById('ef-' + f);
+    if (el) el.value = c[f] || '';
+  });
+  document.getElementById('editorLoading').style.display = 'none';
+  document.getElementById('editorFields').style.display  = '';
+  document.getElementById('modifiedBadge').classList.remove('visible');
+  document.getElementById('saveStatus').textContent = '';
+  _schedulePreview();
+}
+
+function _currentContent() {
+  var c = {};
+  EDITOR_FIELDS.forEach(function(f) {
+    var el = document.getElementById('ef-' + f);
+    if (el) c[f] = el.value;
+  });
+  return c;
+}
+
+function markModified() {
+  var now = JSON.stringify(_currentContent());
+  var saved = _editorSaved[_editorLang] || '{}';
+  document.getElementById('modifiedBadge').classList.toggle('visible', now !== saved);
+  _schedulePreview();
+}
+
+function _schedulePreview() {
+  clearTimeout(_previewTimer);
+  _previewTimer = setTimeout(_renderPreview, 700);
+}
+
+function _renderPreview() {
+  fetch('/.netlify/functions/admin-api?action=email-preview', {
+    method : 'POST',
+    headers: { 'Authorization': 'Bearer ' + _token, 'Content-Type': 'application/json' },
+    body   : JSON.stringify({ lang: _editorLang, prenom: 'Marie', content: _currentContent() }),
+  }).then(function(r) { return r.ok ? r.text() : null; })
+    .then(function(html) {
+      if (!html) return;
+      var frame = document.getElementById('previewFrame');
+      frame.srcdoc = html;
+    });
+}
+
+function saveEmailContent() {
+  var content = _currentContent();
+  var btn = document.querySelector('.save-btn');
+  if (btn) btn.disabled = true;
+  fetch('/.netlify/functions/admin-api?action=email-content-save', {
+    method : 'POST',
+    headers: { 'Authorization': 'Bearer ' + _token, 'Content-Type': 'application/json' },
+    body   : JSON.stringify({ lang: _editorLang, content: content }),
+  }).then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (btn) btn.disabled = false;
+      if (!d || !d.ok) { setText('saveStatus', 'Erreur lors de la sauvegarde.'); return; }
+      _editorLoaded[_editorLang] = content;
+      _editorSaved[_editorLang]  = JSON.stringify(content);
+      document.getElementById('modifiedBadge').classList.remove('visible');
+      setText('saveStatus', '✓ Sauvegardé');
+      setTimeout(function() { setText('saveStatus', ''); }, 3000);
+    });
+}
+
+function sendEmailTest() {
+  var btn = document.querySelector('.test-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Envoi…'; }
+  // Sauvegarder d'abord si modifié
+  var saveFirst = document.getElementById('modifiedBadge').classList.contains('visible');
+  var doSend = function() {
+    fetch('/.netlify/functions/admin-api?action=email-send-test', {
+      method : 'POST',
+      headers: { 'Authorization': 'Bearer ' + _token, 'Content-Type': 'application/json' },
+      body   : JSON.stringify({ lang: _editorLang }),
+    }).then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (btn) { btn.disabled = false; btn.textContent = 'Envoyer email test'; }
+        if (d && d.ok) {
+          setText('saveStatus', '✓ Email test envoyé à zoegrede.kine@gmail.com');
+          setTimeout(function() { setText('saveStatus', ''); }, 5000);
+        } else {
+          setText('saveStatus', 'Erreur : ' + (d && d.error || 'inconnu'));
+        }
+      }).catch(function() {
+        if (btn) { btn.disabled = false; btn.textContent = 'Envoyer email test'; }
+      });
+  };
+  if (saveFirst) {
+    // Sauvegarder puis envoyer
+    fetch('/.netlify/functions/admin-api?action=email-content-save', {
+      method : 'POST',
+      headers: { 'Authorization': 'Bearer ' + _token, 'Content-Type': 'application/json' },
+      body   : JSON.stringify({ lang: _editorLang, content: _currentContent() }),
+    }).then(doSend);
+  } else {
+    doSend();
+  }
+}
+
+function openPreviewWindow() {
+  var win = window.open('', '_blank');
+  if (!win) return;
+  win.document.write('<p style="padding:2rem;font-family:system-ui">Génération…</p>');
+  fetch('/.netlify/functions/admin-api?action=email-preview', {
+    method : 'POST',
+    headers: { 'Authorization': 'Bearer ' + _token, 'Content-Type': 'application/json' },
+    body   : JSON.stringify({ lang: _editorLang, prenom: 'Marie', content: _currentContent() }),
+  }).then(function(r) { return r.ok ? r.text() : null; })
+    .then(function(html) {
+      if (!html) return;
+      win.document.open();
+      win.document.write(html);
+      win.document.close();
+    });
 }
 </script>
 </body>

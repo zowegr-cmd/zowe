@@ -41,33 +41,39 @@ const TR = {
   },
 };
 
-// ── Traductions spécifiques confirmation premium ──────────────────────────────
+// ── Traductions spécifiques confirmation premium (éditables depuis l'admin) ───
 const CT = {
   fr: {
+    subject:       "Bienvenue dans l'expérience Zowe — Votre demande a été reçue avec soin",
     tagline_hero:  "Votre demande a été reçue avec soin.",
     p1:            "Votre demande a été reçue avec toute l'attention qu'elle mérite.",
     p2:            "Zoé prendra personnellement contact avec vous dans la journée afin d'échanger sur vos besoins et de convenir ensemble du moment qui vous conviendra le mieux.",
     contact_title: "D'ici là, retrouvez Zoé directement",
+    sig_name:      "Zoé",
     sig1:          "Kinésithérapie de haute précision",
     sig2:          "Méthode BELTRA",
     rights:        "Tous droits réservés.",
     unsub:         "Se désabonner",
   },
   nl: {
+    subject:       "Welkom bij de Zowe-ervaring — Uw aanvraag is met zorg ontvangen",
     tagline_hero:  "Uw aanvraag is met zorg ontvangen.",
     p1:            "Uw aanvraag is met alle aandacht ontvangen die zij verdient.",
     p2:            "Zoé neemt vandaag nog persoonlijk contact met u op om uw behoeften te bespreken en samen het meest passende moment te kiezen.",
     contact_title: "In de tussentijd, bereik Zoé rechtstreeks",
+    sig_name:      "Zoé",
     sig1:          "Hoge precisie kinesitherapie",
     sig2:          "BELTRA-methode",
     rights:        "Alle rechten voorbehouden.",
     unsub:         "Uitschrijven",
   },
   en: {
+    subject:       "Welcome to the Zowe experience — Your request has been received with care",
     tagline_hero:  "Your request has been received with care.",
     p1:            "Your request has been received with all the attention it deserves.",
     p2:            "Zoé will personally get in touch with you today to discuss your needs and find a time that suits you best.",
     contact_title: "In the meantime, reach Zoé directly",
+    sig_name:      "Zoé",
     sig1:          "High-precision physiotherapy",
     sig2:          "BELTRA method",
     rights:        "All rights reserved.",
@@ -85,10 +91,11 @@ function goldLine(width) {
 }
 
 // ── Email 1 : confirmation patient PREMIUM ────────────────────────────────────
-function buildPatientConfirm(prenom, lang, unsubUrl) {
+// overrides : contenu édité depuis le panel admin (stocké dans Netlify Blobs)
+function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
   if (!CT[lang]) lang = 'fr';
-  const tx = CT[lang];
-  const subject = t(lang, 'subject_confirm');
+  const tx      = Object.assign({}, CT[lang], overrides || {});
+  const subject = tx.subject || t(lang, 'subject_confirm');
 
   // Signature base64 — require() est mis en cache par Node après le 1er appel
   let sigTag = '';
@@ -199,7 +206,7 @@ function buildPatientConfirm(prenom, lang, unsubUrl) {
 <tr>
   <td align="center" class="bg-cream" style="background-color:#F5F0E8;padding:36px 40px 32px;">
     ${sigTag}
-    <p style="margin:0 0 12px;font-family:Georgia,serif;font-size:28px;font-style:italic;color:#6B1F2A;text-align:center;">Zoé</p>
+    <p style="margin:0 0 12px;font-family:Georgia,serif;font-size:28px;font-style:italic;color:#6B1F2A;text-align:center;">${tx.sig_name || 'Zoé'}</p>
     <p style="margin:0 0 14px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:4px;color:#C9A96E;text-align:center;text-transform:uppercase;">${tx.sig1}</p>
     <table width="30" cellpadding="0" cellspacing="0" role="presentation" style="margin:0 auto 14px;">${goldLine(30)}</table>
     <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:3px;color:#6B1F2A;text-align:center;text-transform:uppercase;">${tx.sig2}</p>
@@ -347,4 +354,4 @@ function buildReminder24h(prenom, lang, unsubUrl) {
   return { subject, html, text };
 }
 
-module.exports = { buildPatientConfirm, buildReminder24h };
+module.exports = { buildPatientConfirm, buildReminder24h, CT_DEFAULTS: CT };

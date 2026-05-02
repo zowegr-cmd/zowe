@@ -155,7 +155,13 @@ exports.handler = async function (event) {
     try {
       const unsubToken = createUnsubToken(email);
       const unsubUrl   = `${SITE_URL}/.netlify/functions/unsubscribe?token=${unsubToken}`;
-      const { subject, html, text } = buildPatientConfirm(prenom, lang, unsubUrl);
+      // Charger le contenu éditables depuis l'admin (fail-open sur défaut)
+      let emailContent = null;
+      try {
+        const cStore = getStore('email-content');
+        emailContent = await cStore.get(`confirm:${lang}`, { type: 'json' });
+      } catch (_) {}
+      const { subject, html, text } = buildPatientConfirm(prenom, lang, unsubUrl, emailContent);
       const { data, error } = await resend.emails.send({
         from,
         to      : email,

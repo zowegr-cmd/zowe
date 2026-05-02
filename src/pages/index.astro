@@ -13,7 +13,12 @@ import contact      from '../content/contact.json';
 import meta         from '../content/meta.json';
 
 const formAction = `https://formspree.io/f/${contact.formspreeId}`;
-const allTestimonials = [...testimonials.items, ...testimonials.items];
+// BELTRA en tête, puis les autres
+const _sorted = [
+  ...testimonials.items.filter(t => /beltra/i.test(t.text)),
+  ...testimonials.items.filter(t => !/beltra/i.test(t.text)),
+];
+const allTestimonials = [..._sorted, ..._sorted];
 const waLink = `https://wa.me/32471783746?text=${encodeURIComponent("Bonjour Zoé, je souhaite en savoir plus sur l'expérience Zowe.")}`;
 const igLink = infos.instagram || 'https://www.instagram.com/kine.zowe';
 const mapboxToken = import.meta.env.PUBLIC_MAPBOX_TOKEN || '';
@@ -203,18 +208,28 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         <h2 class="section-title" data-i18n="section.testimonials">Témoignages</h2>
       </div>
     </div>
-    <div class="testimonials-track-wrapper">
-      <div class="testimonials-track" id="testimonialsTrack">
-        {allTestimonials.map((t) => (
-          <div class="testimonial-card">
-            <div class="testimonial-stars">{'★'.repeat(t.rating)}</div>
-            <p class="testimonial-text">"{t.text}"</p>
-            <div class="testimonial-meta">
-              <span class="testimonial-name">{t.name}</span>
-              <span class="testimonial-date">{t.date}</span>
+    <div class="testimonials-outer">
+      <div class="testimonials-track-wrapper">
+        <div class="testimonials-track" id="testimonialsTrack">
+          {allTestimonials.map((t) => (
+            <div class="testimonial-card">
+              <div class="testimonial-stars">{'★'.repeat(t.rating)}</div>
+              <p class="testimonial-text">"{t.text}"</p>
+              <div class="testimonial-meta">
+                <span class="testimonial-name">{t.name}</span>
+                <span class="testimonial-date">{t.date}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+      </div>
+      <div class="testimonials-nav">
+        <button class="testimonials-btn" id="testimonialsPrev" aria-label="Avis précédent">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="testimonials-btn" id="testimonialsNext" aria-label="Avis suivant">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
       </div>
     </div>
   </section>
@@ -643,15 +658,111 @@ window.__translationMode = __translationMode;
     });
   })();
 
+  /* ── Carrousel témoignages — moteur JS (auto-scroll + nav manuelle + swipe) ── */
+  (function() {
+    var track   = document.getElementById('testimonialsTrack');
+    var wrapper = track && track.parentElement;
+    if (!track || !wrapper) return;
+
+    var pos       = 0;      // position courante en px
+    var paused    = false;  // pause hover/interaction
+    var pauseTimer= null;
+    var halfWidth = 0;
+    var SPEED     = 0.45;   // px/frame (~27px/s à 60fps)
+    var GAP       = 24;     // gap CSS en px
+
+    function calcHalf() { halfWidth = track.scrollWidth / 2; }
+    function cardStep() {
+      var c = track.querySelector('.testimonial-card');
+      return c ? c.offsetWidth + GAP : 340;
+    }
+
+    // Boucle rAF principale
+    function tick() {
+      if (!paused) {
+        pos += SPEED;
+        if (pos >= halfWidth) pos -= halfWidth;
+        track.style.transform = 'translateX(-' + pos + 'px)';
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function pauseFor(ms) {
+      paused = true;
+      clearTimeout(pauseTimer);
+      pauseTimer = setTimeout(function() { paused = false; }, ms);
+    }
+
+    // Pause au hover (desktop)
+    wrapper.addEventListener('mouseenter', function() { paused = true; });
+    wrapper.addEventListener('mouseleave', function() {
+      if (!pauseTimer) paused = false;
+    });
+
+    // Navigation manuelle (prev / next)
+    function navigate(dir) {
+      var step = cardStep() * dir;
+      var dest = pos + step;
+      if (dest >= halfWidth) dest -= halfWidth;
+      if (dest < 0)          dest += halfWidth;
+      // Transition CSS temporaire pour fluidité du clic
+      track.style.transition = 'transform 0.38s ease';
+      pos = dest;
+      track.style.transform  = 'translateX(-' + pos + 'px)';
+      setTimeout(function() { track.style.transition = ''; }, 380);
+      pauseFor(3000);
+    }
+
+    var prevBtn = document.getElementById('testimonialsPrev');
+    var nextBtn = document.getElementById('testimonialsNext');
+    if (prevBtn) prevBtn.addEventListener('click', function() { navigate(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { navigate(1); });
+
+    // Swipe tactile
+    var txStart = null, posStart = 0;
+    wrapper.addEventListener('touchstart', function(e) {
+      txStart  = e.touches[0].clientX;
+      posStart = pos;
+      paused   = true;
+    }, { passive: true });
+    wrapper.addEventListener('touchmove', function(e) {
+      if (txStart === null) return;
+      var dx = txStart - e.touches[0].clientX;
+      pos = posStart + dx;
+      if (pos >= halfWidth) pos -= halfWidth;
+      if (pos < 0)          pos += halfWidth;
+      track.style.transform = 'translateX(-' + pos + 'px)';
+    }, { passive: true });
+    wrapper.addEventListener('touchend', function() {
+      txStart = null;
+      pauseFor(3000);
+    });
+
+    calcHalf();
+    tick();
+
+    // Recalcule après chargement dynamique (Google Reviews)
+    window._carouselReload = function() { setTimeout(calcHalf, 100); };
+  })();
+
   /* ── Google Reviews dynamiques ── */
   (function loadReviews() {
     var track = document.getElementById('testimonialsTrack');
     if (!track) return;
+    function escHtml(s) {
+      return String(s).replace(/[&<>"']/g, function(c) {
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+      });
+    }
     fetch('/.netlify/functions/reviews')
       .then(function(r){ return r.ok ? r.json() : null; })
       .then(function(reviews) {
-        if (!reviews || reviews.length < 2) return; // garder le fallback si peu de résultats
-        var doubled = reviews.concat(reviews); // double pour le marquee infini
+        if (!reviews || reviews.length < 2) return;
+        // BELTRA en tête
+        reviews.sort(function(a, b) {
+          return (/beltra/i.test(b.text) ? 1 : 0) - (/beltra/i.test(a.text) ? 1 : 0);
+        });
+        var doubled = reviews.concat(reviews);
         track.innerHTML = doubled.map(function(t) {
           return '<div class="testimonial-card">'
             + '<div class="testimonial-stars">' + '★'.repeat(t.rating) + '</div>'
@@ -661,13 +772,9 @@ window.__translationMode = __translationMode;
             + '<span class="testimonial-date">' + escHtml(t.date) + '</span>'
             + '</div></div>';
         }).join('');
+        if (window._carouselReload) window._carouselReload();
       })
       .catch(function(){});
-    function escHtml(s) {
-      return String(s).replace(/[&<>"']/g, function(c) {
-        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-      });
-    }
   })();
 
   /* ── Mapbox ── */

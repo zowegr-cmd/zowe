@@ -280,6 +280,7 @@ img {
   width: clamp(240px, 46vw, 560px);
   height: auto;
   display: block;
+  opacity: 0.55;
 }
 
 .hero-tagline {

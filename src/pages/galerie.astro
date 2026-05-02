@@ -783,7 +783,6 @@ const EAGER = 5;
       if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
     }
     function scheduleResume() {
-      if (MOB()) return;
       if (resumeTimer) clearTimeout(resumeTimer);
       resumeTimer = setTimeout(startAuto, 3000);
     }
@@ -819,7 +818,7 @@ const EAGER = 5;
     var wrap = document.getElementById('gcWrap');
     if (wrap) {
       wrap.addEventListener('mouseenter', stopAuto);
-      wrap.addEventListener('mouseleave', function() { if (!MOB()) startAuto(); });
+      wrap.addEventListener('mouseleave', startAuto);
     }
 
     /* ── Touch swipe ── */
@@ -890,7 +889,7 @@ const EAGER = 5;
     /* ── Init ── */
     preloadNearby();
     render();
-    if (!MOB()) startAuto();
+    startAuto();
     // Background-load the rest after 1s
     setTimeout(preloadAll, 1200);
 

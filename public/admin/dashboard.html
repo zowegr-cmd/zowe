@@ -41,7 +41,7 @@ body{font-family:var(--sans);background:var(--cr);color:var(--dk);min-height:100
 .section-title{font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--bx);margin-bottom:1.5rem}
 
 /* ── Tabs ── */
-.tab-bar{display:flex;gap:.5rem;margin-bottom:2.5rem}
+.tab-bar{display:flex;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap}
 .tab{padding:.5rem 1.25rem;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--bd);color:var(--lt);cursor:pointer;transition:.2s}
 .tab.active{background:var(--bx);border-color:var(--bx);color:#fff}
 
@@ -58,7 +58,6 @@ body{font-family:var(--sans);background:var(--cr);color:var(--dk);min-height:100
 .card__label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--lt);margin-bottom:.75rem}
 .card__value{font-family:var(--serif);font-size:2.2rem;font-weight:300;color:var(--bx);line-height:1}
 .card__sub{font-size:.7rem;color:var(--lt);margin-top:.4rem}
-.card__badge{position:absolute;top:1rem;right:1rem;font-size:.6rem;letter-spacing:.06em;color:var(--or)}
 .card--accent{background:var(--bx);border-color:var(--bx)}
 .card--accent .card__label{color:rgba(245,240,232,.5)}
 .card--accent .card__value{color:var(--or)}
@@ -83,11 +82,11 @@ canvas{display:block;width:100%;height:160px}
 .lang-bar-fill{height:100%;border-radius:3px;background:var(--bx);transition:width .6s ease}
 .lang-bar-pct{font-size:.68rem;color:var(--lt);width:32px;text-align:right;flex-shrink:0}
 
-/* ── Newsletter ── */
+/* ── Tables (newsletter / emails / logs) ── */
 .nl-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.75rem}
-.nl-stats{display:flex;gap:1.5rem}
+.nl-stats{display:flex;gap:1.5rem;flex-wrap:wrap}
 .nl-stat{font-size:.72rem;color:var(--mid)}.nl-stat strong{color:var(--bx);font-weight:600}
-.export-btn{font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1.1rem;background:none;border:1px solid var(--bd);color:var(--mid);cursor:pointer;transition:.2s;text-decoration:none}
+.export-btn{font-size:.65rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1.1rem;background:none;border:1px solid var(--bd);color:var(--mid);cursor:pointer;transition:.2s}
 .export-btn:hover{border-color:var(--bx);color:var(--bx)}
 .nl-table-wrap{background:var(--wh);border:1px solid var(--bd);overflow:auto}
 table{width:100%;border-collapse:collapse}
@@ -101,9 +100,15 @@ td.name{color:var(--dk);font-weight:500}
 td.email a{color:var(--bx);text-decoration:none}
 .unsub-btn{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid rgba(200,100,100,.3);color:#C05050;padding:.28rem .7rem;cursor:pointer;transition:.2s}
 .unsub-btn:hover{background:#C05050;color:#fff;border-color:#C05050}
+.retry-btn{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid rgba(201,169,110,.4);color:var(--or);padding:.28rem .7rem;cursor:pointer;transition:.2s}
+.retry-btn:hover{background:var(--or);color:#fff;border-color:var(--or)}
 .badge-unsub{font-size:.6rem;letter-spacing:.06em;color:var(--lt)}
+.badge-ok{font-size:.65rem;color:var(--bx)}
+.badge-warn{font-size:.65rem;color:var(--or)}
+.badge-fail{font-size:.65rem;color:#C05050}
 .empty{text-align:center;padding:3rem;color:var(--lt);font-style:italic}
 .loading{text-align:center;padding:2rem;color:var(--lt)}
+.session-info{font-size:.62rem;color:rgba(245,240,232,.25);margin-left:.5rem}
 
 /* ── Responsive ── */
 @media(max-width:640px){
@@ -132,10 +137,15 @@ td.email a{color:var(--bx);text-decoration:none}
     <nav class="topbar-nav">
       <button class="topbar-link active" onclick="showTab('dashboard',this)">Dashboard</button>
       <button class="topbar-link" onclick="showTab('newsletter',this)">Newsletter</button>
+      <button class="topbar-link" onclick="showTab('emails',this)">Emails</button>
+      <button class="topbar-link" onclick="showTab('security',this)">Sécurité</button>
       <a href="/admin/" class="topbar-link" target="_blank">Contenu ↗</a>
       <a href="https://analytics.google.com" class="topbar-link" target="_blank">GA4 ↗</a>
     </nav>
-    <button class="logout-btn" onclick="logout()">Se déconnecter</button>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <span class="session-info" id="sessionInfo"></span>
+      <button class="logout-btn" onclick="logout()">Se déconnecter</button>
+    </div>
   </header>
 
   <main class="main">
@@ -151,12 +161,11 @@ td.email a{color:var(--bx);text-decoration:none}
         </div>
       </div>
 
-      <!-- Metric cards -->
       <div class="cards">
         <div class="card card--accent">
           <div class="card__label">Demandes contact</div>
           <div class="card__value" id="stat-form">—</div>
-          <div class="card__sub" id="stat-form-sub">sur la période</div>
+          <div class="card__sub">sur la période</div>
         </div>
         <div class="card">
           <div class="card__label">Clics WhatsApp</div>
@@ -164,14 +173,19 @@ td.email a{color:var(--bx);text-decoration:none}
           <div class="card__sub">sur la période</div>
         </div>
         <div class="card">
-          <div class="card__label">Clics partager</div>
+          <div class="card__label">Clics Instagram</div>
+          <div class="card__value" id="stat-ig">—</div>
+          <div class="card__sub">sur la période</div>
+        </div>
+        <div class="card">
+          <div class="card__label">Partages</div>
           <div class="card__value" id="stat-share">—</div>
           <div class="card__sub">sur la période</div>
         </div>
         <div class="card">
           <div class="card__label">Newsletter</div>
           <div class="card__value" id="stat-nl">—</div>
-          <div class="card__sub" id="stat-nl-sub">inscrits actifs</div>
+          <div class="card__sub">inscrits actifs</div>
         </div>
         <a href="https://analytics.google.com" target="_blank" class="card card--link">
           <div class="card__label">Trafic & visiteurs</div>
@@ -180,7 +194,6 @@ td.email a{color:var(--bx);text-decoration:none}
         </a>
       </div>
 
-      <!-- Courbe 30 jours -->
       <div class="chart-wrap">
         <div class="chart-header">
           <p class="section-title" style="margin:0">Activité — <span id="chartPeriodLabel">30 derniers jours</span></p>
@@ -192,7 +205,6 @@ td.email a{color:var(--bx);text-decoration:none}
         <canvas id="activityChart"></canvas>
       </div>
 
-      <!-- Langues -->
       <div class="langs-wrap">
         <p class="section-title">Sélection de langue sur la période</p>
         <div class="lang-bar-row">
@@ -223,7 +235,7 @@ td.email a{color:var(--bx);text-decoration:none}
             <span class="nl-stat">Désinscrits : <strong id="nl-unsub-count">—</strong></span>
           </div>
         </div>
-        <a id="csvLink" href="/.netlify/functions/admin-api?action=csv" class="export-btn" onclick="addAuthToLink(this)">Exporter CSV</a>
+        <button class="export-btn" onclick="exportCsv()">Exporter CSV</button>
       </div>
 
       <div class="nl-table-wrap">
@@ -231,11 +243,7 @@ td.email a{color:var(--bx);text-decoration:none}
         <table id="nlTable" style="display:none">
           <thead>
             <tr>
-              <th>Prénom · Nom</th>
-              <th>Email</th>
-              <th>Inscrit le</th>
-              <th>Statut</th>
-              <th></th>
+              <th>Prénom · Nom</th><th>Email</th><th>Inscrit le</th><th>Statut</th><th></th>
             </tr>
           </thead>
           <tbody id="nlBody"></tbody>
@@ -244,25 +252,94 @@ td.email a{color:var(--bx);text-decoration:none}
       </div>
     </div>
 
+    <!-- ═══════════ EMAILS TAB ═══════════ -->
+    <div id="tab-emails" style="display:none">
+      <div class="nl-header">
+        <div>
+          <p class="section-title" style="margin-bottom:.25rem">File d'envoi email (7 derniers jours)</p>
+          <div class="nl-stats">
+            <span class="nl-stat">Envoyés : <strong id="eq-sent">—</strong></span>
+            <span class="nl-stat">En attente : <strong id="eq-pending">—</strong></span>
+            <span class="nl-stat">Échoués : <strong id="eq-failed">—</strong></span>
+          </div>
+        </div>
+        <button class="export-btn" onclick="reloadEmailQueue()">Rafraîchir</button>
+      </div>
+
+      <div class="nl-table-wrap">
+        <div class="loading" id="eqLoading">Chargement…</div>
+        <table id="eqTable" style="display:none">
+          <thead>
+            <tr>
+              <th>Email</th><th>Prénom</th><th>Type</th><th>Créé le</th><th>Statut</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="eqBody"></tbody>
+        </table>
+        <div class="empty" id="eqEmpty" style="display:none">Aucun email dans les 7 derniers jours.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════ SÉCURITÉ TAB ═══════════ -->
+    <div id="tab-security" style="display:none">
+      <div class="nl-header">
+        <div>
+          <p class="section-title" style="margin-bottom:.25rem">Journal de connexions (30 derniers jours)</p>
+          <div class="nl-stats">
+            <span class="nl-stat">Réussies : <strong id="sec-ok">—</strong></span>
+            <span class="nl-stat">Échouées : <strong id="sec-fail">—</strong></span>
+          </div>
+        </div>
+        <button class="export-btn" onclick="reloadLogs()">Rafraîchir</button>
+      </div>
+
+      <div class="nl-table-wrap">
+        <div class="loading" id="secLoading">Chargement…</div>
+        <table id="secTable" style="display:none">
+          <thead>
+            <tr>
+              <th>Date</th><th>IP</th><th>Action</th><th>Statut</th>
+            </tr>
+          </thead>
+          <tbody id="secBody"></tbody>
+        </table>
+        <div class="empty" id="secEmpty" style="display:none">Aucun log disponible.</div>
+      </div>
+    </div>
+
   </main>
 </div>
 
 <script>
-/* ── Auth ── */
-var _token = sessionStorage.getItem('zw_admin_token') || '';
+/* ── Session (8h expiry) ── */
+var _token = '';
+var _session = null;
+try { _session = JSON.parse(sessionStorage.getItem('zw_admin_session') || 'null'); } catch {}
+if (_session && _session.expiresAt && _session.expiresAt > Date.now()) {
+  _token = _session.token || '';
+}
 
+/* ── Auth ── */
 function login() {
   var pwd = document.getElementById('pwdInput').value.trim();
   if (!pwd) return;
-  fetch('/.netlify/functions/admin-api?action=stats&days=7&token=' + encodeURIComponent(pwd))
-  .then(function(r) {
+  fetch('/.netlify/functions/admin-api?action=stats&days=1', {
+    headers: { 'Authorization': 'Bearer ' + pwd }
+  }).then(function(r) {
     if (r.ok) {
       _token = pwd;
-      sessionStorage.setItem('zw_admin_token', pwd);
+      var session = { token: pwd, expiresAt: Date.now() + 8 * 3600 * 1000 };
+      sessionStorage.setItem('zw_admin_session', JSON.stringify(session));
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
+      updateSessionInfo();
+      startPing();
       loadDashboard(30);
+    } else if (r.status === 429) {
+      document.getElementById('loginError').textContent = 'Trop de tentatives. Réessayez dans une heure.';
+      document.getElementById('loginError').style.display = 'block';
     } else {
+      document.getElementById('loginError').textContent = 'Mot de passe incorrect.';
       document.getElementById('loginError').style.display = 'block';
     }
   }).catch(function() {
@@ -271,7 +348,7 @@ function login() {
 }
 
 function logout() {
-  sessionStorage.removeItem('zw_admin_token');
+  sessionStorage.removeItem('zw_admin_session');
   location.reload();
 }
 
@@ -279,29 +356,80 @@ document.getElementById('pwdInput').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') login();
 });
 
-// Vérifier le token existant au chargement
+function updateSessionInfo() {
+  var el = document.getElementById('sessionInfo');
+  if (!el || !_session) return;
+  var remaining = Math.round((_session.expiresAt - Date.now()) / 3600000);
+  el.textContent = 'Session : ' + remaining + 'h restante';
+}
+
+// Ping silencieux toutes les 5 min pour garder la session active
+function startPing() {
+  setInterval(function() {
+    if (!_token) return;
+    api('?action=stats&days=1').then(function(r) {
+      if (!r) { sessionStorage.removeItem('zw_admin_session'); location.reload(); }
+    });
+    updateSessionInfo();
+  }, 5 * 60 * 1000);
+}
+
+// Vérifier session existante au chargement
 if (_token) {
-  fetch('/.netlify/functions/admin-api?action=stats&days=7&token=' + encodeURIComponent(_token))
-  .then(function(r) {
+  fetch('/.netlify/functions/admin-api?action=stats&days=1', {
+    headers: { 'Authorization': 'Bearer ' + _token }
+  }).then(function(r) {
     if (r.ok) {
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
+      updateSessionInfo();
+      startPing();
       loadDashboard(30);
     } else {
-      sessionStorage.removeItem('zw_admin_token');
+      sessionStorage.removeItem('zw_admin_session');
       _token = '';
     }
   }).catch(function() {});
 }
 
+/* ── API (Authorization header, jamais dans l'URL) ── */
+function api(path, opts) {
+  return fetch('/.netlify/functions/admin-api' + path, Object.assign(
+    { headers: { 'Authorization': 'Bearer ' + _token } },
+    opts || {}
+  )).then(function(r) { return r.ok ? r.json() : null; });
+}
+
+/* ── Export CSV via fetch + blob (token dans header) ── */
+function exportCsv() {
+  fetch('/.netlify/functions/admin-api?action=csv', {
+    headers: { 'Authorization': 'Bearer ' + _token }
+  }).then(function(r) {
+    if (!r.ok) return;
+    return r.blob();
+  }).then(function(blob) {
+    if (!blob) return;
+    var url = URL.createObjectURL(blob);
+    var a   = document.createElement('a');
+    a.href  = url;
+    a.download = 'newsletter-zowe.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+}
+
 /* ── Tabs ── */
 function showTab(name, btn) {
-  ['dashboard','newsletter'].forEach(function(t) {
+  ['dashboard','newsletter','emails','security'].forEach(function(t) {
     document.getElementById('tab-' + t).style.display = t === name ? '' : 'none';
   });
   document.querySelectorAll('.topbar-link').forEach(function(b) { b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
   if (name === 'newsletter') loadNewsletter();
+  if (name === 'emails')     loadEmailQueue();
+  if (name === 'security')   loadSecurityLogs();
 }
 
 /* ── Period ── */
@@ -313,13 +441,6 @@ function setPeriod(days, btn) {
   loadDashboard(days);
 }
 
-/* ── API call ── */
-function api(path) {
-  var sep = path.includes('?') ? '&' : '?';
-  return fetch('/.netlify/functions/admin-api' + path + sep + 'token=' + encodeURIComponent(_token))
-    .then(function(r) { return r.ok ? r.json() : null; });
-}
-
 /* ── Dashboard ── */
 function loadDashboard(days) {
   document.getElementById('chartPeriodLabel').textContent = days + ' derniers jours';
@@ -328,19 +449,17 @@ function loadDashboard(days) {
     var t = data.totals;
     setText('stat-form',  t.form_submit || 0);
     setText('stat-wa',    t.wa_click    || 0);
+    setText('stat-ig',    t.ig_click    || 0);
     setText('stat-share', t.share_click || 0);
 
-    // Langues
     var fr = t.lang_fr || 0, nl = t.lang_nl || 0, en = t.lang_en || 0;
     var total = fr + nl + en || 1;
     setBar('fr', fr / total);
     setBar('nl', nl / total);
     setBar('en', en / total);
 
-    // Chart
     drawChart(data.days);
   });
-  // Newsletter count
   api('?action=newsletter').then(function(data) {
     if (!data) return;
     var active = (data.contacts || []).filter(function(c) { return !c.unsubscribed; }).length;
@@ -371,9 +490,7 @@ function drawChart(days) {
   ctx.scale(devicePixelRatio, devicePixelRatio);
 
   var pad = { t: 12, r: 16, b: 28, l: 28 };
-  var w   = W - pad.l - pad.r;
-  var h   = H - pad.t - pad.b;
-
+  var w = W - pad.l - pad.r, h = H - pad.t - pad.b;
   var contacts = days.map(function(d) { return d.form_submit || 0; });
   var wa       = days.map(function(d) { return d.wa_click    || 0; });
   var maxVal   = Math.max(1, Math.max.apply(null, contacts.concat(wa)));
@@ -382,42 +499,26 @@ function drawChart(days) {
   function xOf(i) { return pad.l + (i / (n - 1)) * w; }
   function yOf(v) { return pad.t + h - (v / maxVal) * h; }
 
-  // Grid
-  ctx.strokeStyle = 'rgba(0,0,0,.06)';
-  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(0,0,0,.06)'; ctx.lineWidth = 1;
   [0, .25, .5, .75, 1].forEach(function(f) {
     var y = pad.t + h - f * h;
     ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l + w, y); ctx.stroke();
   });
 
-  // Lines
   function drawLine(vals, color) {
     ctx.beginPath();
     ctx.strokeStyle = color; ctx.lineWidth = 2;
-    vals.forEach(function(v, i) {
-      i === 0 ? ctx.moveTo(xOf(i), yOf(v)) : ctx.lineTo(xOf(i), yOf(v));
-    });
+    vals.forEach(function(v, i) { i === 0 ? ctx.moveTo(xOf(i),yOf(v)) : ctx.lineTo(xOf(i),yOf(v)); });
     ctx.stroke();
-    // Fill
-    ctx.lineTo(xOf(n - 1), pad.t + h);
-    ctx.lineTo(pad.l, pad.t + h);
-    ctx.closePath();
-    ctx.fillStyle = color.replace(')', ',.08)').replace('rgb','rgba');
-    ctx.fill();
+    ctx.lineTo(xOf(n-1),pad.t+h); ctx.lineTo(pad.l,pad.t+h); ctx.closePath();
+    ctx.fillStyle = color.replace(')',',.08)').replace('rgb','rgba'); ctx.fill();
   }
-  if (n > 1) {
-    drawLine(wa,       'rgb(201,169,110)');
-    drawLine(contacts, 'rgb(107,31,42)');
-  }
+  if (n > 1) { drawLine(wa,'rgb(201,169,110)'); drawLine(contacts,'rgb(107,31,42)'); }
 
-  // X-axis labels (every ~7 days)
   ctx.fillStyle = '#AAAAAA'; ctx.font = '10px system-ui'; ctx.textAlign = 'center';
   var step = Math.ceil(n / 6);
   days.forEach(function(d, i) {
-    if (i % step === 0 || i === n - 1) {
-      var label = d.date ? d.date.slice(5) : '';
-      ctx.fillText(label, xOf(i), H - 6);
-    }
+    if (i % step === 0 || i === n-1) ctx.fillText(d.date ? d.date.slice(5) : '', xOf(i), H-6);
   });
 }
 
@@ -437,16 +538,15 @@ function loadNewsletter() {
     setText('nl-total',       active.length);
     setText('nl-unsub-count', inactive.length);
 
-    var tbody = document.getElementById('nlBody');
-    var rows  = '';
+    var tbody = document.getElementById('nlBody'), rows = '';
     data.contacts.forEach(function(c) {
       var date = c.created ? c.created.split('T')[0] : '—';
-      var name = [c.prenom, c.nom].filter(Boolean).join(' ') || '—';
+      var name = [c.prenom,c.nom].filter(Boolean).join(' ') || '—';
       rows += '<tr>' +
         '<td class="name">' + esc(name) + '</td>' +
         '<td class="email"><a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></td>' +
         '<td>' + date + '</td>' +
-        '<td>' + (c.unsubscribed ? '<span class="badge-unsub">Désinscrit</span>' : '<span style="color:var(--bx);font-size:.65rem">Actif</span>') + '</td>' +
+        '<td>' + (c.unsubscribed ? '<span class="badge-unsub">Désinscrit</span>' : '<span class="badge-ok">Actif</span>') + '</td>' +
         '<td>' + (!c.unsubscribed ? '<button class="unsub-btn" onclick="manualUnsub(\'' + esc(c.id) + '\',this)">Désinscrire</button>' : '') + '</td>' +
         '</tr>';
     });
@@ -463,24 +563,122 @@ function manualUnsub(contactId, btn) {
     body: JSON.stringify({ action: 'unsub', contactId: contactId }),
   }).then(function(r) {
     if (r.ok) {
-      var td = btn.parentElement;
-      td.previousElementSibling.innerHTML = '<span class="badge-unsub">Désinscrit</span>';
+      btn.parentElement.previousElementSibling.innerHTML = '<span class="badge-unsub">Désinscrit</span>';
       btn.remove();
-      var count = parseInt(document.getElementById('nl-unsub-count').textContent) || 0;
-      var active = parseInt(document.getElementById('nl-total').textContent) || 0;
-      setText('nl-unsub-count', count + 1);
-      setText('nl-total', Math.max(0, active - 1));
+      setText('nl-unsub-count', (parseInt(document.getElementById('nl-unsub-count').textContent)||0) + 1);
+      setText('nl-total', Math.max(0, (parseInt(document.getElementById('nl-total').textContent)||0) - 1));
     }
   });
 }
 
-function addAuthToLink(a) {
-  a.href = '/.netlify/functions/admin-api?action=csv&token=' + encodeURIComponent(_token);
-  // Note: token in query string — admin-api doit l'accepter aussi
+/* ── Email queue ── */
+var _eqLoaded = false;
+function loadEmailQueue() {
+  if (_eqLoaded) return;
+  _eqLoaded = true;
+  _renderEmailQueue();
+}
+function reloadEmailQueue() {
+  _eqLoaded = false;
+  document.getElementById('eqLoading').style.display = '';
+  document.getElementById('eqTable').style.display  = 'none';
+  document.getElementById('eqEmpty').style.display  = 'none';
+  loadEmailQueue();
+}
+function _renderEmailQueue() {
+  api('?action=email-queue').then(function(data) {
+    document.getElementById('eqLoading').style.display = 'none';
+    if (!data || !data.emails || !data.emails.length) {
+      document.getElementById('eqEmpty').style.display = '';
+      return;
+    }
+    var sent    = data.emails.filter(function(e){ return e.status==='sent'; }).length;
+    var pending = data.emails.filter(function(e){ return e.status==='pending'; }).length;
+    var failed  = data.emails.filter(function(e){ return e.status==='failed'; }).length;
+    setText('eq-sent',    sent);
+    setText('eq-pending', pending);
+    setText('eq-failed',  failed);
+
+    var tbody = document.getElementById('eqBody'), rows = '';
+    data.emails.forEach(function(e) {
+      var date = e.created ? e.created.split('T')[0] : '—';
+      var badge = e.status === 'sent'    ? '<span class="badge-ok">Envoyé</span>'
+                : e.status === 'failed'  ? '<span class="badge-fail">Échoué</span>'
+                : '<span class="badge-warn">En attente</span>';
+      var retry = e.status === 'failed'
+        ? '<button class="retry-btn" onclick="retryEmail(\'' + esc(e.id) + '\',this)">Réessayer</button>'
+        : '';
+      rows += '<tr>' +
+        '<td class="email"><a href="mailto:' + esc(e.to) + '">' + esc(e.to) + '</a></td>' +
+        '<td class="name">' + esc(e.prenom||'—') + '</td>' +
+        '<td>' + esc(e.type||'—') + '</td>' +
+        '<td>' + date + '</td>' +
+        '<td>' + badge + '</td>' +
+        '<td>' + retry + '</td>' +
+        '</tr>';
+    });
+    document.getElementById('eqBody').innerHTML = rows;
+    document.getElementById('eqTable').style.display = '';
+  });
+}
+function retryEmail(id, btn) {
+  fetch('/.netlify/functions/admin-api', {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + _token, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'retry-email', emailId: id }),
+  }).then(function(r) {
+    if (r.ok) {
+      btn.parentElement.previousElementSibling.innerHTML = '<span class="badge-warn">En attente</span>';
+      btn.remove();
+      setText('eq-failed',  Math.max(0, (parseInt(document.getElementById('eq-failed').textContent)||0) - 1));
+      setText('eq-pending', (parseInt(document.getElementById('eq-pending').textContent)||0) + 1);
+    }
+  });
+}
+
+/* ── Security logs ── */
+var _secLoaded = false;
+function loadSecurityLogs() {
+  if (_secLoaded) return;
+  _secLoaded = true;
+  _renderLogs();
+}
+function reloadLogs() {
+  _secLoaded = false;
+  document.getElementById('secLoading').style.display = '';
+  document.getElementById('secTable').style.display  = 'none';
+  document.getElementById('secEmpty').style.display  = 'none';
+  loadSecurityLogs();
+}
+function _renderLogs() {
+  api('?action=admin-logs').then(function(data) {
+    document.getElementById('secLoading').style.display = 'none';
+    if (!data || !data.logs || !data.logs.length) {
+      document.getElementById('secEmpty').style.display = '';
+      return;
+    }
+    var ok   = data.logs.filter(function(l){ return l.success; }).length;
+    var fail = data.logs.filter(function(l){ return !l.success; }).length;
+    setText('sec-ok',   ok);
+    setText('sec-fail', fail);
+
+    var tbody = document.getElementById('secBody'), rows = '';
+    data.logs.slice(0,100).forEach(function(l) {
+      var dt = l.timestamp ? l.timestamp.replace('T',' ').slice(0,16) : '—';
+      rows += '<tr>' +
+        '<td>' + dt + '</td>' +
+        '<td>' + esc(l.ip||'—') + '</td>' +
+        '<td>' + esc(l.action||'—') + '</td>' +
+        '<td>' + (l.success ? '<span class="badge-ok">OK</span>' : '<span class="badge-fail">Échec</span>') + '</td>' +
+        '</tr>';
+    });
+    document.getElementById('secBody').innerHTML = rows;
+    document.getElementById('secTable').style.display = '';
+  });
 }
 
 function esc(s) {
-  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 </body>

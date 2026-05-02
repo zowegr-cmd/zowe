@@ -163,7 +163,7 @@ document.querySelectorAll('[data-share]').forEach(function(btn) {
   btn.addEventListener('click', function(e) {
     e.preventDefault();
     var title = card.dataset.shareTitle || 'Zowe — Kinésithérapie BELTRA';
-    var url   = 'https://zowe.netlify.app/galerie';
+    var url   = 'https://zowekine.com/galerie';
     if (navigator.share) {
       navigator.share({ title: title, url: url });
     } else {

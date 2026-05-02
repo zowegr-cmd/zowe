@@ -4,59 +4,59 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://zowe.netlify.app/</loc>
-    <xhtml:link rel="alternate" hreflang="fr"        href="https://zowe.netlify.app/"/>
-    <xhtml:link rel="alternate" hreflang="nl"        href="https://zowe.netlify.app/"/>
-    <xhtml:link rel="alternate" hreflang="en"        href="https://zowe.netlify.app/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zowe.netlify.app/"/>
-    <lastmod>2026-04-30</lastmod>
+    <loc>https://zowekine.com/</loc>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://zowekine.com/"/>
+    <xhtml:link rel="alternate" hreflang="nl"        href="https://zowekine.com/"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://zowekine.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zowekine.com/"/>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://zowe.netlify.app/cadeau</loc>
-    <xhtml:link rel="alternate" hreflang="fr"        href="https://zowe.netlify.app/cadeau"/>
-    <xhtml:link rel="alternate" hreflang="nl"        href="https://zowe.netlify.app/cadeau"/>
-    <xhtml:link rel="alternate" hreflang="en"        href="https://zowe.netlify.app/cadeau"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zowe.netlify.app/cadeau"/>
-    <lastmod>2026-04-30</lastmod>
+    <loc>https://zowekine.com/cadeau</loc>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://zowekine.com/cadeau"/>
+    <xhtml:link rel="alternate" hreflang="nl"        href="https://zowekine.com/cadeau"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://zowekine.com/cadeau"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zowekine.com/cadeau"/>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://zowe.netlify.app/preparer-ma-seance</loc>
-    <xhtml:link rel="alternate" hreflang="fr"        href="https://zowe.netlify.app/preparer-ma-seance"/>
-    <xhtml:link rel="alternate" hreflang="nl"        href="https://zowe.netlify.app/preparer-ma-seance"/>
-    <xhtml:link rel="alternate" hreflang="en"        href="https://zowe.netlify.app/preparer-ma-seance"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zowe.netlify.app/preparer-ma-seance"/>
-    <lastmod>2026-04-30</lastmod>
+    <loc>https://zowekine.com/preparer-ma-seance</loc>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://zowekine.com/preparer-ma-seance"/>
+    <xhtml:link rel="alternate" hreflang="nl"        href="https://zowekine.com/preparer-ma-seance"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://zowekine.com/preparer-ma-seance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zowekine.com/preparer-ma-seance"/>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://zowe.netlify.app/galerie</loc>
-    <xhtml:link rel="alternate" hreflang="fr"        href="https://zowe.netlify.app/galerie"/>
-    <xhtml:link rel="alternate" hreflang="nl"        href="https://zowe.netlify.app/galerie"/>
-    <xhtml:link rel="alternate" hreflang="en"        href="https://zowe.netlify.app/galerie"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zowe.netlify.app/galerie"/>
-    <lastmod>2026-04-30</lastmod>
+    <loc>https://zowekine.com/galerie</loc>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://zowekine.com/galerie"/>
+    <xhtml:link rel="alternate" hreflang="nl"        href="https://zowekine.com/galerie"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://zowekine.com/galerie"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://zowekine.com/galerie"/>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://zowe.netlify.app/mentions-legales</loc>
-    <lastmod>2026-04-30</lastmod>
+    <loc>https://zowekine.com/mentions-legales</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://zowe.netlify.app/confidentialite</loc>
-    <lastmod>2026-04-30</lastmod>
+    <loc>https://zowekine.com/confidentialite</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

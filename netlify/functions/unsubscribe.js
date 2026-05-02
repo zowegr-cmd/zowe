@@ -42,7 +42,7 @@ exports.handler = async function (event) {
       statusCode: 400,
       headers: { 'Content-Type': 'text/html; charset=utf-8' },
       body: page('Lien invalide', `<p>Ce lien de désinscription est invalide ou a expiré.<br>
-        <a href="https://zowe.netlify.app" style="color:#6B1F2A;">Retour à l'accueil</a></p>`),
+        <a href="https://zowekine.com" style="color:#6B1F2A;">Retour à l'accueil</a></p>`),
     };
   }
 
@@ -75,7 +75,7 @@ exports.handler = async function (event) {
     body: page('Désinscription confirmée', `
       <p>L'adresse <strong>${email.replace(/</g, '&lt;')}</strong>
       a bien été retirée de la liste de diffusion Zowe.</p>
-      <a href="https://zowe.netlify.app" style="color:#6B1F2A;">Retour à l'accueil →</a>
+      <a href="https://zowekine.com" style="color:#6B1F2A;">Retour à l'accueil →</a>
     `),
   };
 };

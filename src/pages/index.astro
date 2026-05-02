@@ -670,6 +670,7 @@ window.__translationMode = __translationMode;
             ? document.getElementById('newsletter').checked : false,
           website:   (document.getElementById('website_hp')||{}).value||'',
           recaptchaToken: window._recaptchaToken || '',
+          lang:      localStorage.getItem('zowe-lang') || 'fr',
         }),
       }).then(function(r) {
         if (r.ok) {
@@ -969,12 +970,22 @@ window.__translationMode = __translationMode;
   }
   // Clics WhatsApp (tous les liens wa.me)
   document.querySelectorAll('a[href*="wa.me"]').forEach(function(a) {
-    a.addEventListener('click', function() { track('wa_click'); });
+    a.addEventListener('click', function() { track('wa_click'); if(typeof gtag!=='undefined') gtag('event','cta_click',{cta_type:'whatsapp'}); });
   });
+  // Clics Instagram
+  document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a) {
+    a.addEventListener('click', function() { track('ig_click'); if(typeof gtag!=='undefined') gtag('event','cta_click',{cta_type:'instagram'}); });
+  });
+  // Bouton itinéraire
+  var _dirBtn = document.querySelector('.localisation-cta');
+  if (_dirBtn) _dirBtn.addEventListener('click', function() { track('cta_itinerary'); if(typeof gtag!=='undefined') gtag('event','cta_click',{cta_type:'itinerary'}); });
   // Langue sélectionnée
   window.addEventListener('zowe:langchange', function(e) {
     var lang = e.detail && e.detail.lang;
-    if (lang) track('lang_' + lang);
+    if (lang) {
+      track('lang_' + lang);
+      if (typeof gtag !== 'undefined') gtag('event', 'language_used', { language: lang });
+    }
   });
 
   /* ── Boutons partage (Web Share API) ── */

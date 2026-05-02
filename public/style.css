@@ -38,6 +38,56 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── Curseur custom doré (desktop uniquement) ── */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  a, button, input, textarea, select,
+  [role="button"], label[for],
+  .beltra-card, .faq-item summary,
+  .lang-btn, .testimonials-btn,
+  .cadeau-card, .loc-social-btn,
+  .localisation-cta, .nav-cta, .sticky-cta { cursor: none; }
+}
+.cursor-dot,
+.cursor-circle {
+  position: fixed;
+  top: 0; left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  will-change: left, top;
+}
+.cursor-dot {
+  width: 6px; height: 6px;
+  background: #C9A96E;
+  transition: transform 0.15s ease-out, opacity 0.2s;
+  opacity: 0.9;
+}
+.cursor-circle {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(201,169,110,0.55);
+  transition: width 0.2s ease-out, height 0.2s ease-out,
+              opacity 0.2s ease-out, background 0.2s ease-out;
+  opacity: 0.4;
+}
+.cursor-circle.is-hover {
+  width: 52px; height: 52px;
+  opacity: 0.65;
+  background: rgba(201,169,110,0.08);
+}
+.cursor-dot.is-hover {
+  transform: translate(-50%,-50%) scale(0);
+  opacity: 0;
+}
+/* Masqué sur mobile/tactile et reduced-motion */
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot, .cursor-circle { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot, .cursor-circle { display: none; }
+}
+
 body {
   font-family: var(--sans);
   background-color: var(--off-white);

@@ -4,4 +4,4 @@ Disallow: /admin/
 Disallow: /identity/
 Disallow: /merci/
 
-Sitemap: https://zowe.netlify.app/sitemap.xml
+Sitemap: https://zowekine.com/sitemap.xml

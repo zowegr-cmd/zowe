@@ -218,7 +218,21 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     </div>
     <div class="testimonials-outer">
       <div class="testimonials-track-wrapper">
-        <div class="testimonials-track" id="testimonialsTrack">
+        <div id="testimonialsSkeletonTrack" class="testimonials-track" role="status" aria-label="Chargement des avis" aria-live="polite">
+          {Array(8).fill(0).map(() => (
+            <div class="testimonial-card skeleton-card" aria-hidden="true">
+              <div class="skeleton-line" style="width:28%;margin-bottom:.75rem"></div>
+              <div class="skeleton-line" style="width:92%"></div>
+              <div class="skeleton-line" style="width:85%"></div>
+              <div class="skeleton-line" style="width:70%;margin-bottom:1rem"></div>
+              <div style="display:flex;justify-content:space-between;padding-top:.75rem;border-top:1px solid var(--border)">
+                <div class="skeleton-line" style="width:32%;margin:0"></div>
+                <div class="skeleton-line" style="width:18%;margin:0"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="testimonials-track" id="testimonialsTrack" style="display:none">
           {allTestimonials.map((t) => (
             <div class="testimonial-card">
               <div class="testimonial-stars">{'★'.repeat(t.rating)}</div>
@@ -391,8 +405,15 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         </div>
         <!-- Colonne droite : carte -->
         <div class="localisation-map-col" id="mapbox-container" data-anim="right">
-          <div id="mapbox-map">
+          <div id="mapbox-map" style="position:relative;">
+            <div class="skeleton-map" id="mapSkeleton" role="status" aria-label="Chargement de la carte" aria-live="polite">
+              <svg class="skeleton-map__pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+            </div>
             <iframe
+              id="mapIframe"
               src="https://maps.google.com/maps?q=Kinovea+Rhode-Saint-Genese+Belgium&t=&z=15&ie=UTF8&iwloc=&output=embed"
               width="100%" height="100%" style="border:0;filter:grayscale(1) brightness(0.7);" loading="lazy"
               title="Localisation">
@@ -666,6 +687,38 @@ window.__translationMode = __translationMode;
     });
   })();
 
+  /* ── Skeleton map — fade-out quand l'iframe est chargée ── */
+  (function() {
+    var skeleton = document.getElementById('mapSkeleton');
+    var iframe   = document.getElementById('mapIframe');
+    if (!skeleton) return;
+    function hideSkeleton() {
+      skeleton.classList.add('skeleton-map--hidden');
+      setTimeout(function() { skeleton.style.display = 'none'; }, 420);
+    }
+    if (iframe) iframe.addEventListener('load', hideSkeleton);
+    setTimeout(hideSkeleton, 5000); // fallback 5s
+  })();
+
+  /* ── Skeleton reviews — révèle le vrai track ── */
+  window._revealReviews = function() {
+    var skTrack = document.getElementById('testimonialsSkeletonTrack');
+    var realTrack = document.getElementById('testimonialsTrack');
+    if (!skTrack || !realTrack) return;
+    skTrack.style.transition = 'opacity 0.35s';
+    skTrack.style.opacity = '0';
+    setTimeout(function() {
+      skTrack.style.display = 'none';
+      realTrack.style.display = '';
+      if (window._carouselReload) window._carouselReload();
+    }, 360);
+  };
+  // Fallback 5s : si l'API ne répond pas, afficher les avis statiques
+  setTimeout(function() {
+    var skTrack = document.getElementById('testimonialsSkeletonTrack');
+    if (skTrack && skTrack.style.display !== 'none') window._revealReviews();
+  }, 5000);
+
   /* ── Carrousel témoignages — moteur JS (auto-scroll + nav manuelle + swipe) ── */
   (function() {
     var track   = document.getElementById('testimonialsTrack');
@@ -765,24 +818,24 @@ window.__translationMode = __translationMode;
     fetch('/.netlify/functions/reviews')
       .then(function(r){ return r.ok ? r.json() : null; })
       .then(function(reviews) {
-        if (!reviews || reviews.length < 2) return;
-        // BELTRA en tête
-        reviews.sort(function(a, b) {
-          return (/beltra/i.test(b.text) ? 1 : 0) - (/beltra/i.test(a.text) ? 1 : 0);
-        });
-        var doubled = reviews.concat(reviews);
-        track.innerHTML = doubled.map(function(t) {
-          return '<div class="testimonial-card">'
-            + '<div class="testimonial-stars">' + '★'.repeat(t.rating) + '</div>'
-            + '<p class="testimonial-text">&ldquo;' + escHtml(t.text) + '&rdquo;</p>'
-            + '<div class="testimonial-meta">'
-            + '<span class="testimonial-name">' + escHtml(t.name) + '</span>'
-            + '<span class="testimonial-date">' + escHtml(t.date) + '</span>'
-            + '</div></div>';
-        }).join('');
-        if (window._carouselReload) window._carouselReload();
+        if (reviews && reviews.length >= 2) {
+          reviews.sort(function(a, b) {
+            return (/beltra/i.test(b.text) ? 1 : 0) - (/beltra/i.test(a.text) ? 1 : 0);
+          });
+          var doubled = reviews.concat(reviews);
+          track.innerHTML = doubled.map(function(t) {
+            return '<div class="testimonial-card">'
+              + '<div class="testimonial-stars">' + '★'.repeat(t.rating) + '</div>'
+              + '<p class="testimonial-text">&ldquo;' + escHtml(t.text) + '&rdquo;</p>'
+              + '<div class="testimonial-meta">'
+              + '<span class="testimonial-name">' + escHtml(t.name) + '</span>'
+              + '<span class="testimonial-date">' + escHtml(t.date) + '</span>'
+              + '</div></div>';
+          }).join('');
+        }
+        window._revealReviews();
       })
-      .catch(function(){});
+      .catch(function(){ window._revealReviews(); });
   })();
 
   /* ── Mapbox ── */

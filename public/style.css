@@ -1367,6 +1367,51 @@ img {
 }
 
 /* ==========================================
+   SKELETONS
+========================================== */
+@keyframes shimmer {
+  0%   { background-position: -1000px 0; }
+  100% { background-position:  1000px 0; }
+}
+
+/* Skeleton carte */
+.skeleton-map {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1A0508 0%, #2A0A10 40%, #1A0508 100%);
+  background-image: linear-gradient(90deg, #1A0508 0px, #2D0C12 500px, #1A0508 1000px);
+  background-size: 1000px 100%;
+  animation: shimmer 2.2s infinite linear;
+  transition: opacity 0.4s ease;
+}
+.skeleton-map--hidden { opacity: 0; pointer-events: none; }
+.skeleton-map__pin {
+  width: 40px; height: 40px;
+  color: var(--or);
+  opacity: 0.3;
+}
+
+/* Skeleton lignes (avis) */
+.skeleton-line {
+  height: 10px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #EFE9DD 0px, #F5F0E8 400px, #EFE9DD 800px);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+  margin-bottom: 0.6rem;
+}
+.skeleton-card { pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-map,
+  .skeleton-line { animation: none !important; }
+}
+
+/* ==========================================
    TÉMOIGNAGES — CARROUSEL
 ========================================== */
 .testimonials { background: var(--cream); overflow: hidden; }

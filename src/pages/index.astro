@@ -44,6 +44,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
       {gallery.visible && <li><a href="/galerie" data-i18n="footer.gallery">Galerie</a></li>}
       {session.visible && <li><a href="/preparer-ma-seance" data-i18n="footer.before_session">Avant votre séance</a></li>}
+      <li id="kqMenuBtn" style="display:none"><a href="#" id="kqMenuLink" class="kq-menu-link" target="_blank" rel="noopener noreferrer">Réserver un Bilan</a></li>
       <li><a href="#contact" class="nav-cta" data-i18n="nav.cta">Initier mon accompagnement</a></li>
       <!-- Sélecteur de langue — visible uniquement dans le menu mobile -->
       <li class="nav-lang-mobile" aria-label="Choisir la langue">
@@ -100,6 +101,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       </h1>
       <p class="hero-tagline" data-i18n="hero.tagline" set:html={hero.tagline.fr.replace(/\n/g,'<br>')}></p>
       <a href="#contact" class="btn btn-primary" data-i18n="hero.cta">{hero.cta.fr}</a>
+      <a href="#" id="kqHeroLink" class="kq-hero-link" style="display:none" target="_blank" rel="noopener noreferrer" aria-hidden="true">ou réserver directement →</a>
     </div>
     <div class="hero-scroll" aria-hidden="true">&#8595;</div>
   </section>
@@ -200,6 +202,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
               <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
             </button>
             <a href="#contact" class={`btn ${i === 2 ? 'btn-light' : 'btn-primary'}`} data-i18n="services.learn_more">En savoir plus</a>
+            <a href="#" class="kq-card-btn" style="display:none" target="_blank" rel="noopener noreferrer">Réserver directement</a>
           </div>
         ))}
       </div>
@@ -327,6 +330,29 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         </a>
       </div>
 
+      <!-- Layout KinoQuick + formulaire -->
+      <div class="kq-contact-layout" id="kqContactWrap">
+
+        <!-- Colonne KinoQuick (cachée par défaut, activée via JS) -->
+        <div class="kq-column" id="kqColumn" style="display:none" aria-hidden="true">
+          <span class="kq-badge" id="kqBadge">Disponibilité immédiate</span>
+          <h3 class="kq-titre" id="kqTitre">Réserver un Bilan Précision</h3>
+          <p class="kq-desc" id="kqDesc">Choisissez directement votre créneau dans l'agenda de Zoé.</p>
+          <p class="kq-detail" id="kqDetail">30 min · 60€</p>
+          <a href="#" id="kqContactBtn" class="kq-btn" target="_blank" rel="noopener noreferrer">Réserver maintenant</a>
+        </div>
+
+        <!-- Séparateur (caché par défaut) -->
+        <div class="kq-sep" id="kqSep" style="display:none" aria-hidden="true">
+          <div class="kq-sep-line"></div>
+          <span id="kqSepText">ou</span>
+          <div class="kq-sep-line"></div>
+        </div>
+
+        <!-- Colonne formulaire -->
+        <div class="kq-form-col" id="kqFormCol">
+          <p class="kq-form-label" id="kqFormLabel" style="display:none">Écrire à Zoé</p>
+
       <!-- Formulaire direct -->
       <form id="mainForm" class="simple-form" data-anim="up" data-delay="3" novalidate>
         <!-- Honeypot anti-bot : ne doit pas être rempli -->
@@ -387,7 +413,9 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           </svg>
           <p data-i18n="form.success_msg">Votre demande est en route. Zoé revient vers vous bientôt.</p>
         </div>
-      </div>
+      </div><!-- /form-success -->
+        </div><!-- /kq-form-col -->
+      </div><!-- /kq-contact-layout -->
     </div>
   </section>
 
@@ -513,6 +541,14 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
   <!-- FAB mobile — actions rapides -->
   <div class="fab-container" id="fabContainer" role="region" aria-label="Actions rapides">
     <div class="fab-actions" id="fabActions" aria-hidden="true" role="list">
+
+      <!-- KinoQuick (caché par défaut) -->
+      <div class="fab-item" id="kqFabItem" style="display:none" role="listitem">
+        <span class="fab-tooltip" id="kqFabTooltip" aria-hidden="true">Réserver</span>
+        <a href="#" id="kqFabBtn" class="fab-sub" aria-label="Réserver sur KinoQuick" data-action="fab_kinoquick" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zm-7-9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        </a>
+      </div>
 
       <!-- Carte cadeau -->
       <div class="fab-item" role="listitem">
@@ -1115,6 +1151,89 @@ window.__translationMode = __translationMode;
     _updateSticky();
   }
 
+})();
+
+  /* ── KinoQuick — activation côté client ── */
+  (function() {
+    fetch('/.netlify/functions/settings?type=kinoquick')
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(kq) {
+        if (!kq || !kq.enabled || !kq.url) return;
+        var lang = localStorage.getItem('zowe-lang') || 'fr';
+        var url  = kq.url;
+        function g(field) { return kq[field] && (kq[field][lang] || kq[field]['fr']) || ''; }
+
+        function trackKq(source) {
+          if (typeof gtag === 'function') gtag('event', 'kinoquick_click', { source: source });
+        }
+
+        // Hero
+        var heroLink = document.getElementById('kqHeroLink');
+        if (heroLink) {
+          heroLink.href = url;
+          heroLink.style.display = '';
+          heroLink.addEventListener('click', function() { trackKq('hero'); });
+        }
+
+        // Menu mobile
+        var menuBtn = document.getElementById('kqMenuBtn');
+        var menuLink = document.getElementById('kqMenuLink');
+        if (menuBtn && menuLink) {
+          menuLink.href = url;
+          menuLink.textContent = g('button_text');
+          menuBtn.style.display = '';
+          menuLink.addEventListener('click', function() { trackKq('menu'); });
+        }
+
+        // Boutons protocoles
+        document.querySelectorAll('.kq-card-btn').forEach(function(btn) {
+          btn.href = url;
+          btn.textContent = g('btn');
+          btn.style.display = '';
+          btn.addEventListener('click', function() { trackKq('protocoles'); });
+        });
+
+        // Section contact — layout 2 colonnes
+        var col = document.getElementById('kqColumn');
+        var sep = document.getElementById('kqSep');
+        var wrap = document.getElementById('kqContactWrap');
+        var formLabel = document.getElementById('kqFormLabel');
+        if (col) {
+          var el = function(id) { return document.getElementById(id); };
+          var badge = el('kqBadge'); if (badge) badge.textContent = g('badge');
+          var titre = el('kqTitre'); if (titre) titre.textContent = g('titre');
+          var desc  = el('kqDesc');  if (desc)  desc.textContent  = g('description');
+          var det   = el('kqDetail'); if (det)  det.textContent   = g('detail');
+          var btn   = el('kqContactBtn');
+          if (btn) {
+            btn.href = url;
+            btn.textContent = g('btn');
+            btn.addEventListener('click', function() { trackKq('contact'); });
+          }
+          var sepTxt = el('kqSepText'); if (sepTxt) sepTxt.textContent = g('separateur');
+          col.style.display = '';
+          col.removeAttribute('aria-hidden');
+          if (sep) { sep.style.display = ''; sep.removeAttribute('aria-hidden'); }
+          if (wrap) wrap.classList.add('kq-active');
+          if (formLabel) formLabel.style.display = '';
+        }
+
+        // FAB
+        var fabItem = document.getElementById('kqFabItem');
+        var fabBtn  = document.getElementById('kqFabBtn');
+        var fabTip  = document.getElementById('kqFabTooltip');
+        if (fabItem && fabBtn) {
+          fabBtn.href = url;
+          if (fabTip) fabTip.textContent = g('btn');
+          fabItem.style.display = '';
+          fabBtn.addEventListener('click', function() { trackKq('fab'); });
+          // Stagger : KinoQuick visible = 6 items actifs
+          var container = document.getElementById('fabContainer');
+          if (container) container.classList.add('kq-fab-active');
+        }
+      })
+      .catch(function() {});
+  })();
 })();
 </script>
 

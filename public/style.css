@@ -2500,11 +2500,7 @@ img {
     transform: translateY(10px);
     transition: opacity 0.22s ease, transform 0.22s ease;
   }
-  .fab-container.open .fab-item:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 200ms; }
-  .fab-container.open .fab-item:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 150ms; }
-  .fab-container.open .fab-item:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 100ms; }
-  .fab-container.open .fab-item:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 50ms;  }
-  .fab-container.open .fab-item:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0ms;   }
+  /* stagger géré en dehors du @media par les règles KinoQuick */
 
   .fab-tooltip {
     font-family: var(--sans);
@@ -2800,3 +2796,174 @@ img {
   min-height: 100dvh;
   padding-top: calc(80px + env(safe-area-inset-top, 0px));
 }
+
+/* ==========================================
+   KINOQUICK — INTÉGRATION
+========================================== */
+
+/* Lien discret hero */
+.kq-hero-link {
+  display: block;
+  margin-top: 1rem;
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--or);
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.kq-hero-link:hover { opacity: 1; }
+
+/* Bouton protocole card */
+.kq-card-btn {
+  display: block;
+  margin-top: 0.75rem;
+  padding: 0.55rem 1.25rem;
+  border: 1px solid var(--bordeaux);
+  color: var(--bordeaux);
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.2s, color 0.2s;
+}
+.kq-card-btn:hover { background: var(--bordeaux); color: var(--off-white); }
+
+/* Bouton menu mobile */
+.kq-menu-link {
+  display: block;
+  background: var(--bordeaux);
+  color: var(--off-white) !important;
+  padding: 0.7rem 1.5rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 1px;
+}
+
+/* Layout 2 colonnes contact */
+.kq-contact-layout { display: block; }
+.kq-contact-layout.kq-active {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 0;
+  margin-top: 1.5rem;
+}
+@media (max-width: 768px) {
+  .kq-contact-layout.kq-active { grid-template-columns: 1fr; }
+}
+
+/* Colonne KinoQuick */
+.kq-column {
+  background: var(--bordeaux);
+  padding: 2.5rem;
+  border-radius: 2px;
+}
+.kq-badge {
+  display: inline-block;
+  background: var(--or);
+  color: var(--bordeaux);
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  margin-bottom: 1.25rem;
+}
+.kq-titre {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--off-white);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+.kq-desc {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba(245,240,232,0.78);
+  margin-bottom: 1rem;
+  line-height: 1.65;
+}
+.kq-detail {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: rgba(245,240,232,0.75);
+  letter-spacing: 0.12em;
+  margin-bottom: 1.5rem;
+}
+.kq-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  background: var(--off-white);
+  color: var(--bordeaux);
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.kq-btn:hover { opacity: 0.88; }
+
+/* Séparateur */
+.kq-sep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  gap: 1rem;
+  min-height: 200px;
+}
+.kq-sep-line {
+  width: 1px;
+  flex: 1;
+  background: rgba(201,169,110,0.35);
+  min-height: 32px;
+}
+.kq-sep span {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--or);
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .kq-sep { flex-direction: row; padding: 1.5rem 0; min-height: auto; }
+  .kq-sep-line { width: auto; height: 1px; flex: 1; min-height: unset; }
+}
+
+/* Label "Écrire à Zoé" visible quand KinoQuick actif */
+.kq-form-label {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--bordeaux);
+  margin-bottom: 1rem;
+}
+
+/* FAB stagger — KinoQuick en position 1 (caché par défaut) */
+.fab-container.open .fab-item:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 250ms; }
+.fab-container.open .fab-item:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 200ms; }
+.fab-container.open .fab-item:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 150ms; }
+.fab-container.open .fab-item:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 100ms; }
+.fab-container.open .fab-item:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 50ms;  }
+.fab-container.open .fab-item:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0ms;   }

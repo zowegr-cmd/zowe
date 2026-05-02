@@ -358,6 +358,36 @@ td.email a{color:var(--bx);text-decoration:none}
         </div>
         <button class="save-btn" onclick="saveSettings()" id="settingsSaveBtn">Sauvegarder</button>
         <p id="settingsMsg" style="font-size:.75rem;color:var(--ok);margin-top:.75rem;display:none"></p>
+        <div style="margin-top:1rem;padding:.85rem 1rem;background:rgba(107,31,42,.06);border-left:3px solid var(--bx);">
+          <p style="font-size:.72rem;color:var(--bx);line-height:1.6;margin:0;">⚠️ <strong>Ne pas activer</strong> si KinoQuick est en place — les rappels sont déjà gérés par KinoQuick.</p>
+        </div>
+      </div>
+
+      <!-- KinoQuick -->
+      <div class="card" style="max-width:600px;margin-top:1.5rem">
+        <p class="section-title" style="font-size:.75rem;margin-bottom:.25rem">KinoQuick — Réservation directe</p>
+        <p class="section-sub" style="margin-bottom:1.5rem">Une fois activé, un bouton de réservation apparaît dans le hero, les protocoles, le menu mobile et le formulaire de contact.</p>
+
+        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem">
+          <label style="display:flex;align-items:center;gap:.75rem;cursor:pointer">
+            <input type="checkbox" id="kqToggle" style="display:none" onchange="onKqToggle(this)">
+            <div class="settings-toggle" id="kqToggleVisual"><div class="settings-toggle-knob"></div></div>
+            <span id="kqToggleLabel" style="font-size:.8rem;font-weight:500;color:var(--lt)">OFF</span>
+          </label>
+        </div>
+
+        <div class="field-group" style="margin-bottom:1rem">
+          <label style="font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--lt);">Lien de réservation KinoQuick</label>
+          <input type="url" id="kqUrl" placeholder="https://..." style="width:100%;padding:.6rem .85rem;border:1px solid var(--bd);font-size:.82rem;background:var(--wh);color:var(--dk);outline:none;" oninput="kqDirty=true">
+          <p style="font-size:.68rem;color:var(--lt);margin-top:.35rem">Fourni par le dirigeant du cabinet.</p>
+        </div>
+
+        <button class="save-btn" onclick="saveKq()" id="kqSaveBtn">Sauvegarder KinoQuick</button>
+        <p id="kqMsg" style="font-size:.75rem;color:var(--ok);margin-top:.75rem;display:none"></p>
+
+        <div style="margin-top:1.25rem;padding:.85rem 1rem;background:rgba(107,31,42,.06);border-left:3px solid var(--bx);">
+          <p style="font-size:.72rem;color:var(--bx);line-height:1.6;margin:0;">⚠️ KinoQuick gère automatiquement les emails de confirmation et de rappel de RDV. <strong>Ne pas activer le rappel 24h Resend</strong> si KinoQuick est utilisé.</p>
+        </div>
       </div>
     </div>
 
@@ -612,6 +642,44 @@ function loadSettings() {
     lbl.textContent = enabled ? 'ON' : 'OFF';
     lbl.style.color = enabled ? 'var(--bx)' : 'var(--lt)';
   });
+  api('?action=kinoquick-get').then(function(data) {
+    if (!data) return;
+    var en = !!data.enabled;
+    document.getElementById('kqToggle').checked = en;
+    document.getElementById('kqToggleVisual').classList.toggle('on', en);
+    document.getElementById('kqToggleLabel').textContent = en ? 'ON' : 'OFF';
+    document.getElementById('kqToggleLabel').style.color = en ? 'var(--bx)' : 'var(--lt)';
+    document.getElementById('kqUrl').value = data.url || '';
+  });
+}
+
+var kqDirty = false;
+function onKqToggle(cb) {
+  var en = cb.checked;
+  document.getElementById('kqToggleVisual').classList.toggle('on', en);
+  document.getElementById('kqToggleLabel').textContent = en ? 'ON' : 'OFF';
+  document.getElementById('kqToggleLabel').style.color = en ? 'var(--bx)' : 'var(--lt)';
+  kqDirty = true;
+}
+function saveKq() {
+  var enabled = document.getElementById('kqToggle').checked;
+  var url     = document.getElementById('kqUrl').value.trim();
+  var btn = document.getElementById('kqSaveBtn');
+  var msg = document.getElementById('kqMsg');
+  btn.disabled = true;
+  api('?action=kinoquick-save', { method: 'POST', body: JSON.stringify({ enabled: enabled, url: url }) })
+    .then(function(d) {
+      btn.disabled = false;
+      msg.style.display = 'block';
+      if (d && d.ok) {
+        msg.textContent = 'KinoQuick sauvegardé ✓';
+        msg.style.color = 'var(--ok)';
+      } else {
+        msg.textContent = 'Erreur lors de la sauvegarde.';
+        msg.style.color = '#c0392b';
+      }
+      setTimeout(function() { msg.style.display = 'none'; }, 3000);
+    }).catch(function() { btn.disabled = false; });
 }
 
 function onReminderToggle(cb) {

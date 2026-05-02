@@ -403,6 +403,31 @@ exports.handler = async function(event) {
     }
   }
 
+  // GET kinoquick-get
+  if (action === 'kinoquick-get') {
+    try {
+      const store = getStore('settings');
+      const saved = await store.get('kinoquick', { type: 'json' }).catch(() => null);
+      return json(saved || { enabled: false, url: '' });
+    } catch (e) {
+      return json({ enabled: false, url: '' });
+    }
+  }
+
+  // POST kinoquick-save
+  if (action === 'kinoquick-save' && event.httpMethod === 'POST') {
+    let body = {};
+    try { body = JSON.parse(event.body || '{}'); } catch {}
+    try {
+      const store = getStore('settings');
+      await store.setJSON('kinoquick', body);
+      await logAdminAction(`kinoquick-save: enabled=${body.enabled} url=${body.url || '(vide)'}`);
+      return json({ ok: true });
+    } catch (e) {
+      return json({ error: e.message }, 500);
+    }
+  }
+
   // GET settings-get
   if (action === 'settings-get') {
     try {

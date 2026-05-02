@@ -103,15 +103,13 @@ function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
   const tx      = Object.assign({}, CT[lang], overrides || {});
   const subject = tx.subject || t(lang, 'subject_confirm');
 
-  // Monogramme PNG (exact monogramme du site, gold sur fond bordeaux)
-  const monogramTag = _MONOGRAM_B64
-    ? `<img src="data:image/png;base64,${_MONOGRAM_B64}" width="70" height="67" alt="Monogramme Zowe" border="0" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;">`
-    : `<p style="margin:0;font-family:Georgia,serif;font-size:48px;font-weight:bold;color:#C9A96E;letter-spacing:4px;line-height:1;text-align:center;">ZW</p>`;
+  // Monogramme — URL absolue HTTPS (data: URI bloqué par Gmail/Outlook.com)
+  const monogramSrc = `${SITE_URL}/images/monogram-email.png`;
+  const monogramTag = `<img src="${monogramSrc}" width="70" height="67" alt="Monogramme Zowe" border="0" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;">`;
 
-  // Signature manuscrite PNG base64
-  const sigTag = _SIG_B64
-    ? `<img src="data:image/png;base64,${_SIG_B64}" width="200" height="auto" alt="Signature Zoé Grêde" border="0" style="display:block;margin:0 auto 14px;max-width:200px;border:0;outline:none;text-decoration:none;">`
-    : '';
+  // Signature manuscrite — URL absolue HTTPS
+  const sigSrc = `${SITE_URL}/images/signature_zoe_premium.png`;
+  const sigTag = `<img src="${sigSrc}" width="200" height="auto" alt="Signature Zoé Grêde" border="0" style="display:block;margin:0 auto 14px;max-width:200px;border:0;outline:none;text-decoration:none;">`;
 
   const unsubRow = unsubUrl
     ? `<p style="margin:6px 0 0;text-align:center;"><a href="${unsubUrl}" style="font-family:Arial,Helvetica,sans-serif;font-size:10px;color:#C9A96E;text-decoration:underline;">${tx.unsub}</a></p>`

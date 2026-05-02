@@ -103,9 +103,9 @@ function buildPatientConfirm(prenom, lang, unsubUrl, overrides) {
   const tx      = Object.assign({}, CT[lang], overrides || {});
   const subject = tx.subject || t(lang, 'subject_confirm');
 
-  // Monogramme — URL absolue HTTPS (data: URI bloqué par Gmail/Outlook.com)
+  // Monogramme — centrage via align="center" du td, pas display:block
   const monogramSrc = `${SITE_URL}/images/monogram-email.png`;
-  const monogramTag = `<img src="${monogramSrc}" width="70" height="67" alt="Monogramme Zowe" border="0" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;">`;
+  const monogramTag = `<img src="${monogramSrc}" width="80" height="77" alt="" border="0" style="border:0;outline:none;text-decoration:none;">`;
 
   // Signature manuscrite — URL absolue HTTPS, alignée à droite dans le corps
   const sigSrc = `${SITE_URL}/images/signature_zoe_premium.png`;

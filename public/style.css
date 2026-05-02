@@ -88,6 +88,12 @@ html {
   .cursor-dot, .cursor-circle { display: none; }
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+}
+
 body {
   font-family: var(--sans);
   background-color: var(--off-white);

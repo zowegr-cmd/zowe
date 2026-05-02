@@ -421,7 +421,7 @@ exports.handler = async function(event) {
     try {
       const store = getStore('settings');
       await store.setJSON('kinoquick', body);
-      await logAdminAction(`kinoquick-save: enabled=${body.enabled} url=${body.url || '(vide)'}`);
+      await logAuth('admin', 'admin-api', true, `kinoquick-save: enabled=${body.enabled}`);
       return json({ ok: true });
     } catch (e) {
       return json({ error: e.message }, 500);
@@ -450,7 +450,7 @@ exports.handler = async function(event) {
     try {
       const settingsStore = getStore('settings');
       await settingsStore.setJSON('reminder_24h_enabled', reminder_24h_enabled);
-      await logAdminAction(`settings-save: reminder_24h_enabled=${reminder_24h_enabled}`);
+      await logAuth('admin', 'admin-api', true, `settings-save: reminder_24h_enabled=${reminder_24h_enabled}`);
       return json({ ok: true, reminder_24h_enabled });
     } catch (e) {
       return json({ error: e.message }, 500);

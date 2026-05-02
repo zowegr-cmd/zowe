@@ -130,7 +130,7 @@
     "steps_label": "Hoe reserveren",
     "steps": [
       { "title": "Kies de locatie",          "desc": "Selecteer Rhode-Saint-Genèse als locatie." },
-      { "title": "Selecteer de behandeling", "desc": "Kies de Precisie-audit uit de lijst van behandelingen aangeboden door Zoé Grêde." },
+      { "title": "Selecteer de behandeling", "desc": "Kies de Beltra-behandeling uit de lijst van behandelingen aangeboden door Zoé Grêde." },
       { "title": "Bevestig uw tijdslot",     "desc": "Kies de dag en het uur die u schikken, vul uw gegevens in en bevestig. U ontvangt een bevestigingsmail van KinoQuick." }
     ],
     "cta_btn":   "Agenda van Zoé openen →",

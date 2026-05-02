@@ -324,6 +324,22 @@ img {
 /* ==========================================
    BUTTONS
 ========================================== */
+/* Fallback tactile iOS — scale au tap */
+@keyframes tap-feedback {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(0.96); }
+}
+@media (hover: none) and (pointer: coarse) {
+  .btn:active,
+  .sticky-cta:active,
+  .lang-btn:active,
+  .nav-cta:active,
+  a[href*="wa.me"]:active,
+  .localisation-cta:active {
+    animation: tap-feedback 150ms ease-out;
+  }
+}
+
 .btn {
   display: inline-block;
   font-family: var(--sans);

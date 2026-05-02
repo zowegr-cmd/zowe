@@ -607,6 +607,7 @@ window.__translationMode = __translationMode;
         return;
       }
 
+      window.hapticFeedback('medium');
       isSubmitting = true;
       setLoading(true);
 
@@ -626,6 +627,7 @@ window.__translationMode = __translationMode;
         }),
       }).then(function(r) {
         if (r.ok) {
+          window.hapticFeedback('success');
           showSuccess();
         } else {
           r.json().then(function(d){ showError(d.error); }).catch(function(){ showError(); });
@@ -774,6 +776,19 @@ window.__translationMode = __translationMode;
       if (label && window.__t) label.textContent = window.__t('faq.show_less') || '− Voir moins';
     });
   })();
+
+  /* ── Haptic feedback — CTA principaux ── */
+  // Sticky CTA + nav CTA
+  document.querySelectorAll('.sticky-cta, .nav-cta').forEach(function(el) {
+    el.addEventListener('click', function() { window.hapticFeedback('medium'); });
+  });
+  // WhatsApp (tous liens wa.me)
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function(a) {
+    a.addEventListener('click', function() { window.hapticFeedback('medium'); });
+  });
+  // Bouton itinéraire
+  var dirBtn = document.querySelector('.localisation-cta');
+  if (dirBtn) dirBtn.addEventListener('click', function() { window.hapticFeedback('medium'); });
 
   /* ── Tracking analytics ── */
   function track(evt) {

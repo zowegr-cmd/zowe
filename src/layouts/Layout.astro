@@ -126,6 +126,12 @@ const ogImage = `${siteUrl}/og-image.png`;
     </div>
   </div>
   <script is:inline>
+    // Haptic feedback — Android vibration + iOS scale animation
+    window.hapticFeedback = function(intensity) {
+      var patterns = { light: 10, medium: 20, success: [10, 50, 10] };
+      if (navigator.vibrate) navigator.vibrate(patterns[intensity] || 10);
+    };
+
     // Sélecteur de langue fixe — affiché uniquement sur les pages sans nav
     var fixedSel = document.getElementById('langSelectorFixed');
     if (fixedSel && !document.querySelector('.nav')) {
@@ -347,7 +353,10 @@ const ogImage = `${siteUrl}/og-image.png`;
 
     document.addEventListener('click', function(e) {
       var btn = e.target.closest('.lang-btn');
-      if (btn && btn.dataset.lang) setLang(btn.dataset.lang);
+      if (btn && btn.dataset.lang) {
+        window.hapticFeedback('light');
+        setLang(btn.dataset.lang);
+      }
     });
 
     // Helper global : window.__t('form.submit')

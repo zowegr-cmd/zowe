@@ -326,7 +326,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
             <path class="form-success__tick" fill="none" stroke="#C9A96E" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round" d="M 14,26 L 22,34 L 38,18"/>
           </svg>
-          <p>Votre demande est en route.<br>Zoé revient vers vous bientôt.</p>
+          <p data-i18n="form.success_msg">Votre demande est en route. Zoé revient vers vous bientôt.</p>
         </div>
       </div>
     </div>
@@ -538,6 +538,7 @@ window.__translationMode = __translationMode;
     if (emailEl) {
       var hint = document.createElement('span');
       hint.className = 'field-hint';
+      hint.setAttribute('data-i18n', 'form.hint_email');
       hint.textContent = 'Vérifiez le format de votre email';
       emailEl.parentElement.appendChild(hint);
       emailEl.addEventListener('blur',  function(){ validateEmailField(this); });
@@ -569,6 +570,7 @@ window.__translationMode = __translationMode;
     /* Afficher erreur */
     function showError(msg) {
       if (formErrorMsg) formErrorMsg.textContent = msg ||
+        (window.__t && window.__t('form.error_network')) ||
         'Un instant — la connexion semble lente. Réessayez ou contactez Zoé directement au 0471 78 37 46.';
       if (formError) formError.hidden = false;
     }

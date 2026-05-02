@@ -57,9 +57,11 @@
     "note":           "Zoé will get back to you today to arrange a time that suits you.",
     "submit":         "Write to Zoé",
     "sending":        "Sending…",
+    "hint_email":     "Please check your email format",
+    "success_msg":    "Your request is on its way. Zoé will be in touch with you shortly.",
     "error_required": "Please enter your first name, email and phone number.",
-    "error_network":  "Network error. Please try again.",
-    "error_server":   "An error occurred. Please try again."
+    "error_network":  "One moment — the connection seems slow. Try again or contact Zoé directly on 0471 78 37 46.",
+    "error_server":   "Something went wrong. Please try again or contact Zoé directly on 0471 78 37 46."
   },
   "cookie": {
     "text":       "This site uses Google Analytics to measure its audience in an anonymised way.",

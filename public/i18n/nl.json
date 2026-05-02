@@ -57,9 +57,11 @@
     "note":           "Zoé neemt vandaag nog contact met u op om een geschikt moment te vinden.",
     "submit":         "Schrijf naar Zoé",
     "sending":        "Bezig met verzenden…",
+    "hint_email":     "Controleer het formaat van uw e-mailadres",
+    "success_msg":    "Uw aanvraag is onderweg.\nZoé neemt binnenkort contact met u op.",
     "error_required": "Gelieve uw voornaam, e-mailadres en telefoonnummer in te vullen.",
-    "error_network":  "Netwerkfout. Probeer opnieuw.",
-    "error_server":   "Er is een fout opgetreden. Probeer opnieuw."
+    "error_network":  "Een moment — de verbinding lijkt traag. Probeer opnieuw of contacteer Zoé op 0471 78 37 46.",
+    "error_server":   "Er is een fout opgetreden. Probeer opnieuw of contacteer Zoé op 0471 78 37 46."
   },
   "cookie": {
     "text":       "Deze site gebruikt Google Analytics voor geanonimiseerde meting van het bezoekersverkeer.",

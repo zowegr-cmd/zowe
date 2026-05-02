@@ -42,9 +42,23 @@ const ogImage = `${siteUrl}/og-image.png`;
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/favicon.svg">
 
-  <!-- Fonts -->
+  <!-- Preconnect critiques -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+
+  <!-- DNS-prefetch APIs externes -->
+  <link rel="dns-prefetch" href="https://maps.googleapis.com">
+  <link rel="dns-prefetch" href="https://api.mapbox.com">
+  <link rel="dns-prefetch" href="https://api.resend.com">
+  <link rel="dns-prefetch" href="https://api.brevo.com">
+  <link rel="dns-prefetch" href="https://formspree.io">
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+  <!-- Préchargement image signature (visible sans scroll) -->
+  <link rel="preload" href="/images/signature_zoe_premium.png" as="image">
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 
@@ -387,6 +401,53 @@ const ogImage = `${siteUrl}/og-image.png`;
         });
       }
     });
+  </script>
+  <script is:inline>
+  /* ── Préchargement intelligent ── */
+  (function() {
+    // Ne rien faire si économie de données ou connexion lente
+    var conn = navigator.connection;
+    if (conn && (conn.saveData || conn.effectiveType === '2g' || conn.effectiveType === 'slow-2g')) return;
+
+    var preloaded = new Set();
+    function preloadHref(href, as) {
+      if (!href || preloaded.has(href)) return;
+      preloaded.add(href);
+      var link = document.createElement('link');
+      link.rel = as === 'document' ? 'prefetch' : 'preload';
+      link.as  = as;
+      link.href = href;
+      if (as === 'font') link.crossOrigin = 'anonymous';
+      document.head.appendChild(link);
+    }
+
+    // Préchargement images des sections suivantes via IntersectionObserver
+    var sections = document.querySelectorAll('.section');
+    if (sections.length) {
+      var secObs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting) return;
+          // Précharger les images lazy de la section suivante
+          var next = entry.target.nextElementSibling;
+          if (next) {
+            next.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+              if (img.src) preloadHref(img.src, 'image');
+            });
+          }
+        });
+      }, { rootMargin: '300px' });
+      sections.forEach(function(s) { secObs.observe(s); });
+    }
+
+    // Prefetch pages internes au survol (>200ms)
+    document.querySelectorAll('a[href^="/"]').forEach(function(link) {
+      var timer;
+      link.addEventListener('mouseenter', function() {
+        timer = setTimeout(function() { preloadHref(link.href, 'document'); }, 200);
+      });
+      link.addEventListener('mouseleave', function() { clearTimeout(timer); });
+    });
+  })();
   </script>
 </body>
 </html>

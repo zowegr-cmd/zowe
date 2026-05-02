@@ -805,7 +805,11 @@ window.__translationMode = __translationMode;
     var SPEED     = 0.45;   // px/frame (~27px/s à 60fps)
     var GAP       = 24;     // gap CSS en px
 
-    function calcHalf() { halfWidth = track.scrollWidth / 2; }
+    function calcHalf() {
+      halfWidth = track.scrollWidth / 2;
+      // Si pos est hors limites après recalcul (remplacement dynamique des cartes), on recadre
+      if (halfWidth > 0 && pos >= halfWidth) pos = pos % halfWidth;
+    }
     function cardStep() {
       var c = track.querySelector('.testimonial-card');
       return c ? c.offsetWidth + GAP : 340;
@@ -833,13 +837,14 @@ window.__translationMode = __translationMode;
       if (!pauseTimer) paused = false;
     });
 
-    // Navigation manuelle (prev / next)
+    // Navigation manuelle (prev / next) — snap sur bord de carte
     function navigate(dir) {
-      var step = cardStep() * dir;
-      var dest = pos + step;
+      var step = cardStep();
+      // Aligner d'abord sur le bord le plus proche, puis avancer d'un cran
+      var snapped = Math.round(pos / step) * step;
+      var dest    = snapped + step * dir;
       if (dest >= halfWidth) dest -= halfWidth;
       if (dest < 0)          dest += halfWidth;
-      // Transition CSS temporaire pour fluidité du clic
       track.style.transition = 'transform 0.38s ease';
       pos = dest;
       track.style.transform  = 'translateX(-' + pos + 'px)';
@@ -876,7 +881,7 @@ window.__translationMode = __translationMode;
     tick();
 
     // Recalcule après chargement dynamique (Google Reviews)
-    window._carouselReload = function() { setTimeout(calcHalf, 100); };
+    window._carouselReload = function() { setTimeout(calcHalf, 250); };
   })();
 
   /* ── Google Reviews dynamiques ── */

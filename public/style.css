@@ -2384,16 +2384,7 @@ img {
 /* ==========================================
    FORMULAIRE — NOTE DISPONIBILITÉS
 ========================================== */
-.mf-note {
-  font-size: 0.82rem;
-  color: var(--mid);
-  font-style: italic;
-  line-height: 1.7;
-  padding: 1rem 1.25rem;
-  background: rgba(107,36,55,0.04);
-  border-left: 2px solid rgba(107,36,55,0.22);
-  margin-bottom: 0.5rem;
-}
+.mf-note { display: none; }
 
 /* ==========================================
    STICKY CTA — MOBILE UNIQUEMENT
@@ -3022,6 +3013,9 @@ img {
   align-items: start;
   gap: 0;
   margin-top: 2rem;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 @media (max-width: 860px) {
   .kq-contact-layout.kq-active { grid-template-columns: 1fr; }

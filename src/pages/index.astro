@@ -1329,4 +1329,48 @@ window.__translationMode = __translationMode;
 })();
 </script>
 
+<!-- ── Protocoles mobile : dots carousel ── -->
+<script is:inline>
+(function() {
+  if (window.innerWidth > 768) return;
+
+  var grid = document.querySelector('#services .beltra-grid');
+  if (!grid) return;
+
+  var cards = Array.from(grid.querySelectorAll('.beltra-card'));
+  var total = cards.length;
+  if (!total) return;
+
+  /* Créer les dots */
+  var dotsWrap = document.createElement('div');
+  dotsWrap.className = 'beltra-dots';
+  grid.parentNode.insertBefore(dotsWrap, grid.nextSibling);
+
+  var dots = cards.map(function(_, i) {
+    var d = document.createElement('button');
+    d.className = 'beltra-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Protocole ' + (i + 1));
+    d.addEventListener('click', function() {
+      var cardW = cards[0].offsetWidth + 16;
+      grid.scrollTo({ left: i * cardW, behavior: 'smooth' });
+    });
+    dotsWrap.appendChild(d);
+    return d;
+  });
+
+  /* Mettre à jour au scroll */
+  var ticking = false;
+  grid.addEventListener('scroll', function() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function() {
+      var cardW = (cards[0] ? cards[0].offsetWidth : 1) + 16;
+      var active = Math.min(total - 1, Math.round(grid.scrollLeft / cardW));
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === active); });
+      ticking = false;
+    });
+  }, { passive: true });
+})();
+</script>
+
 

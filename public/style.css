@@ -3501,3 +3501,55 @@ img {
   .cm-social-icon { width: 56px; height: 56px; }
   .cm-social-icon svg { width: 24px; height: 24px; }
 }
+
+/* ==========================================
+   PROTOCOLES MOBILE — Carousel horizontal
+========================================== */
+@media (max-width: 768px) {
+  .beltra-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding: 8px 24px 20px;
+    max-width: none !important;
+    scrollbar-width: none;
+    /* dépasse du container pour le peek */
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .beltra-grid::-webkit-scrollbar { display: none; }
+
+  .beltra-card {
+    flex: 0 0 82vw !important;
+    max-width: 320px !important;
+    scroll-snap-align: start;
+    border-radius: 12px !important;
+    min-width: 0;
+  }
+
+  /* Dots navigation */
+  .beltra-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .beltra-dot {
+    height: 6px;
+    width: 6px;
+    border-radius: 3px;
+    background: rgba(201,169,110,.3);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: width .3s ease, background .3s ease;
+  }
+  .beltra-dot.active { width: 20px; background: #C9A96E; }
+}

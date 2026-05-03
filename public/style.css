@@ -3593,3 +3593,34 @@ img {
     min-height: auto !important;
   }
 }
+
+/* ==========================================
+   PROTOCOLES MOBILE — Corrections carousel
+========================================== */
+@media (max-width: 768px) {
+  /* C1 — Hauteur contrainte */
+  .beltra-grid {
+    max-height: calc(100dvh - 264px) !important;
+    overflow-y: hidden !important;
+  }
+
+  /* C1+C2 — Card 88vw centrée + bords arrondis */
+  .beltra-card {
+    flex: 0 0 88vw !important;
+    width: 88vw !important;
+    max-width: 88vw !important;
+    margin: 0 6vw !important;
+    border-radius: 16px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  /* C4 — Share button visible et positionné */
+  .beltra-card .share-btn {
+    display: flex !important;
+    position: absolute !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    z-index: 5 !important;
+  }
+}

@@ -1329,7 +1329,7 @@ window.__translationMode = __translationMode;
 })();
 </script>
 
-<!-- ── Protocoles mobile : carousel plein écran + dots IntersectionObserver ── -->
+<!-- ── Protocoles mobile : carousel swipe custom + dots ── -->
 <script is:inline>
 (function() {
   if (window.innerWidth > 768) return;
@@ -1341,6 +1341,8 @@ window.__translationMode = __translationMode;
   var total = cards.length;
   if (!total) return;
 
+  var curIdx = 0;
+
   /* Dots */
   var dotsWrap = document.createElement('div');
   dotsWrap.className = 'beltra-dots';
@@ -1350,40 +1352,57 @@ window.__translationMode = __translationMode;
     var d = document.createElement('button');
     d.className = 'beltra-dot' + (i === 0 ? ' active' : '');
     d.setAttribute('aria-label', 'Protocole ' + (i + 1));
-    d.addEventListener('click', function() {
-      grid.scrollTo({ left: i * window.innerWidth, behavior: 'smooth' });
-    });
+    d.addEventListener('click', function() { scrollToCard(i); });
     dotsWrap.appendChild(d);
     return d;
   });
 
-  /* IntersectionObserver — 1 card pleine largeur */
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        var idx = cards.indexOf(entry.target);
-        if (idx !== -1) {
-          dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
-        }
+  function updateDots(idx) {
+    curIdx = idx;
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+  }
+
+  function scrollToCard(idx) {
+    idx = Math.max(0, Math.min(idx, total - 1));
+    cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    updateDots(idx);
+  }
+
+  /* IntersectionObserver pour sync dots au scroll natif */
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var idx = cards.indexOf(e.target);
+        if (idx !== -1) updateDots(idx);
       }
     });
-  }, { root: grid, threshold: 0.6 });
+  }, { root: grid, threshold: 0.55 });
+  cards.forEach(function(c) { io.observe(c); });
 
-  cards.forEach(function(card) { observer.observe(card); });
+  /* Swipe custom touchstart/touchend sur toute la card */
+  var startX = 0, startY = 0, dragging = false;
 
-  /* Bloquer scroll vertical pendant swipe horizontal */
-  var startX = 0, startY = 0, lockH = false;
   grid.addEventListener('touchstart', function(e) {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    lockH  = false;
+    startX   = e.touches[0].clientX;
+    startY   = e.touches[0].clientY;
+    dragging = true;
   }, { passive: true });
 
+  grid.addEventListener('touchend', function(e) {
+    if (!dragging) return;
+    dragging    = false;
+    var dx = startX - e.changedTouches[0].clientX;
+    var dy = startY - e.changedTouches[0].clientY;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      scrollToCard(dx > 0 ? curIdx + 1 : curIdx - 1);
+    }
+  }, { passive: true });
+
+  /* touchmove : bloquer scroll page si swipe horizontal */
   grid.addEventListener('touchmove', function(e) {
     var dx = Math.abs(e.touches[0].clientX - startX);
     var dy = Math.abs(e.touches[0].clientY - startY);
-    if (!lockH && dx > dy) { lockH = true; }
-    if (lockH) e.preventDefault();
+    if (dx > dy && dx > 10) e.preventDefault();
   }, { passive: false });
 })();
 </script>

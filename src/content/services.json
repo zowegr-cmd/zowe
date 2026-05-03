@@ -9,6 +9,12 @@
     "nl": "Drie interventieniveaus, één doel: de uitmuntendheid van uw lichamelijk kapitaal.",
     "en": "Three levels of intervention, one goal: the excellence of your physical capital."
   },
+  "scroll_hint": { "fr": "← Faites glisser →", "nl": "← Veeg →", "en": "← Swipe →" },
+  "table": {
+    "objective": { "fr": "Objectif", "nl": "Doelstelling", "en": "Goal" },
+    "description": { "fr": "Description", "nl": "Beschrijving", "en": "Description" },
+    "ideal": { "fr": "Idéal pour", "nl": "Ideaal voor", "en": "Ideal for" }
+  },
   "asterisk_note": {
     "fr": "* Vous avez déjà effectué un Bilan Précision ? Contactez directement Zoé pour réserver un Soin Demi Corps ou un Contrôle Technique.",
     "nl": "* Heeft u al een Precisie-Bilan gehad? Neem rechtstreeks contact op met Zoé om een Halflichaamsbehandeling of Technische Controle te reserveren.",

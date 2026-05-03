@@ -553,17 +553,20 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
 (function() {
   if (window.innerWidth > 768) return;
 
+  /* En PWA standalone, le hero remplit tout l'écran — pas besoin des barres */
+  var isPWA = window.matchMedia('(display-mode: standalone)').matches;
+
   /* ── Injecter les styles des barres safe-area en JS pur (bypass cache CSS) ── */
   var s = document.createElement('style');
-  s.textContent = [
+  var barCSS = isPWA ? '' : [
     '#homeTopBar{display:block !important;position:fixed;top:-30px;left:0;right:0;',
     'height:calc(env(safe-area-inset-top,50px) + 30px);background-color:#120305;',
     'z-index:9999;pointer-events:none;transition:background-color .3s ease;}',
     '#homeBottomBar{display:block !important;position:fixed;bottom:0;left:0;right:0;',
     'height:env(safe-area-inset-bottom,0px);background-color:#120305;',
-    'z-index:5;pointer-events:none;transition:background-color .3s ease;}',
-    'body.is-home .sticky-cta-hidden-home{display:none !important;}'
+    'z-index:5;pointer-events:none;transition:background-color .3s ease;}'
   ].join('');
+  s.textContent = barCSS + 'body.is-home .sticky-cta-hidden-home{display:none !important;}';
   document.head.appendChild(s);
   document.body.classList.add('is-home');
 

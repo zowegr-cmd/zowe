@@ -2433,6 +2433,9 @@ img {
   /* Espace sous le contenu pour éviter que le sticky masque le footer */
   body { padding-bottom: 3.5rem; }
 
+  /* Safe area top → bordeaux derrière la barre de statut iOS */
+  html, body { background-color: #1A0508; }
+
   /* Éviter le zoom iOS sur les champs */
   .form-group input,
   .form-group select,

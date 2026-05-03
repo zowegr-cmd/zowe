@@ -9,6 +9,11 @@
     "nl": "Drie interventieniveaus, één doel: de uitmuntendheid van uw lichamelijk kapitaal.",
     "en": "Three levels of intervention, one goal: the excellence of your physical capital."
   },
+  "asterisk_note": {
+    "fr": "* Vous avez déjà effectué un Bilan Précision ? Contactez directement Zoé pour réserver un Soin Demi Corps ou un Contrôle Technique.",
+    "nl": "* Heeft u al een Precisie-Bilan gehad? Neem rechtstreeks contact op met Zoé om een Halflichaamsbehandeling of Technische Controle te reserveren.",
+    "en": "* Already had a Precision Assessment? Contact Zoé directly to book a Half-body Care or Technical Check-up."
+  },
   "tiers": [
     {
       "id": "audit",
@@ -61,6 +66,7 @@
         "nl": "Regelmatige opvolging, sportief herstel, gelokaliseerde pijnen.",
         "en": "Regular follow-up, sports recovery, localised pain."
       },
+      "cta": { "fr": "En savoir plus →", "nl": "Meer weten →", "en": "Learn more →" },
       "mobile_note": {
         "fr": "Ce protocole est mis en place par Zoé lors de votre Bilan Précision.",
         "nl": "Dit protocol wordt door Zoé bepaald tijdens uw Precisie-Bilan.",
@@ -89,6 +95,7 @@
         "nl": "Chronische pathologieën, intensief herstel, volledige optimalisatie van het lichamelijk kapitaal.",
         "en": "Chronic conditions, intensive recovery, complete optimisation of physical capital."
       },
+      "cta": { "fr": "En savoir plus →", "nl": "Meer weten →", "en": "Learn more →" },
       "mobile_note": {
         "fr": "Ce protocole est mis en place par Zoé lors de votre Bilan Précision.",
         "nl": "Dit protocol wordt door Zoé bepaald tijdens uw Precisie-Bilan.",

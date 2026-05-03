@@ -191,9 +191,15 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
                 Réserver votre Bilan Précision →
               </a>
             )}
+            {i > 0 && (
+              <a href="#contact" class="btn btn-primary proto-reserve-btn" data-i18n={`services.tiers.${i}.cta`}>
+                {tier.cta.fr}
+              </a>
+            )}
           </div>
         ))}
       </div>
+      <p class="proto-asterisk" data-i18n="services.asterisk_note">{services.asterisk_note.fr}</p>
     </div>
   </section>
 

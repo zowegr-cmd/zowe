@@ -1881,7 +1881,7 @@ img {
   .nav:not(.scrolled) .nav-logo { color: var(--or); }
   .nav:not(.scrolled) .nav-toggle span { background: var(--or); }
 
-  /* Menu mobile — plein écran crème (design original) */
+  /* Menu mobile — plein écran crème, tout tient dans 100dvh sans scroll */
   .nav-links {
     display: none;
     position: fixed;
@@ -1890,54 +1890,93 @@ img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 0;
     z-index: 250;
-    overflow-y: auto;
-    padding: calc(env(safe-area-inset-top, 0px) + 2rem) 2rem calc(env(safe-area-inset-bottom, 0px) + 2rem);
+    overflow: hidden;
+    padding: calc(env(safe-area-inset-top, 0px) + 56px) 24px calc(env(safe-area-inset-bottom, 0px) + 20px);
   }
   .nav-links.open { display: flex; }
-  .nav-links a { font-size: 0.9rem; letter-spacing: 0.18em; color: var(--bordeaux); }
-  .nav-links a:hover { color: var(--bordeaux-dark, #4A1520); }
+
+  /* Liens nav — compact, Cinzel */
+  .nav-links > li > a:not(.kq-menu-link):not(.nav-cta) {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 11px 0;
+    font-size: 12px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 4px;
+    color: #6B1F2A;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,169,110,0.12);
+  }
+  .nav-links > li:first-child > a { border-top: 1px solid rgba(201,169,110,0.12); }
+  .nav-links > li > a:not(.kq-menu-link):hover { color: #C9A96E; }
+
+  /* Bouton KinoQuick */
+  #kqMenuBtn {
+    width: 100%;
+    margin: 16px 0 0;
+    border-top: 1px solid rgba(201,169,110,0.3);
+    padding-top: 16px;
+  }
+  .kq-menu-link {
+    display: block !important;
+    width: 100%;
+    text-align: center;
+    padding: 13px 0 !important;
+    background: #6B1F2A !important;
+    color: #F5F0E8 !important;
+    font-size: 11px !important;
+    font-family: 'Cinzel', serif !important;
+    letter-spacing: 3px !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+  }
+
+  /* Icônes sociales */
+  .nav-socials {
+    display: flex !important;
+    list-style: none;
+    width: 100%;
+    margin: 16px 0 0;
+    padding: 16px 0 0;
+    border-top: 1px solid rgba(201,169,110,0.3);
+  }
+  .nav-socials-inner {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+  }
+  .nav-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #C9A96E;
+    border-radius: 50%;
+    background: #F5F0E8;
+    color: #6B1F2A;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-social-icon svg { width: 20px; height: 20px; }
 
   /* Sélecteur de langue mobile */
   .nav-lang-mobile {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-top: 0.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(201,169,110,0.3);
   }
-  .nav-lang-mobile .lang-btn {
-    font-size: 0.78rem;
-    padding: 0.3rem 0.5rem;
-  }
-  .nav-lang-mobile > span {
-    color: var(--light);
-    font-size: 0.78rem;
-  }
-
-  /* Icônes sociales — masquées sur mobile aussi (supprimées du menu) */
-  .nav-socials { display: none !important; }
-  .nav-social-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border: 1px solid rgba(201,169,110,0.35);
-    border-radius: 50%;
-    color: var(--or);
-    text-decoration: none;
-    transition: background 0.2s, border-color 0.2s;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .nav-social-icon:hover,
-  .nav-social-icon:active {
-    background: rgba(201,169,110,0.1);
-    border-color: var(--or);
-  }
-  .nav-social-icon svg { width: 18px; height: 18px; }
+  .nav-lang-mobile .lang-btn { font-size: 0.78rem; padding: 0.3rem 0.5rem; }
+  .nav-lang-mobile > span { color: var(--light); font-size: 0.78rem; }
 
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
 

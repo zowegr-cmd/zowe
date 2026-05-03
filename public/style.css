@@ -2798,6 +2798,20 @@ img {
   padding-top: calc(80px + env(safe-area-inset-top, 0px));
 }
 
+/* Renfort CSS natif — s'active même sans la classe .is-pwa (JS lent) */
+@media (display-mode: standalone) {
+  .nav {
+    padding-top: calc(1.75rem + env(safe-area-inset-top, 0px)) !important;
+  }
+  .nav.scrolled {
+    padding-top: calc(1.1rem + env(safe-area-inset-top, 0px)) !important;
+  }
+  .hero {
+    min-height: 100dvh;
+    padding-top: calc(80px + env(safe-area-inset-top, 0px));
+  }
+}
+
 /* ==========================================
    KINOQUICK — INTÉGRATION
 ========================================== */

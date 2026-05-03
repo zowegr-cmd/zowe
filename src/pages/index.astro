@@ -199,44 +199,6 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           </div>
         ))}
       </div>
-      <!-- Tableau comparatif -->
-      <span class="scroll-hint" data-i18n="services.scroll_hint">{services.scroll_hint.fr}</span>
-      <div class="protocols-table-wrapper">
-        <table class="protocols-table">
-          <thead>
-            <tr>
-              <th></th>
-              {services.tiers.map((tier, i) => (
-                <th>
-                  <span class="pt-name" data-i18n={`services.tiers.${i}.name`}>{tier.name.fr}</span>
-                  <span class="pt-meta">{tier.price} · {tier.duration}</span>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="pt-label" data-i18n="services.table.objective">{services.table.objective.fr}</td>
-              {services.tiers.map((tier, i) => (
-                <td data-i18n={`services.tiers.${i}.tagline`}>{tier.tagline.fr}</td>
-              ))}
-            </tr>
-            <tr>
-              <td class="pt-label" data-i18n="services.table.description">{services.table.description.fr}</td>
-              {services.tiers.map((tier, i) => (
-                <td data-i18n={`services.tiers.${i}.description`}>{tier.description.fr}</td>
-              ))}
-            </tr>
-            <tr>
-              <td class="pt-label" data-i18n="services.table.ideal">{services.table.ideal.fr}</td>
-              {services.tiers.map((tier, i) => (
-                <td data-i18n={`services.tiers.${i}.ideal`}>{tier.ideal.fr}</td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
       <p class="proto-asterisk" data-i18n="services.asterisk_note">{services.asterisk_note.fr}</p>
     </div>
   </section>

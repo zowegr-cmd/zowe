@@ -58,8 +58,10 @@ function webpOf(src: string): string {
       margin: 0 auto;
       padding: 0 2rem 2.5rem;
     }
-    /* Cacher le sélecteur de langue flottant (global — échappe le scope Astro) */
-    :global(#langSelectorFixed) { display: none !important; }
+    /* Cacher le sélecteur de langue sur mobile uniquement (desktop : visible) */
+    @media (max-width: 768px) {
+      :global(#langSelectorFixed) { display: none !important; }
+    }
 
     .gc-back {
       display: inline-flex; align-items: center; gap: .5rem;

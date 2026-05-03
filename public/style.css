@@ -2982,39 +2982,33 @@ img {
 
 /* Colonne formulaire dans le mode 2 chemins */
 .kq-contact-layout.kq-active .kq-form-col {
-  padding: 0 0 0 3rem;
-  position: relative;
-}
-.kq-contact-layout.kq-active .kq-form-col::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.5rem;
-  bottom: 0;
-  width: 1px;
-  background: linear-gradient(to bottom, var(--or) 0%, transparent 100%);
-  opacity: 0.35;
+  padding: 0 3rem 0 0;
 }
 @media (max-width: 860px) {
-  .kq-contact-layout.kq-active .kq-form-col {
-    padding: 2rem 0 0;
-  }
-  .kq-contact-layout.kq-active .kq-form-col::before { display: none; }
+  .kq-contact-layout.kq-active .kq-form-col { padding: 2rem 0 0; }
 }
+
+/* Ordre des colonnes : Formulaire | ou | KinoQuick */
+.kq-contact-layout.kq-active .kq-form-col { order: 1; }
+.kq-contact-layout.kq-active .kq-sep      { order: 2; }
+.kq-contact-layout.kq-active .kq-column   { order: 3; }
+
+/* Supprimer les traits autour de "ou" — garder uniquement le texte */
+.kq-sep-line { display: none; }
 .kq-form-title {
-  font-family: var(--serif);
-  font-size: 1.75rem;
+  font-family: Georgia, var(--serif);
+  font-size: 22px;
   font-style: italic;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--bordeaux);
   margin-bottom: 0.5rem;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 .kq-form-desc {
-  font-family: var(--sans);
-  font-size: 0.82rem;
+  font-family: 'Cormorant Garamond', Georgia, var(--serif);
+  font-size: 15px;
   font-style: italic;
-  color: var(--light);
+  color: var(--mid);
   margin-bottom: 1.75rem;
   line-height: 1.65;
   padding-bottom: 1.5rem;

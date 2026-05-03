@@ -3210,3 +3210,151 @@ img {
     animation: none;
   }
 }
+
+/* ==========================================
+   CONTACT MOBILE — 2 options
+========================================== */
+.cm-wrap { display: none; }
+
+@media (max-width: 768px) {
+  /* Cacher le contenu desktop dans la section contact */
+  .contact-meta    { display: none !important; }
+  #kqContactWrap   { display: none !important; }
+  #kqSubtitle      { display: none !important; }
+
+  /* Afficher le wrapper mobile */
+  .cm-wrap { display: block; }
+
+  /* Carte accordéon */
+  .cm-card {
+    border: 1px solid #6B1F2A;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* Bouton déclencheur */
+  .cm-trigger {
+    width: 100%;
+    background: #F5F0E8;
+    border: none;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s;
+  }
+  .cm-trigger:active { background: #ede8e0; }
+  .cm-trigger-text  { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .cm-trigger-title {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 18px;
+    color: #6B1F2A;
+    display: block;
+  }
+  .cm-trigger-sub {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    color: var(--mid);
+    display: block;
+  }
+  .cm-chevron {
+    flex-shrink: 0;
+    margin-left: 12px;
+    transition: transform 0.3s ease;
+  }
+
+  /* Corps accordéon */
+  .cm-body {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    background: #fff;
+    transition: max-height 0.3s ease-out, opacity 0.25s ease-out;
+  }
+  .cm-body.open {
+    max-height: 1400px;
+    opacity: 1;
+  }
+  .cm-body-inner { padding: 24px; }
+
+  /* Icônes sociales */
+  .cm-socials { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(107,31,42,.1); }
+  .cm-socials-label {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    color: var(--mid);
+    margin-bottom: 16px;
+    text-align: center;
+    display: block;
+  }
+  .cm-socials-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+  }
+  .cm-social-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+  }
+  .cm-social-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #F5F0E8;
+    border: 1px solid rgba(201,169,110,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cm-social-label {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    color: var(--mid);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Séparateur */
+  .cm-sep {
+    display: none;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #C9A96E;
+    margin: 24px 0;
+  }
+
+  /* Bouton Réserver */
+  .cm-reserve {
+    display: none;
+    width: 100%;
+    min-height: 64px;
+    background: #6B1F2A;
+    color: #F5F0E8;
+    border-radius: 8px;
+    padding: 20px 24px;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 18px;
+    transition: opacity 0.2s;
+    box-sizing: border-box;
+  }
+  .cm-reserve:active { opacity: 0.85; }
+  .cm-reserve-arrow {
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    color: #C9A96E;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+}

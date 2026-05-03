@@ -3553,3 +3553,15 @@ img {
   }
   .beltra-dot.active { width: 20px; background: #C9A96E; }
 }
+
+/* CONTACT MOBILE — Finitions bouton + bulles */
+@media (max-width: 768px) {
+  .cm-body .btn-primary {
+    width: auto !important;
+    min-width: 200px !important;
+    padding: 16px 40px !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+  .cm-social-icon { background: #F5F0E8 !important; }
+}

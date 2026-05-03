@@ -557,16 +557,18 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
   var s = document.createElement('style');
   s.textContent = [
     '#homeTopBar{display:block !important;position:fixed;top:-30px;left:0;right:0;',
-    'height:calc(env(safe-area-inset-top,50px) + 30px);background-color:#1A0508;',
+    'height:calc(env(safe-area-inset-top,50px) + 30px);background-color:#120305;',
     'z-index:9999;pointer-events:none;transition:background-color .3s ease;}',
     '#homeBottomBar{display:block !important;position:fixed;bottom:0;left:0;right:0;',
-    'height:env(safe-area-inset-bottom,0px);background-color:#1A0508;',
-    'z-index:5;pointer-events:none;transition:background-color .3s ease;}'
+    'height:env(safe-area-inset-bottom,0px);background-color:#120305;',
+    'z-index:5;pointer-events:none;transition:background-color .3s ease;}',
+    'body.is-home .sticky-cta-hidden-home{display:none !important;}'
   ].join('');
   document.head.appendChild(s);
+  document.body.classList.add('is-home');
 
   var sections = [
-    { selector: '.hero',     color: '#1A0508' },
+    { selector: '.hero',     color: '#120305' },
     { selector: '#about',    color: '#F5F0E8' },
     { selector: '#services', color: '#F5F0E8' },
     { selector: '#faq',      color: '#F5F0E8' },
@@ -594,7 +596,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       var bottom = top + el.offsetHeight;
       if (scrollY >= top && scrollY < bottom) return s.color;
     }
-    return '#1A0508';
+    return '#120305';
   }
 
   var ticking = false;
@@ -1139,6 +1141,7 @@ window.__translationMode = __translationMode;
     function _updateSticky() {
       var hidden = _heroVisible || _contactVisible;
       stickyCta.classList.toggle('sticky-cta--hidden', hidden);
+      stickyCta.style.display    = hidden ? 'none' : '';
       stickyCta.style.background = hidden ? 'transparent' : '';
     }
     if (heroSection) {

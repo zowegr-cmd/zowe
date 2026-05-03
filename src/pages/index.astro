@@ -541,21 +541,53 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     </div>
   </footer>
 
-  <!-- Safe area mobile : fond du haut du hero (#0F0F0F = début gradient 150deg) -->
-  <style is:global>
-    @media (max-width: 768px) {
-      html, body { background-color: #0F0F0F !important; }
-    }
-  </style>
 
 </Layout>
 
-<!-- theme-color = haut du hero, mobile uniquement -->
+<!-- theme-color dynamique selon section visible — mobile uniquement -->
 <script is:inline>
 (function() {
   if (window.innerWidth > 768) return;
-  var m = document.querySelector('meta[name="theme-color"]');
-  if (m) m.setAttribute('content', '#0F0F0F');
+
+  var sections = [
+    { selector: '.hero',     color: '#1A0407' },
+    { selector: '#about',    color: '#F5F0E8' },
+    { selector: '#services', color: '#F5F0E8' },
+    { selector: '#faq',      color: '#F5F0E8' },
+    { selector: '#contact',  color: '#F5F0E8' },
+    { selector: 'footer',    color: '#0F0F0F' }
+  ];
+
+  function updateThemeColor(color) {
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', color);
+  }
+
+  function getCurrentColor() {
+    var scrollY = window.scrollY;
+    for (var i = 0; i < sections.length; i++) {
+      var s = sections[i];
+      var el = document.querySelector(s.selector);
+      if (!el) continue;
+      var top = el.offsetTop - 10;
+      var bottom = top + el.offsetHeight;
+      if (scrollY >= top && scrollY < bottom) return s.color;
+    }
+    return '#1A0407';
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        updateThemeColor(getCurrentColor());
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateThemeColor(getCurrentColor());
 })();
 </script>
 

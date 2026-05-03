@@ -3479,3 +3479,25 @@ img {
     text-transform: uppercase;
   }
 }
+
+/* ==========================================
+   CONTACT MOBILE — Finitions formulaire
+========================================== */
+@media (max-width: 768px) {
+  /* C1 — Gap entre champs */
+  .cm-body .simple-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cm-body .ff-row { gap: 10px; }
+  .cm-body .ff { margin-bottom: 0; }
+
+  /* C2 — Masquer labels sous icônes */
+  .cm-social-label { display: none !important; }
+
+  /* C2 — Cercles plus grands, gap plus large */
+  .cm-socials-row { gap: 40px; }
+  .cm-social-icon { width: 56px; height: 56px; }
+  .cm-social-icon svg { width: 24px; height: 24px; }
+}

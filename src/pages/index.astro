@@ -30,6 +30,9 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
 
 <Layout title={meta.siteTitle} description={meta.description}>
 
+  <!-- Safe area top : prolonge la couleur de la section courante sous la barre iOS -->
+  <div id="homeTopBar" aria-hidden="true" style="display:none;position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top);z-index:9999;pointer-events:none;transition:background-color .3s ease;"></div>
+
   <!-- Navigation -->
   <nav class="nav" id="nav">
     <a href="#hero" class="nav-logo" aria-label="Zowe — Accueil">
@@ -558,9 +561,13 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     { selector: 'footer',    color: '#0F0F0F' }
   ];
 
+  var topBar = document.getElementById('homeTopBar');
+  if (topBar) topBar.style.display = '';
+
   function updateThemeColor(color) {
     var m = document.querySelector('meta[name="theme-color"]');
     if (m) m.setAttribute('content', color);
+    if (topBar) topBar.style.backgroundColor = color;
   }
 
   function getCurrentColor() {

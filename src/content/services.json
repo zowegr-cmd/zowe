@@ -14,6 +14,8 @@
       "id": "audit",
       "duration": "30 min",
       "price": "60€",
+      "tab_label": { "fr": "Bilan", "nl": "Bilan", "en": "Assessment" },
+      "badge": { "fr": "POINT DE DÉPART OBLIGATOIRE", "nl": "VERPLICHT STARTPUNT", "en": "MANDATORY STARTING POINT" },
       "name": { "fr": "Le Bilan", "nl": "Het Bilan", "en": "The Assessment" },
       "tagline": { "fr": "Le point de départ obligatoire", "nl": "Het verplichte startpunt", "en": "The essential starting point" },
       "description": {
@@ -30,12 +32,18 @@
         "fr": "Première consultation ou bilan avant tout protocole BELTRA.",
         "nl": "Eerste consultatie of bilan voor elk BELTRA-protocol.",
         "en": "First consultation or assessment before any BELTRA protocol."
+      },
+      "mobile_note": {
+        "fr": "Le Soin Demi Corps et le Contrôle Technique seront définis avec Zoé lors de votre Bilan selon vos besoins.",
+        "nl": "De Halflichaamsbehandeling en de Technische Controle worden door Zoé bepaald tijdens uw Bilan.",
+        "en": "The Half-body Care and Technical Check-up will be defined with Zoé during your Assessment according to your needs."
       }
     },
     {
       "id": "harmonie",
       "duration": "1h",
       "price": "110€",
+      "tab_label": { "fr": "Demi Corps", "nl": "Half Lichaam", "en": "Half Body" },
       "name": { "fr": "Le Soin Demi Corps", "nl": "De Halflichaamsbehandeling", "en": "The Half-body Care" },
       "tagline": { "fr": "Le soin d'équilibre", "nl": "De evenwichtszorg", "en": "The balancing care" },
       "description": {
@@ -52,12 +60,18 @@
         "fr": "Suivi régulier, récupération sportive, douleurs localisées.",
         "nl": "Regelmatige opvolging, sportief herstel, gelokaliseerde pijnen.",
         "en": "Regular follow-up, sports recovery, localised pain."
+      },
+      "mobile_note": {
+        "fr": "Ce protocole est mis en place par Zoé lors de votre Bilan Précision.",
+        "nl": "Dit protocol wordt door Zoé bepaald tijdens uw Precisie-Bilan.",
+        "en": "This protocol is defined by Zoé during your Precision Assessment."
       }
     },
     {
       "id": "signature",
       "duration": "1h30",
       "price": "165€",
+      "tab_label": { "fr": "Contrôle", "nl": "Controle", "en": "Check-up" },
       "name": { "fr": "Le Contrôle Technique", "nl": "De Technische Controle", "en": "The Technical Check" },
       "tagline": { "fr": "Le soin ultime — corps complet", "nl": "De ultieme zorg — volledig lichaam", "en": "The ultimate care — full body" },
       "description": {
@@ -74,6 +88,11 @@
         "fr": "Pathologies chroniques, récupération intensive, optimisation complète du capital physique.",
         "nl": "Chronische pathologieën, intensief herstel, volledige optimalisatie van het lichamelijk kapitaal.",
         "en": "Chronic conditions, intensive recovery, complete optimisation of physical capital."
+      },
+      "mobile_note": {
+        "fr": "Ce protocole est mis en place par Zoé lors de votre Bilan Précision.",
+        "nl": "Dit protocol wordt door Zoé bepaald tijdens uw Precisie-Bilan.",
+        "en": "This protocol is defined by Zoé during your Precision Assessment."
       }
     }
   ]

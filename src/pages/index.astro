@@ -150,6 +150,47 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
           </div>
         ))}
       </div>
+
+      <!-- MOBILE ONLY — Protocoles tabs -->
+      <div id="proto-tabs-mobile">
+        <div class="protocols-tabs" role="tablist">
+          {services.tiers.map((tier, i) => (
+            <button class="protocol-tab" role="tab" data-tab={String(i)} data-i18n={`services.tiers.${i}.tab_label`}>
+              {tier.tab_label.fr}
+            </button>
+          ))}
+        </div>
+        {services.tiers.map((tier, i) => (
+          <div class="protocol-panel" role="tabpanel" data-panel={String(i)}>
+            {i === 0 && (
+              <div class="proto-badge" data-i18n="services.tiers.0.badge">{tier.badge.fr}</div>
+            )}
+            <h3 class="proto-title" data-i18n={`services.tiers.${i}.name`}>{tier.name.fr}</h3>
+            <div class="proto-meta">
+              <span class="proto-duration">{tier.duration}</span>
+              <span class="proto-sep">·</span>
+              <span class="proto-price">{tier.price}</span>
+            </div>
+            <p class="proto-desc" data-i18n={`services.tiers.${i}.description`}>{tier.description.fr}</p>
+            <div class="proto-tools">
+              <p class="beltra-label" data-i18n="services.protocol">Protocole</p>
+              <ul>
+                {tier.tools.fr.map((t, j) => (
+                  <li data-i18n={`services.tiers.${i}.tools.${j}`}>{t}</li>
+                ))}
+              </ul>
+            </div>
+            <div class={i === 0 ? 'proto-note' : 'proto-note proto-note--footer'} data-i18n={`services.tiers.${i}.mobile_note`}>
+              {tier.mobile_note.fr}
+            </div>
+            {i === 0 && (
+              <a href="/reserver?s=protocoles" id="protoTabReserveBtn" class="btn btn-primary proto-reserve-btn" style="display:none">
+                Réserver votre Bilan Précision →
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -1220,6 +1261,13 @@ window.__translationMode = __translationMode;
           lnk.addEventListener('click', function() { trackKq('protocoles'); });
         });
 
+        // Bouton réserver dans les tabs mobile
+        var protoTabReserveBtn = document.getElementById('protoTabReserveBtn');
+        if (protoTabReserveBtn) {
+          protoTabReserveBtn.style.display = '';
+          protoTabReserveBtn.addEventListener('click', function() { trackKq('protocoles'); });
+        }
+
         // Section contact — layout 2 chemins
         var col  = document.getElementById('kqColumn');
         var sep  = document.getElementById('kqSep');
@@ -1329,81 +1377,28 @@ window.__translationMode = __translationMode;
 })();
 </script>
 
-<!-- ── Protocoles mobile : carousel swipe custom + dots ── -->
+<!-- ── Protocoles mobile : tabs ── -->
 <script is:inline>
 (function() {
   if (window.innerWidth > 768) return;
 
-  var grid = document.querySelector('#services .beltra-grid');
-  if (!grid) return;
+  var tabs   = document.querySelectorAll('.protocol-tab');
+  var panels = document.querySelectorAll('.protocol-panel');
+  if (!tabs.length || !panels.length) return;
 
-  var cards = Array.from(grid.querySelectorAll('.beltra-card'));
-  var total = cards.length;
-  if (!total) return;
-
-  var curIdx = 0;
-
-  /* Dots */
-  var dotsWrap = document.createElement('div');
-  dotsWrap.className = 'beltra-dots';
-  grid.parentNode.insertBefore(dotsWrap, grid.nextSibling);
-
-  var dots = cards.map(function(_, i) {
-    var d = document.createElement('button');
-    d.className = 'beltra-dot' + (i === 0 ? ' active' : '');
-    d.setAttribute('aria-label', 'Protocole ' + (i + 1));
-    d.addEventListener('click', function() { scrollToCard(i); });
-    dotsWrap.appendChild(d);
-    return d;
+  tabs.forEach(function(tab, i) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      panels[i].classList.add('active');
+      if (navigator.vibrate) navigator.vibrate(8);
+    });
   });
 
-  function updateDots(idx) {
-    curIdx = idx;
-    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
-  }
-
-  function scrollToCard(idx) {
-    idx = Math.max(0, Math.min(idx, total - 1));
-    cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-    updateDots(idx);
-  }
-
-  /* IntersectionObserver pour sync dots au scroll natif */
-  var io = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        var idx = cards.indexOf(e.target);
-        if (idx !== -1) updateDots(idx);
-      }
-    });
-  }, { root: grid, threshold: 0.55 });
-  cards.forEach(function(c) { io.observe(c); });
-
-  /* Swipe custom touchstart/touchend sur toute la card */
-  var startX = 0, startY = 0, dragging = false;
-
-  grid.addEventListener('touchstart', function(e) {
-    startX   = e.touches[0].clientX;
-    startY   = e.touches[0].clientY;
-    dragging = true;
-  }, { passive: true });
-
-  grid.addEventListener('touchend', function(e) {
-    if (!dragging) return;
-    dragging    = false;
-    var dx = startX - e.changedTouches[0].clientX;
-    var dy = startY - e.changedTouches[0].clientY;
-    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-      scrollToCard(dx > 0 ? curIdx + 1 : curIdx - 1);
-    }
-  }, { passive: true });
-
-  /* touchmove : bloquer scroll page si swipe horizontal */
-  grid.addEventListener('touchmove', function(e) {
-    var dx = Math.abs(e.touches[0].clientX - startX);
-    var dy = Math.abs(e.touches[0].clientY - startY);
-    if (dx > dy && dx > 10) e.preventDefault();
-  }, { passive: false });
+  // Bilan actif par défaut
+  tabs[0].classList.add('active');
+  panels[0].classList.add('active');
 })();
 </script>
 

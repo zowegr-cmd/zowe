@@ -3010,7 +3010,7 @@ img {
 .kq-contact-layout.kq-active {
   display: grid;
   grid-template-columns: 1fr 80px 1fr;
-  align-items: start;
+  align-items: center;
   gap: 0;
   margin-top: 2rem;
   max-width: 960px;
@@ -3497,55 +3497,170 @@ img {
 }
 
 /* ==========================================
-   PROTOCOLES MOBILE — Carousel horizontal
+   PROTOCOLES MOBILE — Tabs
 ========================================== */
+#proto-tabs-mobile { display: none; }
+
 @media (max-width: 768px) {
-  .beltra-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 16px;
-    padding: 8px 24px 20px;
-    max-width: none !important;
-    scrollbar-width: none;
-    /* dépasse du container pour le peek */
-    margin-left: -1.25rem;
-    margin-right: -1.25rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-  .beltra-grid::-webkit-scrollbar { display: none; }
+  /* Masquer le carousel desktop, afficher les tabs */
+  #services { overflow: visible; }
+  .beltra-grid { display: none !important; }
 
-  .beltra-card {
-    flex: 0 0 82vw !important;
-    max-width: 320px !important;
-    scroll-snap-align: start;
-    border-radius: 12px !important;
-    min-width: 0;
-  }
+  #proto-tabs-mobile { display: block; }
 
-  /* Dots navigation */
-  .beltra-dots {
+  /* ── Onglets ── */
+  .protocols-tabs {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-top: 16px;
+    width: 100%;
+    border-bottom: 1px solid rgba(201,169,110,0.3);
+    margin-bottom: 24px;
   }
-  .beltra-dot {
-    height: 6px;
-    width: 6px;
-    border-radius: 3px;
-    background: rgba(201,169,110,.3);
-    border: none;
-    padding: 0;
+  .protocol-tab {
+    flex: 1;
+    padding: 14px 8px;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #888888;
     cursor: pointer;
-    flex-shrink: 0;
-    transition: width .3s ease, background .3s ease;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.2s ease;
   }
-  .beltra-dot.active { width: 20px; background: #C9A96E; }
+  .protocol-tab.active {
+    color: #6B1F2A;
+    border-bottom: 2px solid #C9A96E;
+    font-weight: 600;
+  }
+
+  /* ── Panels ── */
+  .protocol-panel {
+    display: none;
+    padding: 0 4px;
+    animation: protoPanelFadeIn 0.2s ease;
+  }
+  .protocol-panel.active { display: block; }
+
+  @keyframes protoPanelFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Badge ── */
+  .proto-badge {
+    display: inline-block;
+    background: #6B1F2A;
+    color: #F5F0E8;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+
+  /* ── Titre ── */
+  .proto-title {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 22px;
+    color: #6B1F2A;
+    margin: 0 0 8px;
+  }
+
+  /* ── Meta (durée · prix) ── */
+  .proto-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .proto-duration,
+  .proto-price {
+    font-size: 12px;
+    color: #C9A96E;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .proto-sep {
+    color: rgba(201,169,110,0.5);
+    font-size: 12px;
+  }
+
+  /* ── Description ── */
+  .proto-desc {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #444;
+    margin-bottom: 16px;
+  }
+
+  /* ── Outils ── */
+  .proto-tools {
+    margin-bottom: 16px;
+  }
+  .proto-tools .beltra-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 8px;
+  }
+  .proto-tools ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .proto-tools li {
+    font-size: 13px;
+    color: #555;
+    padding: 4px 0 4px 18px;
+    position: relative;
+  }
+  .proto-tools li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #C9A96E;
+  }
+
+  /* ── Note panel Bilan (fond crème, bordure or) ── */
+  .proto-note {
+    background: #F5F0E8;
+    border-left: 3px solid #C9A96E;
+    padding: 12px 16px;
+    font-style: italic;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 24px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ── Note footer panels 2+3 (gris, centré) ── */
+  .proto-note.proto-note--footer {
+    background: none;
+    border-left: none;
+    border-radius: 0;
+    padding: 0;
+    text-align: center;
+    color: #999;
+    margin-top: 16px;
+    margin-bottom: 0;
+  }
+
+  /* ── Bouton réserver ── */
+  .proto-reserve-btn {
+    display: block !important;
+    width: 100%;
+    text-align: center;
+    margin-top: 4px;
+    box-sizing: border-box;
+  }
 }
 
 /* CONTACT MOBILE — Finitions bouton + bulles */
@@ -3560,67 +3675,3 @@ img {
   .cm-social-icon { background: #F5F0E8 !important; }
 }
 
-/* ==========================================
-   PROTOCOLES MOBILE — Carousel corrigé (override)
-========================================== */
-@media (max-width: 768px) {
-  #services { overflow: hidden; }
-
-  .beltra-grid {
-    flex-direction: row !important;
-    overflow-x: scroll !important;
-    overflow-y: hidden !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    gap: 0 !important;
-    padding: 8px 0 20px !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    max-width: none !important;
-    scrollbar-width: none !important;
-  }
-  .beltra-grid::-webkit-scrollbar { display: none !important; }
-
-  .beltra-card {
-    flex: 0 0 100vw !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    scroll-snap-align: start !important;
-    scroll-snap-stop: always !important;
-    border-radius: 0 !important;
-    padding: 32px 24px !important;
-    box-sizing: border-box !important;
-    min-height: auto !important;
-  }
-}
-
-/* ==========================================
-   PROTOCOLES MOBILE — Corrections carousel
-========================================== */
-@media (max-width: 768px) {
-  /* C1 — Hauteur contrainte */
-  .beltra-grid {
-    max-height: calc(100dvh - 264px) !important;
-    overflow-y: hidden !important;
-  }
-
-  /* C1+C2 — Card 88vw centrée + bords arrondis */
-  .beltra-card {
-    flex: 0 0 88vw !important;
-    width: 88vw !important;
-    max-width: 88vw !important;
-    margin: 0 6vw !important;
-    border-radius: 16px !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-  }
-
-  /* C4 — Share button visible et positionné */
-  .beltra-card .share-btn {
-    display: flex !important;
-    position: absolute !important;
-    top: 1rem !important;
-    right: 1rem !important;
-    z-index: 5 !important;
-  }
-}

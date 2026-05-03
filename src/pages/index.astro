@@ -1329,7 +1329,7 @@ window.__translationMode = __translationMode;
 })();
 </script>
 
-<!-- ── Protocoles mobile : dots carousel ── -->
+<!-- ── Protocoles mobile : carousel plein écran + dots IntersectionObserver ── -->
 <script is:inline>
 (function() {
   if (window.innerWidth > 768) return;
@@ -1341,7 +1341,7 @@ window.__translationMode = __translationMode;
   var total = cards.length;
   if (!total) return;
 
-  /* Créer les dots */
+  /* Dots */
   var dotsWrap = document.createElement('div');
   dotsWrap.className = 'beltra-dots';
   grid.parentNode.insertBefore(dotsWrap, grid.nextSibling);
@@ -1351,25 +1351,40 @@ window.__translationMode = __translationMode;
     d.className = 'beltra-dot' + (i === 0 ? ' active' : '');
     d.setAttribute('aria-label', 'Protocole ' + (i + 1));
     d.addEventListener('click', function() {
-      var cardW = cards[0].offsetWidth + 16;
-      grid.scrollTo({ left: i * cardW, behavior: 'smooth' });
+      grid.scrollTo({ left: i * window.innerWidth, behavior: 'smooth' });
     });
     dotsWrap.appendChild(d);
     return d;
   });
 
-  /* Mettre à jour au scroll */
-  var ticking = false;
-  grid.addEventListener('scroll', function() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function() {
-      var cardW = (cards[0] ? cards[0].offsetWidth : 1) + 16;
-      var active = Math.min(total - 1, Math.round(grid.scrollLeft / cardW));
-      dots.forEach(function(d, i) { d.classList.toggle('active', i === active); });
-      ticking = false;
+  /* IntersectionObserver — 1 card pleine largeur */
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var idx = cards.indexOf(entry.target);
+        if (idx !== -1) {
+          dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+        }
+      }
     });
+  }, { root: grid, threshold: 0.6 });
+
+  cards.forEach(function(card) { observer.observe(card); });
+
+  /* Bloquer scroll vertical pendant swipe horizontal */
+  var startX = 0, startY = 0, lockH = false;
+  grid.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    lockH  = false;
   }, { passive: true });
+
+  grid.addEventListener('touchmove', function(e) {
+    var dx = Math.abs(e.touches[0].clientX - startX);
+    var dy = Math.abs(e.touches[0].clientY - startY);
+    if (!lockH && dx > dy) { lockH = true; }
+    if (lockH) e.preventDefault();
+  }, { passive: false });
 })();
 </script>
 

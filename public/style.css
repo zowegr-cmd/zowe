@@ -3565,3 +3565,37 @@ img {
   }
   .cm-social-icon { background: #F5F0E8 !important; }
 }
+
+/* ==========================================
+   PROTOCOLES MOBILE — Carousel corrigé (override)
+========================================== */
+@media (max-width: 768px) {
+  #services { overflow: hidden; }
+
+  .beltra-grid {
+    flex-direction: row !important;
+    overflow-x: scroll !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 0 !important;
+    padding: 8px 0 20px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+    scrollbar-width: none !important;
+  }
+  .beltra-grid::-webkit-scrollbar { display: none !important; }
+
+  .beltra-card {
+    flex: 0 0 100vw !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+    border-radius: 0 !important;
+    padding: 32px 24px !important;
+    box-sizing: border-box !important;
+    min-height: auto !important;
+  }
+}

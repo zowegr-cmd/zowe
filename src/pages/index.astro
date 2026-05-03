@@ -544,33 +544,30 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     </div>
   </footer>
 
-  <style is:global>
-    /* Barre safe-area-top — visible immédiatement, couleur mise à jour au scroll */
-    #homeTopBar {
-      display: none; /* masqué desktop — activé par JS mobile */
-    }
-    @media (max-width: 768px) {
-      #homeTopBar {
-        display: block;
-        position: fixed;
-        top: -30px;           /* dépasse au-dessus du viewport */
-        left: 0;
-        right: 0;
-        height: calc(env(safe-area-inset-top, 50px) + 30px);
-        background-color: #1A0508; /* couleur hero par défaut, visible avant JS */
-        z-index: 9999;
-        pointer-events: none;
-        transition: background-color 0.3s ease;
-      }
-    }
-  </style>
 
 </Layout>
 
-<!-- theme-color dynamique selon section visible — mobile uniquement -->
+<!-- theme-color + safe-area-top dynamiques — mobile uniquement -->
 <script is:inline>
 (function() {
   if (window.innerWidth > 768) return;
+
+  /* ── Injecter les styles du topBar en JS pur (bypass cache CSS) ── */
+  var s = document.createElement('style');
+  s.textContent = [
+    '#homeTopBar{',
+    '  display:block !important;',
+    '  position:fixed;',
+    '  top:-30px;',
+    '  left:0;right:0;',
+    '  height:calc(env(safe-area-inset-top,50px) + 30px);',
+    '  background-color:#1A0508;',
+    '  z-index:9999;',
+    '  pointer-events:none;',
+    '  transition:background-color .3s ease;',
+    '}'
+  ].join('');
+  document.head.appendChild(s);
 
   var sections = [
     { selector: '.hero',     color: '#1A0508' },

@@ -404,49 +404,6 @@ td.email a{color:var(--bx);text-decoration:none}
         </div>
       </div>
 
-      <!-- Mode Mobile — Sections dépliantes -->
-      <div class="card" style="max-width:600px;margin-top:1.5rem">
-        <p class="section-title" style="font-size:.75rem;margin-bottom:.25rem">Mode Mobile — Sections dépliantes</p>
-        <p class="section-sub" style="margin-bottom:1.5rem">Transforme chaque section en accordéon sur mobile. Le visiteur déplie les sections qui l'intéressent.</p>
-
-        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem">
-          <label style="display:flex;align-items:center;gap:.75rem;cursor:pointer">
-            <input type="checkbox" id="maToggle" style="display:none" onchange="onMaToggle(this)">
-            <div class="settings-toggle" id="maToggleVisual"><div class="settings-toggle-knob"></div></div>
-            <span id="maToggleLabel" style="font-size:.8rem;font-weight:500;color:var(--lt)">OFF</span>
-          </label>
-          <span style="font-size:.8rem;color:var(--dk);font-weight:500">Sections dépliantes sur mobile</span>
-        </div>
-
-        <div id="maSubOptions" style="display:none;padding-left:1rem;border-left:2px solid rgba(201,169,110,0.3);margin-bottom:1.5rem">
-          <div style="margin-bottom:1.25rem">
-            <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.35rem">
-              <label style="display:flex;align-items:center;gap:.75rem;cursor:pointer">
-                <input type="checkbox" id="maDefaultOpenToggle" style="display:none" onchange="onMaDefaultOpenToggle(this)">
-                <div class="settings-toggle" id="maDefaultOpenVisual"><div class="settings-toggle-knob"></div></div>
-                <span id="maDefaultOpenLabel" style="font-size:.8rem;font-weight:500;color:var(--lt)">OFF</span>
-              </label>
-              <span style="font-size:.8rem;color:var(--dk);font-weight:500">Sections ouvertes à l'arrivée</span>
-            </div>
-            <p style="font-size:.72rem;color:var(--lt);margin:0 0 0 3.5rem">Si activé, toutes les sections sont déjà ouvertes quand le patient arrive. Si désactivé, tout est fermé.</p>
-          </div>
-
-          <div style="margin-bottom:.5rem">
-            <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.35rem">
-              <label style="display:flex;align-items:center;gap:.75rem;cursor:pointer">
-                <input type="checkbox" id="maOneAtATimeToggle" style="display:none" onchange="onMaOneAtATimeToggle(this)">
-                <div class="settings-toggle" id="maOneAtATimeVisual"><div class="settings-toggle-knob"></div></div>
-                <span id="maOneAtATimeLabel" style="font-size:.8rem;font-weight:500;color:var(--lt)">OFF</span>
-              </label>
-              <span style="font-size:.8rem;color:var(--dk);font-weight:500">Une section ouverte à la fois</span>
-            </div>
-            <p style="font-size:.72rem;color:var(--lt);margin:0 0 0 3.5rem">Si activé, ouvrir une section ferme automatiquement la précédente. Si désactivé, plusieurs sections peuvent être ouvertes simultanément.</p>
-          </div>
-        </div>
-
-        <button class="save-btn" onclick="saveMobileAccordion()" id="maSaveBtn">Sauvegarder Mode Mobile</button>
-        <p id="maMsg" style="font-size:.75rem;color:var(--ok);margin-top:.75rem;display:none"></p>
-      </div>
     </div>
 
     <!-- ═══════════ SÉCURITÉ TAB ═══════════ -->
@@ -716,42 +673,6 @@ function loadSettings() {
     var zones = Array.isArray(data.domicile_zones) ? data.domicile_zones : (data.domicile_zones || '');
     document.getElementById('kqDomicileZones').value = Array.isArray(zones) ? zones.join(', ') : zones;
   });
-  api('?action=mobile-accordion-get').then(function(data) {
-    if (!data) return;
-    maSetToggle('maToggle', 'maToggleVisual', 'maToggleLabel', !!data.enabled);
-    maSetToggle('maDefaultOpenToggle', 'maDefaultOpenVisual', 'maDefaultOpenLabel', !!data.default_open);
-    maSetToggle('maOneAtATimeToggle', 'maOneAtATimeVisual', 'maOneAtATimeLabel', data.one_at_a_time !== false);
-    document.getElementById('maSubOptions').style.display = data.enabled ? 'block' : 'none';
-  });
-}
-
-function maSetToggle(checkboxId, visualId, labelId, val) {
-  document.getElementById(checkboxId).checked = val;
-  document.getElementById(visualId).classList.toggle('on', val);
-  document.getElementById(labelId).textContent = val ? 'ON' : 'OFF';
-  document.getElementById(labelId).style.color = val ? 'var(--bx)' : 'var(--lt)';
-}
-function onMaToggle(cb) {
-  maSetToggle('maToggle', 'maToggleVisual', 'maToggleLabel', cb.checked);
-  document.getElementById('maSubOptions').style.display = cb.checked ? 'block' : 'none';
-}
-function onMaDefaultOpenToggle(cb) { maSetToggle('maDefaultOpenToggle', 'maDefaultOpenVisual', 'maDefaultOpenLabel', cb.checked); }
-function onMaOneAtATimeToggle(cb)  { maSetToggle('maOneAtATimeToggle', 'maOneAtATimeVisual', 'maOneAtATimeLabel', cb.checked); }
-function saveMobileAccordion() {
-  var enabled     = document.getElementById('maToggle').checked;
-  var defaultOpen = document.getElementById('maDefaultOpenToggle').checked;
-  var oneAtATime  = document.getElementById('maOneAtATimeToggle').checked;
-  var btn = document.getElementById('maSaveBtn');
-  var msg = document.getElementById('maMsg');
-  btn.disabled = true;
-  api('?action=mobile-accordion-save', { method: 'POST', body: JSON.stringify({ enabled: enabled, default_open: defaultOpen, one_at_a_time: oneAtATime }) })
-    .then(function(d) {
-      btn.disabled = false;
-      msg.style.display = 'block';
-      if (d && d.ok) { msg.textContent = 'Mode Mobile sauvegardé ✓'; msg.style.color = 'var(--ok)'; }
-      else { msg.textContent = 'Erreur lors de la sauvegarde.'; msg.style.color = '#c0392b'; }
-      setTimeout(function() { msg.style.display = 'none'; }, 3000);
-    }).catch(function() { btn.disabled = false; });
 }
 
 var kqDirty = false;

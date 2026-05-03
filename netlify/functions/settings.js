@@ -24,30 +24,28 @@ const KQ_DEFAULTS = {
 exports.handler = async function (event) {
   const type = (event.queryStringParameters || {}).type;
 
-  const HEADERS_JSON = { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=30', 'Access-Control-Allow-Origin': '*' };
-
-  if (type === 'kinoquick') {
-    try {
-      const store = getStore('settings');
-      const saved = await store.get('kinoquick', { type: 'json' }).catch(() => null);
-      const data  = saved ? Object.assign({}, KQ_DEFAULTS, saved) : KQ_DEFAULTS;
-      return { statusCode: 200, headers: HEADERS_JSON, body: JSON.stringify(data) };
-    } catch (e) {
-      return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(KQ_DEFAULTS) };
-    }
+  if (type !== 'kinoquick') {
+    return { statusCode: 400, body: JSON.stringify({ error: 'type invalide' }) };
   }
 
-  if (type === 'mobile-accordion') {
-    const DEFAULTS = { enabled: false, default_open: false, one_at_a_time: true };
-    try {
-      const store = getStore('settings');
-      const saved = await store.get('mobile_accordion', { type: 'json' }).catch(() => null);
-      const data  = saved ? Object.assign({}, DEFAULTS, saved) : DEFAULTS;
-      return { statusCode: 200, headers: HEADERS_JSON, body: JSON.stringify(data) };
-    } catch (e) {
-      return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(DEFAULTS) };
-    }
+  try {
+    const store = getStore('settings');
+    const saved = await store.get('kinoquick', { type: 'json' }).catch(() => null);
+    const data  = saved ? Object.assign({}, KQ_DEFAULTS, saved) : KQ_DEFAULTS;
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type' : 'application/json',
+        'Cache-Control': 'public, max-age=60',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify(data),
+    };
+  } catch (e) {
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(KQ_DEFAULTS),
+    };
   }
-
-  return { statusCode: 400, body: JSON.stringify({ error: 'type invalide' }) };
 };

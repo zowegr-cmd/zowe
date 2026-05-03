@@ -3040,3 +3040,38 @@ img {
 .fab-container.open .fab-item:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 100ms; }
 .fab-container.open .fab-item:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 50ms;  }
 .fab-container.open .fab-item:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0ms;   }
+
+/* ==========================================
+   HERO MOBILE — corrections visuelles
+========================================== */
+@media (max-width: 768px) {
+  /* Correction 1 — supprimer tout flou/filtre sur le hero */
+  .hero,
+  .hero::before,
+  .hero::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+  }
+
+  /* Correction 2 — recentrer verticalement le contenu */
+  .hero {
+    min-height: 100dvh;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 80px);
+    padding-bottom: 80px;
+    justify-content: center;
+  }
+  .hero-inner {
+    margin-top: -8vh;
+  }
+
+  /* Correction 3 — flèche scroll toujours visible */
+  .hero-scroll {
+    position: absolute;
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.6;
+    animation: none;
+  }
+}

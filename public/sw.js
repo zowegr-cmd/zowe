@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zowe-v6';
+const CACHE_NAME = 'zowe-v7';
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',

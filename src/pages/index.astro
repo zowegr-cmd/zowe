@@ -153,12 +153,15 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
 
       <!-- MOBILE ONLY — Protocoles tabs -->
       <div id="proto-tabs-mobile">
-        <div class="protocols-tabs" role="tablist">
-          {services.tiers.map((tier, i) => (
-            <button class="protocol-tab" role="tab" data-tab={String(i)} data-i18n={`services.tiers.${i}.tab_label`}>
-              {tier.tab_label.fr}
-            </button>
-          ))}
+        <div class="protocols-tabs-wrapper">
+          <div class="protocols-tabs" role="tablist">
+            {services.tiers.map((tier, i) => (
+              <button class="protocol-tab" role="tab" data-index={String(i)} data-i18n={`services.tiers.${i}.tab_label`}>
+                {tier.tab_label.fr}
+              </button>
+            ))}
+            <div class="tabs-indicator"></div>
+          </div>
         </div>
         {services.tiers.map((tier, i) => (
           <div class="protocol-panel" role="tabpanel" data-panel={String(i)}>
@@ -1377,28 +1380,41 @@ window.__translationMode = __translationMode;
 })();
 </script>
 
-<!-- ── Protocoles mobile : tabs ── -->
+<!-- ── Protocoles mobile : tabs avec indicateur animé ── -->
 <script is:inline>
 (function() {
   if (window.innerWidth > 768) return;
 
-  var tabs   = document.querySelectorAll('.protocol-tab');
-  var panels = document.querySelectorAll('.protocol-panel');
-  if (!tabs.length || !panels.length) return;
+  var tabs      = document.querySelectorAll('.protocol-tab');
+  var panels    = document.querySelectorAll('.protocol-panel');
+  var indicator = document.querySelector('.tabs-indicator');
+  if (!tabs.length || !panels.length || !indicator) return;
+
+  function moveIndicator(tab) {
+    indicator.style.width = tab.offsetWidth + 'px';
+    indicator.style.left  = tab.offsetLeft  + 'px';
+  }
+
+  function activateTab(index) {
+    tabs.forEach(function(t)  { t.classList.remove('active'); });
+    panels.forEach(function(p) { p.classList.remove('active'); });
+    tabs[index].classList.add('active');
+    panels[index].classList.add('active');
+    moveIndicator(tabs[index]);
+    if (navigator.vibrate) navigator.vibrate(8);
+  }
 
   tabs.forEach(function(tab, i) {
-    tab.addEventListener('click', function() {
-      tabs.forEach(function(t) { t.classList.remove('active'); });
-      panels.forEach(function(p) { p.classList.remove('active'); });
-      tab.classList.add('active');
-      panels[i].classList.add('active');
-      if (navigator.vibrate) navigator.vibrate(8);
-    });
+    tab.addEventListener('click', function() { activateTab(i); });
   });
 
-  // Bilan actif par défaut
-  tabs[0].classList.add('active');
-  panels[0].classList.add('active');
+  // Init
+  activateTab(0);
+
+  window.addEventListener('resize', function() {
+    var active = document.querySelector('.protocol-tab.active');
+    if (active) moveIndicator(active);
+  });
 })();
 </script>
 

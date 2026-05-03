@@ -1462,3 +1462,88 @@ window.__translationMode = __translationMode;
 })();
 </script>
 
+<!-- ── Mode Mobile : accordéon sections ── -->
+<script is:inline>
+(function() {
+  if (window.innerWidth > 768) return;
+
+  fetch('/.netlify/functions/settings?type=mobile-accordion')
+    .then(function(r) { return r.json(); })
+    .then(function(cfg) {
+      if (!cfg || !cfg.enabled) return;
+      initAccordion(!!cfg.default_open, cfg.one_at_a_time !== false);
+    })
+    .catch(function() {});
+
+  function initAccordion(defaultOpen, oneAtATime) {
+    var sections = Array.from(document.querySelectorAll('.section:not(.hero)'));
+    if (!sections.length) return;
+    document.body.classList.add('accordion-mode');
+
+    sections.forEach(function(section) {
+      var header = section.querySelector('.section-header');
+      if (!header) return;
+
+      // Envelopper tout le contenu après le header dans .section-content
+      var content = document.createElement('div');
+      content.className = 'section-content';
+      var toMove = Array.from(section.children).filter(function(c) {
+        return !c.classList.contains('section-header');
+      });
+      toMove.forEach(function(c) { content.appendChild(c); });
+      section.appendChild(content);
+
+      // Ajouter chevron dans le header
+      var chevron = document.createElement('span');
+      chevron.className = 'section-chevron';
+      chevron.innerHTML = '&#9660;';
+      header.appendChild(chevron);
+
+      // État initial
+      if (defaultOpen) {
+        section.classList.add('is-open');
+        content.style.maxHeight = content.scrollHeight + 'px';
+        content.style.opacity = '1';
+        chevron.style.transform = 'rotate(180deg)';
+      } else {
+        content.style.maxHeight = '0';
+        content.style.opacity = '0';
+      }
+
+      header.addEventListener('click', function() {
+        var isOpen = section.classList.contains('is-open');
+
+        // Fermer les autres si oneAtATime et qu'on ouvre
+        if (oneAtATime && !isOpen) {
+          sections.forEach(function(s) {
+            if (s === section || !s.classList.contains('is-open')) return;
+            var c  = s.querySelector('.section-content');
+            var cv = s.querySelector('.section-chevron');
+            s.classList.remove('is-open');
+            if (c)  { c.style.maxHeight = '0'; c.style.opacity = '0'; }
+            if (cv)   cv.style.transform = 'rotate(0deg)';
+          });
+        }
+
+        if (isOpen) {
+          section.classList.remove('is-open');
+          content.style.maxHeight = '0';
+          content.style.opacity = '0';
+          chevron.style.transform = 'rotate(0deg)';
+        } else {
+          section.classList.add('is-open');
+          content.style.maxHeight = content.scrollHeight + 'px';
+          content.style.opacity = '1';
+          chevron.style.transform = 'rotate(180deg)';
+          setTimeout(function() {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 420);
+        }
+
+        if (navigator.vibrate) navigator.vibrate(8);
+      });
+    });
+  }
+})();
+</script>
+

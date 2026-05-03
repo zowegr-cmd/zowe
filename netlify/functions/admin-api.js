@@ -457,5 +457,34 @@ exports.handler = async function(event) {
     }
   }
 
+  // GET mobile-accordion-get
+  if (action === 'mobile-accordion-get') {
+    try {
+      const store = getStore('settings');
+      const saved = await store.get('mobile_accordion', { type: 'json' }).catch(() => null);
+      return json(saved || { enabled: false, default_open: false, one_at_a_time: true });
+    } catch (e) {
+      return json({ enabled: false, default_open: false, one_at_a_time: true });
+    }
+  }
+
+  // POST mobile-accordion-save
+  if (action === 'mobile-accordion-save' && event.httpMethod === 'POST') {
+    let body = {};
+    try { body = JSON.parse(event.body || '{}'); } catch {}
+    const { enabled, default_open, one_at_a_time } = body;
+    if (typeof enabled !== 'boolean' || typeof default_open !== 'boolean' || typeof one_at_a_time !== 'boolean') {
+      return json({ error: 'enabled, default_open, one_at_a_time (booleans) requis.' }, 400);
+    }
+    try {
+      const store = getStore('settings');
+      await store.setJSON('mobile_accordion', { enabled, default_open, one_at_a_time });
+      await logAuth('admin', 'admin-api', true, `mobile-accordion-save: enabled=${enabled}`);
+      return json({ ok: true });
+    } catch (e) {
+      return json({ error: e.message }, 500);
+    }
+  }
+
   return json({ error: 'Action inconnue.' }, 400);
 };

@@ -36,6 +36,7 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #1A0508;
 }
 
 /* ── Curseur custom doré (desktop uniquement) ── */

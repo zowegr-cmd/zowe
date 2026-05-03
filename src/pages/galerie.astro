@@ -63,17 +63,6 @@ function webpOf(src: string): string {
       :global(#langSelectorFixed) { display: none !important; }
     }
 
-    /* ── Nav desktop sur fond bordeaux — couleurs visibles dès le paint ── */
-    @media (min-width: 769px) {
-      :global(.nav:not(.scrolled) .nav-logo)               { color: #C9A96E !important; }
-      :global(.nav:not(.scrolled) .nav-links a:not(.nav-cta)) { color: rgba(245,240,232,.72) !important; }
-      :global(.nav:not(.scrolled) .nav-links a:not(.nav-cta):hover) { color: #C9A96E !important; }
-      :global(.nav:not(.scrolled) .nav-cta) {
-        border-color: rgba(201,169,110,.45) !important;
-        color: #F5F0E8 !important;
-      }
-      :global(.nav:not(.scrolled) .nav-toggle span) { background: #F5F0E8 !important; }
-    }
 
     .gc-back {
       display: inline-flex; align-items: center; gap: .5rem;
@@ -1153,10 +1142,20 @@ function webpOf(src: string): string {
     var m = document.querySelector('meta[name="theme-color"]');
     if (m) m.setAttribute('content', '#1A0508');
 
-    /* Desktop : nav style fond sombre (logo doré, liens crème) */
+    /* Desktop : injection CSS directe dans <head> — bypass Astro scoping */
     if (window.innerWidth > 768) {
       var nav = document.getElementById('nav');
       if (nav) nav.classList.add('is-homepage');
+
+      var st = document.createElement('style');
+      st.textContent =
+        '#nav:not(.scrolled) .nav-logo{color:#C9A96E!important;}' +
+        '#nav:not(.scrolled) .nav-monogram{color:#C9A96E!important;}' +
+        '#nav:not(.scrolled) .nav-links a:not(.nav-cta){color:rgba(245,240,232,.72)!important;}' +
+        '#nav:not(.scrolled) .nav-links a:not(.nav-cta):hover{color:#C9A96E!important;}' +
+        '#nav:not(.scrolled) .nav-cta{border-color:rgba(201,169,110,.45)!important;color:#F5F0E8!important;}' +
+        '#nav:not(.scrolled) .nav-toggle span{background:#F5F0E8!important;}';
+      document.head.appendChild(st);
     }
   })();
   </script>

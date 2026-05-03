@@ -997,7 +997,9 @@ window.__translationMode = __translationMode;
     tick();
 
     // Recalcule après chargement dynamique (Google Reviews)
-    window._carouselReload = function() { setTimeout(calcHalf, 250); };
+    window._carouselReload  = function() { setTimeout(calcHalf, 250); };
+    window._carouselPause   = function() { paused = true; };
+    window._carouselResume  = function() { paused = false; };
   })();
 
   /* ── Google Reviews dynamiques ── */
@@ -1437,30 +1439,57 @@ window.__translationMode = __translationMode;
     })
     .catch(function() {});
 
+  // Exposé globalement pour que la nav puisse déclencher l'ouverture
+  var _sections = [];
+  window._accordionOpen = function(sectionEl) { openSection(sectionEl); };
+
+  function closeSection(s) {
+    var c  = s.querySelector('.section-content');
+    var cv = s.querySelector('.section-chevron');
+    s.classList.remove('is-open');
+    if (c)  { c.style.maxHeight = '0'; c.style.opacity = '0'; }
+    if (cv)   cv.style.transform = 'rotate(0deg)';
+    onTestimonialsVisibility(s, false);
+  }
+
+  function openSection(s) {
+    var c  = s.querySelector('.section-content');
+    var cv = s.querySelector('.section-chevron');
+    s.classList.add('is-open');
+    if (c)  { c.style.maxHeight = '9999px'; c.style.opacity = '1'; }
+    if (cv)   cv.style.transform = 'rotate(180deg)';
+    onTestimonialsVisibility(s, true);
+  }
+
+  function onTestimonialsVisibility(section, isOpen) {
+    if (!section.classList.contains('testimonials')) return;
+    if (isOpen) {
+      if (window._carouselResume) window._carouselResume();
+    } else {
+      if (window._carouselPause) window._carouselPause();
+    }
+  }
+
   function initAccordion(defaultOpen, oneAtATime) {
-    var sections = Array.from(document.querySelectorAll('.section:not(.hero)'));
-    if (!sections.length) return;
+    _sections = Array.from(document.querySelectorAll('.section:not(.hero)'));
+    if (!_sections.length) return;
     document.body.classList.add('accordion-mode');
 
-    sections.forEach(function(section) {
-      // La vraie structure : section > .container > .section-header + reste
+    _sections.forEach(function(section) {
       var container = section.querySelector('.container');
       if (!container) return;
       var header = container.querySelector('.section-header');
       if (!header) return;
 
-      // Envelopper tout le contenu APRÈS le header dans .section-content
-      // (reste dans le même .container — le header reste toujours visible)
+      // Envelopper tout le contenu après le header dans .section-content
       var content = document.createElement('div');
       content.className = 'section-content';
       Array.from(container.children).forEach(function(child) {
-        if (!child.classList.contains('section-header')) {
-          content.appendChild(child);
-        }
+        if (!child.classList.contains('section-header')) content.appendChild(child);
       });
       container.appendChild(content);
 
-      // Ajouter chevron dans le header
+      // Chevron
       var chevron = document.createElement('span');
       chevron.className = 'section-chevron';
       chevron.innerHTML = '&#9660;';
@@ -1475,39 +1504,66 @@ window.__translationMode = __translationMode;
       } else {
         content.style.maxHeight = '0';
         content.style.opacity = '0';
+        onTestimonialsVisibility(section, false);
       }
 
       header.addEventListener('click', function() {
         var isOpen = section.classList.contains('is-open');
 
-        // Fermer les autres si oneAtATime et qu'on ouvre
         if (oneAtATime && !isOpen) {
-          sections.forEach(function(s) {
-            if (s === section || !s.classList.contains('is-open')) return;
-            var c  = s.querySelector('.section-content');
-            var cv = s.querySelector('.section-chevron');
-            s.classList.remove('is-open');
-            if (c)  { c.style.maxHeight = '0'; c.style.opacity = '0'; }
-            if (cv)   cv.style.transform = 'rotate(0deg)';
+          _sections.forEach(function(s) {
+            if (s !== section && s.classList.contains('is-open')) closeSection(s);
           });
         }
 
-        if (isOpen) {
-          section.classList.remove('is-open');
-          content.style.maxHeight = '0';
-          content.style.opacity = '0';
-          chevron.style.transform = 'rotate(0deg)';
-        } else {
-          section.classList.add('is-open');
-          content.style.maxHeight = '9999px';
-          content.style.opacity = '1';
-          chevron.style.transform = 'rotate(180deg)';
+        if (isOpen) { closeSection(section); }
+        else {
+          openSection(section);
           setTimeout(function() {
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 420);
         }
 
         if (navigator.vibrate) navigator.vibrate(8);
+      });
+    });
+
+    // Nav hamburger : ouvre la section cible en accordéon
+    var navLinks = document.querySelectorAll('#navLinks a[href^="/#"], #navLinks a[href^="#"]');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var href   = link.getAttribute('href') || '';
+        var hash   = href.replace(/.*#/, '');
+        var target = hash ? document.getElementById(hash) : null;
+        if (!target || !document.body.classList.contains('accordion-mode')) return;
+
+        e.preventDefault();
+
+        // Fermer le menu hamburger (réutilise la fonction Layout)
+        var navLinksEl = document.getElementById('navLinks');
+        var navToggle  = document.getElementById('navToggle');
+        var navOverlay = document.getElementById('navOverlay');
+        if (navLinksEl)  navLinksEl.classList.remove('open');
+        if (navToggle)  { navToggle.classList.remove('open'); navToggle.setAttribute('aria-label', 'Ouvrir le menu'); }
+        if (navOverlay)  navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+
+        // Ouvrir la section cible
+        if (oneAtATime) {
+          _sections.forEach(function(s) { if (s.classList.contains('is-open')) closeSection(s); });
+        }
+        if (!target.classList.contains('is-open')) openSection(target);
+
+        // Scroll + highlight
+        setTimeout(function() {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          var title = target.querySelector('.section-title');
+          if (title) {
+            title.style.transition = 'color 0.3s';
+            title.style.color = '#C9A96E';
+            setTimeout(function() { title.style.color = ''; }, 1500);
+          }
+        }, 350);
       });
     });
   }

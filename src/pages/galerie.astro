@@ -1140,6 +1140,12 @@ function webpOf(src: string): string {
   (function() {
     var m = document.querySelector('meta[name="theme-color"]');
     if (m) m.setAttribute('content', '#1A0508');
+
+    /* Desktop : nav style fond sombre (logo doré, liens crème) */
+    if (window.innerWidth > 768) {
+      var nav = document.getElementById('nav');
+      if (nav) nav.classList.add('is-homepage');
+    }
   })();
   </script>
 

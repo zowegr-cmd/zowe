@@ -2890,6 +2890,11 @@ img {
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 
+/* Pages avec nav global — espace sous la barre fixe */
+@media (min-width: 769px) {
+  .page-with-nav { padding-top: 6rem; }
+}
+
 /* ==========================================
    PWA — MODE STANDALONE iOS
 ========================================== */

@@ -541,8 +541,23 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     </div>
   </footer>
 
+  <!-- Safe area mobile : fond du haut du hero (#0F0F0F = début gradient 150deg) -->
+  <style is:global>
+    @media (max-width: 768px) {
+      html, body { background-color: #0F0F0F !important; }
+    }
+  </style>
 
 </Layout>
+
+<!-- theme-color = haut du hero, mobile uniquement -->
+<script is:inline>
+(function() {
+  if (window.innerWidth > 768) return;
+  var m = document.querySelector('meta[name="theme-color"]');
+  if (m) m.setAttribute('content', '#0F0F0F');
+})();
+</script>
 
 <script is:inline define:vars={{
   __translationMode: meta.translation_mode || 'manual',

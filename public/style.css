@@ -2752,7 +2752,16 @@ img {
   gap: 1.25rem;
 }
 .gallery-grid--preview .gallery-card { text-decoration: none; }
-@media (max-width: 768px) { .gallery-card--hide-mobile { display: none; } }
+@media (max-width: 768px) {
+  .gallery-card--hide-mobile { display: none; }
+  .gallery-grid--preview {
+    grid-template-columns: 1fr;
+  }
+  .gallery-grid--preview .gallery-card:not(.gallery-card--hide-mobile) {
+    height: 280px;
+    border-radius: 8px;
+  }
+}
 .gallery-card {
   position: relative;
   overflow: hidden;

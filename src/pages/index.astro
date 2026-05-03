@@ -30,8 +30,9 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
 
 <Layout title={meta.siteTitle} description={meta.description}>
 
-  <!-- Safe area top — prolonge la couleur du hero sous la barre de statut iOS -->
-  <div id="homeTopBar" aria-hidden="true"></div>
+  <!-- Safe areas : prolongent la couleur de section sous les barres iOS -->
+  <div id="homeTopBar"    aria-hidden="true"></div>
+  <div id="homeBottomBar" aria-hidden="true"></div>
 
   <!-- Navigation -->
   <nav class="nav" id="nav">
@@ -552,20 +553,15 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
 (function() {
   if (window.innerWidth > 768) return;
 
-  /* ── Injecter les styles du topBar en JS pur (bypass cache CSS) ── */
+  /* ── Injecter les styles des barres safe-area en JS pur (bypass cache CSS) ── */
   var s = document.createElement('style');
   s.textContent = [
-    '#homeTopBar{',
-    '  display:block !important;',
-    '  position:fixed;',
-    '  top:-30px;',
-    '  left:0;right:0;',
-    '  height:calc(env(safe-area-inset-top,50px) + 30px);',
-    '  background-color:#1A0508;',
-    '  z-index:9999;',
-    '  pointer-events:none;',
-    '  transition:background-color .3s ease;',
-    '}'
+    '#homeTopBar{display:block !important;position:fixed;top:-30px;left:0;right:0;',
+    'height:calc(env(safe-area-inset-top,50px) + 30px);background-color:#1A0508;',
+    'z-index:9999;pointer-events:none;transition:background-color .3s ease;}',
+    '#homeBottomBar{display:block !important;position:fixed;bottom:0;left:0;right:0;',
+    'height:env(safe-area-inset-bottom,0px);background-color:#1A0508;',
+    'z-index:5;pointer-events:none;transition:background-color .3s ease;}'
   ].join('');
   document.head.appendChild(s);
 
@@ -578,12 +574,14 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     { selector: 'footer',    color: '#0F0F0F' }
   ];
 
-  var topBar = document.getElementById('homeTopBar');
+  var topBar    = document.getElementById('homeTopBar');
+  var bottomBar = document.getElementById('homeBottomBar');
 
   function updateThemeColor(color) {
     var m = document.querySelector('meta[name="theme-color"]');
     if (m) m.setAttribute('content', color);
-    if (topBar) topBar.style.backgroundColor = color;
+    if (topBar)    topBar.style.backgroundColor    = color;
+    if (bottomBar) bottomBar.style.backgroundColor = color;
   }
 
   function getCurrentColor() {
@@ -1139,7 +1137,9 @@ window.__translationMode = __translationMode;
     var _heroVisible    = true;  // caché par défaut (on commence sur le hero)
     var _contactVisible = false;
     function _updateSticky() {
-      stickyCta.classList.toggle('sticky-cta--hidden', _heroVisible || _contactVisible);
+      var hidden = _heroVisible || _contactVisible;
+      stickyCta.classList.toggle('sticky-cta--hidden', hidden);
+      stickyCta.style.background = hidden ? 'transparent' : '';
     }
     if (heroSection) {
       new IntersectionObserver(function(e) {

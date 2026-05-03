@@ -63,6 +63,18 @@ function webpOf(src: string): string {
       :global(#langSelectorFixed) { display: none !important; }
     }
 
+    /* ── Nav desktop sur fond bordeaux — couleurs visibles dès le paint ── */
+    @media (min-width: 769px) {
+      :global(.nav:not(.scrolled) .nav-logo)               { color: #C9A96E !important; }
+      :global(.nav:not(.scrolled) .nav-links a:not(.nav-cta)) { color: rgba(245,240,232,.72) !important; }
+      :global(.nav:not(.scrolled) .nav-links a:not(.nav-cta):hover) { color: #C9A96E !important; }
+      :global(.nav:not(.scrolled) .nav-cta) {
+        border-color: rgba(201,169,110,.45) !important;
+        color: #F5F0E8 !important;
+      }
+      :global(.nav:not(.scrolled) .nav-toggle span) { background: #F5F0E8 !important; }
+    }
+
     .gc-back {
       display: inline-flex; align-items: center; gap: .5rem;
       font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;

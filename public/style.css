@@ -3713,55 +3713,65 @@ img {
 ========================================== */
 @media (max-width: 768px) {
 
-  body.accordion-mode .section:not(.hero) .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 24px;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(201,169,110,0.3);
-    background: #F5F0E8;
-    user-select: none;
-    -webkit-user-select: none;
+  /* Le container reste padding normal, le header devient la barre cliquable */
+  body.accordion-mode .section:not(.hero) > .container {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
-  body.accordion-mode .section:not(.hero) .section-header .section-header-left,
-  body.accordion-mode .section:not(.hero) .section-header > :not(.section-chevron) {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
+  body.accordion-mode .section:not(.hero) .section-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 20px 24px !important;
+    cursor: pointer !important;
+    border-bottom: 1px solid rgba(201,169,110,0.3);
+    background: #F5F0E8 !important;
+    color: #6B1F2A !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative;
+    z-index: 2;
+    pointer-events: all !important;
+    user-select: none;
+    -webkit-user-select: none;
+    margin: 0 !important;
   }
 
   body.accordion-mode .section:not(.hero) .section-header .section-number {
-    font-size: 11px;
-    color: #C9A96E;
+    font-size: 11px !important;
+    color: #C9A96E !important;
     letter-spacing: 3px;
-    font-family: 'Cormorant Garamond', serif;
+    opacity: 1 !important;
   }
 
   body.accordion-mode .section:not(.hero) .section-header .section-title {
-    font-family: Georgia, serif;
-    font-style: italic;
-    font-size: 20px;
-    color: #6B1F2A;
-    margin: 0;
+    font-family: Georgia, serif !important;
+    font-style: italic !important;
+    font-size: 20px !important;
+    color: #6B1F2A !important;
+    opacity: 1 !important;
+    margin: 0 !important;
   }
 
   body.accordion-mode .section:not(.hero) .section-chevron {
-    color: #C9A96E;
+    color: #C9A96E !important;
     font-size: 14px;
     transition: transform 0.3s ease;
     flex-shrink: 0;
     line-height: 1;
+    opacity: 1 !important;
   }
 
   body.accordion-mode .section:not(.hero) .section-content {
     overflow: hidden;
     transition: max-height 0.4s ease-out, opacity 0.3s ease;
+    padding: 0 24px;
   }
 
   body.accordion-mode .section:not(.hero).is-open .section-content {
     transition: max-height 0.4s ease-out, opacity 0.3s ease 0.08s;
+    padding: 24px;
   }
 }
 

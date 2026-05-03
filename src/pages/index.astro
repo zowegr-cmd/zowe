@@ -1443,17 +1443,22 @@ window.__translationMode = __translationMode;
     document.body.classList.add('accordion-mode');
 
     sections.forEach(function(section) {
-      var header = section.querySelector('.section-header');
+      // La vraie structure : section > .container > .section-header + reste
+      var container = section.querySelector('.container');
+      if (!container) return;
+      var header = container.querySelector('.section-header');
       if (!header) return;
 
-      // Envelopper tout le contenu après le header dans .section-content
+      // Envelopper tout le contenu APRÈS le header dans .section-content
+      // (reste dans le même .container — le header reste toujours visible)
       var content = document.createElement('div');
       content.className = 'section-content';
-      var toMove = Array.from(section.children).filter(function(c) {
-        return !c.classList.contains('section-header');
+      Array.from(container.children).forEach(function(child) {
+        if (!child.classList.contains('section-header')) {
+          content.appendChild(child);
+        }
       });
-      toMove.forEach(function(c) { content.appendChild(c); });
-      section.appendChild(content);
+      container.appendChild(content);
 
       // Ajouter chevron dans le header
       var chevron = document.createElement('span');
@@ -1464,7 +1469,7 @@ window.__translationMode = __translationMode;
       // État initial
       if (defaultOpen) {
         section.classList.add('is-open');
-        content.style.maxHeight = content.scrollHeight + 'px';
+        content.style.maxHeight = '9999px';
         content.style.opacity = '1';
         chevron.style.transform = 'rotate(180deg)';
       } else {
@@ -1494,7 +1499,7 @@ window.__translationMode = __translationMode;
           chevron.style.transform = 'rotate(0deg)';
         } else {
           section.classList.add('is-open');
-          content.style.maxHeight = content.scrollHeight + 'px';
+          content.style.maxHeight = '9999px';
           content.style.opacity = '1';
           chevron.style.transform = 'rotate(180deg)';
           setTimeout(function() {

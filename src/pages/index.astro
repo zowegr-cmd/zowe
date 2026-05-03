@@ -30,8 +30,8 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
 
 <Layout title={meta.siteTitle} description={meta.description}>
 
-  <!-- Safe area top : prolonge la couleur de la section courante sous la barre iOS -->
-  <div id="homeTopBar" aria-hidden="true" style="display:none;position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top);z-index:9999;pointer-events:none;transition:background-color .3s ease;"></div>
+  <!-- Safe area top — prolonge la couleur du hero sous la barre de statut iOS -->
+  <div id="homeTopBar" aria-hidden="true"></div>
 
   <!-- Navigation -->
   <nav class="nav" id="nav">
@@ -544,6 +544,26 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
     </div>
   </footer>
 
+  <style is:global>
+    /* Barre safe-area-top — visible immédiatement, couleur mise à jour au scroll */
+    #homeTopBar {
+      display: none; /* masqué desktop — activé par JS mobile */
+    }
+    @media (max-width: 768px) {
+      #homeTopBar {
+        display: block;
+        position: fixed;
+        top: -30px;           /* dépasse au-dessus du viewport */
+        left: 0;
+        right: 0;
+        height: calc(env(safe-area-inset-top, 50px) + 30px);
+        background-color: #1A0508; /* couleur hero par défaut, visible avant JS */
+        z-index: 9999;
+        pointer-events: none;
+        transition: background-color 0.3s ease;
+      }
+    }
+  </style>
 
 </Layout>
 
@@ -553,7 +573,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
   if (window.innerWidth > 768) return;
 
   var sections = [
-    { selector: '.hero',     color: '#1A0407' },
+    { selector: '.hero',     color: '#1A0508' },
     { selector: '#about',    color: '#F5F0E8' },
     { selector: '#services', color: '#F5F0E8' },
     { selector: '#faq',      color: '#F5F0E8' },
@@ -562,7 +582,6 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
   ];
 
   var topBar = document.getElementById('homeTopBar');
-  if (topBar) topBar.style.display = '';
 
   function updateThemeColor(color) {
     var m = document.querySelector('meta[name="theme-color"]');
@@ -580,7 +599,7 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
       var bottom = top + el.offsetHeight;
       if (scrollY >= top && scrollY < bottom) return s.color;
     }
-    return '#1A0407';
+    return '#1A0508';
   }
 
   var ticking = false;

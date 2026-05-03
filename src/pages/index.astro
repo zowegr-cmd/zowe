@@ -160,9 +160,9 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
         <div class="section-header" data-anim="up">
           <h2 class="section-title">{gallery.title_fr}</h2>
         </div>
-        <div class="gallery-grid gallery-grid--preview">
+        <div class="gallery-grid gallery-grid--preview" id="galleryPreviewGrid">
           {gallery.photos.slice(0, 3).map((photo, i) => (
-            <a href="/galerie" class={`gallery-card${i !== 1 ? ' gallery-card--hide-mobile' : ''}`}>
+            <a href="/galerie" class="gallery-card" data-preview-idx={String(i)}>
               <img src={photo.image} alt={photo.title_fr} loading="lazy" style="height:280px;width:100%;object-fit:cover;display:block;">
               <div class="gallery-card__overlay">
                 {photo.protocol && <span class="gallery-card__badge">{photo.protocol}</span>}
@@ -171,6 +171,17 @@ const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIC
             </a>
           ))}
         </div>
+        <script is:inline>
+          (function() {
+            if (window.innerWidth > 768) return;
+            var grid = document.getElementById('galleryPreviewGrid');
+            if (!grid) return;
+            grid.style.gridTemplateColumns = '1fr';
+            grid.querySelectorAll('.gallery-card').forEach(function(card) {
+              if (card.dataset.previewIdx !== '1') card.style.display = 'none';
+            });
+          })();
+        </script>
         <div style="text-align:center;margin-top:2.5rem;">
           <a href="/galerie" class="btn btn-primary" data-anim="up" data-i18n="gallery.view_all">Voir toute la galerie</a>
         </div>

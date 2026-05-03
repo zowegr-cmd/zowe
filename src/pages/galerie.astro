@@ -343,11 +343,35 @@ function webpOf(src: string): string {
         position: relative;
         width: 100vw;
         overflow: hidden;
-        background: #0A0205;
-        transition: background .8s ease;
+        background: #1A0508;
         display: flex;
         flex-direction: column;
       }
+
+      /* ── Bloquer scroll HTML/body sur cette page ── */
+      :global(html), :global(body) {
+        overflow: hidden !important;
+        height: 100dvh !important;
+      }
+
+      /* ── Barre de progression story ── */
+      .gc-m-progress {
+        position: absolute;
+        top: 8px; left: 8px; right: 8px;
+        display: flex;
+        gap: 3px;
+        z-index: 10;
+        pointer-events: none;
+      }
+      .gc-m-progress-seg {
+        flex: 1;
+        height: 2px;
+        background: rgba(245,240,232,.3);
+        border-radius: 1px;
+        transition: background .2s;
+      }
+      .gc-m-progress-seg.done   { background: rgba(245,240,232,.8); }
+      .gc-m-progress-seg.active { background: #F5F0E8; }
 
       /* Back link dans topbar */
       .gc-m-back {
@@ -646,6 +670,13 @@ function webpOf(src: string): string {
           <!-- Zone photo fullscreen -->
           <div class="gc-m-photo" id="gcMPhoto">
 
+            <!-- Barre progression story -->
+            <div class="gc-m-progress" id="gcMProgress" aria-hidden="true">
+              {photos.map((_, i) => (
+                <div class={`gc-m-progress-seg${i === 0 ? ' active' : ''}`} data-index={String(i)}></div>
+              ))}
+            </div>
+
             <!-- Slides container -->
             <div class="gc-m-outer" id="gcMOuter">
               <div class="gc-m-track" id="gcMTrack">
@@ -891,8 +922,6 @@ function webpOf(src: string): string {
     if (!outer || !track) return;
 
     var SW = window.innerWidth - 24; // slide width (12px peek each side)
-
-    var mBgColors  = {};   // cache couleurs extraites
     var lastHapticDist = 0;
 
     function mTX(idx) { return -(idx * SW); }
@@ -919,7 +948,6 @@ function webpOf(src: string): string {
       if (img.src && img.src.length > 10 && !img.src.endsWith('#')) { mLoaded.add(idx); return; }
       var src = img.dataset.src;
       if (!src) return;
-      img.onload = function() { mExtractBg(img, idx); };
       var source = sl.querySelector('source[data-srcset]');
       if (source) source.srcset = source.dataset.srcset;
       img.src = src;
@@ -929,23 +957,11 @@ function webpOf(src: string): string {
       for (var i = -2; i <= 2; i++) mLoad(((idx + i) % total + total) % total);
     }
 
-    /* ── Fond dynamique ── */
-    function mExtractBg(img, idx) {
-      try {
-        var c = document.createElement('canvas');
-        c.width = c.height = 1;
-        var ctx = c.getContext('2d');
-        ctx.drawImage(img, 0, 0, 1, 1);
-        var d = ctx.getImageData(0, 0, 1, 1).data;
-        var r = Math.round(d[0] * 0.3 + 26 * 0.7);
-        var g = Math.round(d[1] * 0.3 + 5  * 0.7);
-        var b = Math.round(d[2] * 0.3 + 8  * 0.7);
-        mBgColors[idx] = 'rgb(' + r + ',' + g + ',' + b + ')';
-      } catch(_) { mBgColors[idx] = '#1A0508'; }
-    }
-    function mApplyBg(idx) {
-      var photo = document.getElementById('gcMPhoto') || document.querySelector('.gc-m-photo');
-      if (photo && mBgColors[idx]) photo.style.background = mBgColors[idx];
+    /* ── Barre de progression story ── */
+    function mUpdateProgress(idx) {
+      document.querySelectorAll('.gc-m-progress-seg').forEach(function(seg, i) {
+        seg.className = 'gc-m-progress-seg' + (i < idx ? ' done' : i === idx ? ' active' : '');
+      });
     }
 
     /* ── Dots pill ── */
@@ -987,7 +1003,7 @@ function webpOf(src: string): string {
       mUpdateDots(mCur);
       mUpdateSlides(mCur);
       mUpdateCounter(mCur);
-      mApplyBg(mCur);
+      mUpdateProgress(mCur);
       if (navigator.vibrate) {
         navigator.vibrate(atEdge ? [4, 30, 4] : 8);
       }
@@ -1037,10 +1053,13 @@ function webpOf(src: string): string {
       isDrag = false;
       var dx = startX - e.clientX;
       if (Math.abs(dx) > 50) {
+        // Swipe
         dx > 0 ? mNext() : mPrev();
       } else {
-        // Spring snap-back
-        mSetTXSpring(mTX(mCur));
+        // Tap → navigation story gauche/droite
+        var rect = outer.getBoundingClientRect();
+        if (e.clientX - rect.left > rect.width / 2) mNext();
+        else mPrev();
       }
       mScheduleResume();
     }, { passive: true });
@@ -1066,6 +1085,11 @@ function webpOf(src: string): string {
       .then(function(kq) {
         if (kq && kq.enabled) { var b = document.getElementById('gcMCtaReserver'); if (b) b.style.display = ''; }
       }).catch(function() {});
+
+    /* ── Bloquer le scroll natif de la page ── */
+    document.addEventListener('touchmove', function(e) {
+      if (!e.target.closest('#gcMOuter')) e.preventDefault();
+    }, { passive: false });
 
     /* ── Init ── */
     mGoTo(0, false);
